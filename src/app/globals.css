@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* Chivita | Hollandia colours */
+@theme {
+  --color-brand-red: #e30613;
+  --color-brand-red-dark: #b8050f;
+  --color-brand-blue: #1d3f8f;
+  --color-brand-blue-dark: #142c66;
+  --color-ok: #15803d;
+  --color-warn: #b45309;
+  --color-crit: #b91c1c;
+}
+
+:root {
+  --background: #f6f7f9;
+  --foreground: #111827;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Large, finger-friendly controls for plant-floor use */
+@utility input {
+  @apply block w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-base shadow-sm focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30 focus:outline-none;
+}
+@utility btn {
+  @apply inline-flex min-h-12 items-center justify-center rounded-lg px-5 text-base font-semibold transition disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-brand-red text-white hover:bg-brand-red-dark;
+}
+@utility btn-secondary {
+  @apply btn border border-gray-300 bg-white text-gray-800 hover:bg-gray-50;
+}
+@utility card {
+  @apply rounded-xl border border-gray-200 bg-white p-4 shadow-sm;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+}
