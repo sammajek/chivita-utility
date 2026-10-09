@@ -13,8 +13,8 @@ do $$ begin
   assert (select role from public.profiles where email = 'op@test.local') = 'viewer', 'new users default to viewer';
 end $$;
 
-update public.profiles set role = 'admin' where email = 'admin@test.local';
-update public.profiles set role = 'operator' where email = 'op@test.local';
+update public.profiles set role = 'admin', active = true where email = 'admin@test.local';
+update public.profiles set role = 'operator', active = true where email = 'op@test.local';
 
 -- A scratch table that follows the record-tagging convention.
 create table public.t_reading (

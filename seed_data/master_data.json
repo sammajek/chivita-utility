@@ -1,0 +1,6975 @@
+{
+ "categories": [
+  "Boilers",
+  "Air Compressors",
+  "Air Dryers",
+  "Degassers",
+  "Chillers",
+  "Jet Pumps",
+  "Boreholes",
+  "UV Systems",
+  "Filtration",
+  "Pumps",
+  "Water Treatment",
+  "Storage Tanks",
+  "Distribution Systems",
+  "Nitrogen Generators",
+  "General"
+ ],
+ "assets": [
+  {
+   "code": "BLR-01",
+   "name": "Boiler 1 (LOOS)",
+   "category": "Boilers",
+   "area": "U1",
+   "make": "LOOS",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Boiler 1 (LOOS)"
+    ],
+    [
+     "pm_register",
+     "STEAM BOILER 1"
+    ]
+   ]
+  },
+  {
+   "code": "BLR-02",
+   "name": "Boiler 2 (SHELLMAX)",
+   "category": "Boilers",
+   "area": "U1",
+   "make": "SHELLMAX",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Boiler 2 (SHELLMAX)"
+    ],
+    [
+     "pm_register",
+     "STEAM BOILER 2"
+    ]
+   ]
+  },
+  {
+   "code": "BLR-03",
+   "name": "Boiler 3 (THERMAX)",
+   "category": "Boilers",
+   "area": "U1",
+   "make": "THERMAX",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Boiler 3 (THERMAX)"
+    ],
+    [
+     "pm_register",
+     "STEAM BOILER 3"
+    ]
+   ]
+  },
+  {
+   "code": "BLR-04",
+   "name": "Boiler 4 (THERMAX)",
+   "category": "Boilers",
+   "area": "U1",
+   "make": "THERMAX",
+   "confirmed": true,
+   "notes": "PM register calls it THERMAX EXHAUST BOILER 4. Same unit as the 3.5 t/h waste heat boiler? (owner to confirm)",
+   "aliases": [
+    [
+     "downtime_template",
+     "Boiler 4 (THERMAX)"
+    ],
+    [
+     "pm_register",
+     "THERMAX EXHAUST BOILER 4"
+    ]
+   ]
+  },
+  {
+   "code": "BLR-05",
+   "name": "Boiler 5 (THERMAX)",
+   "category": "Boilers",
+   "area": "U1",
+   "make": "THERMAX",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Boiler 5 (THERMAX)"
+    ],
+    [
+     "pm_register",
+     "STEAM BOILER 5"
+    ]
+   ]
+  },
+  {
+   "code": "BLR-06",
+   "name": "2 t/h Boiler",
+   "category": "Boilers",
+   "area": "U2",
+   "notes": "Utility 2 register '2 TONS/HR BOILER LOG REPORT'.",
+   "aliases": [
+    [
+     "log_register",
+     "2 TONS/HR BOILER"
+    ]
+   ]
+  },
+  {
+   "code": "BLR-07",
+   "name": "3.5 t/h Waste Heat Boiler",
+   "category": "Boilers",
+   "area": "U2",
+   "notes": "Utility 2 register '3.5 TONS/HR WASTE HEAT BOILER LOG REPORT'. May be the same as BLR-04.",
+   "aliases": [
+    [
+     "log_register",
+     "3.5 TONS/HR WASTE HEAT BOILER"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-02",
+   "name": "Air Compressor 2 - Oil (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 2 - Oil (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.2 (NORMAL)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-03",
+   "name": "Air Compressor 3 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 3 - Oil-free (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.3 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-04",
+   "name": "Air Compressor 4 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 4 - Oil-free (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.4 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-05",
+   "name": "Air Compressor 5 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 5 - Oil-free (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.5 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-06",
+   "name": "Air Compressor 6 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 6 - Oil-free (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.6 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-07",
+   "name": "Air Compressor 7 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 7 - Oil-free (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.7 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-08",
+   "name": "Air Compressor 8 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 8 - Oil-free (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.8 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-09",
+   "name": "Air Compressor 9 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 9 - Oil-free (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.9 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-11",
+   "name": "Air Compressor 11 - Oil (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 11 - Oil (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.11 (NORMAL)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-12",
+   "name": "Air Compressor 12 - Oil (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Compressor 12 - Oil (Ingersoll Rand)"
+    ],
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.12 (NORMAL)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-10",
+   "name": "Air Compressor 10 - Oil-free (Ingersoll Rand)",
+   "category": "Air Compressors",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "notes": "In the PM register but not in the downtime template.",
+   "aliases": [
+    [
+     "pm_register",
+     "AIR COMPRESSOR NO.10 (OIL-FREE)"
+    ]
+   ]
+  },
+  {
+   "code": "CMP-13",
+   "name": "Air Compressor IR MH75",
+   "category": "Air Compressors",
+   "area": "U2",
+   "make": "Ingersoll Rand",
+   "notes": "Utility 2 register 'IR MH75 AIR COMPRESSOR LOG REPORT'.",
+   "aliases": [
+    [
+     "log_register",
+     "IR MH75 AIR COMPRESSOR"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-01",
+   "name": "Air Dryer 1",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 1"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.1"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-02",
+   "name": "Air Dryer 2",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 2"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.2"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-03",
+   "name": "Air Dryer 3",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 3"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.3"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-04",
+   "name": "Air Dryer 4",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 4"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.4"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-05",
+   "name": "Air Dryer 5",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 5"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.5"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-06",
+   "name": "Air Dryer 6",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 6"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.6"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-07",
+   "name": "Air Dryer 7",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 7"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.7"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-08",
+   "name": "Air Dryer 8",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 8"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.8"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-09",
+   "name": "Air Dryer 9",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Atlas Copco",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 9"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.9"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-10",
+   "name": "Air Dryer 10",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Dryer 10"
+    ],
+    [
+     "pm_register",
+     "REFRIGERATED AIR DRYER NO.10"
+    ]
+   ]
+  },
+  {
+   "code": "DRY-11",
+   "name": "Air Dryer 11",
+   "category": "Air Dryers",
+   "area": "U1",
+   "make": "Ingersoll Rand",
+   "notes": "Listed on the U1 IR dryer register ('for No. 5, 6, 7, 8, 10, 11') but not in the downtime template."
+  },
+  {
+   "code": "DRY-12",
+   "name": "Air Dryer IR TMS",
+   "category": "Air Dryers",
+   "area": "U2",
+   "make": "Ingersoll Rand",
+   "notes": "Utility 2 register 'IR TMS AIR DRYER LOG REPORT'.",
+   "aliases": [
+    [
+     "log_register",
+     "IR TMS AIR DRYER"
+    ]
+   ]
+  },
+  {
+   "code": "DGS-01",
+   "name": "Degasser 1",
+   "category": "Degassers",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Degasser 1"
+    ]
+   ]
+  },
+  {
+   "code": "DGS-02",
+   "name": "Degasser 2",
+   "category": "Degassers",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Degasser 2"
+    ]
+   ]
+  },
+  {
+   "code": "DGS-03",
+   "name": "Degasser 3",
+   "category": "Degassers",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Degasser 3"
+    ]
+   ]
+  },
+  {
+   "code": "CHT-01",
+   "name": "TRANE Chiller 1 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Trane",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "TRANE Chiller 1 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "TRANE CHILLER 1"
+    ],
+    [
+     "pm_register",
+     "TRANE COOLING TOWER 1"
+    ]
+   ]
+  },
+  {
+   "code": "CHT-02",
+   "name": "TRANE Chiller 2 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Trane",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "TRANE Chiller 2 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "TRANE CHILLER 2"
+    ],
+    [
+     "pm_register",
+     "TRANE COOLING TOWER 2"
+    ]
+   ]
+  },
+  {
+   "code": "CHT-03",
+   "name": "TRANE Chiller 3 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Trane",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "TRANE Chiller 3 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "TRANE CHILLER 3"
+    ],
+    [
+     "pm_register",
+     "TRANE COOLING TOWER 3"
+    ]
+   ]
+  },
+  {
+   "code": "CHT-04",
+   "name": "TRANE Chiller 4 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Trane",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "TRANE Chiller 4 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "TRANE CHILLER 4"
+    ],
+    [
+     "pm_register",
+     "TRANE COOLING TOWER 4"
+    ]
+   ]
+  },
+  {
+   "code": "CHT-05",
+   "name": "TRANE Chiller 5 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Trane",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "TRANE Chiller 5 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "TRANE CHILLER 5"
+    ],
+    [
+     "pm_register",
+     "TRANE COOLING TOWER 5"
+    ]
+   ]
+  },
+  {
+   "code": "CHV-01",
+   "name": "VAM Chiller 1 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Thermax",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "VAM Chiller 1 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "VAM CHILLER 1"
+    ],
+    [
+     "pm_register",
+     "VAM COOLING TOWER 1"
+    ]
+   ]
+  },
+  {
+   "code": "CHV-02",
+   "name": "VAM Chiller 2 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Thermax",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "VAM Chiller 2 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "VAM CHILLER 2"
+    ],
+    [
+     "pm_register",
+     "VAM COOLING TOWER 2"
+    ]
+   ]
+  },
+  {
+   "code": "CHV-03",
+   "name": "VAM Chiller 3 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Thermax",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "VAM Chiller 3 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "VAM CHILLER 3"
+    ],
+    [
+     "pm_register",
+     "VAM COOLING TOWER 3"
+    ]
+   ]
+  },
+  {
+   "code": "CHV-04",
+   "name": "VAM Chiller 4 + Cooling Tower",
+   "category": "Chillers",
+   "area": "U1",
+   "make": "Thermax",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "VAM Chiller 4 + Cooling Tower"
+    ],
+    [
+     "pm_register",
+     "VAM CHILLER 4"
+    ],
+    [
+     "pm_register",
+     "VAM COOLING TOWER 4"
+    ]
+   ]
+  },
+  {
+   "code": "CHC-01",
+   "name": "Clivet Chiller (air-cooled)",
+   "category": "Chillers",
+   "area": "U2",
+   "make": "Clivet",
+   "aliases": [
+    [
+     "pm_register",
+     "CLIVET CHILLER - AIR COOLED"
+    ],
+    [
+     "log_register",
+     "CLIVET CHILLER"
+    ]
+   ]
+  },
+  {
+   "code": "CHK-01",
+   "name": "Carrier Chiller (air-cooled)",
+   "category": "Chillers",
+   "area": "U2",
+   "make": "Carrier",
+   "aliases": [
+    [
+     "pm_register",
+     "CARRIER CHILLER - AIR COOLED"
+    ]
+   ]
+  },
+  {
+   "code": "CHV-U2",
+   "name": "VAM Chiller (Utility 2)",
+   "category": "Chillers",
+   "area": "U2",
+   "make": "Thermax",
+   "notes": "Utility 2 'VAM CHILLER LOG REPORT' / 'CHILLER LOGBOOK THERMAX (THDC2)'. Is this one of VAM 1-4?"
+  },
+  {
+   "code": "JP-01",
+   "name": "Jet Pumps (Expansion)",
+   "category": "Jet Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Jet Pumps (Expansion)"
+    ]
+   ]
+  },
+  {
+   "code": "JP-02",
+   "name": "Jet Pumps (New Building)",
+   "category": "Jet Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Jet Pumps (New Building)"
+    ]
+   ]
+  },
+  {
+   "code": "JP-03",
+   "name": "Jet Pumps (Old Building 1)",
+   "category": "Jet Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Jet Pumps (Old Building 1)"
+    ]
+   ]
+  },
+  {
+   "code": "JP-04",
+   "name": "Jet Pumps (Old Building 2)",
+   "category": "Jet Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Jet Pumps (Old Building 2)"
+    ]
+   ]
+  },
+  {
+   "code": "JP-05",
+   "name": "Jet Pumps (Debottleneck)",
+   "category": "Jet Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Jet Pumps (Debottleneck)"
+    ]
+   ]
+  },
+  {
+   "code": "BH-01",
+   "name": "Borehole 1",
+   "category": "Boreholes",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Borehole 1"
+    ]
+   ]
+  },
+  {
+   "code": "BH-02",
+   "name": "Borehole 2",
+   "category": "Boreholes",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Borehole 2"
+    ]
+   ]
+  },
+  {
+   "code": "BH-03",
+   "name": "Borehole 3",
+   "category": "Boreholes",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Borehole 3"
+    ]
+   ]
+  },
+  {
+   "code": "BH-04",
+   "name": "Borehole 4",
+   "category": "Boreholes",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Borehole 4"
+    ]
+   ]
+  },
+  {
+   "code": "BH-05",
+   "name": "Borehole 5",
+   "category": "Boreholes",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Borehole 5"
+    ]
+   ]
+  },
+  {
+   "code": "BH-06",
+   "name": "Borehole 6",
+   "category": "Boreholes",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Borehole 6"
+    ]
+   ]
+  },
+  {
+   "code": "BH-07",
+   "name": "Borehole 7",
+   "category": "Boreholes",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Borehole 7"
+    ]
+   ]
+  },
+  {
+   "code": "UV-01",
+   "name": "UV-1",
+   "category": "UV Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "UV-1"
+    ],
+    [
+     "log_register",
+     "UV-A"
+    ]
+   ]
+  },
+  {
+   "code": "UV-02",
+   "name": "UV-2",
+   "category": "UV Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "UV-2"
+    ],
+    [
+     "log_register",
+     "UV-B"
+    ]
+   ]
+  },
+  {
+   "code": "UV-03",
+   "name": "UV-3",
+   "category": "UV Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "UV-3"
+    ],
+    [
+     "log_register",
+     "UV-C"
+    ]
+   ]
+  },
+  {
+   "code": "UV-04",
+   "name": "UV-4",
+   "category": "UV Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "UV-4"
+    ],
+    [
+     "log_register",
+     "UV-D"
+    ]
+   ]
+  },
+  {
+   "code": "PFT-01",
+   "name": "Pressure Filter Tank 1",
+   "category": "Filtration",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Pressure Filter Tank 1"
+    ]
+   ]
+  },
+  {
+   "code": "PFT-02",
+   "name": "Pressure Filter Tank 2",
+   "category": "Filtration",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Pressure Filter Tank 2"
+    ]
+   ]
+  },
+  {
+   "code": "PFT-03",
+   "name": "Pressure Filter Tank 3",
+   "category": "Filtration",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Pressure Filter Tank 3"
+    ]
+   ]
+  },
+  {
+   "code": "PFT-04",
+   "name": "Pressure Filter Tank 4",
+   "category": "Filtration",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Pressure Filter Tank 4"
+    ]
+   ]
+  },
+  {
+   "code": "PFT-05",
+   "name": "Pressure Filter Tank 5",
+   "category": "Filtration",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Pressure Filter Tank 5"
+    ]
+   ]
+  },
+  {
+   "code": "PFT-06",
+   "name": "Pressure Filter Tank 6",
+   "category": "Filtration",
+   "area": "U1",
+   "notes": "On the WTP equipment register but not in the downtime template."
+  },
+  {
+   "code": "PFT-07",
+   "name": "Pressure Filter Tank 7",
+   "category": "Filtration",
+   "area": "U1",
+   "notes": "On the WTP equipment register but not in the downtime template."
+  },
+  {
+   "code": "FLT-PRE",
+   "name": "Pre-Filter Bag Units",
+   "category": "Filtration",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Pre-Filter Bag"
+    ],
+    [
+     "pm_register",
+     "PRESSURE PRE-FILTER BAG TANK 25UM"
+    ]
+   ]
+  },
+  {
+   "code": "FLT-POST",
+   "name": "Post-Filter Bag Unit",
+   "category": "Filtration",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Post-Filter Bag"
+    ],
+    [
+     "pm_register",
+     "PRESSURE POST-FILTER BAG TANK 1UM"
+    ]
+   ]
+  },
+  {
+   "code": "PMP-RW",
+   "name": "Raw Water Pumps",
+   "category": "Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Raw Water Pumps"
+    ]
+   ]
+  },
+  {
+   "code": "PMP-TW",
+   "name": "Treated Water Pumps",
+   "category": "Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Treated Water Pumps"
+    ],
+    [
+     "pm_register",
+     "TREATED WATER TRANSFER PUMPS"
+    ]
+   ]
+  },
+  {
+   "code": "PMP-CWI",
+   "name": "Chilled Water Inlet Pumps",
+   "category": "Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Chilled Water Inlet Pumps"
+    ],
+    [
+     "pm_register",
+     "CHILLED WATER TRANSFER PUMPS"
+    ]
+   ]
+  },
+  {
+   "code": "PMP-CWO",
+   "name": "Chilled Water Outlet Pumps",
+   "category": "Pumps",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Chilled Water Outlet Pumps"
+    ]
+   ]
+  },
+  {
+   "code": "PMP-BFW",
+   "name": "Boiler Feed Water Transfer Pumps",
+   "category": "Pumps",
+   "area": "U1",
+   "aliases": [
+    [
+     "pm_register",
+     "BOILER FEED WATER TRANSFER PUMPS"
+    ]
+   ]
+  },
+  {
+   "code": "RO-01",
+   "name": "RO Plant",
+   "category": "Water Treatment",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "RO Plant"
+    ]
+   ]
+  },
+  {
+   "code": "SOF-01",
+   "name": "Softener Plant",
+   "category": "Water Treatment",
+   "area": "U1",
+   "aliases": [
+    [
+     "pm_register",
+     "SOFTENER PLANT"
+    ]
+   ]
+  },
+  {
+   "code": "TNK-UT",
+   "name": "Utility Tanks (Raw, Treated, Chilled, Boiler Feed, RO Water)",
+   "category": "Storage Tanks",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Utility Tanks (Raw Water, Treated Water, Chilled Water, Boiler Feed Water, RO Water)"
+    ],
+    [
+     "pm_register",
+     "MS TANKS"
+    ],
+    [
+     "pm_register",
+     "SS TANKS"
+    ]
+   ]
+  },
+  {
+   "code": "TNK-AR",
+   "name": "Air Receiver Tanks",
+   "category": "Storage Tanks",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Air Receiver Tanks"
+    ],
+    [
+     "pm_register",
+     "AIR RECEIVER TANKS"
+    ]
+   ]
+  },
+  {
+   "code": "DST-STM",
+   "name": "Steam Distribution",
+   "category": "Distribution Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Steam Distribution"
+    ]
+   ]
+  },
+  {
+   "code": "DST-TW",
+   "name": "Treated Water Distribution",
+   "category": "Distribution Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Treated Water Distribution"
+    ]
+   ]
+  },
+  {
+   "code": "DST-CHW",
+   "name": "Chilled Water Distribution",
+   "category": "Distribution Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Chilled Water Distribution"
+    ]
+   ]
+  },
+  {
+   "code": "DST-CND",
+   "name": "Steam Condensate Collection",
+   "category": "Distribution Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Steam Condensate Collection"
+    ]
+   ]
+  },
+  {
+   "code": "DST-AIR",
+   "name": "Compressed Air Distribution",
+   "category": "Distribution Systems",
+   "area": "U1",
+   "confirmed": true,
+   "aliases": [
+    [
+     "downtime_template",
+     "Compressed Air Distribution"
+    ]
+   ]
+  },
+  {
+   "code": "N2G-01",
+   "name": "Nitrogen Generator 1",
+   "category": "Nitrogen Generators",
+   "area": "U1",
+   "notes": "From the Utility 1 nitrogen register (generators 1-4)."
+  },
+  {
+   "code": "N2G-02",
+   "name": "Nitrogen Generator 2",
+   "category": "Nitrogen Generators",
+   "area": "U1",
+   "notes": "From the Utility 1 nitrogen register (generators 1-4)."
+  },
+  {
+   "code": "N2G-03",
+   "name": "Nitrogen Generator 3",
+   "category": "Nitrogen Generators",
+   "area": "U1",
+   "notes": "From the Utility 1 nitrogen register (generators 1-4)."
+  },
+  {
+   "code": "N2G-04",
+   "name": "Nitrogen Generator 4",
+   "category": "Nitrogen Generators",
+   "area": "U1",
+   "notes": "From the Utility 1 nitrogen register (generators 1-4)."
+  },
+  {
+   "code": "N2G-U2-01",
+   "name": "Nitrogen Generator 1 (Utility 2)",
+   "category": "Nitrogen Generators",
+   "area": "U2",
+   "notes": "From the Utility 2 nitrogen register (generators 1-2)."
+  },
+  {
+   "code": "N2G-U2-02",
+   "name": "Nitrogen Generator 2 (Utility 2)",
+   "category": "Nitrogen Generators",
+   "area": "U2",
+   "notes": "From the Utility 2 nitrogen register (generators 1-2)."
+  },
+  {
+   "code": "SYS-U1",
+   "name": "Utility 1 general plant",
+   "category": "General",
+   "area": "U1",
+   "confirmed": true,
+   "notes": "Readings on the general registers that are not tied to one machine."
+  },
+  {
+   "code": "SYS-U2",
+   "name": "Utility 2 general plant",
+   "category": "General",
+   "area": "U2",
+   "confirmed": true,
+   "notes": "Readings on the general registers that are not tied to one machine."
+  }
+ ],
+ "parameters": [
+  {
+   "group": "Boiler",
+   "name": "Feed Water Tank Level",
+   "unit": "%",
+   "min": 90.0,
+   "max": 95.0,
+   "written": "90 - 95%",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "80 - 90 % (General Utility register)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: 80 - 90 % (General Utility register)."
+  },
+  {
+   "group": "Boiler",
+   "name": "Feed Water Tank Temperature",
+   "unit": "°C",
+   "min": 85.0,
+   "max": 95.0,
+   "written": "85 - 95 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "General Utility",
+   "name": "Chilled Water Outlet Temperature",
+   "unit": "°C",
+   "min": 7.0,
+   "max": 10.0,
+   "written": "7 - 10 °C",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "6 - 10 °C (General Utility register)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: 6 - 10 °C (General Utility register)."
+  },
+  {
+   "group": "General Utility",
+   "name": "Air Line Pressure",
+   "unit": "bar",
+   "min": 6.8,
+   "max": 8.0,
+   "written": "6.8 - 8.0 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "General Utility",
+   "name": "Steam Line Pressure",
+   "unit": "bar",
+   "min": 7.5,
+   "max": 8.5,
+   "written": "7.5 - 8.5 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "General Utility",
+   "name": "Chilled Water Pump Pressure",
+   "unit": "bar",
+   "min": 3.5,
+   "max": 4.0,
+   "written": "3.5 - 4.0 bar",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "3.5 - 4.5 bar (Shift & Daily register)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: 3.5 - 4.5 bar (Shift & Daily register)."
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water pH",
+   "min": 8.0,
+   "max": 10.0,
+   "written": "8.0 - 10.0",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water TDS",
+   "unit": "ppm",
+   "max": 2000,
+   "written": "< 2000",
+   "source": "Printed on the register",
+   "review": true,
+   "note": "Boiler water TDS standard is < 3500 ppm; is < 2000 the feed water limit?"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water Conductivity",
+   "unit": "µS/cm",
+   "max": 2000,
+   "written": "< 2000",
+   "source": "Printed on the register",
+   "review": true,
+   "note": "Boiler conductivity standard is < 3500 µS/cm; is < 2000 the feed water limit?"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water Total Hardness",
+   "unit": "ppm",
+   "written": "0",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water P-Alkalinity",
+   "unit": "ppm"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water M-Alkalinity",
+   "unit": "ppm"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water O-Alkalinity",
+   "unit": "ppm"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water Sulphite",
+   "unit": "ppm"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Feed Water TSS",
+   "unit": "ppm"
+  },
+  {
+   "group": "General Utility",
+   "name": "Chilled Water Tank Level",
+   "type": "select",
+   "options": [
+    "Full",
+    "Not Full"
+   ],
+   "ok": [
+    "Full"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Diesel Tank Level",
+   "unit": "%"
+  },
+  {
+   "group": "Boiler",
+   "name": "Oxygen Scavenger Tank Level",
+   "unit": "%"
+  },
+  {
+   "group": "Boiler",
+   "name": "Sludge Dispersant Tank Level",
+   "unit": "%"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Softener Plant Salt Level",
+   "type": "select",
+   "options": [
+    "Salt",
+    "No Salt"
+   ],
+   "ok": [
+    "Salt"
+   ]
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Degasser Blower Operation",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Backwashing Transfer Pump Operation",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "Water Treatment",
+   "name": "NEXGEN Air Blowers Operation",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "General Utility",
+   "name": "Steam Condensate Tank & Pump Operation",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Water Recovery Tank & Pump Operation",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Steam Pressure",
+   "unit": "bar",
+   "min": 8.0,
+   "max": 8.5,
+   "written": "8.0 - 8.5",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler",
+   "name": "Flame Signal",
+   "unit": "%",
+   "min": 90.0,
+   "written": "> 90",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "90 - 95 % (second boiler block on the standard sheet)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: 90 - 95 % (second boiler block on the standard sheet)."
+  },
+  {
+   "group": "Boiler",
+   "name": "Conductivity",
+   "unit": "µS/cm",
+   "max": 3500.0,
+   "written": "< 3500",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler",
+   "name": "Water Level",
+   "unit": "%",
+   "min": 60,
+   "max": 75,
+   "written": "60 - 75",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Boiler",
+   "name": "Flue Gas Temperature",
+   "unit": "°C",
+   "min": 130.0,
+   "max": 250.0,
+   "written": "130 - 250",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler",
+   "name": "Fuel Pump Pressure",
+   "unit": "bar",
+   "min": 12,
+   "max": 25,
+   "written": "12 - 25 bar",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Boiler",
+   "name": "Oil Temperature",
+   "unit": "°C",
+   "min": 40,
+   "max": 75,
+   "written": "40 - 75 °C",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Boiler",
+   "name": "Oil Pump Working",
+   "type": "select",
+   "options": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Feedwater Pump Working",
+   "type": "select",
+   "options": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Feedwater Pump 1 Operating Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Boiler",
+   "name": "Feedwater Pump 2 Operating Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Boiler",
+   "name": "Operating Hours - Gas",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Boiler",
+   "name": "Operating Hours - Oil",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Boiler",
+   "name": "Panel A/C Working Condition",
+   "type": "select",
+   "options": [
+    "Working",
+    "Not Working"
+   ],
+   "ok": [
+    "Working"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Water Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Steam Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Burner Flame Sight Glass",
+   "type": "select",
+   "options": [
+    "Clear",
+    "Not Clear"
+   ],
+   "ok": [
+    "Clear"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Blowdown Valve",
+   "type": "select",
+   "options": [
+    "Working",
+    "Not Working"
+   ],
+   "ok": [
+    "Working"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Gas Pressure (high)",
+   "unit": "bar"
+  },
+  {
+   "group": "Boiler",
+   "name": "Gas Pressure (low)",
+   "unit": "mbar"
+  },
+  {
+   "group": "Boiler",
+   "name": "Gas Flowmeter Reading",
+   "unit": "m³",
+   "counter": true
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Raw Water Tank Level",
+   "unit": "%",
+   "min": 20.0,
+   "written": "> 20",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "> 90 % (tank block on the standard sheet)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: > 90 % (tank block on the standard sheet)."
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Process Water Tank Level",
+   "unit": "%",
+   "min": 90,
+   "written": "> 90%",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Backwashing Water Tank Level",
+   "unit": "%",
+   "min": 90,
+   "written": "> 90%",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Raw Water Pump Pressure",
+   "unit": "bar",
+   "min": 3.5,
+   "written": "> 3.5 bar",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "< 6 bar (tank block on the standard sheet)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: < 6 bar (tank block on the standard sheet)."
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Process Water Pump Pressure",
+   "unit": "bar",
+   "min": 3.5,
+   "written": "> 3.5 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Raw Water Flow Rate",
+   "unit": "m³/h"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Process Water Flow Rate",
+   "unit": "m³/h"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Caustic Dosing Rate",
+   "unit": "l/h"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "On-line Water pH",
+   "min": 6.8,
+   "max": 7.2,
+   "written": "6.8 - 7.2",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Raw Water pH",
+   "min": 6.0,
+   "written": "> 6.0",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Process Water pH",
+   "min": 6.8,
+   "max": 7.2,
+   "written": "6.8 - 7.2",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Pre-Filter Bag Unit Inlet Pressure",
+   "unit": "bar",
+   "min": 1.1,
+   "written": "> 1.1 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Pre-Filter Bag Unit Outlet Pressure",
+   "unit": "bar",
+   "min": 0.8,
+   "written": "> 0.8 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Pressure Filter Tank Inlet Pressure",
+   "unit": "bar",
+   "min": 1.1,
+   "written": "> 1.1",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Pressure Filter Tank Outlet Pressure",
+   "unit": "bar",
+   "min": 0.8,
+   "written": "> 0.8",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Post-Filter Bag Unit Inlet Pressure",
+   "unit": "bar",
+   "min": 4.0,
+   "written": "> 4.0 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Post-Filter Bag Unit Outlet Pressure",
+   "unit": "bar",
+   "min": 3.8,
+   "written": "> 3.8 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "UV Intensity",
+   "unit": "W/cm²",
+   "min": 90.0,
+   "written": "> 90 W/cm2",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "Unit printed as W/cm²; usually mW/cm² or %. Please confirm."
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Borehole Line Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Borehole 2&3 Tank Level",
+   "unit": "%"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "PFT Inlet Valves Check",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "Water Treatment",
+   "name": "PFT Outlet Actuator Valves Check",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Water Leakage Check",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Aftercooler Discharge Temp.",
+   "unit": "°C"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Airend Discharge Temp.",
+   "unit": "°C"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Injected Coolant Temp.",
+   "unit": "°C"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Sump Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Separator Pressure Drop",
+   "unit": "bar"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Coolant Filter Pressure Drop",
+   "unit": "bar",
+   "max": 0.9,
+   "written": "< 0.9 bar",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Coolant Filter",
+   "type": "select",
+   "options": [
+    "Okay",
+    "Not Okay"
+   ],
+   "ok": [
+    "Okay"
+   ]
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Inlet Vacuum",
+   "unit": "bar"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Running Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Loaded Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Oil Level",
+   "type": "select",
+   "options": [
+    "Below 1/2",
+    "1/2 to 3/4",
+    "Above 3/4"
+   ],
+   "ok": [
+    "1/2 to 3/4"
+   ]
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Condensate Drain",
+   "type": "select",
+   "options": [
+    "Functional",
+    "Not Functional"
+   ],
+   "ok": [
+    "Functional"
+   ]
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Air Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Water Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Oil Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Internal/External Body Clean",
+   "type": "select",
+   "options": [
+    "Clean",
+    "Not Clean"
+   ],
+   "ok": [
+    "Clean"
+   ]
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Package Discharge Pressure",
+   "unit": "bar",
+   "min": 7.5,
+   "max": 8.5,
+   "written": "7.5 - 8.5",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Package Discharge Temp.",
+   "unit": "°C",
+   "min": 35.0,
+   "max": 45.0,
+   "written": "35 - 45",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Inlet Vacuum",
+   "unit": "bar",
+   "max": 0.01,
+   "written": "< 0.01 mmHg",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "Standard printed as '< 0.01 mmHg'; unit doesn't match the bar reading."
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "1st Stage Inlet Temp.",
+   "unit": "°C",
+   "min": 27.0,
+   "max": 32.0,
+   "written": "27 - 32",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "1st Stage Discharge Temp.",
+   "unit": "°C",
+   "max": 215.0,
+   "written": "< 215",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "2nd Stage Inlet Pressure",
+   "unit": "bar",
+   "min": 2.0,
+   "max": 3.0,
+   "written": "2.0 - 3.0",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "2nd Stage Inlet Temp.",
+   "unit": "°C",
+   "max": 45.0,
+   "written": "< 45",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "2nd Stage Discharge Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "2nd Stage Discharge Temp.",
+   "unit": "°C"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Bearing Oil Temp.",
+   "unit": "°C",
+   "min": 55.0,
+   "max": 65.0,
+   "written": "55 - 65",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Bearing Oil Pressure",
+   "unit": "bar",
+   "min": 1.8,
+   "max": 2.0,
+   "written": "1.8 - 2.0",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Oil Filter Pressure Drop",
+   "unit": "bar",
+   "max": 0.5,
+   "written": "< 0.5",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "< 0.9 bar (Air Compressor 2 block)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: < 0.9 bar (Air Compressor 2 block)."
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Package kW",
+   "unit": "kW"
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Running Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Loaded Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Oil Level",
+   "type": "select",
+   "options": [
+    "Below 1/2",
+    "1/2 to 3/4",
+    "Above 3/4"
+   ],
+   "ok": [
+    "1/2 to 3/4"
+   ],
+   "alt": "> 70% (IR block on the standard sheet)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: > 70% (IR block on the standard sheet)."
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Condensate Drain",
+   "type": "select",
+   "options": [
+    "Functional",
+    "Not Functional"
+   ],
+   "ok": [
+    "Functional"
+   ]
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Air Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Water Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Oil Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Compressor IR",
+   "name": "Internal/External Body Clean",
+   "type": "select",
+   "options": [
+    "Clean",
+    "Not Clean"
+   ],
+   "ok": [
+    "Clean"
+   ]
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Dew Point",
+   "unit": "°C",
+   "min": 1.0,
+   "max": 2.0,
+   "written": "1.0 - 2.0 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Air Inlet Temperature",
+   "unit": "°C",
+   "min": 28.0,
+   "max": 30.0,
+   "written": "28 - 30 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Ambient Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Suction Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Running Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Glycol Level",
+   "unit": "%",
+   "min": 70,
+   "written": "> 70%",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Condensate Drain",
+   "type": "select",
+   "options": [
+    "Functional",
+    "Not Functional"
+   ],
+   "ok": [
+    "Functional"
+   ]
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Air Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Water Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Internal/External Body Clean",
+   "type": "select",
+   "options": [
+    "Clean",
+    "Not Clean"
+   ],
+   "ok": [
+    "Clean"
+   ]
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Condensing Pressure",
+   "unit": "bar",
+   "min": 25.5,
+   "max": 25.5,
+   "written": "25.5 bar",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "Standard is a single value (25.5 bar). What tolerance?"
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Dryer LAT",
+   "unit": "°C",
+   "min": 1.0,
+   "max": 2.0,
+   "written": "1.0 - 2.0 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Refrigerant Temperature",
+   "unit": "°C",
+   "max": 3.0,
+   "written": "0 - 3 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Dryer Ambient Temperature",
+   "unit": "°C",
+   "min": 28.0,
+   "max": 30.0,
+   "written": "28 - 30 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Refrigerant Compressor Outlet",
+   "unit": "°C",
+   "min": 63.0,
+   "max": 66.0,
+   "written": "63 - 66 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Running Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Condensate Drain",
+   "type": "select",
+   "options": [
+    "Functional",
+    "Not Functional"
+   ],
+   "ok": [
+    "Functional"
+   ]
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Air Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Water Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Air Dryer AC",
+   "name": "Internal/External Body Clean",
+   "type": "select",
+   "options": [
+    "Clean",
+    "Not Clean"
+   ],
+   "ok": [
+    "Clean"
+   ]
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Oil Pressure",
+   "unit": "kPa",
+   "min": 1000.0,
+   "max": 1200.0,
+   "written": "1000 - 1200",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "System Refrigerant Diff. Pressure",
+   "unit": "kPa",
+   "min": 800.0,
+   "max": 1000.0,
+   "written": "800 - 1000",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Comp Rfgt Discharge Temp",
+   "unit": "°C",
+   "min": 63.0,
+   "max": 66.0,
+   "written": "63 - 66",
+   "source": "Utility Equipment Standard sheet",
+   "alt": "60 - 70 (columns M-N on the standard sheet)",
+   "review": true,
+   "note": "Conflicting standard elsewhere: 60 - 70 (columns M-N on the standard sheet)."
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "% RLA",
+   "unit": "%",
+   "max": 95.0,
+   "written": "< 95%",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Evap Entering Water Temp.",
+   "unit": "°C"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Evap Leaving Water Temp.",
+   "unit": "°C"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Evap Sat Rfgt Temp.",
+   "unit": "°C",
+   "min": 1.0,
+   "written": "> 1",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Evap Rfgt Pressure",
+   "unit": "kPa",
+   "min": 300.0,
+   "max": 400.0,
+   "written": "300 - 400",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Evap Approach Temp",
+   "unit": "°C",
+   "min": 1.0,
+   "written": "> 1",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Expansion Valve Position",
+   "unit": "%"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Evap Rfgt Liquid Level",
+   "unit": "mm",
+   "written": "> 0",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Cond Rfgt Pressure",
+   "unit": "kPa",
+   "min": 1100.0,
+   "max": 1200.0,
+   "written": "1100 - 1200",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Cond Entering Water Temp.",
+   "unit": "°C",
+   "min": 29.0,
+   "max": 34.0,
+   "written": "29 - 34",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Cond Leaving Water Temp.",
+   "unit": "°C",
+   "min": 35.0,
+   "max": 39.0,
+   "written": "35 - 39",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Cond Sat Rfgt Temp",
+   "unit": "°C",
+   "min": 42.0,
+   "max": 48.0,
+   "written": "42 - 48",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Condenser Approach Temp",
+   "unit": "°C",
+   "min": 5.0,
+   "max": 10.0,
+   "written": "5.0 - 10.0",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Compressor Running Time",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Oil Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Cooling Water Inlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Trane Chiller",
+   "name": "Chilled Water Inlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Burner/Steam Selection",
+   "type": "select",
+   "options": [
+    "Burner",
+    "Steam"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Burner",
+   "unit": "%"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Steam",
+   "unit": "%"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Exhaust Stack Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Chilled Water Inlet Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Chilled Water Outlet Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Chilled Water Differential Pressure",
+   "unit": "mmWC"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Chilled Water Flow",
+   "unit": "m³/h"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Cooling Water Inlet Temperature",
+   "unit": "°C",
+   "min": 30.0,
+   "max": 34.0,
+   "written": "30 - 34 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Cooling Water Outlet Temperature",
+   "unit": "°C",
+   "min": 32.0,
+   "max": 36.0,
+   "written": "32 - 36 °C",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "High Temperature Generator",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Low Temperature Generator",
+   "unit": "°C",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Spray Solution Concentration",
+   "unit": "%",
+   "min": 60.0,
+   "max": 63.0,
+   "written": "60 - 63%",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Intermediate Concentration",
+   "unit": "%"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Spray Solution Temperature",
+   "unit": "°C",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Running Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Vacuum Pump Oil Level",
+   "unit": "%",
+   "min": 50,
+   "written": "> 50%",
+   "source": "Printed on the register"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Vacuum",
+   "unit": "mmHg",
+   "max": 10.0,
+   "written": "< 10mmHg",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Chilled Water Inlet Pressure",
+   "unit": "bar",
+   "min": 0.8,
+   "written": "> 0.8 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Chilled Water Outlet Pressure",
+   "unit": "bar",
+   "min": 0.4,
+   "written": "> 0.4 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Cooling Water Inlet Pressure",
+   "unit": "bar",
+   "min": 2.3,
+   "max": 2.5,
+   "written": "2.3 - 2.5 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Cooling Water Outlet Pressure",
+   "unit": "bar",
+   "min": 1.3,
+   "max": 1.5,
+   "written": "1.3 - 1.5 bar",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "HTG Vapour Temperature",
+   "unit": "°C",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Gas Flowmeter Reading",
+   "unit": "m³",
+   "counter": true
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "U-tube Temperature",
+   "unit": "°C",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Dilute Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "HTHE Out Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Refrigerant Outlet Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Overflow Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Condensate Outlet Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Gas Pressure (high)",
+   "unit": "bar"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Gas Pressure (low)",
+   "unit": "mbar"
+  },
+  {
+   "group": "Nitrogen",
+   "name": "N2 Purity",
+   "unit": "%"
+  },
+  {
+   "group": "Nitrogen",
+   "name": "Air Inlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Nitrogen",
+   "name": "Nitrogen Outlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Nitrogen",
+   "name": "Operating Hours",
+   "unit": "h",
+   "counter": true
+  },
+  {
+   "group": "Nitrogen",
+   "name": "Flow Rate",
+   "unit": "m³/h"
+  },
+  {
+   "group": "Nitrogen",
+   "name": "Total Flow",
+   "unit": "m³",
+   "counter": true
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Hot/Cooling Water Flow Rate",
+   "unit": "m³/h",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "HTG Top Temperature",
+   "unit": "°C",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "HTG Bottom Temperature",
+   "unit": "°C",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Absolute Difference"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Steam Control Valve Opening",
+   "unit": "%"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Generator Fluid Level",
+   "unit": "%",
+   "min": 70.0,
+   "written": "> 70%",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Absorber Fluid Level",
+   "unit": "%",
+   "min": 90.0,
+   "written": "> 90%",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Evaporator Fluid Level",
+   "unit": "%",
+   "min": 70.0,
+   "written": "> 70%",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Steam Pressure before SCV",
+   "unit": "bar",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "No limit given on the standard sheet."
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Noise Level",
+   "type": "select",
+   "options": [
+    "Normal",
+    "Abnormal"
+   ],
+   "ok": [
+    "Normal"
+   ]
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Air Outlet Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "General Utility",
+   "name": "Chilled Water Tank Level %",
+   "unit": "%"
+  },
+  {
+   "group": "General Utility",
+   "name": "Cooling Tower Feedwater pH"
+  },
+  {
+   "group": "General Utility",
+   "name": "Cooling Tower Feedwater Conductivity",
+   "unit": "µS/cm"
+  },
+  {
+   "group": "General Utility",
+   "name": "Cooling Tower Water Total Hardness",
+   "unit": "ppm"
+  },
+  {
+   "group": "Boiler",
+   "name": "Oxygen Scavenger Tank Level (band)",
+   "type": "select",
+   "options": [
+    "25%",
+    "50%",
+    "75%"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Sludge Dispersant Tank Level (band)",
+   "type": "select",
+   "options": [
+    "25%",
+    "50%",
+    "75%"
+   ]
+  },
+  {
+   "group": "General Utility",
+   "name": "Sludge & Corrosion Inhibitor Tank Level",
+   "type": "select",
+   "options": [
+    "25%",
+    "50%",
+    "75%"
+   ]
+  },
+  {
+   "group": "General Utility",
+   "name": "Oxidizing Biocide Tank Level",
+   "type": "select",
+   "options": [
+    "25%",
+    "50%",
+    "75%"
+   ]
+  },
+  {
+   "group": "General Utility",
+   "name": "Non-Oxidizing Biocide Tank Level",
+   "type": "select",
+   "options": [
+    "25%",
+    "50%",
+    "75%"
+   ]
+  },
+  {
+   "group": "General Utility",
+   "name": "VAM Cooling Tower Basin Level",
+   "type": "select",
+   "options": [
+    "25%",
+    "50%",
+    "75%"
+   ]
+  },
+  {
+   "group": "Boiler",
+   "name": "Feedwater Pump Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Waste Heat Boiler",
+   "name": "From Engine-1 Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Waste Heat Boiler",
+   "name": "From Engine-2 Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Waste Heat Boiler",
+   "name": "From Engine-3 Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Waste Heat Boiler",
+   "name": "To Chimney-1 Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Waste Heat Boiler",
+   "name": "To Chimney-2 Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Waste Heat Boiler",
+   "name": "To Chimney-3 Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Waste Heat Boiler",
+   "name": "Level Control Valve Opening",
+   "unit": "%"
+  },
+  {
+   "group": "Water Treatment",
+   "name": "Water Pump Frequency",
+   "unit": "Hz"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Discharge Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Air Compressor Oil",
+   "name": "Airend Oil Temp.",
+   "unit": "°C"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Air Outlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Condenser Pressure HP",
+   "unit": "bar"
+  },
+  {
+   "group": "Air Dryer IR",
+   "name": "Evaporator Pressure LP",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Chilled Water Inlet Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Chilled Water Outlet Temperature",
+   "unit": "°C"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Chilled Water Inlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Chilled Water Outlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Compressor 1 Condenser Pressure HP",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Compressor 1 Evaporator Pressure LP",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Compressor 2 Condenser Pressure HP",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Compressor 2 Evaporator Pressure LP",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Compressor 1 Oil Level",
+   "type": "select",
+   "options": [
+    "Low",
+    "Normal",
+    "High"
+   ],
+   "ok": [
+    "Normal"
+   ]
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Compressor 2 Oil Level",
+   "type": "select",
+   "options": [
+    "Low",
+    "Normal",
+    "High"
+   ],
+   "ok": [
+    "Normal"
+   ]
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Cooling Water Inlet Pressure",
+   "unit": "bar"
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Refrigerant Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Water Leakage",
+   "type": "select",
+   "options": [
+    "No Leak",
+    "Leak"
+   ],
+   "ok": [
+    "No Leak"
+   ]
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Components Physical Damage",
+   "type": "select",
+   "options": [
+    "No Damage",
+    "Damage"
+   ],
+   "ok": [
+    "No Damage"
+   ]
+  },
+  {
+   "group": "Clivet Chiller",
+   "name": "Chilled Water Pump Working",
+   "type": "select",
+   "options": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Instant TR Generated",
+   "unit": "TR"
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Vacuum Pump Oil Level (sight glass)",
+   "type": "select",
+   "options": [
+    "Below",
+    "On",
+    "Above"
+   ],
+   "ok": [
+    "On"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "High Temperature Generator Level",
+   "type": "select",
+   "options": [
+    "Low",
+    "Normal",
+    "High"
+   ],
+   "ok": [
+    "Normal"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Absorber Level",
+   "type": "select",
+   "options": [
+    "Low",
+    "Normal",
+    "High"
+   ],
+   "ok": [
+    "Normal"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Refrigerant Level",
+   "type": "select",
+   "options": [
+    "Low",
+    "Normal",
+    "High"
+   ],
+   "ok": [
+    "Normal"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Chilled Water Pump Working",
+   "type": "select",
+   "options": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Cooling Water Pump Working",
+   "type": "select",
+   "options": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "group": "VAM Chiller",
+   "name": "Cooling Tower Fan Working",
+   "type": "select",
+   "options": [
+    "One",
+    "Both"
+   ]
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water pH",
+   "min": 10.5,
+   "max": 12.5,
+   "written": "10.5 - 12.5",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water TDS",
+   "max": 3500.0,
+   "written": "< 3500ppm",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water Conductivity (ppm)",
+   "max": 7000.0,
+   "written": "< 7000ppm",
+   "source": "Utility Equipment Standard sheet",
+   "review": true,
+   "note": "Unit printed as ppm; conductivity is normally µS/cm."
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water Total Hardness (ppm)",
+   "written": "0 ppm",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water Phenolphthalein [P]-Alkalinity",
+   "min": 150.0,
+   "max": 700.0,
+   "written": "150 - 700 ppm",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water Total [M]-Alkalinity",
+   "max": 1200.0,
+   "written": "< 1200ppm",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water Caustic [O]-Alkalinity",
+   "min": 150.0,
+   "max": 700.0,
+   "written": "150 - 700 ppm",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water Sulphite",
+   "min": 20.0,
+   "max": 40.0,
+   "written": "20 - 40 ppm",
+   "source": "Utility Equipment Standard sheet"
+  },
+  {
+   "group": "Boiler Water",
+   "name": "Boiler Water Phosphate",
+   "min": 10.0,
+   "max": 30.0,
+   "written": "10 - 30 ppm",
+   "source": "Utility Equipment Standard sheet"
+  }
+ ],
+ "registers": [
+  {
+   "key": "u1-gu-hourly",
+   "area": "U1",
+   "doc": "CHINGRGUT01",
+   "title": "General Utility - Daily High/Low",
+   "sheet": "General Utility - Hourly",
+   "description": "Daily highest and lowest values (the sheet is titled 'Hourly').",
+   "sort": 10,
+   "sections": [
+    {
+     "title": "Boiler water & utility",
+     "kind": "daily_high_low",
+     "fields": [
+      [
+       "Feed Water Tank Level (%)",
+       "Boiler",
+       "Feed Water Tank Level",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water Tank Temperature (°C)",
+       "Boiler",
+       "Feed Water Tank Temperature",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Outlet Temp. (°C)",
+       "General Utility",
+       "Chilled Water Outlet Temperature",
+       "SYS-U1"
+      ],
+      [
+       "Air Line Pressure (bar)",
+       "General Utility",
+       "Air Line Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Steam Line Pressure (bar)",
+       "General Utility",
+       "Steam Line Pressure",
+       "SYS-U1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-gu-shift",
+   "area": "U1",
+   "doc": "CHINGRGUT01",
+   "title": "General Utility - Shift & Daily",
+   "sheet": "General Utility - Shift & Daily",
+   "sort": 11,
+   "sections": [
+    {
+     "title": "Chilled water pumps & feed water",
+     "kind": "shift",
+     "fields": [
+      [
+       "Chilled Water Pump 1 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 2 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 3 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 4 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 5 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 6 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 7 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 8 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 9 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 10 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 11 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 12 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water pH",
+       "Boiler Water",
+       "Feed Water pH",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water TDS (ppm)",
+       "Boiler Water",
+       "Feed Water TDS",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water Conductivity (µS/cm)",
+       "Boiler Water",
+       "Feed Water Conductivity",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water Total Hardness (ppm)",
+       "Boiler Water",
+       "Feed Water Total Hardness",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water P-Alkalinity (ppm)",
+       "Boiler Water",
+       "Feed Water P-Alkalinity",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water M-Alkalinity (ppm)",
+       "Boiler Water",
+       "Feed Water M-Alkalinity",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water O-Alkalinity (ppm)",
+       "Boiler Water",
+       "Feed Water O-Alkalinity",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water Sulphite (ppm)",
+       "Boiler Water",
+       "Feed Water Sulphite",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water TSS (ppm)",
+       "Boiler Water",
+       "Feed Water TSS",
+       "SYS-U1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-gu-hourly",
+   "area": "U2",
+   "doc": "CHINGRGUT01",
+   "title": "General Utility - Daily High/Low",
+   "sheet": "General Utility - Hourly",
+   "description": "Daily highest and lowest values (the sheet is titled 'Hourly').",
+   "sort": 10,
+   "sections": [
+    {
+     "title": "Boiler water & utility",
+     "kind": "daily_high_low",
+     "fields": [
+      [
+       "Feed Water Tank Level (%)",
+       "Boiler",
+       "Feed Water Tank Level",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water Tank Temperature (°C)",
+       "Boiler",
+       "Feed Water Tank Temperature",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Outlet Temp. (°C)",
+       "General Utility",
+       "Chilled Water Outlet Temperature",
+       "SYS-U2"
+      ],
+      [
+       "Air Line Pressure (bar)",
+       "General Utility",
+       "Air Line Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Steam Line Pressure (bar)",
+       "General Utility",
+       "Steam Line Pressure",
+       "SYS-U2"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-gu-shift",
+   "area": "U2",
+   "doc": "CHINGRGUT01",
+   "title": "General Utility - Shift & Daily",
+   "sheet": "General Utility - Shift & Daily",
+   "sort": 11,
+   "sections": [
+    {
+     "title": "Chilled water pumps & feed water",
+     "kind": "shift",
+     "fields": [
+      [
+       "Chilled Water Pump 1 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 2 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 3 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 4 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 5 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 6 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 7 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 8 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 9 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 10 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 11 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Pump 12 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water pH",
+       "Boiler Water",
+       "Feed Water pH",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water TDS (ppm)",
+       "Boiler Water",
+       "Feed Water TDS",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water Conductivity (µS/cm)",
+       "Boiler Water",
+       "Feed Water Conductivity",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water Total Hardness (ppm)",
+       "Boiler Water",
+       "Feed Water Total Hardness",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water P-Alkalinity (ppm)",
+       "Boiler Water",
+       "Feed Water P-Alkalinity",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water M-Alkalinity (ppm)",
+       "Boiler Water",
+       "Feed Water M-Alkalinity",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water O-Alkalinity (ppm)",
+       "Boiler Water",
+       "Feed Water O-Alkalinity",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water Sulphite (ppm)",
+       "Boiler Water",
+       "Feed Water Sulphite",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water TSS (ppm)",
+       "Boiler Water",
+       "Feed Water TSS",
+       "SYS-U2"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-general",
+   "area": "U1",
+   "doc": "CHIENGUTRG11",
+   "title": "General Log Report",
+   "sheet": "General",
+   "sort": 12,
+   "sections": [
+    {
+     "title": "Boiler & chilled water",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Feed Water Tank Level (%)",
+       "Boiler",
+       "Feed Water Tank Level",
+       "SYS-U1"
+      ],
+      [
+       "Feed Water Tank Temp. (°C)",
+       "Boiler",
+       "Feed Water Tank Temperature",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Tank Level",
+       "General Utility",
+       "Chilled Water Tank Level",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 1 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 2 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 3 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 4 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 5 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 6 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 7 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 8 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 9 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 10 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 11 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ],
+      [
+       "Chilled Water Pump 12 Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U1"
+      ]
+     ]
+    },
+    {
+     "title": "Chemicals, WTP & auxiliaries",
+     "kind": "shift",
+     "fields": [
+      [
+       "Diesel Tank Level (%)",
+       "Boiler",
+       "Diesel Tank Level",
+       "SYS-U1"
+      ],
+      [
+       "Oxygen Scavenger Chemical Tank Level (%)",
+       "Boiler",
+       "Oxygen Scavenger Tank Level",
+       "SYS-U1"
+      ],
+      [
+       "Sludge Dispersant Chemical Tank Level (%)",
+       "Boiler",
+       "Sludge Dispersant Tank Level",
+       "SYS-U1"
+      ],
+      [
+       "Softener Plant Salt Level",
+       "Water Treatment",
+       "Softener Plant Salt Level",
+       "SOF-01"
+      ],
+      [
+       "Borehole 2 Degasser Blower Operation",
+       "Water Treatment",
+       "Degasser Blower Operation",
+       "DGS-02"
+      ],
+      [
+       "Utility 1 Degasser Blower Operation",
+       "Water Treatment",
+       "Degasser Blower Operation",
+       "DGS-01"
+      ],
+      [
+       "Backwashing Transfer Pump Operation",
+       "Water Treatment",
+       "Backwashing Transfer Pump Operation",
+       "SYS-U1"
+      ],
+      [
+       "NEXGEN Air Blowers Operation",
+       "Water Treatment",
+       "NEXGEN Air Blowers Operation",
+       "SYS-U1"
+      ],
+      [
+       "Steam Condensate Tank & Pump Operation",
+       "General Utility",
+       "Steam Condensate Tank & Pump Operation",
+       "DST-CND"
+      ],
+      [
+       "Water Recovery Tank & Pump Operation",
+       "Water Treatment",
+       "Water Recovery Tank & Pump Operation",
+       "SYS-U1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-boiler",
+   "area": "U1",
+   "doc": "CHIENGUTRG03",
+   "title": "Boiler Log Report",
+   "sheet": "Boiler",
+   "sort": 20,
+   "assets": [
+    "BLR-01",
+    "BLR-02",
+    "BLR-05"
+   ],
+   "sections": [
+    {
+     "title": "Boiler operation",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Steam Pressure (bar)",
+       "Boiler",
+       "Steam Pressure",
+       null
+      ],
+      [
+       "Flame Signal (%)",
+       "Boiler",
+       "Flame Signal",
+       null
+      ],
+      [
+       "Conductivity (µS/cm)",
+       "Boiler",
+       "Conductivity",
+       null
+      ],
+      [
+       "Water Level (%)",
+       "Boiler",
+       "Water Level",
+       null
+      ],
+      [
+       "Flue Gas Temperature (°C)",
+       "Boiler",
+       "Flue Gas Temperature",
+       null
+      ],
+      [
+       "Fuel Pump Pressure (bar)",
+       "Boiler",
+       "Fuel Pump Pressure",
+       null
+      ],
+      [
+       "Oil Temperature (°C)",
+       "Boiler",
+       "Oil Temperature",
+       null
+      ],
+      [
+       "Oil Pump Working No 1/2",
+       "Boiler",
+       "Oil Pump Working",
+       null
+      ],
+      [
+       "Feedwater Pump Working No 1/2",
+       "Boiler",
+       "Feedwater Pump Working",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Hours & checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Feedwater Operating Pump 1 Hours",
+       "Boiler",
+       "Feedwater Pump 1 Operating Hours",
+       null
+      ],
+      [
+       "Feedwater Operating Pump 2 Hours",
+       "Boiler",
+       "Feedwater Pump 2 Operating Hours",
+       null
+      ],
+      [
+       "Operating Hours - Gas",
+       "Boiler",
+       "Operating Hours - Gas",
+       null
+      ],
+      [
+       "Operating Hours - Oil",
+       "Boiler",
+       "Operating Hours - Oil",
+       null
+      ],
+      [
+       "Panel A/C Working Condition",
+       "Boiler",
+       "Panel A/C Working Condition",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Boiler",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Steam Leakage",
+       "Boiler",
+       "Steam Leakage",
+       null
+      ],
+      [
+       "Burner Flame Sight Glass",
+       "Boiler",
+       "Burner Flame Sight Glass",
+       null
+      ],
+      [
+       "Blowdown Valve",
+       "Boiler",
+       "Blowdown Valve",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Gas",
+     "kind": "shift",
+     "fields": [
+      [
+       "Gas Pressure (high) (bar)",
+       "Boiler",
+       "Gas Pressure (high)",
+       null
+      ],
+      [
+       "Gas Pressure (low) (mbar)",
+       "Boiler",
+       "Gas Pressure (low)",
+       null
+      ],
+      [
+       "Gas Flowmeter Reading",
+       "Boiler",
+       "Gas Flowmeter Reading",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-wtp",
+   "area": "U1",
+   "doc": "CHIENGUTRG06",
+   "title": "Water Treatment Plant Log Report",
+   "sheet": "WTP",
+   "sort": 30,
+   "sections": [
+    {
+     "title": "Hourly WTP readings",
+     "kind": "time",
+     "times": [
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "Raw Water Tank Level (%)",
+       "Water Treatment",
+       "Raw Water Tank Level",
+       "TNK-UT"
+      ],
+      [
+       "Process Water Tank Level (%)",
+       "Water Treatment",
+       "Process Water Tank Level",
+       "TNK-UT"
+      ],
+      [
+       "Backwashing Water Tank Level (%)",
+       "Water Treatment",
+       "Backwashing Water Tank Level",
+       "TNK-UT"
+      ],
+      [
+       "Raw Water Pumps Pressure (bar)",
+       "Water Treatment",
+       "Raw Water Pump Pressure",
+       "PMP-RW"
+      ],
+      [
+       "Process Water Pumps Pressure (bar)",
+       "Water Treatment",
+       "Process Water Pump Pressure",
+       "PMP-TW"
+      ],
+      [
+       "Raw Water flow rate (m³/hr)",
+       "Water Treatment",
+       "Raw Water Flow Rate",
+       "PMP-RW"
+      ],
+      [
+       "Process Water flow rate (m³/hr)",
+       "Water Treatment",
+       "Process Water Flow Rate",
+       "PMP-TW"
+      ],
+      [
+       "Caustic Dosing Rate (l/hr)",
+       "Water Treatment",
+       "Caustic Dosing Rate",
+       "SYS-U1"
+      ],
+      [
+       "On-line Water pH",
+       "Water Treatment",
+       "On-line Water pH",
+       "SYS-U1"
+      ],
+      [
+       "Raw Water pH",
+       "Water Treatment",
+       "Raw Water pH",
+       "SYS-U1"
+      ],
+      [
+       "Process Water pH",
+       "Water Treatment",
+       "Process Water pH",
+       "SYS-U1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-wtp-equipment",
+   "area": "U1",
+   "doc": "CHIENGUTRG05",
+   "title": "Water Treatment Equipment Log Report",
+   "sheet": "WTP Equipment",
+   "sort": 31,
+   "sections": [
+    {
+     "title": "Filters, UV & boreholes",
+     "kind": "shift",
+     "fields": [
+      [
+       "Pre-Filter Bag Unit 1 & 2 IN (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Inlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 1 & 2 OUT (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Outlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 3 IN (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Inlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 3 OUT (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Outlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 4 IN (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Inlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 4 OUT (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Outlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 5 IN (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Inlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 5 OUT (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Outlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 6 IN (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Inlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 6 OUT (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Outlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 7 IN (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Inlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pre-Filter Bag Unit 7 OUT (bar)",
+       "Water Treatment",
+       "Pre-Filter Bag Unit Outlet Pressure",
+       "FLT-PRE"
+      ],
+      [
+       "Pressure Filter Tank 1 IN (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Inlet Pressure",
+       "PFT-01"
+      ],
+      [
+       "Pressure Filter Tank 1 OUT (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Outlet Pressure",
+       "PFT-01"
+      ],
+      [
+       "Pressure Filter Tank 2 IN (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Inlet Pressure",
+       "PFT-02"
+      ],
+      [
+       "Pressure Filter Tank 2 OUT (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Outlet Pressure",
+       "PFT-02"
+      ],
+      [
+       "Pressure Filter Tank 3 IN (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Inlet Pressure",
+       "PFT-03"
+      ],
+      [
+       "Pressure Filter Tank 3 OUT (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Outlet Pressure",
+       "PFT-03"
+      ],
+      [
+       "Pressure Filter Tank 4 IN (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Inlet Pressure",
+       "PFT-04"
+      ],
+      [
+       "Pressure Filter Tank 4 OUT (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Outlet Pressure",
+       "PFT-04"
+      ],
+      [
+       "Pressure Filter Tank 5 IN (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Inlet Pressure",
+       "PFT-05"
+      ],
+      [
+       "Pressure Filter Tank 5 OUT (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Outlet Pressure",
+       "PFT-05"
+      ],
+      [
+       "Pressure Filter Tank 6 IN (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Inlet Pressure",
+       "PFT-06"
+      ],
+      [
+       "Pressure Filter Tank 6 OUT (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Outlet Pressure",
+       "PFT-06"
+      ],
+      [
+       "Pressure Filter Tank 7 IN (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Inlet Pressure",
+       "PFT-07"
+      ],
+      [
+       "Pressure Filter Tank 7 OUT (bar)",
+       "Water Treatment",
+       "Pressure Filter Tank Outlet Pressure",
+       "PFT-07"
+      ],
+      [
+       "Post Filter Bag Unit IN (bar)",
+       "Water Treatment",
+       "Post-Filter Bag Unit Inlet Pressure",
+       "FLT-POST"
+      ],
+      [
+       "Post Filter Bag Unit OUT (bar)",
+       "Water Treatment",
+       "Post-Filter Bag Unit Outlet Pressure",
+       "FLT-POST"
+      ],
+      [
+       "UV-A Intensity",
+       "Water Treatment",
+       "UV Intensity",
+       "UV-01"
+      ],
+      [
+       "UV-B Intensity",
+       "Water Treatment",
+       "UV Intensity",
+       "UV-02"
+      ],
+      [
+       "UV-C Intensity",
+       "Water Treatment",
+       "UV Intensity",
+       "UV-03"
+      ],
+      [
+       "UV-D Intensity",
+       "Water Treatment",
+       "UV Intensity",
+       "UV-04"
+      ],
+      [
+       "Borehole 1 Pressure (bar)",
+       "Water Treatment",
+       "Borehole Line Pressure",
+       "BH-01"
+      ],
+      [
+       "Borehole 2 Pressure (bar)",
+       "Water Treatment",
+       "Borehole Line Pressure",
+       "BH-02"
+      ],
+      [
+       "Borehole 3 Pressure (bar)",
+       "Water Treatment",
+       "Borehole Line Pressure",
+       "BH-03"
+      ],
+      [
+       "Borehole 4 Pressure (bar)",
+       "Water Treatment",
+       "Borehole Line Pressure",
+       "BH-04"
+      ],
+      [
+       "Borehole 5 Pressure (bar)",
+       "Water Treatment",
+       "Borehole Line Pressure",
+       "BH-05"
+      ],
+      [
+       "Borehole 6 Pressure (bar)",
+       "Water Treatment",
+       "Borehole Line Pressure",
+       "BH-06"
+      ],
+      [
+       "Borehole 7 Pressure (bar)",
+       "Water Treatment",
+       "Borehole Line Pressure",
+       "BH-07"
+      ],
+      [
+       "Borehole 2&3 Tank Level (%)",
+       "Water Treatment",
+       "Borehole 2&3 Tank Level",
+       "TNK-UT"
+      ],
+      [
+       "PFT Inlet Valves Check",
+       "Water Treatment",
+       "PFT Inlet Valves Check",
+       "SYS-U1"
+      ],
+      [
+       "PFT Outlet Actuator Valves Check",
+       "Water Treatment",
+       "PFT Outlet Actuator Valves Check",
+       "SYS-U1"
+      ],
+      [
+       "Water Leakage Check",
+       "Water Treatment",
+       "Water Leakage Check",
+       "SYS-U1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-compressor-oil",
+   "area": "U1",
+   "doc": "CHIENGUTRG01",
+   "title": "Air Compressor Log Report (Oil)",
+   "sheet": "Air Compressors",
+   "sort": 40,
+   "assets": [
+    "CMP-02"
+   ],
+   "sections": [
+    {
+     "title": "Operating readings",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Aftercooler Discharge Temp. (°C)",
+       "Air Compressor Oil",
+       "Aftercooler Discharge Temp.",
+       null
+      ],
+      [
+       "Airend Discharge Temp. (°C)",
+       "Air Compressor Oil",
+       "Airend Discharge Temp.",
+       null
+      ],
+      [
+       "Injected Coolant Temp. (°C)",
+       "Air Compressor Oil",
+       "Injected Coolant Temp.",
+       null
+      ],
+      [
+       "Sump Pressure (bar)",
+       "Air Compressor Oil",
+       "Sump Pressure",
+       null
+      ],
+      [
+       "Separator Pressure Drop (bar)",
+       "Air Compressor Oil",
+       "Separator Pressure Drop",
+       null
+      ],
+      [
+       "Coolant Filter Pressure Drop (bar)",
+       "Air Compressor Oil",
+       "Coolant Filter Pressure Drop",
+       null
+      ],
+      [
+       "Coolant Filter",
+       "Air Compressor Oil",
+       "Coolant Filter",
+       null
+      ],
+      [
+       "Inlet Vacuum (bar)",
+       "Air Compressor Oil",
+       "Inlet Vacuum",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Hours & checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Running Hours",
+       "Air Compressor Oil",
+       "Running Hours",
+       null
+      ],
+      [
+       "Loaded Hours",
+       "Air Compressor Oil",
+       "Loaded Hours",
+       null
+      ],
+      [
+       "Oil Level",
+       "Air Compressor Oil",
+       "Oil Level",
+       null
+      ],
+      [
+       "Condensate Drain",
+       "Air Compressor Oil",
+       "Condensate Drain",
+       null
+      ],
+      [
+       "Air Leakage",
+       "Air Compressor Oil",
+       "Air Leakage",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Air Compressor Oil",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Oil Leakage",
+       "Air Compressor Oil",
+       "Oil Leakage",
+       null
+      ],
+      [
+       "Internal/ External Body Clean",
+       "Air Compressor Oil",
+       "Internal/External Body Clean",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-compressor-oilfree",
+   "area": "U1",
+   "doc": "CHIENGUTRG01",
+   "title": "Air Compressor Log Report (Oil-free)",
+   "sheet": "Air Compressors",
+   "sort": 41,
+   "assets": [
+    "CMP-03",
+    "CMP-04",
+    "CMP-05",
+    "CMP-06",
+    "CMP-07",
+    "CMP-08",
+    "CMP-09"
+   ],
+   "sections": [
+    {
+     "title": "Operating readings",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Pkg Discharge Pressure (bar)",
+       "Air Compressor IR",
+       "Package Discharge Pressure",
+       null
+      ],
+      [
+       "Pkg Discharge Temp. (°C)",
+       "Air Compressor IR",
+       "Package Discharge Temp.",
+       null
+      ],
+      [
+       "Inlet Vacuum (bar)",
+       "Air Compressor IR",
+       "Inlet Vacuum",
+       null
+      ],
+      [
+       "1st Stage Inlet Temp. (°C)",
+       "Air Compressor IR",
+       "1st Stage Inlet Temp.",
+       null
+      ],
+      [
+       "1st Stage Discharge Temp. (°C)",
+       "Air Compressor IR",
+       "1st Stage Discharge Temp.",
+       null
+      ],
+      [
+       "2nd Stage Inlet Pressure (bar)",
+       "Air Compressor IR",
+       "2nd Stage Inlet Pressure",
+       null
+      ],
+      [
+       "2nd Stage Inlet Temp. (°C)",
+       "Air Compressor IR",
+       "2nd Stage Inlet Temp.",
+       null
+      ],
+      [
+       "2nd Stage Discharge Pressure (bar)",
+       "Air Compressor IR",
+       "2nd Stage Discharge Pressure",
+       null
+      ],
+      [
+       "2nd Stage Discharge Temp. (°C)",
+       "Air Compressor IR",
+       "2nd Stage Discharge Temp.",
+       null
+      ],
+      [
+       "Bearing Oil Temp. (°C)",
+       "Air Compressor IR",
+       "Bearing Oil Temp.",
+       null
+      ],
+      [
+       "Bearing Oil Pressure (bar)",
+       "Air Compressor IR",
+       "Bearing Oil Pressure",
+       null
+      ],
+      [
+       "Oil Filter Pressure Drop (bar)",
+       "Air Compressor IR",
+       "Oil Filter Pressure Drop",
+       null
+      ],
+      [
+       "Package kW (kW)",
+       "Air Compressor IR",
+       "Package kW",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Hours & checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Running Hours",
+       "Air Compressor IR",
+       "Running Hours",
+       null
+      ],
+      [
+       "Loaded Hours",
+       "Air Compressor IR",
+       "Loaded Hours",
+       null
+      ],
+      [
+       "Oil Level",
+       "Air Compressor IR",
+       "Oil Level",
+       null
+      ],
+      [
+       "Condensate Drain",
+       "Air Compressor IR",
+       "Condensate Drain",
+       null
+      ],
+      [
+       "Air Leakage",
+       "Air Compressor IR",
+       "Air Leakage",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Air Compressor IR",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Oil Leakage",
+       "Air Compressor IR",
+       "Oil Leakage",
+       null
+      ],
+      [
+       "Internal/ External Body Clean",
+       "Air Compressor IR",
+       "Internal/External Body Clean",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-dryer-ir",
+   "area": "U1",
+   "doc": "CHIENGUTRG02",
+   "title": "Air Dryer (IR) Log Report",
+   "sheet": "Air Dryers",
+   "sort": 50,
+   "assets": [
+    "DRY-05",
+    "DRY-06",
+    "DRY-07",
+    "DRY-08",
+    "DRY-10",
+    "DRY-11"
+   ],
+   "sections": [
+    {
+     "title": "Temperatures",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Dew Point Pb1 (°C)",
+       "Air Dryer IR",
+       "Dew Point",
+       null
+      ],
+      [
+       "Air Inlet Temperature Pb2 (°C)",
+       "Air Dryer IR",
+       "Air Inlet Temperature",
+       null
+      ],
+      [
+       "Ambient Temperature Pb3 (°C)",
+       "Air Dryer IR",
+       "Ambient Temperature",
+       null
+      ],
+      [
+       "Suction Temperature Pb4 (°C)",
+       "Air Dryer IR",
+       "Suction Temperature",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Hours & checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Running Hours",
+       "Air Dryer IR",
+       "Running Hours",
+       null
+      ],
+      [
+       "Glycol Level (%)",
+       "Air Dryer IR",
+       "Glycol Level",
+       null
+      ],
+      [
+       "Condensate Drain",
+       "Air Dryer IR",
+       "Condensate Drain",
+       null
+      ],
+      [
+       "Air Leakage",
+       "Air Dryer IR",
+       "Air Leakage",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Air Dryer IR",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Internal/ External Body Clean",
+       "Air Dryer IR",
+       "Internal/External Body Clean",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-dryer-ac",
+   "area": "U1",
+   "doc": "CHIENGUTRG02",
+   "title": "Air Dryer (Atlas Copco) Log Report",
+   "sheet": "Air Dryers",
+   "sort": 51,
+   "assets": [
+    "DRY-09"
+   ],
+   "sections": [
+    {
+     "title": "Readings",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Condensing Pressure (bar)",
+       "Air Dryer AC",
+       "Condensing Pressure",
+       null
+      ],
+      [
+       "Dryer LAT (°C)",
+       "Air Dryer AC",
+       "Dryer LAT",
+       null
+      ],
+      [
+       "Refrigerant Temperature (°C)",
+       "Air Dryer AC",
+       "Refrigerant Temperature",
+       null
+      ],
+      [
+       "Dryer Ambient Temperature (°C)",
+       "Air Dryer AC",
+       "Dryer Ambient Temperature",
+       null
+      ],
+      [
+       "Refrigerant Compressor Outlet (°C)",
+       "Air Dryer AC",
+       "Refrigerant Compressor Outlet",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Hours & checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Running Hours",
+       "Air Dryer AC",
+       "Running Hours",
+       null
+      ],
+      [
+       "Condensate Drain",
+       "Air Dryer AC",
+       "Condensate Drain",
+       null
+      ],
+      [
+       "Air Leakage",
+       "Air Dryer AC",
+       "Air Leakage",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Air Dryer AC",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Internal/ External Body Clean",
+       "Air Dryer AC",
+       "Internal/External Body Clean",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-trane",
+   "area": "U1",
+   "doc": "CHIENGUTRG07",
+   "title": "Trane Chiller Log Report",
+   "sheet": "Chillers",
+   "sort": 60,
+   "assets": [
+    "CHT-01",
+    "CHT-02",
+    "CHT-04",
+    "CHT-05"
+   ],
+   "sections": [
+    {
+     "title": "Compressor & evaporator",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Oil Pressure (kPa)",
+       "Trane Chiller",
+       "Oil Pressure",
+       null
+      ],
+      [
+       "System Refrigerant Diff. Pressure (kPa)",
+       "Trane Chiller",
+       "System Refrigerant Diff. Pressure",
+       null
+      ],
+      [
+       "Comp Rfgt Discharge Temp (°C)",
+       "Trane Chiller",
+       "Comp Rfgt Discharge Temp",
+       null
+      ],
+      [
+       "% RLA",
+       "Trane Chiller",
+       "% RLA",
+       null
+      ],
+      [
+       "Evap Entering Water Temp. (°C)",
+       "Trane Chiller",
+       "Evap Entering Water Temp.",
+       null
+      ],
+      [
+       "Evap Leaving Water Temp. (°C)",
+       "Trane Chiller",
+       "Evap Leaving Water Temp.",
+       null
+      ],
+      [
+       "Evap Sat Rfgt Temp. (°C)",
+       "Trane Chiller",
+       "Evap Sat Rfgt Temp.",
+       null
+      ],
+      [
+       "Evap Rfgt Pressure (kPa)",
+       "Trane Chiller",
+       "Evap Rfgt Pressure",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Condenser",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Evap Approach Temp (°C)",
+       "Trane Chiller",
+       "Evap Approach Temp",
+       null
+      ],
+      [
+       "Expansion Valve Position (%)",
+       "Trane Chiller",
+       "Expansion Valve Position",
+       null
+      ],
+      [
+       "Evap Rfgt Liquid Level (mm)",
+       "Trane Chiller",
+       "Evap Rfgt Liquid Level",
+       null
+      ],
+      [
+       "Cond Rfgt Pressure (kPa)",
+       "Trane Chiller",
+       "Cond Rfgt Pressure",
+       null
+      ],
+      [
+       "Cond Entering Water Temp. (°C)",
+       "Trane Chiller",
+       "Cond Entering Water Temp.",
+       null
+      ],
+      [
+       "Cond Leaving Water Temp. (°C)",
+       "Trane Chiller",
+       "Cond Leaving Water Temp.",
+       null
+      ],
+      [
+       "Cond Sat Rfgt Temp (°C)",
+       "Trane Chiller",
+       "Cond Sat Rfgt Temp",
+       null
+      ],
+      [
+       "Condenser Approach Temp (°C)",
+       "Trane Chiller",
+       "Condenser Approach Temp",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Shift checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Compressor Running Time (h)",
+       "Trane Chiller",
+       "Compressor Running Time",
+       null
+      ],
+      [
+       "Oil Leakage",
+       "Trane Chiller",
+       "Oil Leakage",
+       null
+      ],
+      [
+       "Cooling Water Inlet Pressure (bar)",
+       "Trane Chiller",
+       "Cooling Water Inlet Pressure",
+       null
+      ],
+      [
+       "Chilled Water Inlet Pressure (bar)",
+       "Trane Chiller",
+       "Chilled Water Inlet Pressure",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-vam",
+   "area": "U1",
+   "doc": "CHIENGUTRG07",
+   "title": "VAM Chiller Log Report",
+   "sheet": "Chillers",
+   "sort": 61,
+   "assets": [
+    "CHV-01",
+    "CHV-02",
+    "CHV-03"
+   ],
+   "sections": [
+    {
+     "title": "Burner & chilled water",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Burner/Steam Selection",
+       "VAM Chiller",
+       "Burner/Steam Selection",
+       null
+      ],
+      [
+       "Burner (%)",
+       "VAM Chiller",
+       "Burner",
+       null
+      ],
+      [
+       "Steam (%)",
+       "VAM Chiller",
+       "Steam",
+       null
+      ],
+      [
+       "Exhaust Stack Temperature (°C)",
+       "VAM Chiller",
+       "Exhaust Stack Temperature",
+       null
+      ],
+      [
+       "Chilled Water Inlet Temperature (°C)",
+       "VAM Chiller",
+       "Chilled Water Inlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Outlet Temperature (°C)",
+       "VAM Chiller",
+       "Chilled Water Outlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Differential Pressure (mmWC)",
+       "VAM Chiller",
+       "Chilled Water Differential Pressure",
+       null
+      ],
+      [
+       "Chilled Water Flow (m³/hr)",
+       "VAM Chiller",
+       "Chilled Water Flow",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Generator & solution",
+     "kind": "time",
+     "times": [
+      "09:00",
+      "15:00",
+      "21:00",
+      "03:00"
+     ],
+     "fields": [
+      [
+       "Cooling Water Inlet Temperature (°C)",
+       "VAM Chiller",
+       "Cooling Water Inlet Temperature",
+       null
+      ],
+      [
+       "Cooling Water Outlet Temperature (°C)",
+       "VAM Chiller",
+       "Cooling Water Outlet Temperature",
+       null
+      ],
+      [
+       "High Temperature Generator (°C)",
+       "VAM Chiller",
+       "High Temperature Generator",
+       null
+      ],
+      [
+       "Low Temperature Generator (°C)",
+       "VAM Chiller",
+       "Low Temperature Generator",
+       null
+      ],
+      [
+       "Spray Solution Concentration (%)",
+       "VAM Chiller",
+       "Spray Solution Concentration",
+       null
+      ],
+      [
+       "Intermediate Concentration (%)",
+       "VAM Chiller",
+       "Intermediate Concentration",
+       null
+      ],
+      [
+       "Spray Solution Temperature (°C)",
+       "VAM Chiller",
+       "Spray Solution Temperature",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Shift checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Running Hours",
+       "VAM Chiller",
+       "Running Hours",
+       null
+      ],
+      [
+       "Vacuum Pump Oil Level (%)",
+       "VAM Chiller",
+       "Vacuum Pump Oil Level",
+       null
+      ],
+      [
+       "Vacuum (mmHg)",
+       "VAM Chiller",
+       "Vacuum",
+       null
+      ],
+      [
+       "Chilled Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Inlet Pressure",
+       null
+      ],
+      [
+       "Chilled Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Outlet Pressure",
+       null
+      ],
+      [
+       "Cooling Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Inlet Pressure",
+       null
+      ],
+      [
+       "Cooling Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Outlet Pressure",
+       null
+      ],
+      [
+       "HTG Vapour Temperature (°C)",
+       "VAM Chiller",
+       "HTG Vapour Temperature",
+       null
+      ],
+      [
+       "Gas Flowmeter Reading",
+       "VAM Chiller",
+       "Gas Flowmeter Reading",
+       null
+      ],
+      [
+       "U-tube Temperature (°C)",
+       "VAM Chiller",
+       "U-tube Temperature",
+       null
+      ],
+      [
+       "Dilute Temperature (°C)",
+       "VAM Chiller",
+       "Dilute Temperature",
+       null
+      ],
+      [
+       "HTHE Out Temperature Generator (°C)",
+       "VAM Chiller",
+       "HTHE Out Temperature",
+       null
+      ],
+      [
+       "Refrigerant Outlet Temperature (°C)",
+       "VAM Chiller",
+       "Refrigerant Outlet Temperature",
+       null
+      ],
+      [
+       "Overflow Temperature (°C)",
+       "VAM Chiller",
+       "Overflow Temperature",
+       null
+      ],
+      [
+       "Condensate Outlet Temperature (°C)",
+       "VAM Chiller",
+       "Condensate Outlet Temperature",
+       null
+      ],
+      [
+       "Gas Pressure (high) (bar)",
+       "VAM Chiller",
+       "Gas Pressure (high)",
+       null
+      ],
+      [
+       "Gas Pressure (low) (mbar)",
+       "VAM Chiller",
+       "Gas Pressure (low)",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-nitrogen",
+   "area": "U1",
+   "doc": "CHIENGUTRG09",
+   "title": "Nitrogen Generator Log Report",
+   "sheet": "Nitrogen",
+   "sort": 70,
+   "assets": [
+    "N2G-01",
+    "N2G-02",
+    "N2G-03",
+    "N2G-04"
+   ],
+   "sections": [
+    {
+     "title": "Daily readings",
+     "kind": "daily",
+     "fields": [
+      [
+       "N2 Purity (%)",
+       "Nitrogen",
+       "N2 Purity",
+       null
+      ],
+      [
+       "Air Inlet Pressure (bar)",
+       "Nitrogen",
+       "Air Inlet Pressure",
+       null
+      ],
+      [
+       "Nitrogen Outlet Pressure (bar)",
+       "Nitrogen",
+       "Nitrogen Outlet Pressure",
+       null
+      ],
+      [
+       "Operating Hours",
+       "Nitrogen",
+       "Operating Hours",
+       null
+      ],
+      [
+       "Flow rate (m³/hr)",
+       "Nitrogen",
+       "Flow Rate",
+       null
+      ],
+      [
+       "Total flow (m³)",
+       "Nitrogen",
+       "Total Flow",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-nitrogen",
+   "area": "U2",
+   "doc": "CHIENGUTLOGNG01",
+   "title": "Nitrogen Generator Log Report",
+   "sheet": "Nitrogen",
+   "sort": 70,
+   "assets": [
+    "N2G-U2-01",
+    "N2G-U2-02"
+   ],
+   "sections": [
+    {
+     "title": "Daily readings",
+     "kind": "daily",
+     "fields": [
+      [
+       "N2 Purity (%)",
+       "Nitrogen",
+       "N2 Purity",
+       null
+      ],
+      [
+       "Air Inlet Pressure (bar)",
+       "Nitrogen",
+       "Air Inlet Pressure",
+       null
+      ],
+      [
+       "Nitrogen Outlet Pressure (bar)",
+       "Nitrogen",
+       "Nitrogen Outlet Pressure",
+       null
+      ],
+      [
+       "Operating Hours",
+       "Nitrogen",
+       "Operating Hours",
+       null
+      ],
+      [
+       "Flow rate (m³/hr)",
+       "Nitrogen",
+       "Flow Rate",
+       null
+      ],
+      [
+       "Total flow (m³)",
+       "Nitrogen",
+       "Total Flow",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-thermax-logbook",
+   "area": "U1",
+   "doc": "CHIENGUT07",
+   "title": "Chiller Logbook THERMAX (THDC2)",
+   "sheet": "VAM Chiller",
+   "description": "Asset assignment is a guess: please confirm which VAM chiller this logbook covers.",
+   "sort": 62,
+   "assets": [
+    "CHV-04"
+   ],
+   "sections": [
+    {
+     "title": "Hourly logbook",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00"
+     ],
+     "fields": [
+      [
+       "Chilled Water Flow rate",
+       "VAM Chiller",
+       "Chilled Water Flow",
+       null
+      ],
+      [
+       "Chilled Water Inlet Temp. (°C)",
+       "VAM Chiller",
+       "Chilled Water Inlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Outlet Temp. (°C)",
+       "VAM Chiller",
+       "Chilled Water Outlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Inlet Pressure",
+       null
+      ],
+      [
+       "Chilled Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Outlet Pressure",
+       null
+      ],
+      [
+       "Hot/Cooling Water Flow rate",
+       "VAM Chiller",
+       "Hot/Cooling Water Flow Rate",
+       null
+      ],
+      [
+       "Hot/Cooling Water Inlet Temp. (°C)",
+       "VAM Chiller",
+       "Cooling Water Inlet Temperature",
+       null
+      ],
+      [
+       "Hot/Cooling Water Outlet Temp. (°C)",
+       "VAM Chiller",
+       "Cooling Water Outlet Temperature",
+       null
+      ],
+      [
+       "Hot/Cooling Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Inlet Pressure",
+       null
+      ],
+      [
+       "Hot/Cooling Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Outlet Pressure",
+       null
+      ],
+      [
+       "High Temp. Generator Vapour Temp. (°C)",
+       "VAM Chiller",
+       "HTG Vapour Temperature",
+       null
+      ],
+      [
+       "U-tube Temp. (°C)",
+       "VAM Chiller",
+       "U-tube Temperature",
+       null
+      ],
+      [
+       "Low Temp. Generator (°C)",
+       "VAM Chiller",
+       "Low Temperature Generator",
+       null
+      ],
+      [
+       "Spray Solution Temp. (°C)",
+       "VAM Chiller",
+       "Spray Solution Temperature",
+       null
+      ],
+      [
+       "High Temp. Generator Top Temp. (°C)",
+       "VAM Chiller",
+       "HTG Top Temperature",
+       null
+      ],
+      [
+       "High Temp. Generator Bottom Temp. (°C)",
+       "VAM Chiller",
+       "HTG Bottom Temperature",
+       null
+      ],
+      [
+       "Absolute Difference",
+       "VAM Chiller",
+       "Absolute Difference",
+       null
+      ],
+      [
+       "% Steam Control Valve Opening",
+       "VAM Chiller",
+       "Steam Control Valve Opening",
+       null
+      ],
+      [
+       "Concentration (%)",
+       "VAM Chiller",
+       "Spray Solution Concentration",
+       null
+      ],
+      [
+       "Vacuum Pressure (mmHg)",
+       "VAM Chiller",
+       "Vacuum",
+       null
+      ],
+      [
+       "Generator Fluid Level (%)",
+       "VAM Chiller",
+       "Generator Fluid Level",
+       null
+      ],
+      [
+       "Absorber Fluid Level (%)",
+       "VAM Chiller",
+       "Absorber Fluid Level",
+       null
+      ],
+      [
+       "Evaporator Fluid Level (%)",
+       "VAM Chiller",
+       "Evaporator Fluid Level",
+       null
+      ],
+      [
+       "Steam Pressure before SCV (bar)",
+       "VAM Chiller",
+       "Steam Pressure before SCV",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u1-dryer-logbook",
+   "area": "U1",
+   "doc": "CHIENGRGUT02",
+   "title": "Air Dryer Logbook",
+   "sheet": "Air Dryer IR",
+   "description": "Asset assignment is a guess: please confirm which dryers use this logbook.",
+   "sort": 52,
+   "assets": [
+    "DRY-01",
+    "DRY-02",
+    "DRY-03",
+    "DRY-04"
+   ],
+   "sections": [
+    {
+     "title": "Hourly logbook",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00"
+     ],
+     "fields": [
+      [
+       "Condensate Drain",
+       "Air Dryer IR",
+       "Condensate Drain",
+       null
+      ],
+      [
+       "Air Leakage",
+       "Air Dryer IR",
+       "Air Leakage",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Air Dryer IR",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Noise Level",
+       "Air Dryer IR",
+       "Noise Level",
+       null
+      ],
+      [
+       "Air Inlet Temp. (°C)",
+       "Air Dryer IR",
+       "Air Inlet Temperature",
+       null
+      ],
+      [
+       "Air Outlet Temp. (°C)",
+       "Air Dryer IR",
+       "Air Outlet Temperature",
+       null
+      ],
+      [
+       "Dew Point (°C)",
+       "Air Dryer IR",
+       "Dew Point",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-thermax-logbook",
+   "area": "U2",
+   "doc": "CHIENGUT07",
+   "title": "Chiller Logbook THERMAX (THDC2)",
+   "sheet": "VAM Chiller_",
+   "description": "Asset assignment is a guess: please confirm which VAM chiller this logbook covers.",
+   "sort": 62,
+   "assets": [
+    "CHV-U2"
+   ],
+   "sections": [
+    {
+     "title": "Hourly logbook",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00"
+     ],
+     "fields": [
+      [
+       "Chilled Water Flow rate",
+       "VAM Chiller",
+       "Chilled Water Flow",
+       null
+      ],
+      [
+       "Chilled Water Inlet Temp. (°C)",
+       "VAM Chiller",
+       "Chilled Water Inlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Outlet Temp. (°C)",
+       "VAM Chiller",
+       "Chilled Water Outlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Inlet Pressure",
+       null
+      ],
+      [
+       "Chilled Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Outlet Pressure",
+       null
+      ],
+      [
+       "Hot/Cooling Water Flow rate",
+       "VAM Chiller",
+       "Hot/Cooling Water Flow Rate",
+       null
+      ],
+      [
+       "Hot/Cooling Water Inlet Temp. (°C)",
+       "VAM Chiller",
+       "Cooling Water Inlet Temperature",
+       null
+      ],
+      [
+       "Hot/Cooling Water Outlet Temp. (°C)",
+       "VAM Chiller",
+       "Cooling Water Outlet Temperature",
+       null
+      ],
+      [
+       "Hot/Cooling Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Inlet Pressure",
+       null
+      ],
+      [
+       "Hot/Cooling Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Outlet Pressure",
+       null
+      ],
+      [
+       "High Temp. Generator Vapour Temp. (°C)",
+       "VAM Chiller",
+       "HTG Vapour Temperature",
+       null
+      ],
+      [
+       "U-tube Temp. (°C)",
+       "VAM Chiller",
+       "U-tube Temperature",
+       null
+      ],
+      [
+       "Low Temp. Generator (°C)",
+       "VAM Chiller",
+       "Low Temperature Generator",
+       null
+      ],
+      [
+       "Spray Solution Temp. (°C)",
+       "VAM Chiller",
+       "Spray Solution Temperature",
+       null
+      ],
+      [
+       "High Temp. Generator Top Temp. (°C)",
+       "VAM Chiller",
+       "HTG Top Temperature",
+       null
+      ],
+      [
+       "High Temp. Generator Bottom Temp. (°C)",
+       "VAM Chiller",
+       "HTG Bottom Temperature",
+       null
+      ],
+      [
+       "Absolute Difference",
+       "VAM Chiller",
+       "Absolute Difference",
+       null
+      ],
+      [
+       "% Steam Control Valve Opening",
+       "VAM Chiller",
+       "Steam Control Valve Opening",
+       null
+      ],
+      [
+       "Concentration (%)",
+       "VAM Chiller",
+       "Spray Solution Concentration",
+       null
+      ],
+      [
+       "Vacuum Pressure (mmHg)",
+       "VAM Chiller",
+       "Vacuum",
+       null
+      ],
+      [
+       "Generator Fluid Level (%)",
+       "VAM Chiller",
+       "Generator Fluid Level",
+       null
+      ],
+      [
+       "Absorber Fluid Level (%)",
+       "VAM Chiller",
+       "Absorber Fluid Level",
+       null
+      ],
+      [
+       "Evaporator Fluid Level (%)",
+       "VAM Chiller",
+       "Evaporator Fluid Level",
+       null
+      ],
+      [
+       "Steam Pressure before SCV (bar)",
+       "VAM Chiller",
+       "Steam Pressure before SCV",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-dryer-logbook",
+   "area": "U2",
+   "doc": "CHIENGRGUT02",
+   "title": "Air Dryer Logbook",
+   "sheet": "Air Dryer IR",
+   "description": "Asset assignment is a guess: please confirm which dryers use this logbook.",
+   "sort": 52,
+   "assets": [
+    "DRY-12"
+   ],
+   "sections": [
+    {
+     "title": "Hourly logbook",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00"
+     ],
+     "fields": [
+      [
+       "Condensate Drain",
+       "Air Dryer IR",
+       "Condensate Drain",
+       null
+      ],
+      [
+       "Air Leakage",
+       "Air Dryer IR",
+       "Air Leakage",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Air Dryer IR",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Noise Level",
+       "Air Dryer IR",
+       "Noise Level",
+       null
+      ],
+      [
+       "Air Inlet Temp. (°C)",
+       "Air Dryer IR",
+       "Air Inlet Temperature",
+       null
+      ],
+      [
+       "Air Outlet Temp. (°C)",
+       "Air Dryer IR",
+       "Air Outlet Temperature",
+       null
+      ],
+      [
+       "Dew Point (°C)",
+       "Air Dryer IR",
+       "Dew Point",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-general",
+   "area": "U2",
+   "doc": "CHIENGUTRG11",
+   "title": "Utility General Log Report",
+   "sheet": "General",
+   "sort": 12,
+   "sections": [
+    {
+     "title": "3-hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "11:00",
+      "14:00",
+      "17:00",
+      "20:00",
+      "23:00",
+      "02:00",
+      "05:00"
+     ],
+     "fields": [
+      [
+       "Feed Water Tank Level (%)",
+       "Boiler",
+       "Feed Water Tank Level",
+       "SYS-U2"
+      ],
+      [
+       "Feed Water Tank Temp. (°C)",
+       "Boiler",
+       "Feed Water Tank Temperature",
+       "SYS-U2"
+      ],
+      [
+       "Chilled Water Tank Level (%)",
+       "General Utility",
+       "Chilled Water Tank Level %",
+       "SYS-U2"
+      ],
+      [
+       "CHI Snacks-1 Chilled Water Pump Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "CHI Snacks-2 Chilled Water Pump Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Pharma Chilled Water Pump Pressure (bar)",
+       "General Utility",
+       "Chilled Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Compressed Air Line Pressure (bar)",
+       "General Utility",
+       "Air Line Pressure",
+       "SYS-U2"
+      ]
+     ]
+    },
+    {
+     "title": "Water analysis",
+     "kind": "shift",
+     "fields": [
+      [
+       "Cooling Tower Feedwater pH",
+       "General Utility",
+       "Cooling Tower Feedwater pH",
+       "SYS-U2"
+      ],
+      [
+       "Cooling Tower Feedwater Conductivity (µS/cm)",
+       "General Utility",
+       "Cooling Tower Feedwater Conductivity",
+       "SYS-U2"
+      ],
+      [
+       "Cooling Tower Water Total Hardness (ppm)",
+       "General Utility",
+       "Cooling Tower Water Total Hardness",
+       "SYS-U2"
+      ],
+      [
+       "Boiler Feedwater pH",
+       "Boiler Water",
+       "Feed Water pH",
+       "SYS-U2"
+      ],
+      [
+       "Boiler Feedwater Conductivity (µS/cm)",
+       "Boiler Water",
+       "Feed Water Conductivity",
+       "SYS-U2"
+      ],
+      [
+       "Boiler Feedwater Total Hardness (ppm)",
+       "Boiler Water",
+       "Feed Water Total Hardness",
+       "SYS-U2"
+      ]
+     ]
+    },
+    {
+     "title": "Chemical & tank levels",
+     "kind": "shift",
+     "fields": [
+      [
+       "Oxygen Scavenger Tank Level",
+       "Boiler",
+       "Oxygen Scavenger Tank Level (band)",
+       "SYS-U2"
+      ],
+      [
+       "Sludge Dispersant Tank Level",
+       "Boiler",
+       "Sludge Dispersant Tank Level (band)",
+       "SYS-U2"
+      ],
+      [
+       "Sludge & Corrosion Inhibitor Tank Level",
+       "General Utility",
+       "Sludge & Corrosion Inhibitor Tank Level",
+       "SYS-U2"
+      ],
+      [
+       "Oxidizing Biocide Tank Level",
+       "General Utility",
+       "Oxidizing Biocide Tank Level",
+       "SYS-U2"
+      ],
+      [
+       "Non-Oxidizing Biocide Tank Level",
+       "General Utility",
+       "Non-Oxidizing Biocide Tank Level",
+       "SYS-U2"
+      ],
+      [
+       "VAM Cooling Tower Basin Level",
+       "General Utility",
+       "VAM Cooling Tower Basin Level",
+       "SYS-U2"
+      ],
+      [
+       "Softener Plant Tank",
+       "Water Treatment",
+       "Softener Plant Salt Level",
+       "SYS-U2"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-boiler-2t",
+   "area": "U2",
+   "doc": "CHIENGUTRG03",
+   "title": "2 Tons/hr Boiler Log Report",
+   "sheet": "2Tons Boiler",
+   "sort": 20,
+   "assets": [
+    "BLR-06"
+   ],
+   "sections": [
+    {
+     "title": "Hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "Steam Pressure (bar)",
+       "Boiler",
+       "Steam Pressure",
+       null
+      ],
+      [
+       "Boiler Water Level (%)",
+       "Boiler",
+       "Water Level",
+       null
+      ],
+      [
+       "Flue Gas Temperature (°C)",
+       "Boiler",
+       "Flue Gas Temperature",
+       null
+      ],
+      [
+       "Feedwater Pump Pressure (bar)",
+       "Boiler",
+       "Feedwater Pump Pressure",
+       null
+      ],
+      [
+       "Oil Pump Working No 1/2",
+       "Boiler",
+       "Oil Pump Working",
+       null
+      ],
+      [
+       "Feedwater Pump Working No 1/2",
+       "Boiler",
+       "Feedwater Pump Working",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-boiler-wh",
+   "area": "U2",
+   "doc": "CHIENGUTRG03",
+   "title": "3.5 Tons/hr Waste Heat Boiler Log Report",
+   "sheet": "WH Boiler",
+   "sort": 21,
+   "assets": [
+    "BLR-07"
+   ],
+   "sections": [
+    {
+     "title": "Hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "From Engine-1 Temperature (°C)",
+       "Waste Heat Boiler",
+       "From Engine-1 Temperature",
+       null
+      ],
+      [
+       "From Engine-2 Temperature (°C)",
+       "Waste Heat Boiler",
+       "From Engine-2 Temperature",
+       null
+      ],
+      [
+       "From Engine-3 Temperature (°C)",
+       "Waste Heat Boiler",
+       "From Engine-3 Temperature",
+       null
+      ],
+      [
+       "To Chimney-1 Temperature (°C)",
+       "Waste Heat Boiler",
+       "To Chimney-1 Temperature",
+       null
+      ],
+      [
+       "To Chimney-2 Temperature (°C)",
+       "Waste Heat Boiler",
+       "To Chimney-2 Temperature",
+       null
+      ],
+      [
+       "To Chimney-3 Temperature (°C)",
+       "Waste Heat Boiler",
+       "To Chimney-3 Temperature",
+       null
+      ],
+      [
+       "Boiler Steam Pressure (bar)",
+       "Boiler",
+       "Steam Pressure",
+       null
+      ],
+      [
+       "Boiler Water Level (%)",
+       "Boiler",
+       "Water Level",
+       null
+      ],
+      [
+       "Level Control Valve Opening (%)",
+       "Waste Heat Boiler",
+       "Level Control Valve Opening",
+       null
+      ],
+      [
+       "Feedwater Pump Working No 1/2",
+       "Boiler",
+       "Feedwater Pump Working",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-wtp",
+   "area": "U2",
+   "doc": "CHIENGUTRG06",
+   "title": "Water Treatment Plant Log Report",
+   "sheet": "WTP",
+   "sort": 30,
+   "sections": [
+    {
+     "title": "Hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "Process Water Tank Level (%)",
+       "Water Treatment",
+       "Process Water Tank Level",
+       "SYS-U2"
+      ],
+      [
+       "Process Water Pressure (bar)",
+       "Water Treatment",
+       "Process Water Pump Pressure",
+       "SYS-U2"
+      ],
+      [
+       "Process Water Flow Rate (m³/hr)",
+       "Water Treatment",
+       "Process Water Flow Rate",
+       "SYS-U2"
+      ],
+      [
+       "Water Pump Frequency (Hz)",
+       "Water Treatment",
+       "Water Pump Frequency",
+       "SYS-U2"
+      ],
+      [
+       "Water Leakage Check",
+       "Water Treatment",
+       "Water Leakage Check",
+       "SYS-U2"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-compressor",
+   "area": "U2",
+   "doc": "CHIENGUTRG01",
+   "title": "IR MH75 Air Compressor Log Report",
+   "sheet": "Air Compressor",
+   "sort": 40,
+   "assets": [
+    "CMP-13"
+   ],
+   "sections": [
+    {
+     "title": "Hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "Discharge Pressure (bar)",
+       "Air Compressor Oil",
+       "Discharge Pressure",
+       null
+      ],
+      [
+       "Airend Oil Temp. (°C)",
+       "Air Compressor Oil",
+       "Airend Oil Temp.",
+       null
+      ],
+      [
+       "Oil Sump Pressure (bar)",
+       "Air Compressor Oil",
+       "Sump Pressure",
+       null
+      ],
+      [
+       "Running Hours",
+       "Air Compressor Oil",
+       "Running Hours",
+       null
+      ],
+      [
+       "Loaded Hours",
+       "Air Compressor Oil",
+       "Loaded Hours",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-dryer",
+   "area": "U2",
+   "doc": "CHIENGUTRG02",
+   "title": "IR TMS Air Dryer Log Report",
+   "sheet": "Air Dryer",
+   "sort": 50,
+   "assets": [
+    "DRY-12"
+   ],
+   "sections": [
+    {
+     "title": "Hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "Dew Point (°C)",
+       "Air Dryer IR",
+       "Dew Point",
+       null
+      ],
+      [
+       "Air Outlet Pressure (bar)",
+       "Air Dryer IR",
+       "Air Outlet Pressure",
+       null
+      ],
+      [
+       "Condenser Pressure HP (bar)",
+       "Air Dryer IR",
+       "Condenser Pressure HP",
+       null
+      ],
+      [
+       "Evaporator Pressure LP (bar)",
+       "Air Dryer IR",
+       "Evaporator Pressure LP",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-clivet",
+   "area": "U2",
+   "doc": "CHIENGUTRG07",
+   "title": "Clivet Chiller Log Report",
+   "sheet": "Clivet Chiller",
+   "sort": 60,
+   "assets": [
+    "CHC-01"
+   ],
+   "sections": [
+    {
+     "title": "2-hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "10:00",
+      "12:00",
+      "14:00",
+      "16:00",
+      "18:00",
+      "20:00",
+      "22:00",
+      "00:00",
+      "02:00",
+      "04:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "Chilled Water Inlet Temperature (°C)",
+       "Clivet Chiller",
+       "Chilled Water Inlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Outlet Temperature (°C)",
+       "Clivet Chiller",
+       "Chilled Water Outlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Inlet Pressure (bar)",
+       "Clivet Chiller",
+       "Chilled Water Inlet Pressure",
+       null
+      ],
+      [
+       "Chilled Water Outlet Pressure (bar)",
+       "Clivet Chiller",
+       "Chilled Water Outlet Pressure",
+       null
+      ],
+      [
+       "Compressor 1 Condenser Pressure HP (bar)",
+       "Clivet Chiller",
+       "Compressor 1 Condenser Pressure HP",
+       null
+      ],
+      [
+       "Compressor 1 Evaporator Pressure LP (bar)",
+       "Clivet Chiller",
+       "Compressor 1 Evaporator Pressure LP",
+       null
+      ],
+      [
+       "Compressor 2 Condenser Pressure HP (bar)",
+       "Clivet Chiller",
+       "Compressor 2 Condenser Pressure HP",
+       null
+      ],
+      [
+       "Compressor 2 Evaporator Pressure LP (bar)",
+       "Clivet Chiller",
+       "Compressor 2 Evaporator Pressure LP",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Shift checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Compressor 1 Oil Level",
+       "Clivet Chiller",
+       "Compressor 1 Oil Level",
+       null
+      ],
+      [
+       "Compressor 2 Oil Level",
+       "Clivet Chiller",
+       "Compressor 2 Oil Level",
+       null
+      ],
+      [
+       "Chilled Water Outlet Pressure (bar)",
+       "Clivet Chiller",
+       "Chilled Water Outlet Pressure",
+       null
+      ],
+      [
+       "Cooling Water Inlet Pressure (bar)",
+       "Clivet Chiller",
+       "Cooling Water Inlet Pressure",
+       null
+      ],
+      [
+       "Refrigerant Leakage",
+       "Clivet Chiller",
+       "Refrigerant Leakage",
+       null
+      ],
+      [
+       "Water Leakage",
+       "Clivet Chiller",
+       "Water Leakage",
+       null
+      ],
+      [
+       "Components Physical Damage",
+       "Clivet Chiller",
+       "Components Physical Damage",
+       null
+      ],
+      [
+       "Chilled Water Pump Working No 1/2",
+       "Clivet Chiller",
+       "Chilled Water Pump Working",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "u2-vam",
+   "area": "U2",
+   "doc": "CHIENGUTRG07",
+   "title": "VAM Chiller Log Report",
+   "sheet": "VAM Chiller",
+   "sort": 61,
+   "assets": [
+    "CHV-U2"
+   ],
+   "sections": [
+    {
+     "title": "2-hourly readings",
+     "kind": "time",
+     "times": [
+      "08:00",
+      "10:00",
+      "12:00",
+      "14:00",
+      "16:00",
+      "18:00",
+      "20:00",
+      "22:00",
+      "00:00",
+      "02:00",
+      "04:00",
+      "06:00"
+     ],
+     "fields": [
+      [
+       "Steam Control Valve Opening (%)",
+       "VAM Chiller",
+       "Steam Control Valve Opening",
+       null
+      ],
+      [
+       "Chilled Water Inlet Temperature (°C)",
+       "VAM Chiller",
+       "Chilled Water Inlet Temperature",
+       null
+      ],
+      [
+       "Chilled Water Outlet Temperature (°C)",
+       "VAM Chiller",
+       "Chilled Water Outlet Temperature",
+       null
+      ],
+      [
+       "Cooling Water Inlet Temperature (°C)",
+       "VAM Chiller",
+       "Cooling Water Inlet Temperature",
+       null
+      ],
+      [
+       "Cooling Water Outlet Temperature (°C)",
+       "VAM Chiller",
+       "Cooling Water Outlet Temperature",
+       null
+      ],
+      [
+       "High Temperature Generator (°C)",
+       "VAM Chiller",
+       "High Temperature Generator",
+       null
+      ],
+      [
+       "High Temp. Generator Vapour (°C)",
+       "VAM Chiller",
+       "HTG Vapour Temperature",
+       null
+      ],
+      [
+       "U-Tube Temperature (°C)",
+       "VAM Chiller",
+       "U-tube Temperature",
+       null
+      ],
+      [
+       "Low Temperature Generator (°C)",
+       "VAM Chiller",
+       "Low Temperature Generator",
+       null
+      ],
+      [
+       "Spray Solution Temperature (°C)",
+       "VAM Chiller",
+       "Spray Solution Temperature",
+       null
+      ],
+      [
+       "High Temp. Generator Top (°C)",
+       "VAM Chiller",
+       "HTG Top Temperature",
+       null
+      ],
+      [
+       "High Temp. Generator Bottom (°C)",
+       "VAM Chiller",
+       "HTG Bottom Temperature",
+       null
+      ],
+      [
+       "Spray Solution Concentration (%)",
+       "VAM Chiller",
+       "Spray Solution Concentration",
+       null
+      ],
+      [
+       "Vacuum (mmHg)",
+       "VAM Chiller",
+       "Vacuum",
+       null
+      ],
+      [
+       "Instant TR Generated",
+       "VAM Chiller",
+       "Instant TR Generated",
+       null
+      ]
+     ]
+    },
+    {
+     "title": "Shift checks",
+     "kind": "shift",
+     "fields": [
+      [
+       "Running Hours",
+       "VAM Chiller",
+       "Running Hours",
+       null
+      ],
+      [
+       "Vacuum Pump Oil Level",
+       "VAM Chiller",
+       "Vacuum Pump Oil Level (sight glass)",
+       null
+      ],
+      [
+       "Chilled Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Inlet Pressure",
+       null
+      ],
+      [
+       "Chilled Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Chilled Water Outlet Pressure",
+       null
+      ],
+      [
+       "Cooling Water Inlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Inlet Pressure",
+       null
+      ],
+      [
+       "Cooling Water Outlet Pressure (bar)",
+       "VAM Chiller",
+       "Cooling Water Outlet Pressure",
+       null
+      ],
+      [
+       "High Temperature Generator Level",
+       "VAM Chiller",
+       "High Temperature Generator Level",
+       null
+      ],
+      [
+       "Absorber Level",
+       "VAM Chiller",
+       "Absorber Level",
+       null
+      ],
+      [
+       "Refrigerant Level",
+       "VAM Chiller",
+       "Refrigerant Level",
+       null
+      ],
+      [
+       "Chilled Water Pump Working No 1/2",
+       "VAM Chiller",
+       "Chilled Water Pump Working",
+       null
+      ],
+      [
+       "Cooling Water Pump Working No 1/2",
+       "VAM Chiller",
+       "Cooling Water Pump Working",
+       null
+      ],
+      [
+       "Cooling Tower Fan Working",
+       "VAM Chiller",
+       "Cooling Tower Fan Working",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

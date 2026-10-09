@@ -6,7 +6,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PGBIN="${PGBIN:-$(ls -d /usr/lib/postgresql/*/bin 2>/dev/null | sort -V | tail -1)}"
 TMP="$(mktemp -d)"
-PORT="${PGPORT_TEST:-54329}"
+PORT="${PGPORT_TEST:-$((54000 + RANDOM % 1000))}"
 cleanup() { "$PGBIN/pg_ctl" -D "$TMP/data" -m immediate stop >/dev/null 2>&1 || true; rm -rf "$TMP"; }
 trap cleanup EXIT
 
@@ -17,9 +17,10 @@ if [ "$(id -u)" = "0" ]; then
   RUNAS=(runuser -u pgtest --)
 fi
 "${RUNAS[@]}" "$PGBIN/initdb" -D "$TMP/data" -U postgres -A trust >/dev/null
-"${RUNAS[@]}" "$PGBIN/pg_ctl" -D "$TMP/data" -o "-p $PORT -k $TMP -c timezone=UTC" -l "$TMP/log" start >/dev/null
+"${RUNAS[@]}" "$PGBIN/pg_ctl" -D "$TMP/data" -o "-p $PORT -k $TMP -c timezone=UTC" -l "$TMP/log" -w start >/dev/null \
+  || { cat "$TMP/log"; exit 1; }
 
-PSQL=(psql -h "$TMP" -p "$PORT" -U postgres -d postgres -v ON_ERROR_STOP=1 -q -X)
+PSQL=(psql -h "$TMP" -p "$PORT" -U postgres -d postgres -v ON_ERROR_STOP=1 -q -X -o /dev/null)
 "${PSQL[@]}" -f "$ROOT/supabase/tests/00_supabase_stub.sql"
 for f in "$ROOT"/supabase/migrations/*.sql; do
   echo "migrate: $(basename "$f")"
