@@ -1511,6 +1511,8 @@
    "group": "Boiler Water",
    "name": "Feed Water Total Hardness",
    "unit": "ppm",
+   "min": 0,
+   "max": 0,
    "written": "0",
    "source": "Printed on the register"
   },
@@ -2451,6 +2453,7 @@
    "group": "Air Dryer AC",
    "name": "Refrigerant Temperature",
    "unit": "°C",
+   "min": 0.0,
    "max": 3.0,
    "written": "0 - 3 °C",
    "source": "Utility Equipment Standard sheet"
@@ -2609,6 +2612,7 @@
    "group": "Trane Chiller",
    "name": "Evap Rfgt Liquid Level",
    "unit": "mm",
+   "min": 0.0,
    "written": "> 0",
    "source": "Utility Equipment Standard sheet"
   },
@@ -3385,6 +3389,8 @@
   {
    "group": "Boiler Water",
    "name": "Boiler Water Total Hardness (ppm)",
+   "min": 0.0,
+   "max": 0.0,
    "written": "0 ppm",
    "source": "Utility Equipment Standard sheet"
   },

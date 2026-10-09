@@ -708,7 +708,8 @@ for (g, n), row in STD.items():
 def build() -> dict:
     """Compact, key-based master data (no generated IDs) for public.load_master_data()."""
     def clean(d):
-        return {k: v for k, v in d.items() if v not in (None, False, [], "")}
+        # keep numeric zeros (0 == False in Python, so test types explicitly)
+        return {k: v for k, v in d.items() if not (v is None or v is False or v == [] or v == "")}
 
     return {
         "categories": CATEGORIES,
