@@ -18,4 +18,17 @@ begin
   assert not exists (select 1 from public.readings where is_demo), 'demo readings cleared';
   assert not exists (select 1 from public.downtime_events where is_demo), 'demo downtime cleared';
 end $$;
+-- signed-in users cannot create demo rows (which keep their own timestamps)
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000e1', true);
+do $$ begin
+  begin
+    insert into public.readings (field_id, asset_id, log_date, slot_key, reading_for, value_num, recorded_at, is_demo)
+    select f.id, (select id from public.assets where code = 'BLR-01'), current_date, '09:00', now(), 8.2, '2020-01-01', true
+      from public.register_fields f join public.register_sections s on s.id = f.section_id
+      join public.registers r on r.id = s.register_id where r.key = 'u1-boiler' and f.label like 'Steam Pressure%';
+    raise exception 'user demo insert should fail';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
 rollback;
