@@ -1,0 +1,57 @@
+[
+  {
+    "kpi": "Unsafe Act Reporting %",
+    "category": "Safety & HSE",
+    "target": "≥95%"
+  },
+  {
+    "kpi": "GEMBA Obs. Closure %",
+    "category": "Safety & HSE",
+    "target": "≥90%"
+  },
+  {
+    "kpi": "Work Permit Compliance %",
+    "category": "Safety & HSE",
+    "target": "100%"
+  },
+  {
+    "kpi": "PM Task Completion %",
+    "category": "Maintenance",
+    "target": "≥85%"
+  },
+  {
+    "kpi": "AMC Task Completion %",
+    "category": "Maintenance",
+    "target": "≥85%"
+  },
+  {
+    "kpi": "Equipment Availability % (My Shift)",
+    "category": "Maintenance",
+    "target": "≥80%"
+  },
+  {
+    "kpi": "CW Temp Readings Compliance %",
+    "category": "Utility Quality",
+    "target": "≥99%"
+  },
+  {
+    "kpi": "Water Quality Compliance %",
+    "category": "Utility Quality",
+    "target": "≥99%"
+  },
+  {
+    "kpi": "Air Dew Pt Compliance %",
+    "category": "Utility Quality",
+    "target": "≥99%"
+  },
+  {
+    "kpi": "Leakage Identification & Closure %",
+    "category": "Utility Quality",
+    "target": "≥95%"
+  },
+  {
+    "kpi": "THERMAX Monitoring Adherence %",
+    "category": "Digital",
+    "target": "≥95%"
+  }
+]

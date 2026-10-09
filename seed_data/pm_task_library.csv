@@ -1,0 +1,278 @@
+frequency,register_sn,equipment_name_in_register,tasks,document_no
+Daily,1,STEAM BOILER 1,"Check for leakages (valves, mobrey, sight glass, manhole, etc) | Check proper operation of pumps (pump pressure, pump & motor overheating, etc.) | Check combustion chamber flame | Check proper operation of Boiler blowdown valve",CHIENGUTRG08
+Daily,2,STEAM BOILER 2,"Check for leakages (valves, mobrey, sight glass, manhole, etc) | Check proper operation of pumps (pump pressure, pump & motor overheating, etc.) | Check combustion chamber flame | Check proper operation of Boiler blowdown valve",CHIENGUTRG08
+Daily,3,STEAM BOILER 3,"Check for leakages (valves, mobrey, sight glass, manhole, etc) | Check proper operation of pumps (pump pressure, pump & motor overheating, etc.) | Check combustion chamber flame | Check proper operation of Boiler blowdown valve",CHIENGUTRG08
+Daily,4,THERMAX EXHAUST BOILER 4,"Check for leakages (valves, mobrey, sight glass, manhole, etc) | Check proper operation of pumps (pump pressure, pump & motor overheating, etc.) | Check proper operation of Boiler blowdown valve",CHIENGUTRG08
+Daily,5,STEAM BOILER 5,"Check for leakages (valves, mobrey, sight glass, manhole, etc) | Check proper operation of pumps (pump pressure, pump & motor overheating, etc.) | Check combustion chamber flame | Check proper operation of Boiler blowdown valve",CHIENGUTRG08
+Daily,6,AIR COMPRESSOR NO.2 (NORMAL).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,7,AIR COMPRESSOR NO.3 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,8,AIR COMPRESSOR NO.4 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,9,AIR COMPRESSOR NO.5 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,10,AIR COMPRESSOR NO.6 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,11,AIR COMPRESSOR NO.7 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,12,AIR COMPRESSOR NO.8 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,13,AIR COMPRESSOR NO.9 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,14,AIR COMPRESSOR NO.10 (OIL-FREE).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,15,AIR COMPRESSOR NO.11 (NORMAL).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,16,AIR COMPRESSOR NO.12 (NORMAL).,Check for oil and air leaks | Check for unusual noise on airend and electric motor | Check oil level in oil sump,CHIENGUTRG08
+Daily,17,REFRIGERATED AIR DRYER NO.1,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,18,REFRIGERATED AIR DRYER NO.2,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,19,REFRIGERATED AIR DRYER NO.3,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,20,REFRIGERATED AIR DRYER NO.4,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,21,REFRIGERATED AIR DRYER NO.5,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,22,REFRIGERATED AIR DRYER NO.6,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,23,REFRIGERATED AIR DRYER NO.7,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,24,REFRIGERATED AIR DRYER NO.8,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,25,REFRIGERATED AIR DRYER NO.9,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,26,REFRIGERATED AIR DRYER NO.10,Check for air and refrigerant gas leaks | Check for unusual noise on compressor and HE blower fan | Check for proper operation of condensate drain valve,CHIENGUTRG08
+Daily,27,TRANE CHILLER 1,Check log parameters on HMI | Check for oil and gas leaks | Check for proper operation of cond. and evap. line guages,CHIENGUTRG08
+Daily,28,TRANE CHILLER 2,Check log parameters on HMI | Check for oil and gas leaks | Check for proper operation of cond. and evap. line guages,CHIENGUTRG08
+Daily,29,TRANE CHILLER 3,Check log parameters on HMI | Check for oil and gas leaks | Check for proper operation of cond. and evap. line guages,CHIENGUTRG08
+Daily,30,TRANE CHILLER 4,Check log parameters on HMI | Check for oil and gas leaks | Check for proper operation of cond. and evap. line guages,CHIENGUTRG08
+Daily,31,TRANE CHILLER 5,Check log parameters on HMI | Check for oil and gas leaks | Check for proper operation of cond. and evap. line guages,CHIENGUTRG08
+Daily,32,VAM CHILLER 1,"Check for steam, condensate water leak on HTG | Check for air leak on steam control valve | Check for proper operation of guages",CHIENGUTRG08
+Daily,33,VAM CHILLER 2,Check for natural gas and diesel leaks on the line | Check for proper operation of guages,CHIENGUTRG08
+Daily,34,VAM CHILLER 3,Check for natural gas and diesel leaks on the line | Check for proper operation of guages,CHIENGUTRG08
+Daily,35,VAM CHILLER 4,"Check for steam, condensate water leak on HTG | Check for air leak on steam control valve | Check for proper operation of guages",CHIENGUTRG08
+Daily,36,TRANE COOLING TOWER 1,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,37,TRANE COOLING TOWER 2,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,38,TRANE COOLING TOWER 3,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,39,TRANE COOLING TOWER 4,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,40,TRANE COOLING TOWER 5,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,41,VAM COOLING TOWER 1,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,42,VAM COOLING TOWER 2,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,43,VAM COOLING TOWER 3,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,44,VAM COOLING TOWER 4,Check for proper operation of water make-up float valve,CHIENGUTRG08
+Daily,45,CARRIER CHILLER - AIR COOLED,Check HP/LP pressure guages value,CHIENGUTRG08
+Daily,46,CLIVET CHILLER - AIR COOLED,Check HP/LP pressure guages value,CHIENGUTRG08
+Daily,47,SOFTENER PLANT,Check daily backwashing of softener plant | Check quantity of industrial salt in basin | Check for proper operation of auto controller,CHIENGUTRG08
+Daily,48,PRESSURE PRE-FILTER BAG TANK 25UM,"Check for leak on filter bag tank | Check differential pressure of filter bag tank inlet/outlet, if applicable",CHIENGUTRG08
+Daily,49,PRESSURE POST-FILTER BAG TANK 1UM,"Check for leak on filter bag tank | Check differential pressure of filter bag tank inlet/outlet, if applicable",CHIENGUTRG08
+Daily,50,BOREHOLES,Check for proper operation of pressure guages | Check for water leaks,CHIENGUTRG08
+Daily,51,TREATED WATER TRANSFER PUMPS,"Check proper operation of pumps (pump pressure, overheating, overcurrent, etc.)",CHIENGUTRG08
+Daily,52,CHILLED WATER TRANSFER PUMPS,"Check proper operation of pumps (pump pressure, overheating, overcurrent, etc.)",CHIENGUTRG08
+Daily,53,GENERAL,"Check for leaks on Treated Water, Boiler Feed, Chilled Water tanks | Check for proper operation of Treated Water, Boiler Feed, Chilled Water tanks level indicator and control valve | Drain condensate in Air Receiver tank",CHIENGUTRG08
+Weekly,1,STEAM BOILER 1,Physical inspection & lifting of safety relief valves | Physical inspection of mobrey float switch/motorized valve; check for proper operation,CHIENGUTRG08
+Weekly,2,STEAM BOILER 2,Physical inspection & lifting of safety relief valves | Physical inspection of mobrey float switch/motorized valve; check for proper operation,CHIENGUTRG08
+Weekly,3,STEAM BOILER 3,Physical inspection & lifting of safety relief valves | Physical inspection of mobrey float switch/motorized valve; check for proper operation,CHIENGUTRG08
+Weekly,4,THERMAX EXHAUST BOILER 4,Physical inspection of mobrey float switch; check for proper movement | Check proper operation of Boiler blowdown valve | Check electric motor current of running boiler pump,CHIENGUTRG08
+Weekly,5,STEAM BOILER 5,Physical inspection & lifting of safety relief valves | Physical inspection of mobrey float switch/motorized valve; check for proper operation,CHIENGUTRG08
+Weekly,6,AIR COMPRESSOR NO.2 (NORMAL).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,7,AIR COMPRESSOR NO.3 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,8,AIR COMPRESSOR NO.4 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,9,AIR COMPRESSOR NO.5 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,10,AIR COMPRESSOR NO.6 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,11,AIR COMPRESSOR NO.7 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,12,AIR COMPRESSOR NO.8 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,13,AIR COMPRESSOR NO.9 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,14,AIR COMPRESSOR NO.10 (OIL-FREE).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,15,AIR COMPRESSOR NO.11 (NORMAL).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,16,AIR COMPRESSOR NO.12 (NORMAL).,Blowing of aftercooler HE and air filter | Check unload/load running current of electric motor and HE blower,CHIENGUTRG08
+Weekly,17,REFRIGERATED AIR DRYER NO.1,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,18,REFRIGERATED AIR DRYER NO.2,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,19,REFRIGERATED AIR DRYER NO.3,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,20,REFRIGERATED AIR DRYER NO.4,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,21,REFRIGERATED AIR DRYER NO.5,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,22,REFRIGERATED AIR DRYER NO.6,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,23,REFRIGERATED AIR DRYER NO.7,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,24,REFRIGERATED AIR DRYER NO.8,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,25,REFRIGERATED AIR DRYER NO.9,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,26,REFRIGERATED AIR DRYER NO.10,"Blowing of condenser HE and fan | Check level of water/glycol mixture, top up if required",CHIENGUTRG08
+Weekly,27,AIR RECEIVER TANKS,"Inspect air receiver tanks (leaks, pressure gauge, auto-drain) | Manually drain, if applicable",CHIENGUTRG08
+Weekly,28,VAM CHILLER 1,Check vacuum pump oil level,CHIENGUTRG08
+Weekly,29,VAM CHILLER 2,Check vacuum pump oil level,CHIENGUTRG08
+Weekly,30,VAM CHILLER 3,Check vacuum pump oil level,CHIENGUTRG08
+Weekly,31,VAM CHILLER 4,Check vacuum pump oil level,CHIENGUTRG08
+Weekly,32,TRANE COOLING TOWER 1,Check electric motor fan current,CHIENGUTRG08
+Weekly,33,TRANE COOLING TOWER 2,Check electric motor fan current,CHIENGUTRG08
+Weekly,34,TRANE COOLING TOWER 3,Check electric motor fan current,CHIENGUTRG08
+Weekly,35,TRANE COOLING TOWER 4,Check electric motor fan current,CHIENGUTRG08
+Weekly,36,TRANE COOLING TOWER 5,Check electric motor fan current,CHIENGUTRG08
+Weekly,37,VAM COOLING TOWER 1,Check electric motor fan current,CHIENGUTRG08
+Weekly,38,VAM COOLING TOWER 2,Check electric motor fan current,CHIENGUTRG08
+Weekly,39,VAM COOLING TOWER 3,Check electric motor fan current,CHIENGUTRG08
+Weekly,40,VAM COOLING TOWER 4,Check electric motor fan current,CHIENGUTRG08
+Weekly,41,SOFTENER PLANT,"Check for leakage of resin through bottom filter | Charging of industrial salt, if necessary | Check proper operation of unit",CHIENGUTRG08
+Weekly,42,PRESSURE PRE-FILTER BAG TANK 25UM,Cleaning of filter bags,CHIENGUTRG08
+Weekly,43,PRESSURE POST-FILTER BAG TANK 1UM,Cleaning of filter bags,CHIENGUTRG08
+Weekly,44,"BH 1,4,5 DEGASSER",Check for vibration on degasser blower base | Clean the air filters,CHIENGUTRG08
+Weekly,45,BH 2 DEGASSER,Check for vibration on degasser blower base | Clean the air filters,CHIENGUTRG08
+Weekly,46,"BH 6, 7 DEGASSER",Check for vibration on degasser blower base | Clean the air filters,CHIENGUTRG08
+Weekly,47,PRESSURE GUAGES,Check proper operation of guages,CHIENGUTRG08
+Weekly,48,TREATED WATER TRANSFER PUMPS,"Check proper operation of pumps (pump pressure, overheating, overcurrent, etc.)",CHIENGUTRG08
+Weekly,49,CHILLED WATER TRANSFER PUMPS,"Check proper operation of pumps (pump pressure, overheating, overcurrent, etc.)",CHIENGUTRG08
+Weekly,50,UTILITY DISTRIBUTION LINE,Check for steam leak on steam distribution line | Check for air leak on air distribution line | Check for water leak on water distribution line | Check for chilled water leak on chilled water distribution line,CHIENGUTRG08
+Monthly,1,STEAM BOILER 1,"Check electric motor current of running boiler transfer pump, burner draft fan",CHIENGUTRG08
+Monthly,2,STEAM BOILER 2,"Check electric motor current of running boiler transfer pump, burner draft fan",CHIENGUTRG08
+Monthly,3,STEAM BOILER 3,"Check electric motor current of running boiler transfer pump, burner draft fan",CHIENGUTRG08
+Monthly,4,THERMAX EXHAUST BOILER 4,Check proper operation of blowdown valve,CHIENGUTRG08
+Monthly,5,STEAM BOILER 5,"Check electric motor current of running boiler transfer pump, burner draft fan",CHIENGUTRG08
+Monthly,6,REFRIGERATED AIR DRYER NO.1,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,7,REFRIGERATED AIR DRYER NO.2,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,8,REFRIGERATED AIR DRYER NO.3,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,9,REFRIGERATED AIR DRYER NO.4,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,10,REFRIGERATED AIR DRYER NO.5,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,11,REFRIGERATED AIR DRYER NO.6,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,12,REFRIGERATED AIR DRYER NO.7,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,13,REFRIGERATED AIR DRYER NO.8,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,14,REFRIGERATED AIR DRYER NO.9,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,15,REFRIGERATED AIR DRYER NO.10,Inspection of auto drain valves and filter | Check running current of compressor and HE blower fan,CHIENGUTRG08
+Monthly,16,CARRIER CHILLER - AIR COOLED,Check oil level in compressor sump | Cleaning/washing of condenser,CHIENGUTRG08
+Monthly,17,CLIVET CHILLER - AIR COOLED,Check oil level in compressor sump | Cleaning/washing of condenser,CHIENGUTRG08
+Monthly,18,VAM CHILLER 1,Cleaning of pump strainers,CHIENGUTRG08
+Monthly,19,VAM CHILLER 2,Cleaning of pump strainers,CHIENGUTRG08
+Monthly,20,VAM CHILLER 3,Cleaning of pump strainers,CHIENGUTRG08
+Monthly,21,VAM CHILLER 4,Cleaning of pump strainers,CHIENGUTRG08
+Monthly,22,TRANE COOLING TOWER 1,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,23,TRANE COOLING TOWER 2,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,24,TRANE COOLING TOWER 3,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,25,TRANE COOLING TOWER 4,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,26,TRANE COOLING TOWER 5,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,27,VAM COOLING TOWER 1,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,28,VAM COOLING TOWER 2,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,29,VAM COOLING TOWER 3,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,30,VAM COOLING TOWER 4,"Draining and replenishment of treated water | Check proper operation of dosing pumps, foot valves, sensor | Inspection of extractor fan (U-bolts, coupling, locknuts, fan blades",CHIENGUTRG08
+Monthly,31,BOREHOLES,Check for blockage on borehole water strainer and clean,CHIENGUTRG08
+Monthly,32,PRESSURE PRE-FILTER BAG TANK 25UM,"Inspect pressure filter bag tank gasket, replace if necessary | Replacement of pressure filter bags",CHIENGUTRG08
+Monthly,33,PRESSURE POST-FILTER BAG TANK 1UM,"Inspect pressure filter bag tank gasket, replace if necessary",CHIENGUTRG08
+Monthly,34,"BH 1,4,5 DEGASSER",Check the currect load on degasser blower,CHIENGUTRG08
+Monthly,35,BH 2 DEGASSER,Check the currect load on degasser blower,CHIENGUTRG08
+Monthly,36,"BH 6, 7 DEGASSER",Check the currect load on degasser blower,CHIENGUTRG08
+Monthly,37,TREATED WATER TRANSFER PUMPS,"Lubrication of valves, Throttle manual valves (butterfly,klinger) continually until free | Check running current of electric motor",CHIENGUTRG08
+Monthly,38,CHILLED WATER TRANSFER PUMPS,"Lubrication of valves, Throttle manual valves (butterfly,klinger) continually until free | Check running current of electric motor",CHIENGUTRG08
+Monthly,39,PRESSURE GUAGES,Check proper operation of guages,CHIENGUTRG08
+Quarterly,1,STEAM BOILER 1,"Blowing of gas line filter | Open burner cover; inspect diesel and gas hose for damage, leak | Inspection & cleaning burner photocell | Cleaning of burner draft fan and sight glass",CHIENGUTRG08
+Quarterly,2,STEAM BOILER 2,"Blowing of gas line filter | Open burner cover; inspect diesel and gas hose for damage, leak | Inspection & cleaning burner photocell | Cleaning of burner draft fan and sight glass",CHIENGUTRG08
+Quarterly,3,STEAM BOILER 3,"Blowing of gas line filter | Open burner cover; inspect diesel and gas hose for damage, leak | Inspection & cleaning burner photocell | Cleaning of burner draft fan and sight glass",CHIENGUTRG08
+Quarterly,4,STEAM BOILER 5,"Blowing of gas line filter | Open burner cover; inspect diesel and gas hose for damage, leak | Inspection & cleaning burner photocell | Cleaning of burner draft fan and sight glass",CHIENGUTRG08
+Quarterly,5,AIR COMPRESSOR NO.2 (NORMAL).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,6,AIR COMPRESSOR NO.3 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,7,AIR COMPRESSOR NO.4 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,8,AIR COMPRESSOR NO.5 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,9,AIR COMPRESSOR NO.6 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,10,AIR COMPRESSOR NO.7 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,11,AIR COMPRESSOR NO.8 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,12,AIR COMPRESSOR NO.9 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,13,AIR COMPRESSOR NO.10 (OIL-FREE).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,14,AIR COMPRESSOR NO.11 (NORMAL).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,15,AIR COMPRESSOR NO.12 (NORMAL).,"2000 hours maintenance - hoses inspection and cleaning - pressure relief valve inspection & lifting, if applicable - check proper operation of thermostat",CHIENGUTRG08
+Quarterly,16,REFRIGERATED AIR DRYER NO.1,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,17,REFRIGERATED AIR DRYER NO.2,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,18,REFRIGERATED AIR DRYER NO.3,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,19,REFRIGERATED AIR DRYER NO.4,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,20,REFRIGERATED AIR DRYER NO.5,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,21,REFRIGERATED AIR DRYER NO.6,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,22,REFRIGERATED AIR DRYER NO.7,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,23,REFRIGERATED AIR DRYER NO.8,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,24,REFRIGERATED AIR DRYER NO.9,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,25,REFRIGERATED AIR DRYER NO.10,"Inspection of condenser HE for damaged fins, blockage, etc | Inspection of blower fan for wear, damage, etc",CHIENGUTRG08
+Quarterly,26,CARRIER CHILLER - AIR COOLED,"Preventive maintenance (leaks, component malfunction, sensor checks, flow switch etc.) | Inspect electrical components for deficiences | Check compressor crankcase heater functionality | Cleaning of pump strainers",CHIENGUTRG08
+Quarterly,27,CLIVET CHILLER - AIR COOLED,"Preventive maintenance (leaks, component malfunction, sensor checks, flow switch etc.) | Inspect electrical components for deficiences | Check compressor crankcase heater functionality | Cleaning of pump strainers",CHIENGUTRG08
+Quarterly,28,TRANE CHILLER 1,Routine inspection and checks by OEM/maintenance team | Cleaning of pump strainers | Poking of evaporator and condenser tubes,CHIENGUTRG08
+Quarterly,29,TRANE CHILLER 2,Routine inspection and checks by OEM/maintenance team | Cleaning of pump strainers | Poking of evaporator and condenser tubes,CHIENGUTRG08
+Quarterly,30,TRANE CHILLER 3,Routine inspection and checks by OEM/maintenance team | Cleaning of pump strainers | Poking of evaporator and condenser tubes,CHIENGUTRG08
+Quarterly,31,TRANE CHILLER 4,Routine inspection and checks by OEM/maintenance team | Cleaning of pump strainers | Poking of evaporator and condenser tubes,CHIENGUTRG08
+Quarterly,32,TRANE CHILLER 5,Routine inspection and checks by OEM/maintenance team | Cleaning of pump strainers | Poking of evaporator and condenser tubes,CHIENGUTRG08
+Quarterly,33,VAM CHILLER 1,"Preventive maintenance (leaks, component malfunction, sensor checks, flow switch, etc.) | Inspect electrical components for deficiences | Replacement of vacuum pump oil | LiBr analysis, corrosion inhibitor level",CHIENGUTRG08
+Quarterly,34,VAM CHILLER 2,"Preventive maintenance (leaks, component malfunction, sensor checks, flow switch, etc.) | Inspect electrical components for deficiences | Replacement of vacuum pump oil | LiBr analysis, corrosion inhibitor level",CHIENGUTRG08
+Quarterly,35,VAM CHILLER 3,"Preventive maintenance (leaks, component malfunction, sensor checks, flow switch, etc.) | Inspect electrical components for deficiences | Replacement of vacuum pump oil | LiBr analysis, corrosion inhibitor level",CHIENGUTRG08
+Quarterly,36,VAM CHILLER 4,"Preventive maintenance (leaks, component malfunction, sensor checks, flow switch, etc.) | Inspect electrical components for deficiences | Replacement of vacuum pump oil | LiBr analysis, corrosion inhibitor level",CHIENGUTRG08
+Quarterly,37,TRANE COOLING TOWER 1,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,38,TRANE COOLING TOWER 2,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,39,TRANE COOLING TOWER 3,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,40,TRANE COOLING TOWER 4,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,41,TRANE COOLING TOWER 5,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,42,VAM COOLING TOWER 1,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,43,VAM COOLING TOWER 2,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,44,VAM COOLING TOWER 3,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,45,VAM COOLING TOWER 4,Cleaning of baffles | Cleaning of basin,CHIENGUTRG08
+Quarterly,46,TREATED WATER TRANSFER PUMPS,Cleaning of pump strainers,CHIENGUTRG08
+Quarterly,47,CHILLED WATER TRANSFER PUMPS,Cleaning of pump strainers,CHIENGUTRG08
+Quarterly,48,BOILER FEED WATER TRANSFER PUMPS,Cleaning of pump strainers,CHIENGUTRG08
+Quarterly,49,PRESSURE POST-FILTER BAG TANK 1UM,Replacement of filter bags,CHIENGUTRG08
+Bi-Annually,1,AIR COMPRESSOR NO.2 (NORMAL).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,2,AIR COMPRESSOR NO.3 (OIL-FREE).,"4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element - check rubber insert of drive coupling, if applicable ",CHIENGUTRG08
+Bi-Annually,3,AIR COMPRESSOR NO.4 (OIL-FREE).,"4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element - check rubber insert of drive coupling, if applicable ",CHIENGUTRG08
+Bi-Annually,4,AIR COMPRESSOR NO.5 (OIL-FREE).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,5,AIR COMPRESSOR NO.6 (OIL-FREE).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,6,AIR COMPRESSOR NO.7 (OIL-FREE).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,7,AIR COMPRESSOR NO.8 (OIL-FREE).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,8,AIR COMPRESSOR NO.9 (OIL-FREE).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,9,AIR COMPRESSOR NO.10 (OIL-FREE).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,10,AIR COMPRESSOR NO.11 (NORMAL).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,11,AIR COMPRESSOR NO.12 (NORMAL).,4000 hours maintenance - air filter replacement - clean air condensate drain strainer - inspect condensate drain valves - clean breather element,CHIENGUTRG08
+Bi-Annually,12,TRANE CHILLER 1,Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Bi-Annually,13,TRANE CHILLER 2,Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Bi-Annually,14,TRANE CHILLER 3,Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Bi-Annually,15,TRANE CHILLER 4,Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Bi-Annually,16,TRANE CHILLER 5,Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Bi-Annually,17,VAM CHILLER 1,Cleaning of pump strainers | Inspect insulation of piping and corrosion on chiller parts | Clean liquid trap of purging line,CHIENGUTRG08
+Bi-Annually,18,VAM CHILLER 2,Cleaning of pump strainers | Inspect insulation of piping and corrosion on chiller parts | Clean liquid trap of purging line,CHIENGUTRG08
+Bi-Annually,19,VAM CHILLER 3,Cleaning of pump strainers | Inspect insulation of piping and corrosion on chiller parts | Clean liquid trap of purging line,CHIENGUTRG08
+Bi-Annually,20,VAM CHILLER 4,Cleaning of pump strainers | Inspect insulation of piping and corrosion on chiller parts | Clean liquid trap of purging line,CHIENGUTRG08
+Bi-Annually,21,STEAM TRAP,Inspection of steam traps - proper discharge of condensate and check for blockage - steam leakage - proper functionality of isolation valves,CHIENGUTRG08
+Annually,1,STEAM BOILER 1,Annual overhauling of boiler | Burner fine-tuning and calibration | Cold & hot inspection of boiler | Servicing of gas train,CHIENGUTRG08
+Annually,35,VAM CHILLER 1,Annual overhaul of chillers | Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Annually,2,STEAM BOILER 2,Annual overhauling of boiler | Burner fine-tuning and calibration | Cold & hot inspection of boiler | Servicing of gas train,CHIENGUTRG08
+Annually,36,VAM CHILLER 2,Annual overhaul of chillers | Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Annually,3,STEAM BOILER 3,Annual overhauling of boiler | Burner fine-tuning and calibration | Cold & hot inspection of boiler | Servicing of gas train,CHIENGUTRG08
+Annually,37,VAM CHILLER 3,Annual overhaul of chillers | Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Annually,4,THERMAX EXHAUST BOILER 4,Annual overhauling of boiler | Cold & hot inspection of boiler,CHIENGUTRG08
+Annually,38,VAM CHILLER 4,Annual overhaul of chillers | Cleaning of evaporator and condenser tubes,CHIENGUTRG08
+Annually,5,STEAM BOILER 5,Annual overhauling of boiler | Burner fine-tuning and calibration | Cold & hot inspection of boiler | Servicing of gas train,CHIENGUTRG08
+Annually,39,TRANE COOLING TOWER 1,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,6,AIR COMPRESSOR NO.2 (NORMAL).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,40,TRANE COOLING TOWER 2,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,7,AIR COMPRESSOR NO.3 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,41,TRANE COOLING TOWER 3,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,8,AIR COMPRESSOR NO.4 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,42,TRANE COOLING TOWER 4,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,9,AIR COMPRESSOR NO.5 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,43,TRANE COOLING TOWER 5,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,10,AIR COMPRESSOR NO.6 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,44,VAM COOLING TOWER 1,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,11,AIR COMPRESSOR NO.7 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,45,VAM COOLING TOWER 2,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,12,AIR COMPRESSOR NO.8 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,46,VAM COOLING TOWER 3,Inspection of baffles and vents. Replace damaged ones | Thorough washing of baffles and vents,CHIENGUTRG08
+Annually,13,AIR COMPRESSOR NO.9 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,47,SOFTENER PLANT,"Inspection and replacment of resins, every 2 years",CHIENGUTRG08
+Annually,14,AIR COMPRESSOR NO.10 (OIL-FREE).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,48,MS TANKS,Cleaning and disinfection of tank,CHIENGUTRG08
+Annually,15,AIR COMPRESSOR NO.11 (NORMAL).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,49,SS TANKS,Cleaning and disinfection of tank,CHIENGUTRG08
+Annually,16,AIR COMPRESSOR NO.12 (NORMAL).,"8000 hours maintenance - air filter, oil filter, oil seperator & ultracoolant oil replacement - ultracoolant oil analysis - inspect starter contactors - clean seperator scavenge screen and orifice",CHIENGUTRG08
+Annually,50,TREATED WATER TRANSFER PUMPS,Annual overhauling of transfer pumps,CHIENGUTRG08
+Annually,17,REFRIGERATED AIR DRYER NO.1,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,51,CHILLED WATER TRANSFER PUMPS,Annual overhauling of transfer pumps,CHIENGUTRG08
+Annually,18,REFRIGERATED AIR DRYER NO.2,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,52,FLOWMETERS,Annual calibration of flowmeters,CHIENGUTRG08
+Annually,19,REFRIGERATED AIR DRYER NO.3,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,53,PRESSURE GUAGES,Annual calibration of pressure guages,CHIENGUTRG08
+Annually,20,REFRIGERATED AIR DRYER NO.4,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,54,AIR COMPRESSOR NO.2 (NORMAL).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,21,REFRIGERATED AIR DRYER NO.5,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,55,AIR COMPRESSOR NO.3 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,22,REFRIGERATED AIR DRYER NO.6,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,56,AIR COMPRESSOR NO.4 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,23,REFRIGERATED AIR DRYER NO.7,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,57,AIR COMPRESSOR NO.5 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,24,REFRIGERATED AIR DRYER NO.8,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,58,AIR COMPRESSOR NO.6 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,25,REFRIGERATED AIR DRYER NO.9,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,59,AIR COMPRESSOR NO.7 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,26,REFRIGERATED AIR DRYER NO.10,"Servicing of air dryer (sensor replacement), if required | Removal and pressure washing of condenser HE, if required | Service auto-drain valves",CHIENGUTRG08
+Annually,60,AIR COMPRESSOR NO.8 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,27,TRANE CHILLER 1,Annual overhaul of chillers,CHIENGUTRG08
+Annually,61,AIR COMPRESSOR NO.9 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,28,TRANE CHILLER 2,Annual overhaul of chillers,CHIENGUTRG08
+Annually,62,AIR COMPRESSOR NO.10 (OIL-FREE).,"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,29,TRANE CHILLER 3,Annual overhaul of chillers,CHIENGUTRG08
+Annually,63,AIR COMPRESSOR NO.11 (NORMAL),"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,30,TRANE CHILLER 4,Annual overhaul of chillers,CHIENGUTRG08
+Annually,64,AIR COMPRESSOR NO.12 (NORMAL),"16000 hours maintenance - removal and pressure washing of aftercooler HE) - replace discharge check valve, if necessary - replace rubber insert of drive coupling, if necessary",CHIENGUTRG08
+Annually,31,TRANE CHILLER 5,Annual overhaul of chillers,CHIENGUTRG08
+Annually,65,PRESSURE SAFETY RELIEF VALVES,Annual inspection of pressure safety relief valves,CHIENGUTRG08
+Annually,32,CARRIER CHILLER - AIR COOLED,Oil analysis | Inspect insulation of piping and corrosion on chiller parts ,CHIENGUTRG08
+Annually,33,CLIVET CHILLER - AIR COOLED,Oil analysis | Inspect insulation of piping and corrosion on chiller parts ,CHIENGUTRG08
+Annually,34,AIR RECEIVER TANKS,"Annual inspection of air receiver tanks (relief valves, UTM, etc.)",CHIENGUTRG08

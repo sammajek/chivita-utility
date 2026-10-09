@@ -1,0 +1,308 @@
+{
+  "equipment_by_category": {
+    "Boilers": [
+      "Boiler 1 (LOOS)",
+      "Boiler 2 (SHELLMAX)",
+      "Boiler 3 (THERMAX)",
+      "Boiler 4 (THERMAX)",
+      "Boiler 5 (THERMAX)"
+    ],
+    "Air Compressors": [
+      "Air Compressor 2 - Oil (Ingersoll Rand)",
+      "Air Compressor 3 - Oil-free (Ingersoll Rand)",
+      "Air Compressor 4 - Oil-free (Ingersoll Rand)",
+      "Air Compressor 5 - Oil-free (Ingersoll Rand)",
+      "Air Compressor 6 - Oil-free (Ingersoll Rand)",
+      "Air Compressor 7 - Oil-free (Ingersoll Rand)",
+      "Air Compressor 8 - Oil-free (Ingersoll Rand)",
+      "Air Compressor 9 - Oil-free (Ingersoll Rand)",
+      "Air Compressor 11 - Oil (Ingersoll Rand)",
+      "Air Compressor 12 - Oil (Ingersoll Rand)"
+    ],
+    "Air Dryers": [
+      "Air Dryer 1",
+      "Air Dryer 2",
+      "Air Dryer 3",
+      "Air Dryer 4",
+      "Air Dryer 5",
+      "Air Dryer 6",
+      "Air Dryer 7",
+      "Air Dryer 8",
+      "Air Dryer 9",
+      "Air Dryer 10"
+    ],
+    "Degassers": [
+      "Degasser 1",
+      "Degasser 2",
+      "Degasser 3"
+    ],
+    "Chillers": [
+      "TRANE Chiller 1 + Cooling Tower",
+      "TRANE Chiller 2 + Cooling Tower",
+      "TRANE Chiller 3 + Cooling Tower",
+      "TRANE Chiller 4 + Cooling Tower",
+      "TRANE Chiller 5 + Cooling Tower",
+      "VAM Chiller 1 + Cooling Tower",
+      "VAM Chiller 2 + Cooling Tower",
+      "VAM Chiller 3 + Cooling Tower",
+      "VAM Chiller 4 + Cooling Tower"
+    ],
+    "Jet Pumps": [
+      "Jet Pumps (Expansion)",
+      "Jet Pumps (New Building)",
+      "Jet Pumps (Old Building 1)",
+      "Jet Pumps (Old Building 2)",
+      "Jet Pumps (Debottleneck)"
+    ],
+    "Boreholes": [
+      "Borehole 1",
+      "Borehole 2",
+      "Borehole 3",
+      "Borehole 4",
+      "Borehole 5",
+      "Borehole 6",
+      "Borehole 7"
+    ],
+    "UV Systems": [
+      "UV-1",
+      "UV-2",
+      "UV-3",
+      "UV-4"
+    ],
+    "Filtration": [
+      "Pressure Filter Tank 1",
+      "Pressure Filter Tank 2",
+      "Pressure Filter Tank 3",
+      "Pressure Filter Tank 4",
+      "Pressure Filter Tank 5",
+      "Pre-Filter Bag",
+      "Post-Filter Bag"
+    ],
+    "Pumps": [
+      "Raw Water Pumps",
+      "Treated Water Pumps",
+      "Chilled Water Inlet Pumps",
+      "Chilled Water Outlet Pumps"
+    ],
+    "Water Treatment": [
+      "RO Plant"
+    ],
+    "Storage Tanks": [
+      "Utility Tanks (Raw Water, Treated Water, Chilled Water, Boiler Feed Water, RO Water)",
+      "Air Receiver Tanks"
+    ],
+    "Distribution Systems": [
+      "Steam Distribution",
+      "Treated Water Distribution",
+      "Chilled Water Distribution",
+      "Steam Condensate Collection",
+      "Compressed Air Distribution"
+    ]
+  },
+  "failure_modes_by_category": {
+    "Mechanical": [
+      "Bearing failure",
+      "Mechanical seal / gasket leakage",
+      "Coupling failure",
+      "Impeller / rotor damage",
+      "Belt failure or slippage",
+      "Valve failure (passing / stuck)",
+      "Pipe or line leakage",
+      "Excessive vibration / misalignment",
+      "Tube leakage",
+      "Fan / blower fault",
+      "Gearbox fault",
+      "General mechanical wear",
+      "Lubrication failure"
+    ],
+    "Electrical": [
+      "Motor failure / burnt winding",
+      "Public power (PHCN) outage",
+      "Generator changeover failure",
+      "Contactor / relay fault",
+      "Cable or wiring fault",
+      "VFD / soft starter fault",
+      "Overload trip",
+      "Panel / circuit breaker fault",
+      "Earth fault",
+      "Capacitor / power factor fault",
+      "Voltage fluctuation"
+    ],
+    "Instrumentation and Control": [
+      "Sensor / transmitter fault",
+      "PLC or controller fault",
+      "HMI / display fault",
+      "Pressure switch fault",
+      "Level control fault",
+      "Temperature control fault",
+      "Solenoid valve fault",
+      "Calibration drift",
+      "Communication / signal loss",
+      "Flow meter fault",
+      "Safety interlock trip"
+    ],
+    "Process and Utility": [
+      "Low feed water supply",
+      "Poor raw water quality",
+      "High conductivity / TDS",
+      "Steam pressure drop",
+      "Low condensate return",
+      "Refrigerant loss / low charge",
+      "Low chilled water flow",
+      "Compressed air pressure drop",
+      "Fouling / scaling",
+      "Chemical dosing failure",
+      "Cooling tower fouling",
+      "Air / gas locking",
+      "Resin exhaustion",
+      "Membrane fouling"
+    ],
+    "Operational": [
+      "Operator error",
+      "Delayed start-up / shutdown",
+      "Improper changeover",
+      "Delayed response to alarm",
+      "Manpower shortage",
+      "Wrong parameter setting"
+    ],
+    "Maintenance and Spares": [
+      "Spare parts unavailable",
+      "Awaiting vendor / OEM support",
+      "Awaiting CAPEX approval",
+      "Extended repair duration",
+      "Repeat failure / poor previous repair",
+      "Tooling unavailable"
+    ],
+    "Planned Maintenance": [
+      "Planned preventive maintenance",
+      "Statutory / insurance inspection",
+      "Boiler chemical cleaning / blowdown",
+      "Descaling / de-fouling",
+      "Major overhaul",
+      "Plant-wide shutdown",
+      "Installation / upgrade project",
+      "Calibration exercise"
+    ],
+    "External Factors": [
+      "Utility supply failure",
+      "LPFO / gas supply shortage",
+      "Diesel supply shortage",
+      "Weather / environmental event",
+      "Vendor / contractor delay",
+      "Production hold (no demand)"
+    ]
+  },
+  "Issue Description": [
+    "Equipment failed to start",
+    "Equipment tripped during operation",
+    "Equipment shut down on alarm",
+    "Fault code displayed on HMI / panel",
+    "Abnormal noise observed",
+    "Excessive vibration observed",
+    "Overheating observed",
+    "Leakage observed",
+    "Low output pressure",
+    "Low output flow",
+    "High discharge temperature",
+    "Pressure fluctuation",
+    "Flow fluctuation",
+    "Loss of power to equipment",
+    "Motor overload trip",
+    "Emergency stop activated",
+    "Low water level alarm",
+    "High water level alarm",
+    "Water carryover observed",
+    "Foaming in boiler observed",
+    "Low steam pressure",
+    "Steam leakage observed",
+    "Condensate not returning",
+    "Compressed air pressure below set point",
+    "Moisture in compressed air line",
+    "Dew point out of specification",
+    "Chilled water temperature above set point",
+    "Refrigerant low pressure alarm",
+    "Cooling tower fan not running",
+    "Poor water quality at outlet",
+    "High conductivity / TDS at outlet",
+    "Turbidity above limit",
+    "UV lamp failure alarm",
+    "Filter differential pressure high",
+    "Pump not priming / loss of suction",
+    "Pump running dry",
+    "Borehole yield dropped",
+    "Tank level low",
+    "Tank overflow",
+    "Scheduled maintenance carried out",
+    "Statutory inspection carried out",
+    "Equipment isolated for repairs",
+    "Equipment on standby (not required)",
+    "Equipment awaiting spare parts",
+    "Equipment awaiting vendor attention",
+    "Other (describe in Remarks)"
+  ],
+  "Shift": [
+    "Day Shift (7am - 7pm)",
+    "Night Shift (7pm - 7am)"
+  ],
+  "Downtime Type": [
+    "Unplanned Breakdown",
+    "Planned Maintenance",
+    "External Supply Failure",
+    "Idle / Standby"
+  ],
+  "Attended By": [
+    "Utility Section (In-house)",
+    "Electrical & Instrumentation Section",
+    "Automation Section",
+    "R&A Section",
+    "General Workshop",
+    "External Vendor"
+  ],
+  "Impact on Production": [
+    "Full Stoppage",
+    "Partial / Reduced Output",
+    "Standby Unit Took Over",
+    "No Production Impact"
+  ],
+  "Status": [
+    "Open",
+    "In Progress",
+    "Awaiting Spares",
+    "Awaiting CAPEX Approval",
+    "Awaiting Vendor",
+    "Closed"
+  ],
+  "Root Cause Category (6M)": [
+    "Man (people / skill / manning)",
+    "Machine (equipment / design)",
+    "Material (spares / consumables / water quality)",
+    "Method (procedure / practice)",
+    "Measurement (instrumentation / calibration)",
+    "Environment (external / ambient / supply)"
+  ],
+  "Action Type": [
+    "Immediate Fix Only",
+    "Repair + Procedure Change",
+    "Preventive Maintenance Revision",
+    "Spare Parts Stocking",
+    "Training / Competence",
+    "Equipment Modification",
+    "CAPEX - New Equipment",
+    "CAPEX - Equipment Upgrade",
+    "Vendor / Contract Change"
+  ],
+  "RCA Status": [
+    "Not Started",
+    "Investigation Ongoing",
+    "Root Cause Identified",
+    "Action In Progress",
+    "Awaiting CAPEX Approval",
+    "Completed - Pending Verification",
+    "Closed - Verified Effective"
+  ],
+  "rca_triggers": {
+    "hours_at_or_above": 4,
+    "repeats_at_or_above": 3,
+    "source": "603-001 Dashboard control panel"
+  }
+}

@@ -1,0 +1,2292 @@
+[
+  {
+    "area": "Utility 1",
+    "sheet": "General Utility - Hourly",
+    "document_no": "CHINGRGUT01",
+    "title": "General Utility - Hourly",
+    "reading_times": [],
+    "shift_entries": [
+      "Day High",
+      "Day Low"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHINGRGUT01"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "BOILER WATER",
+        "UTILITY"
+      ],
+      [
+        "Feed Water Tank Level",
+        "Feed Water Tank Temperature",
+        "Chilled Water Outlet Temp.",
+        "Air Line Pressure",
+        "Steam Line Pressure",
+        "Operator"
+      ],
+      [
+        "Standard",
+        "80 - 90 %",
+        "85 - 95 °C",
+        "6 - 10 (°C)",
+        "6.8 - 8.0 bar",
+        "7.5 - 8.5 bar"
+      ],
+      [
+        "July 2022"
+      ],
+      [
+        "2022-07-01T00:00:00",
+        "Day High"
+      ],
+      [
+        "Day Low"
+      ],
+      [
+        "2022-07-02T00:00:00",
+        "Day High"
+      ],
+      [
+        "Day Low"
+      ],
+      [
+        "2022-07-03T00:00:00",
+        "Day High"
+      ],
+      [
+        "Day Low"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "General Utility - Shift & Daily",
+    "document_no": "CHINGRGUT01",
+    "title": "General Utility - Shift & Daily",
+    "reading_times": [],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "GENERAL UTILITY",
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHINGRGUT01"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "CHILLED WATER"
+      ],
+      [
+        "Pump 1 Pressure",
+        "Pump 2 Pressure",
+        "Pump 3 Pressure",
+        "Pump 4 Pressure",
+        "Pump 5 Pressure",
+        "Pump 6 Pressure",
+        "Pump 7 Pressure",
+        "Pump 8 Pressure",
+        "Pump 9 Pressure",
+        "Pump 10 Pressure",
+        "Pump 11 Pressure",
+        "Pump 12 Pressure",
+        "Feed Water pH",
+        "Feed Water TDS (ppm)",
+        "Feed Water Conductivity (us/cm)",
+        "Feed Water Total Hardness (ppm)",
+        "Feed Water P-Alkalinity",
+        "Feed Water M-Alkalinity",
+        "Feed Water O-Alkalinity",
+        "Feed Water Sulphite",
+        "Feed Water TSS",
+        "Operator"
+      ],
+      [
+        "Standard",
+        "3.5 - 4.5 bar",
+        "8 - 10",
+        "< 2000",
+        "< 2000",
+        "0"
+      ],
+      [
+        "2022-07-01T00:00:00",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "2022-07-02T00:00:00",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "2022-07-03T00:00:00",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "2022-07-04T00:00:00",
+        "Morning Shift"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "General",
+    "document_no": "CHIENGUTRG11",
+    "title": "GENERAL LOG REPORT",
+    "reading_times": [
+      "03:00",
+      "09:00",
+      "15:00",
+      "21:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "GENERAL LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG11"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "BOILER",
+        "Parameters",
+        "CHILLED WATER"
+      ],
+      [
+        "Parameters",
+        "Feed Water Tank Level (%)",
+        "Feed Water Tank Temp. (°C)",
+        "Chilled Water Tank Level (Full/ Not Full)",
+        "Chilled Water Pump 1 Pressure (bar)",
+        "Chilled Water Pump 2 Pressure (bar)",
+        "Chilled Water Pump 3 Pressure (bar)",
+        "Chilled Water Pump 4 Pressure (bar)",
+        "Chilled Water Pump 5 Pressure (bar)",
+        "Chilled Water Pump 6 Pressure (bar)",
+        "Operators Name"
+      ],
+      [
+        "09:00:00",
+        "Morning Shift"
+      ],
+      [
+        "15:00:00",
+        "Night Shift"
+      ],
+      [
+        "21:00:00",
+        "Parameters",
+        "Chilled Water Pump 7 Pressure (bar)",
+        "Chilled Water Pump 8 Pressure (bar)",
+        "Chilled Water Pump 9 Pressure (bar)",
+        "Chilled Water Pump 10 Pressure (bar)",
+        "Chilled Water Pump 11 Pressure (bar)",
+        "Chilled Water Pump 12 Pressure (bar)"
+      ],
+      [
+        "03:00:00"
+      ],
+      [
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "BOILER",
+        "WTP"
+      ],
+      [
+        "Parameters",
+        "Diesel Tank Level (%)",
+        "Oxygen Scavenger Chemical Tank Level (%)",
+        "Sludge Dispersant Chemical Tank Level (%)",
+        "Check Softener Plant Salt Level",
+        "Borehole 2 Degasser Blower Operation",
+        "Utility 1 Degasser Blower Operation",
+        "Backwashing Transfer Pump Operation",
+        "NEXGEN Air Blowers Operation",
+        "Steam Condensate Tank & Pump Operation",
+        "Water Recovery Tank & Pump Operation",
+        "Operators Name"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "Boiler",
+    "document_no": "CHIENGUTRG03",
+    "title": "BOILER LOG REPORT",
+    "reading_times": [
+      "03:00",
+      "09:00",
+      "15:00",
+      "21:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "for No. 1, 2",
+        "for No. 5"
+      ],
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "BOILER LOG REPORT",
+        "DEPARTMENT",
+        "ENGINEERING",
+        "BOILER LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG03",
+        "DOCUMENT NO",
+        "CHIENGUTRG03"
+      ],
+      [
+        "MONTH",
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Steam Pressure (bar)",
+        "Flame Signal (%)",
+        "Conductivity (us/cm)",
+        "Water Level (%)",
+        "Flue Gas Temperature (°C)",
+        "Fuel Pump Pressure",
+        "Oil Temperature",
+        "Oil Pump Working No 1/2",
+        "Feedwater Pump Working No 1/2",
+        "Operators Name",
+        "Parameters",
+        "Steam Pressure (bar)",
+        "Flame Signal (%)",
+        "Conductivity (us/cm)",
+        "Water Level (%)",
+        "Flue Gas Temperature (°C)",
+        "Fuel Pump Pressure",
+        "Oil Temperature",
+        "Oil Pump Working No 1/2",
+        "Feedwater Pump Working No 1/2",
+        "Operators Name"
+      ],
+      [
+        "09:00:00",
+        "09:00:00"
+      ],
+      [
+        "15:00:00",
+        "15:00:00"
+      ],
+      [
+        "21:00:00",
+        "21:00:00"
+      ],
+      [
+        "03:00:00",
+        "03:00:00"
+      ],
+      [
+        "Parameters",
+        "Feedwater Operating Pump 1 Hours",
+        "Feedwater Operating Pump 2 Hours",
+        "Operating Hours - Gas",
+        "Operating Hours - Oil",
+        "Panel A/C Working Condition",
+        "Water Leakage",
+        "Steam Leakage",
+        "Burner Flame Sight Glass",
+        "Blowdown Valve",
+        "Operators Name",
+        "Parameters",
+        "Feedwater Operating Pump 1 Hours",
+        "Feedwater Operating Pump 2 Hours",
+        "Operating Hours - Gas",
+        "Operating Hours - Oil",
+        "Panel A/C Working Condition",
+        "Water Leakage",
+        "Steam Leakage",
+        "Burner Flame Sight Glass",
+        "Blowdown Valve",
+        "Operators Name"
+      ],
+      [
+        "Working/ Not Working",
+        "No Leak/ Leak",
+        "No Leak/ Leak",
+        "Clear/ Not Clear",
+        "Working/ Not Working",
+        "Working/ Not Working",
+        "No Leak/ Leak",
+        "No Leak/ Leak",
+        "Clear/ Not Clear",
+        "Working/ Not Working"
+      ],
+      [
+        "Morning Shift",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift",
+        "Night Shift"
+      ],
+      [
+        "Parameters",
+        "Gas Pressure (high) (bar)",
+        "Gas Pressure (low) (mbar)",
+        "Gas Flowmeter Reading",
+        "Operators Name",
+        "Parameters",
+        "Gas Pressure (high) (bar)",
+        "Gas Pressure (low) (mbar)",
+        "Gas Flowmeter Reading",
+        "Operators Name"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "WTP",
+    "document_no": "CHIENGUTRG06",
+    "title": "WATER TREATMENT PLANT LOG REPORT",
+    "reading_times": [
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "WATER TREATMENT PLANT LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG06"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Raw Water Tank Level (%)",
+        "Process Water Tank Level (%)",
+        "Backwashing Water Tank Level (%)",
+        "Raw Water Pumps Pressure (bar)",
+        "Process Water Pumps Pressure (bar)",
+        "Raw Water flow rate (m3/hr)",
+        "Process Water flow rate (m3/hr)",
+        "Caustic Dosing Rate (l/hr)",
+        "On-line Water pH",
+        "Raw Water pH",
+        "Process Water pH",
+        "Signature",
+        "Operators Name"
+      ],
+      [
+        "LAB",
+        "UTILITY"
+      ],
+      [
+        "07:00:00"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "WTP Equipment",
+    "document_no": "CHIENGUTRG05",
+    "title": "WATER TREATMENT EQUIPMENT LOG REPORT",
+    "reading_times": [],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "WATER TREATMENT EQUIPMENT LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG05"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "PRE-FILTER BAG UNIT 1 & 2 (bar)",
+        "PRE-FILTER BAG UNIT 3 (bar)",
+        "PRE-FILTER BAG UNIT 4 (bar)",
+        "PRE-FILTER BAG UNIT 5 (bar)",
+        "PRE-FILTER BAG UNIT 6 (bar)",
+        "Operators Name"
+      ],
+      [
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT"
+      ],
+      [
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "Parameters",
+        "PRE-FILTER BAG UNIT 7 (bar)",
+        "PRESSURE FILTER TANK 1 (bar)",
+        "PRESSURE FILTER TANK 2 (bar)",
+        "PRESSURE FILTER TANK 3 (bar)"
+      ],
+      [
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT"
+      ],
+      [
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "Parameters",
+        "PRESSURE FILTER TANK 4 (bar)",
+        "PRESSURE FILTER TANK 5 (bar)",
+        "PRESSURE FILTER TANK 6 (bar)",
+        "PRESSURE FILTER TANK 7 (bar)",
+        "POST FILTER BAG UNIT"
+      ],
+      [
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT",
+        "IN",
+        "OUT"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "Air Compressors",
+    "document_no": "CHIENGUTRG01",
+    "title": "AIR COMPRESSOR LOG REPORT (OIL)",
+    "reading_times": [
+      "03:00",
+      "09:00",
+      "15:00",
+      "21:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "for No. 2",
+        "for No. 3, 4, 5, 6, 7, 8, 9"
+      ],
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "AIR COMPRESSOR LOG REPORT (OIL)",
+        "DEPARTMENT",
+        "ENGINEERING",
+        "AIR COMPRESSOR LOG REPORT (OIL-FREE)"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG01",
+        "DOCUMENT NO",
+        "CHIENGUTRG01"
+      ],
+      [
+        "MONTH",
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Aftercooler Discharge Temp. (°C)",
+        "Airend Discharge Temp. (°C)",
+        "Injected Coolant Temp. (°C)",
+        "Sump Pressure (bar)",
+        "Separator Pressure Drop (bar)",
+        "Coolant Filter Pressure Drop (bar)",
+        "Coolant Filter",
+        "Inlet Vacuum (bar)",
+        "Operators Name",
+        "Parameters",
+        "Pkg Discharge Pressure (bar)",
+        "Pkg Discharge Temp. (°C)",
+        "Inlet Vaccum (bar)",
+        "1st Stage Inlet Temp. (°C)",
+        "1st Stage Discharge Temp. (°C)",
+        "2nd Stage Inlet Pressure (bar)",
+        "2nd Stage Inlet Temp. (°C)",
+        "2nd Stage Discharge Pressure (bar)",
+        "2nd Stage Discharge Temp. (°C)",
+        "Bearing Oil Temp. (°C)",
+        "Bearing Oil Pressure (bar)",
+        "Oil Filter Pressure Drop (bar)",
+        "Package kW (kW)",
+        "Operators Name"
+      ],
+      [
+        "09:00:00",
+        "09:00:00"
+      ],
+      [
+        "15:00:00",
+        "15:00:00"
+      ],
+      [
+        "21:00:00",
+        "21:00:00"
+      ],
+      [
+        "03:00:00",
+        "03:00:00"
+      ],
+      [
+        "Parameters",
+        "Running Hours",
+        "Loaded Hours",
+        "Oil Level",
+        "Condensate Drain",
+        "Air Leakage",
+        "Water Leakage",
+        "Oil Leakage",
+        "Internal/ External Body Clean",
+        "Operators Name",
+        "Parameters",
+        "Running Hours",
+        "Loaded Hours",
+        "Oil Level",
+        "Condensate Drain",
+        "Air Leakage",
+        "Water Leakage",
+        "Oil Leakage",
+        "Internal/ External Body Clean",
+        "Operators Name"
+      ],
+      [
+        "1/2 to 3/4",
+        "Functional/ Not Functional",
+        "No Leak/ Leakage",
+        "No Leak/ Leakage",
+        "No Leak/ Leakage",
+        "Clean/ Not Clean",
+        "1/2 to 3/4",
+        "Functional/ Not Functional",
+        "No Leak/ Leakage",
+        "No Leak/ Leakage",
+        "No Leak/ Leakage",
+        "Clean/ Not Clean"
+      ],
+      [
+        "Morning Shift",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift",
+        "Night Shift"
+      ],
+      [
+        "Alarm Fault/ Breakdown History",
+        "1. 2. 3.",
+        "Manager Sign-off",
+        "Alarm Fault/ Breakdown History",
+        "1. 2. 3.",
+        "Manager Sign-off"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "Air Dryers",
+    "document_no": "CHIENGUTRG02",
+    "title": "AIR DRYER (IR) LOG REPORT",
+    "reading_times": [
+      "03:00",
+      "09:00",
+      "15:00",
+      "21:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "for No. 5, 6, 7, 8, 10, 11",
+        "for No. 9"
+      ],
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "AIR DRYER (IR) LOG REPORT",
+        "DEPARTMENT",
+        "ENGINEERING",
+        "AIR DRYER (ATLAS COPCO) LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG02",
+        "DOCUMENT NO",
+        "CHIENGUTRG02"
+      ],
+      [
+        "MONTH",
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Dew Point Pb1 (°C)",
+        "Air Inlet Temperature Pb2 (°C)",
+        "Ambient Temperature Pb3 (°C)",
+        "Suction Temperature Pb4 (°C)",
+        "Operators Name",
+        "Parameters",
+        "Condensing Pressure (bar)",
+        "Dryer LAT (°C)",
+        "Refrigerant Temperature (°C)",
+        "Dryer Ambient Temperature (°C)",
+        "Refrigerant Compressor Outlet (°C)",
+        "Operators Name"
+      ],
+      [
+        "09:00:00",
+        "09:00:00"
+      ],
+      [
+        "15:00:00",
+        "15:00:00"
+      ],
+      [
+        "21:00:00",
+        "21:00:00"
+      ],
+      [
+        "03:00:00",
+        "03:00:00"
+      ],
+      [
+        "Parameters",
+        "Running Hours",
+        "Glycol Level",
+        "Condensate Drain",
+        "Air Leakage",
+        "Water Leakage",
+        "Internal/ External Body Clean",
+        "Operators Name",
+        "Parameters",
+        "Running Hours",
+        "Condensate Drain",
+        "Air Leakage",
+        "Water Leakage",
+        "Internal/ External Body Clean",
+        "Operators Name"
+      ],
+      [
+        "> 70%",
+        "Functional/ Not Functional",
+        "No Leak/ Leakage",
+        "No Leak/ Leakage",
+        "Clean/ Not Clean",
+        "Functional/ Not Functional",
+        "No Leak/ Leakage",
+        "No Leak/ Leakage",
+        "Clean/ Not Clean"
+      ],
+      [
+        "Morning Shift",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift",
+        "Night Shift"
+      ],
+      [
+        "Alarm Fault/ Breakdown History",
+        "1. 2. 3.",
+        "Manager Sign-off",
+        "Alarm Fault/ Breakdown History",
+        "1. 2. 3.",
+        "Manager Sign-off"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "Chillers",
+    "document_no": "CHIENGUTRG07",
+    "title": "TRANE CHILLER LOG REPORT",
+    "reading_times": [
+      "03:00",
+      "09:00",
+      "15:00",
+      "21:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "for No. 1, 2, 4, 5",
+        "for No. 1, 2, 3"
+      ],
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "TRANE CHILLER LOG REPORT",
+        "DEPARTMENT",
+        "ENGINEERING",
+        "VAM CHILLER LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG07",
+        "DOCUMENT NO",
+        "CHIENGUTRG07"
+      ],
+      [
+        "MONTH",
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Oil Pressure (kPa)",
+        "System Refrigerant Diff. Pressure (kPa)",
+        "Comp Rfgt Discharge Temp (°C)",
+        "% RLA",
+        "Evap Entering Water Temp. (°C)",
+        "Evap Leaving Water Temp. (°C)",
+        "Evap Sat Rfgt Temp. (°C)",
+        "Evap Rfgt Pressure (kPa)",
+        "Operators Name",
+        "Parameters",
+        "Burner/Steam Selection",
+        "Burner (%)",
+        "Steam (%)",
+        "Exhaust Stack Temperature (°C)",
+        "Chilled Water Inlet Temperature (°C)",
+        "Chilled Water Outlet Temperature (°C)",
+        "Chilled Water Differential Pressure (mmWC)",
+        "Chilled Water Flow (m3/hr)",
+        "Operators Name"
+      ],
+      [
+        "09:00:00",
+        "09:00:00"
+      ],
+      [
+        "15:00:00",
+        "15:00:00"
+      ],
+      [
+        "21:00:00",
+        "21:00:00"
+      ],
+      [
+        "03:00:00",
+        "03:00:00"
+      ],
+      [
+        "Parameters",
+        "Evap Approach Temp (°C)",
+        "Expansion Valve Position (%)",
+        "Evap Rfgt Liquid Level (mm)",
+        "Cond Rfgt Pressure (kPa)",
+        "Cond Entering Water Temp. (°C)",
+        "Cond Leaving Water Temp. (°C)",
+        "Cond Sat Rfgt Temp (°C)",
+        "Condenser Approach Temp (°C)",
+        "Operators Name",
+        "Parameters",
+        "Cooling Water Inlet Temperature (°C)",
+        "Cooling Water Outlet Temperature (°C)",
+        "High Temperature Generator (°C)",
+        "Low Temperature Generator (°C)",
+        "Spray Solution Concentration (%)",
+        "Intermediate Concentration (%)",
+        "Spray Solution Temperature (°C)",
+        "Operators Name"
+      ],
+      [
+        "09:00:00",
+        "09:00:00"
+      ],
+      [
+        "15:00:00",
+        "15:00:00"
+      ],
+      [
+        "21:00:00",
+        "21:00:00"
+      ],
+      [
+        "03:00:00",
+        "03:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "Nitrogen",
+    "document_no": "CHIENGUTRG09",
+    "title": "NITROGEN GENERATOR LOG REPORT",
+    "reading_times": [],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "NITROGEN GENERATOR LOG REPORT",
+        "DEPARTMENT",
+        "ENGINEERING",
+        "NITROGEN GENERATOR LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG09",
+        "DOCUMENT NO",
+        "CHIENGUTRG09"
+      ],
+      [
+        "MONTH",
+        "MONTH"
+      ],
+      [
+        "YEAR",
+        "YEAR"
+      ],
+      [
+        "DATE",
+        "NITROGEN GENERATOR 1",
+        "NITROGEN GENERATOR 2",
+        "DATE",
+        "NITROGEN GENERATOR 3",
+        "NITROGEN GENERATOR 4"
+      ],
+      [
+        "N2 Purity (%)",
+        "Air Inlet Pressure (bar)",
+        "Nitrogen Outlet Pressure (bar)",
+        "Operating Hours",
+        "Flow rate (m³/hr)",
+        "Total flow (m³)",
+        "N2 Purity (%)",
+        "Air Inlet Pressure (bar)",
+        "Nitrogen Outlet Pressure (bar)",
+        "Operating Hours",
+        "Flow rate (m³/hr)",
+        "Total flow (m³)",
+        "Operators Name",
+        "N2 Purity (%)",
+        "Air Inlet Pressure (bar)",
+        "Nitrogen Outlet Pressure (bar)",
+        "Operating Hours",
+        "Flow rate (m³/hr)",
+        "Total flow (m³)",
+        "N2 Purity (%)",
+        "Air Inlet Pressure (bar)",
+        "Nitrogen Outlet Pressure (bar)",
+        "Operating Hours",
+        "Flow rate (m³/hr)",
+        "Total flow (m³)",
+        "Operators Name"
+      ],
+      [
+        "1st",
+        "1st"
+      ],
+      [
+        "2nd",
+        "2nd"
+      ],
+      [
+        "3rd",
+        "3rd"
+      ],
+      [
+        "4th",
+        "4th"
+      ],
+      [
+        "5th",
+        "5th"
+      ],
+      [
+        "6th",
+        "6th"
+      ],
+      [
+        "7th",
+        "7th"
+      ],
+      [
+        "8th",
+        "8th"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "VAM Chiller",
+    "document_no": "CHIENGUT07",
+    "title": "CHILLER LOGBOOK THERMAX (THDC2)",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "CHILLER LOGBOOK THERMAX (THDC2)",
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHIENGUT07"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "COMPRESSOR REPORT",
+        "EVAPORATOR REPORT",
+        "CONDENSER REPORT"
+      ],
+      [
+        "TIME",
+        "Chilled Water Flow rate",
+        "Chilled Water Inlet Temp. (°C)",
+        "Chilled Water Outlet Temp. (°C)",
+        "Chilled Water Inlet Pressure (bar)",
+        "Chilled Water Outlet Pressure (bar)",
+        "Hot/Cooling Water Flow rate",
+        "Hot/Cooling Water Inlet Temp.",
+        "Hot/Cooling Water Outlet Temp.",
+        "Hot/Cooling Water Inlet Pressure",
+        "Hot/Cooling Water Outlet Pressure",
+        "High Temp. Generator Vapour Temp.",
+        "U-tube Temp.",
+        "Low Temp. Generator",
+        "Spray Solution Temp.",
+        "High Temp. Generator Top Temp.",
+        "High Temp. Generator Bottom Temp.",
+        "Absolute Difference",
+        "%Steam Control Valve Opening",
+        "Concentration",
+        "Vacuum Pressure mmHg",
+        "Generator Fluid Level",
+        "Absorber Fluid Level",
+        "Evaporator Fluid Level",
+        "Steam Pressure before SCV",
+        "Operator"
+      ],
+      [
+        "Standard"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 1",
+    "sheet": "Air Dryer IR",
+    "document_no": "CHIENGRGUT02",
+    "title": "AIR DRYER LOGBOOK",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "AIR DRYER LOGBOOK",
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHIENGRGUT02"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "GENERAL CHECKING",
+        "TEMPERATURE (°C)"
+      ],
+      [
+        "TIME",
+        "Condensate Drain",
+        "Air Leakage",
+        "Water Leakage",
+        "Noise Level",
+        "Air Inlet Temp.",
+        "Air Outlet Temp.",
+        "Dew Point",
+        "Operator"
+      ],
+      [
+        "Standard"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "General Utility - Hourly",
+    "document_no": "CHINGRGUT01",
+    "title": "General Utility - Hourly",
+    "reading_times": [],
+    "shift_entries": [
+      "Day High",
+      "Day Low"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHINGRGUT01"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "BOILER WATER",
+        "UTILITY"
+      ],
+      [
+        "Feed Water Tank Level",
+        "Feed Water Tank Temperature",
+        "Chilled Water Outlet Temp.",
+        "Air Line Pressure",
+        "Steam Line Pressure",
+        "Operator"
+      ],
+      [
+        "Standard",
+        "80 - 90 %",
+        "85 - 95 °C",
+        "6 - 10 (°C)",
+        "6.8 - 8.0 bar",
+        "7.5 - 8.5 bar"
+      ],
+      [
+        "July 2022"
+      ],
+      [
+        "2022-07-01T00:00:00",
+        "Day High"
+      ],
+      [
+        "Day Low"
+      ],
+      [
+        "2022-07-02T00:00:00",
+        "Day High"
+      ],
+      [
+        "Day Low"
+      ],
+      [
+        "2022-07-03T00:00:00",
+        "Day High"
+      ],
+      [
+        "Day Low"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "General Utility - Shift & Daily",
+    "document_no": "CHINGRGUT01",
+    "title": "General Utility - Shift & Daily",
+    "reading_times": [],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "GENERAL UTILITY",
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHINGRGUT01"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE",
+        "CHILLED WATER"
+      ],
+      [
+        "Pump 1 Pressure",
+        "Pump 2 Pressure",
+        "Pump 3 Pressure",
+        "Pump 4 Pressure",
+        "Pump 5 Pressure",
+        "Pump 6 Pressure",
+        "Pump 7 Pressure",
+        "Pump 8 Pressure",
+        "Pump 9 Pressure",
+        "Pump 10 Pressure",
+        "Pump 11 Pressure",
+        "Pump 12 Pressure",
+        "Feed Water pH",
+        "Feed Water TDS (ppm)",
+        "Feed Water Conductivity (us/cm)",
+        "Feed Water Total Hardness (ppm)",
+        "Feed Water P-Alkalinity",
+        "Feed Water M-Alkalinity",
+        "Feed Water O-Alkalinity",
+        "Feed Water Sulphite",
+        "Feed Water TSS",
+        "Operator"
+      ],
+      [
+        "Standard",
+        "3.5 - 4.5 bar",
+        "8 - 10",
+        "< 2000",
+        "< 2000",
+        "0"
+      ],
+      [
+        "2022-07-01T00:00:00",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "2022-07-02T00:00:00",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "2022-07-03T00:00:00",
+        "Morning Shift"
+      ],
+      [
+        "Night Shift"
+      ],
+      [
+        "2022-07-04T00:00:00",
+        "Morning Shift"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "General",
+    "document_no": "CHIENGUTRG11",
+    "title": "UTILITY GENERAL LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "11:00",
+      "14:00",
+      "17:00",
+      "20:00",
+      "23:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "UTILITY GENERAL LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG11"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "EQUIPMENT",
+        "BOILER",
+        "CHILLED WATER",
+        "COMPRESSED AIR",
+        "Water Analysis"
+      ],
+      [
+        "Parameters",
+        "Feed Water Tank Level (%)",
+        "Feed Water Tank Temp. (°C)",
+        "Chilled Water Tank Level (%)",
+        "CHI Snacks-1 Chilled Water Pump Pressure (bar)",
+        "CHI Snacks-2 Chilled Water Pump Pressure (bar)",
+        "Pharma Chilled Water Pump Pressure (bar)",
+        "Compressed Air Line Pressure (bar)",
+        "Cooling Tower Feedwater pH",
+        "Cooling Tower Feedwater Conductivity (us/cm)"
+      ],
+      [
+        "08:00:00",
+        "Morning Shift"
+      ],
+      [
+        "11:00:00",
+        "Cooling Tower Water Total Hardness (ppm)",
+        "Boiler Feedwater pH"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "17:00:00",
+        "Morning Shift"
+      ],
+      [
+        "20:00:00",
+        "Boiler Feedwater Conductivity (us/cm)",
+        "Boiler Feedwater Total Hardness (ppm)"
+      ],
+      [
+        "23:00:00"
+      ],
+      [
+        "1900-01-01T02:00:00",
+        "Morning Shift"
+      ],
+      [
+        "1900-01-01T05:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "2Tons Boiler",
+    "document_no": "CHIENGUTRG03",
+    "title": "2 TONS/HR BOILER LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "2 TONS/HR BOILER LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG03"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Steam Pressure (bar)",
+        "Boiler Water Level (%)",
+        "Flue Gas Temperature (°C)",
+        "Water Level (%)",
+        "Flue Gas Temperature (°C)",
+        "Feedwater Pump Pressure (bar)",
+        "Oil Pump Working No 1/2",
+        "Feedwater Pump Working No 1/2"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "15:00:00"
+      ],
+      [
+        "16:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "WH Boiler",
+    "document_no": "CHIENGUTRG03",
+    "title": "3.5 TONS/HR WASTE HEAT BOILER LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "3.5 TONS/HR WASTE HEAT BOILER LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG03"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "From Engine-1 Temperature (°C)",
+        "From Engine-2 Temperature (°C)",
+        "From Engine-3 Temperature (°C)",
+        "To Chimney-1 Temperature (°C)",
+        "To Chimney-2 Temperature (°C)",
+        "To Chimney-3 Temperature (°C)",
+        "Boiler Steam Pressure (bar)",
+        "Boiler Water Level (%)",
+        "Level Control Valve Opening (%)",
+        "Feedwater Pump Working No 1/2"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "15:00:00"
+      ],
+      [
+        "16:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "WTP",
+    "document_no": "CHIENGUTRG06",
+    "title": "WATER TREATMENT PLANT LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "WATER TREATMENT PLANT LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG06"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Process Water Tank Level (%)",
+        "Process Water Pressure (bar)",
+        "Process Water Flow Rate (m3/hr)",
+        "Water Pump Frequency (Hz)",
+        "Water Leakage Check ?"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "15:00:00"
+      ],
+      [
+        "16:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "Air Compressor",
+    "document_no": "CHIENGUTRG01",
+    "title": "IR MH75 AIR COMPRESSOR LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "IR MH75 AIR COMPRESSOR LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG01"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Discharge Pressure (bar)",
+        "Airend Oil Temp. (°C)",
+        "Oil Sump Pressure (bar)",
+        "Running Hours",
+        "Loaded Hours"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "15:00:00"
+      ],
+      [
+        "16:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "Air Dryer",
+    "document_no": "CHIENGUTRG02",
+    "title": "IR TMS AIR DRYER LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "IR TMS AIR DRYER LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG02"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Dew Point (°C)",
+        "Air Outlet Pressure (bar)",
+        "Condenser Pressure HP (bar)",
+        "Evaporator Pressure LP (bar)"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "15:00:00"
+      ],
+      [
+        "16:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "Clivet Chiller",
+    "document_no": "CHIENGUTRG07",
+    "title": "CLIVET CHILLER LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "10:00",
+      "12:00",
+      "14:00",
+      "16:00",
+      "18:00",
+      "20:00",
+      "22:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "CLIVET CHILLER LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG07"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Chilled Water Inlet Temperature (°C)",
+        "Chilled Water Outlet Temperature (°C)",
+        "Chilled Water Inlet Pressure (bar)",
+        "Chilled Water Outlet Pressure (bar)",
+        "Compressor 1 Condenser Pressure HP (bar)",
+        "Compressor 1 Evaporator Pressure LP (bar)",
+        "Compressor 2 Condenser Pressure HP (bar)",
+        "Compressor 2 Evaporator Pressure LP (bar)"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "16:00:00"
+      ],
+      [
+        "18:00:00"
+      ],
+      [
+        "20:00:00"
+      ],
+      [
+        "22:00:00"
+      ],
+      [
+        "1900-01-01T00:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "VAM Chiller",
+    "document_no": "CHIENGUTRG07",
+    "title": "VAM CHILLER LOG REPORT",
+    "reading_times": [
+      "08:00",
+      "10:00",
+      "12:00",
+      "14:00",
+      "16:00",
+      "18:00",
+      "20:00",
+      "22:00"
+    ],
+    "shift_entries": [
+      "Morning Shift",
+      "Night Shift"
+    ],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "VAM CHILLER LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTRG07"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "Parameters",
+        "Steam Control Valve Opening (%)",
+        "Chilled Water Inlet Temperature (°C)",
+        "Chilled Water Outlet Temperature (°C)",
+        "Cooling Water Inlet Temperature (°C)",
+        "Cooling Water Outlet Temperature (°C)",
+        "High Temperature Generator (°C)",
+        "High Temp. Generator Vapour (°C)",
+        "U-Tube Temperature (°C)",
+        "Low Temperature Generator (°C)",
+        "Spray Solution Temperature (°C)",
+        "High Temp. Generator Top (°C)",
+        "High Temp. Generator Bottom (°C)",
+        "Spray Solution Concentration (%)",
+        "Vacuum (mmHg)",
+        "Instant TR Generated"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "14:00:00"
+      ],
+      [
+        "16:00:00"
+      ],
+      [
+        "18:00:00"
+      ],
+      [
+        "20:00:00"
+      ],
+      [
+        "22:00:00"
+      ],
+      [
+        "1900-01-01T00:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "Nitrogen",
+    "document_no": "CHIENGUTLOGNG01",
+    "title": "NITROGEN GENERATOR LOG REPORT",
+    "reading_times": [],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "DEPARTMENT",
+        "ENGINEERING",
+        "NITROGEN GENERATOR LOG REPORT"
+      ],
+      [
+        "DOCUMENT NO",
+        "CHIENGUTLOGNG01"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "YEAR"
+      ],
+      [
+        "DATE",
+        "NITROGEN GENERATOR 1",
+        "NITROGEN GENERATOR 2"
+      ],
+      [
+        "N2 Purity (%)",
+        "Air Inlet Pressure (bar)",
+        "Nitrogen Outlet Pressure (bar)",
+        "Operating Hours",
+        "Flow rate (m³/hr)",
+        "Total flow (m³)",
+        "N2 Purity (%)",
+        "Air Inlet Pressure (bar)",
+        "Nitrogen Outlet Pressure (bar)",
+        "Operating Hours",
+        "Flow rate (m³/hr)",
+        "Total flow (m³)",
+        "Operators Name"
+      ],
+      [
+        "1st"
+      ],
+      [
+        "2nd"
+      ],
+      [
+        "3rd"
+      ],
+      [
+        "4th"
+      ],
+      [
+        "5th"
+      ],
+      [
+        "6th"
+      ],
+      [
+        "7th"
+      ],
+      [
+        "8th"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "VAM Chiller_",
+    "document_no": "CHIENGUT07",
+    "title": "CHILLER LOGBOOK THERMAX (THDC2)",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "CHILLER LOGBOOK THERMAX (THDC2)",
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHIENGUT07"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "COMPRESSOR REPORT",
+        "EVAPORATOR REPORT",
+        "CONDENSER REPORT"
+      ],
+      [
+        "TIME",
+        "Chilled Water Flow rate",
+        "Chilled Water Inlet Temp. (°C)",
+        "Chilled Water Outlet Temp. (°C)",
+        "Chilled Water Inlet Pressure (bar)",
+        "Chilled Water Outlet Pressure (bar)",
+        "Hot/Cooling Water Flow rate",
+        "Hot/Cooling Water Inlet Temp.",
+        "Hot/Cooling Water Outlet Temp.",
+        "Hot/Cooling Water Inlet Pressure",
+        "Hot/Cooling Water Outlet Pressure",
+        "High Temp. Generator Vapour Temp.",
+        "U-tube Temp.",
+        "Low Temp. Generator",
+        "Spray Solution Temp.",
+        "High Temp. Generator Top Temp.",
+        "High Temp. Generator Bottom Temp.",
+        "Absolute Difference",
+        "%Steam Control Valve Opening",
+        "Concentration",
+        "Vacuum Pressure mmHg",
+        "Generator Fluid Level",
+        "Absorber Fluid Level",
+        "Evaporator Fluid Level",
+        "Steam Pressure before SCV",
+        "Operator"
+      ],
+      [
+        "Standard"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ]
+    ]
+  },
+  {
+    "area": "Utility 2",
+    "sheet": "Air Dryer IR",
+    "document_no": "CHIENGRGUT02",
+    "title": "AIR DRYER LOGBOOK",
+    "reading_times": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00"
+    ],
+    "shift_entries": [],
+    "header_rows_raw": [
+      [
+        "AIR DRYER LOGBOOK",
+        "DEPARTMENT",
+        "ENGINEERING"
+      ],
+      [
+        "REGISTER NO",
+        "CHIENGRGUT02"
+      ],
+      [
+        "DATE"
+      ],
+      [
+        "MONTH"
+      ],
+      [
+        "GENERAL CHECKING",
+        "TEMPERATURE (°C)"
+      ],
+      [
+        "TIME",
+        "Condensate Drain",
+        "Air Leakage",
+        "Water Leakage",
+        "Noise Level",
+        "Air Inlet Temp.",
+        "Air Outlet Temp.",
+        "Dew Point",
+        "Operator"
+      ],
+      [
+        "Standard"
+      ],
+      [
+        "08:00:00"
+      ],
+      [
+        "09:00:00"
+      ],
+      [
+        "10:00:00"
+      ],
+      [
+        "11:00:00"
+      ],
+      [
+        "12:00:00"
+      ],
+      [
+        "13:00:00"
+      ],
+      [
+        "14:00:00"
+      ]
+    ]
+  }
+]
