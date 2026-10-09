@@ -133,7 +133,7 @@ begin
       raise exception 'That equipment is not on this register.' using errcode = 'P0001';
     end if;
     if not new.is_demo then
-      new.minutes_late := greatest(0, floor(extract(epoch from (new.recorded_at - new.reading_for)) / 60))::int;
+      new.minutes_late := greatest(0, floor(extract(epoch from (now() - new.reading_for)) / 60))::int;
     end if;
   end if;
 
