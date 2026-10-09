@@ -162,19 +162,15 @@ $$;
 revoke execute on function public.readings_before_write() from public, anon, authenticated;
 
 -- signed-in users can never create demo rows
-drop policy readings_insert on public.readings;
-create policy readings_insert on public.readings
-  for insert to authenticated
+alter policy readings_insert on public.readings
   with check (
     public.has_role('operator', 'engineer', 'shift_manager', 'section_manager', 'admin')
     and recorded_by_type = 'person' and not is_demo
   );
-drop policy downtime_insert on public.downtime_events;
-create policy downtime_insert on public.downtime_events for insert to authenticated
+alter policy downtime_insert on public.downtime_events
   with check (public.has_role('operator', 'engineer', 'shift_manager', 'section_manager', 'admin')
               and recorded_by_type = 'person' and not is_demo);
-drop policy rcas_write on public.rcas;
-create policy rcas_write on public.rcas for insert to authenticated
+alter policy rcas_write on public.rcas
   with check (public.is_engineer_or_above() and not is_demo);
 
 -- Demo generator without trigger switching.
