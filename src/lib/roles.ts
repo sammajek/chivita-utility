@@ -30,6 +30,7 @@ export const NAV: NavItem[] = [
   { href: "/rca", label: "RCA", roles: [...ENGINEER_UP, "viewer"], ready: true },
   { href: "/pm", label: "PM", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
   { href: "/amc", label: "AMC", roles: [...ENGINEER_UP, "viewer"], ready: true },
+  { href: "/jobs", label: "Jobs & POs", roles: [...ENGINEER_UP, "viewer"], ready: true },
   { href: "/cleaning", label: "Cleaning", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
   { href: "/admin", label: "Admin", roles: ["admin", "section_manager"], ready: true },
 ];
