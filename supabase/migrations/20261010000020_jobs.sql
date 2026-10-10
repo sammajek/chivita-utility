@@ -63,6 +63,7 @@ create trigger item_orders_touch before update on public.item_orders for each ro
 create or replace function public.keep_record_stamp()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   new.recorded_by_type := old.recorded_by_type; new.recorded_by_id := old.recorded_by_id;
