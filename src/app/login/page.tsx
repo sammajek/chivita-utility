@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { LoginForm } from "./LoginForm";
 
@@ -15,7 +16,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <LoginForm next={next ?? "/"} />
         </div>
         <p className="mt-6 text-center text-xs text-gray-500">
-          No account? Ask the section manager or app admin to add you.
+          No account?{" "}
+          <Link href="/signup" className="font-medium text-brand-blue underline">
+            Request access
+          </Link>{" "}
+          — an admin activates it.
         </p>
       </div>
     </main>
