@@ -15,6 +15,8 @@ logged in [`docs/decisions.md`](docs/decisions.md).
 | 1d | On-duty check-in/out with handover, flags every 5 min, escalation ladder, daily digest | done (emails queue until a provider is approved) |
 | 1e | Downtime (603-001 lists) and RCA, MTTR/MTBF/availability, dashboard | done |
 
+Phase 2 has started: **Preventive maintenance** is done (277 tasks from the PM register).
+
 The test database holds **DEMO** data (14 days of readings, downtime, RCAs), labelled DEMO on every screen.
 
 ## Screens
@@ -27,6 +29,7 @@ The test database holds **DEMO** data (14 days of readings, downtime, RCAs), lab
 | Flags `/flags` | everyone | Missing readings, out-of-spec values, no check-in, ageing downtime, overdue RCAs |
 | Downtime `/downtime` | operators and up | Downtime log; RCA required automatically at ≥ 4 h or ≥ 3 repeats |
 | RCA `/rca` | engineers and up | 5-Whys, 6M, actions, cost, effectiveness check |
+| PM `/pm` | everyone (entry: operators and up) | CHIENGUTRG08 PM log: tick √ / -- / X per task and period; schedule (last done, next due) and adherence % |
 | Admin `/admin` | managers and admin | Users and roles, items to review, equipment, limits, register monitoring, settings |
 
 ## Email alerts

@@ -38,6 +38,18 @@ Each entry: date, decision, who decided, notes.
   to that provider). The sender is ready for Resend; M365 SMTP can be added.
 - **Demo data:** generated in the test database and flagged `is_demo`; users cannot create demo rows.
 
+## 2026-10-10: Preventive maintenance (Phase 2 started without waiting, per the owner's instruction)
+- PM tasks come from `seed_data/pm_task_library.csv` (277 rows, CHIENGUTRG08), mapped to equipment through the PM names.
+  10 names stay unmapped for the owner (boreholes, degassers by borehole, flowmeters, pressure gauges, relief valves,
+  steam traps, distribution line, "General").
+- Periods: daily = log day (07:00–07:00); weeks start Sunday (as the paper log); months, quarters, half-years, years by calendar.
+- Codes as on paper: Done OK (√), Not done (--), Done not OK (X). "Not done" and "Done not OK" need a note;
+  "Done not OK" opens a follow-up flag.
+- Adherence = PMs carried out (√ or X) ÷ PMs due, for periods that have ended; "--" and blanks count as missed.
+- Missed-PM flags start only from the date set in Admin → Settings → `pm_monitor_from` (off until go-live).
+- Running-hours services (2,000 / 4,000 / 8,000 / 16,000 h) are shown on the task; automatic triggering from compressor
+  running-hour readings is a later step.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
