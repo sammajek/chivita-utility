@@ -23,7 +23,7 @@ const ENGINEER_UP: readonly Role[] = ["engineer", "shift_manager", "section_mana
 
 export const NAV: NavItem[] = [
   { href: "/", label: "Dashboard", roles: ALL, ready: true },
-  { href: "/registers", label: "Registers", roles: ["operator", ...ENGINEER_UP], ready: false },
+  { href: "/registers", label: "Registers", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
   { href: "/duty", label: "On duty", roles: ENGINEER_UP, ready: false },
   { href: "/downtime", label: "Downtime", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: false },
   { href: "/rca", label: "RCA", roles: [...ENGINEER_UP, "viewer"], ready: false },
