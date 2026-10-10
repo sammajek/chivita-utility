@@ -29,6 +29,8 @@ const KIND: Record<string, string> = {
   no_checkin: "No check-in",
   downtime_open: "Downtime open",
   rca_overdue: "RCA overdue",
+  pm_overdue: "PM not recorded",
+  pm_followup: "PM follow-up",
 };
 const SEV: Record<string, string> = { critical: "border-l-crit", warning: "border-l-warn", info: "border-l-gray-300" };
 const LEVEL = ["Reminder", "Escalated to on-duty engineer", "Escalated to shift manager"];
