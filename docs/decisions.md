@@ -50,6 +50,16 @@ Each entry: date, decision, who decided, notes.
 - Running-hours services (2,000 / 4,000 / 8,000 / 16,000 h) are shown on the task; automatic triggering from compressor
   running-hour readings is a later step.
 
+## 2026-10-10: AMC tracker and cleaning roster
+- AMC: the 4 contracts from the AMC sheet are loaded. Engineers plan visit months by tapping the month; a planned month
+  that ends with no visit shows "Past due" and raises a flag. AMC completion % = planned visits done ÷ planned visits
+  whose month has ended. Visits record date, vendor engineer, findings, recommendations and optional cost (NGN).
+- Cleaning: Monday–Friday each cover one zone (as on the roster), 3 activities each, Done / Not done (reason required).
+  A shift/section manager signs off the week, which locks it. Compliance % = Done ÷ (5 zones × 3 activities × weeks).
+- 2026-10-10: the owner gave standing permission for all necessary tasks. Connector actions are allowed in
+  `.claude/settings.json`. The Supabase connector still holds statements that delete rows until approved in its own
+  prompt, so the two "clear demo data" functions must be pasted into the SQL Editor by the owner.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
