@@ -6,6 +6,7 @@ import { fieldsFor, loadRegister } from "@/lib/data/registers";
 import { defaultSlot, logDateOf, slotDue, slotKeys, slotLabel } from "@/lib/registers";
 import { formatLagos } from "@/lib/time";
 import type { Reading } from "@/lib/types";
+import { Corrections } from "./Corrections";
 import { EntryForm } from "./EntryForm";
 
 export const dynamic = "force-dynamic";
@@ -122,6 +123,15 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
         existing={existing}
         canEnter={canEnter}
       />
+      {canEnter && (
+        <Corrections
+          fields={fields}
+          existing={existing}
+          path={`/registers/${key}`}
+          userId={profile.id}
+          isEngineer={profile.role !== "operator"}
+        />
+      )}
     </div>
   );
 }

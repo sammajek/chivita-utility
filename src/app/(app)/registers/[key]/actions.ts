@@ -58,19 +58,33 @@ export async function saveReadings(_prev: SaveState, form: FormData): Promise<Sa
   return { ok: true, saved: rows.length };
 }
 
-export async function amendReading(_prev: SaveState, form: FormData): Promise<SaveState> {
+/**
+ * Corrects or voids a saved reading. Both need a reason, which the database
+ * writes to the audit log with the old and new values.
+ */
+export async function correctReading(_prev: { ok?: string; error?: string }, form: FormData): Promise<{ ok?: string; error?: string }> {
   const supabase = await createClient();
-  const isNum = form.get("numeric") === "1";
-  const value = String(form.get("value") ?? "").trim();
-  const { error } = await supabase.rpc("amend_reading", {
-    p_id: String(form.get("id")),
-    p_value_num: isNum ? Number(value) : null,
-    p_value_text: isNum ? null : value,
-    p_comment: String(form.get("comment") ?? "").trim() || null,
-    p_action: null,
-    p_reason: String(form.get("reason") ?? ""),
-  } as never);
-  if (error) return { error: error.message };
+  const id = String(form.get("id"));
+  const reason = String(form.get("reason") ?? "").trim();
+  if (reason.length < 5) return { error: "Give a reason (5+ characters)." };
+  if (form.get("mode") === "void") {
+    const { error } = await supabase.rpc("void_reading", { p_id: id, p_reason: reason } as never);
+    if (error) return { error: error.message };
+  } else {
+    const isNum = form.get("numeric") === "1";
+    const value = String(form.get("value") ?? "").trim().replace(",", ".");
+    if (value === "") return { error: "Enter the corrected value." };
+    if (isNum && Number.isNaN(Number(value))) return { error: `"${value}" is not a number.` };
+    const { error } = await supabase.rpc("amend_reading", {
+      p_id: id,
+      p_value_num: isNum ? Number(value) : null,
+      p_value_text: isNum ? null : value,
+      p_comment: String(form.get("comment") ?? "").trim() || null,
+      p_action: null,
+      p_reason: reason,
+    } as never);
+    if (error) return { error: error.message };
+  }
   revalidatePath(String(form.get("path") || "/registers"));
-  return { ok: true };
+  return { ok: form.get("mode") === "void" ? "Voided." : "Corrected." };
 }
