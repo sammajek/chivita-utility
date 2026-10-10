@@ -78,7 +78,7 @@ begin
     select wk, z.id, a.id, case when r < 0.9 then 'done' else 'not_done' end,
            case when r >= 0.9 then 'DEMO: area occupied by contractors' end, 'person', p_operator,
            public.lagos_ts(wk + z.day_of_week, time '16:00'), public.lagos_ts(wk + z.day_of_week, time '16:00'), true
-      from public.cleaning_zones z cross join public.cleaning_activities a cross join lateral (select random() r) x
+      from public.cleaning_zones z cross join public.cleaning_activities a cross join lateral (select random() + 0 * z.id + 0 * a.id as r) x
     on conflict do nothing;
     insert into public.cleaning_signoffs (week_start, signed_by, signed_at, comment, is_demo)
     values (wk, p_manager, public.lagos_ts(wk + 6, time '10:00'), 'DEMO sign-off', true)
