@@ -74,9 +74,14 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
           </p>
           {register.description && <p className="mt-1 text-xs text-warn">{register.description}</p>}
         </div>
+        <div className="flex gap-2">
+        <Link href={`/registers/${key}/trend${assetId ? `?asset=${assetId}` : ""}`} className="btn-secondary text-sm">
+          Trends
+        </Link>
         <Link href={`/registers/${key}/sheet?date=${logDate}${assetId ? `&asset=${assetId}` : ""}`} className="btn-secondary text-sm">
           Day sheet / print
         </Link>
+        </div>
       </div>
 
       <form className="card grid gap-3 sm:grid-cols-3" action={`/registers/${key}`}>
