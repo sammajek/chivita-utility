@@ -28,7 +28,7 @@ export const NAV: NavItem[] = [
   { href: "/flags", label: "Flags", roles: ALL, ready: true },
   { href: "/downtime", label: "Downtime", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
   { href: "/rca", label: "RCA", roles: [...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/admin", label: "Admin", roles: ["admin", "section_manager"], ready: false },
+  { href: "/admin", label: "Admin", roles: ["admin", "section_manager"], ready: true },
 ];
 
 export function navFor(role: Role | null | undefined): NavItem[] {
