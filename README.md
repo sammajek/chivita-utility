@@ -15,7 +15,9 @@ logged in [`docs/decisions.md`](docs/decisions.md).
 | 1d | On-duty check-in/out with handover, flags every 5 min, escalation ladder, daily digest | done (emails queue until a provider is approved) |
 | 1e | Downtime (603-001 lists) and RCA, MTTR/MTBF/availability, dashboard | done |
 
-Phase 2 so far: **Preventive maintenance** (277 tasks), **AMC tracker** and **cleaning roster** are done.
+Phase 2 so far: **Preventive maintenance** (277 tasks), **AMC tracker**, **cleaning roster** and **job requests / item orders** are done.
+
+**To put the app online, follow [`docs/go-live.md`](docs/go-live.md).**
 
 The test database holds **DEMO** data (14 days of readings, downtime, RCAs), labelled DEMO on every screen.
 
@@ -31,6 +33,7 @@ The test database holds **DEMO** data (14 days of readings, downtime, RCAs), lab
 | RCA `/rca` | engineers and up | 5-Whys, 6M, actions, cost, effectiveness check |
 | PM `/pm` | everyone (entry: operators and up) | CHIENGUTRG08 PM log: tick √ / -- / X per task and period; schedule (last done, next due) and adherence % |
 | AMC `/amc` | engineers and up | AMC plan per month (Planned / Done / Past due), vendor visits, completion % |
+| Jobs & POs `/jobs` | engineers and up | Job requests and item orders from the Excel tracker: PO → execution → JCC → payment |
 | Cleaning `/cleaning` | everyone (entry: operators and up) | CHI/ENG/UTI/CLN/001 roster: Mon–Fri zones, Done / Not done, manager sign-off locks the week |
 | Admin `/admin` | managers and admin | Users and roles, items to review, equipment, limits, register monitoring, settings |
 
