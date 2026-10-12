@@ -24,6 +24,7 @@ interface FlagRow {
 
 const KIND: Record<string, string> = {
   reading_missing: "Missing reading",
+  reading_early: "Early entry",
   out_of_spec: "Out of spec",
   critical: "Critical value",
   no_checkin: "No check-in",

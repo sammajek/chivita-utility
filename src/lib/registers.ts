@@ -41,6 +41,29 @@ export function slotLabel(kind: SlotKind, slot: string): string {
   return SLOT_LABEL[slot] ?? slot;
 }
 
+/** When a slot opens for entry. Mirrors public.slot_opens. Entries before this are flagged as early. */
+export function slotOpens(kind: SlotKind, logDate: string, slot: string, earlyMin = 15): Date {
+  if (kind === "time") return new Date(slotDue(kind, logDate, slot).getTime() - earlyMin * 60_000);
+  if (kind === "shift") return slot === "day" ? lagosInstant(logDate, 7) : lagosInstant(logDate, 19);
+  return lagosInstant(logDate, 7);
+}
+
+export type SlotState = "done" | "open" | "due" | "missing" | "upcoming";
+
+/**
+ * upcoming: not open yet (entering now = early entry) · open: open, before its time · due: past its time,
+ * within the grace period · missing: grace period over with nothing recorded · done: recorded.
+ */
+export function slotState(kind: SlotKind, logDate: string, slot: string, filled: boolean, now = new Date(),
+                          earlyMin = 15, missingAfterMin = 60): SlotState {
+  if (filled) return "done";
+  const t = now.getTime();
+  if (t < slotOpens(kind, logDate, slot, earlyMin).getTime()) return "upcoming";
+  const due = slotDue(kind, logDate, slot).getTime();
+  if (t < due) return "open";
+  return t < due + missingAfterMin * 60_000 ? "due" : "missing";
+}
+
 /** The slot an operator most likely wants now: the latest slot already due (or the first one). */
 export function defaultSlot(kind: SlotKind, times: string[] | null, logDate: string, now = new Date()): string {
   const keys = slotKeys(kind, times);
@@ -49,9 +72,10 @@ export function defaultSlot(kind: SlotKind, times: string[] | null, logDate: str
     return h >= 7 && h < 19 ? "day" : "night";
   }
   if (kind !== "time") return keys[0];
+  // the latest slot that is already open for entry (opens 15 min before its time)
   let best = keys[0];
   for (const k of keys) {
-    if (slotDue(kind, logDate, k).getTime() <= now.getTime() + 15 * 60_000) best = k;
+    if (slotOpens(kind, logDate, k).getTime() <= now.getTime()) best = k;
   }
   return best;
 }

@@ -3,13 +3,25 @@ import { notFound } from "next/navigation";
 import { requireProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { fieldsFor, loadRegister } from "@/lib/data/registers";
-import { defaultSlot, logDateOf, slotDue, slotKeys, slotLabel } from "@/lib/registers";
+import { defaultSlot, logDateOf, slotDue, slotKeys, slotLabel, slotOpens, slotState, type SlotState } from "@/lib/registers";
 import { formatLagos } from "@/lib/time";
 import type { Reading } from "@/lib/types";
 import { Corrections } from "./Corrections";
 import { EntryForm } from "./EntryForm";
 
 export const dynamic = "force-dynamic";
+
+const SLOT_STYLE: Record<SlotState, string> = {
+  done: "border-green-300 bg-green-50 text-ok",
+  open: "border-brand-blue bg-blue-50 text-brand-blue",
+  due: "border-amber-300 bg-amber-50 text-warn",
+  missing: "border-red-300 bg-red-50 text-crit",
+  upcoming: "border-gray-200 bg-white text-gray-400",
+};
+const SLOT_TITLE: Record<SlotState, string> = {
+  done: "Recorded", open: "Open for entry", due: "Due now", missing: "Missing: past the grace period",
+  upcoming: "Not open yet: entering now will be flagged as early",
+};
 
 type Search = { asset?: string; date?: string; section?: string; slot?: string };
 
@@ -32,6 +44,13 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
   const fields = fieldsFor(section, assetId, multiAsset);
 
   const supabase = await createClient();
+  const { data: timing } = await supabase.from("app_settings").select("key, value")
+    .in("key", ["reading_early_window_min", "reading_missing_after_min"]);
+  const setting = (k: string, d: number) => Number(timing?.find((t) => t.key === k)?.value ?? d);
+  const earlyMin = setting("reading_early_window_min", 15);
+  const missingMin = setting("reading_missing_after_min", 60);
+  const now = new Date();
+  const opens = slotOpens(section.slot_kind, logDate, slot, earlyMin);
   const { data: rows } = await supabase
     .from("readings")
     .select("id, field_id, asset_id, log_date, slot_key, reading_for, value_num, value_text, status, comment, action_taken, minutes_late, recorded_by_id, recorded_at, amended, is_demo")
@@ -107,14 +126,21 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
       </form>
 
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {keys.map((k) => (
-          <Link key={k} href={href({ slot: k })}
-            className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${k === slot ? "border-brand-red bg-brand-red text-white" : filled.has(k) ? "border-green-300 bg-green-50 text-ok" : "border-gray-300 bg-white"}`}>
-            {slotLabel(section.slot_kind, k)}{filled.has(k) && k !== slot ? " ✓" : ""}
-          </Link>
-        ))}
+        {keys.map((k) => {
+          const st = slotState(section.slot_kind, logDate, k, filled.has(k), now, earlyMin, missingMin);
+          return (
+            <Link key={k} href={href({ slot: k })} title={SLOT_TITLE[st]}
+              className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${SLOT_STYLE[st]} ${k === slot ? "ring-2 ring-brand-red ring-offset-1" : ""}`}>
+              {slotLabel(section.slot_kind, k)}{st === "done" ? " ✓" : st === "missing" ? " !" : ""}
+            </Link>
+          );
+        })}
       </div>
-      <p className="text-xs text-gray-500">Due {formatLagos(due)} · green = already entered</p>
+      <p className="text-xs text-gray-500">
+        Due {formatLagos(due)} · opens {formatLagos(opens)} · flagged missing {missingMin} min after the slot time.
+        <span className="ml-1">Key: <span className="text-ok">✓ done</span> · <span className="text-brand-blue">open</span> ·
+        <span className="text-warn"> due</span> · <span className="text-crit">! missing</span> · <span className="text-gray-400">not open yet</span></span>
+      </p>
 
       <EntryForm
         key={`${assetId}-${logDate}-${section.id}-${slot}`}
@@ -128,6 +154,7 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
         existing={existing}
         canEnter={canEnter}
         userId={profile.id}
+        opensAt={opens.toISOString()}
       />
       {canEnter && (
         <Corrections

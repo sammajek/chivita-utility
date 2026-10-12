@@ -86,7 +86,8 @@ end $$;
 reset role;
 
 -- Flag job: monitored register with no readings yesterday → missing flags; RCA overdue flag.
-update public.registers set monitor = true where key = 'u1-boiler';
+update public.registers set monitor = (key = 'u1-boiler');
+update public.app_settings set value = 'null'::jsonb where key = 'reading_monitor_from';  -- flag past slots in this test
 do $$
 declare res jsonb; n int;
 begin
@@ -116,14 +117,14 @@ end $$;
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000d1', true);
 do $$
-declare f public.flags; fld uuid; sec uuid;
+declare f public.flags; fld uuid;
 begin
   select * into f from public.flags where kind = 'reading_missing' order by due_at limit 1;
-  sec := split_part(f.ref_key, ':', 2)::uuid;
-  select id into fld from public.register_fields where section_id = sec and label like 'Steam Pressure%';
+  assert f.section_id is not null and f.detail like '%BLR-01%', 'missing flag lists the machines';
+  select id into fld from public.register_fields where section_id = f.section_id and label like 'Steam Pressure%';
+  -- every boiler on the register is expected; enter them all (late)
   insert into public.readings (field_id, asset_id, log_date, slot_key, reading_for, value_num)
-  values (fld, (select id from public.assets where code = 'BLR-01'), split_part(f.ref_key, ':', 3)::date,
-          substring(f.ref_key from '^miss:[^:]+:[^:]+:(.*)$'), f.due_at, 8.2);
+  select fld, ea.asset_id, f.log_date, f.slot_key, f.due_at, 8.2 from public.slot_expected_assets(f.section_id, f.due_at) ea;
 end $$;
 reset role;
 do $$

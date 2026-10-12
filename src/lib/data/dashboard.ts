@@ -11,6 +11,8 @@ export interface DashboardData {
   openDowntime: number;
   onDuty: { name: string; areas: string[] }[];
   outOfSpec24h: number;
+  early24h: number;
+  missingOpen: number;
   kpis: (AssetKpi & { code: string; name: string })[];
   fleet: { events: number; unplannedHours: number; mttr: number | null; availability: number | null };
   pareto: { label: string; hours: number; events: number }[];
@@ -27,7 +29,7 @@ export async function loadDashboard(from: Date, to: Date, area: string | null): 
     supabase.rpc("register_slots", { p_log_date: today } as never),
     supabase.from("register_fields").select("id, section_id"),
     supabase.from("readings").select("field_id, slot_key").eq("log_date", today).is("voided_at", null).limit(50000),
-    supabase.from("flags").select("severity, is_demo").is("resolved_at", null),
+    supabase.from("flags").select("severity, kind, is_demo, raised_at").or("resolved_at.is.null,kind.eq.reading_early"),
     supabase.from("duty_sessions").select("areas, checked_out_at, profile:profiles(full_name)").is("checked_out_at", null),
     supabase.from("downtime_events")
       .select("asset_id, downtime_type, start_at, end_at, override_hours, status, failure_mode, area, is_demo, asset:assets(code, name, area)")
@@ -87,7 +89,12 @@ export async function loadDashboard(from: Date, to: Date, area: string | null): 
     return monday.toISOString().slice(0, 10);
   };
 
-  const flagRows = (flags.data ?? []) as { severity: string; is_demo: boolean }[];
+  const allFlags = (flags.data ?? []) as { severity: string; kind: string; is_demo: boolean; raised_at: string }[];
+  const dayAgo = Date.now() - 86_400_000;
+  const early24h = allFlags.filter((f) => f.kind === "reading_early" && new Date(f.raised_at).getTime() > dayAgo).length;
+  // open flags only (early-entry flags are included above even when resolved, for the 24 h count)
+  const { data: openRows } = await supabase.from("flags").select("severity, kind, is_demo").is("resolved_at", null);
+  const flagRows = (openRows ?? []) as { severity: string; kind: string; is_demo: boolean }[];
   return {
     compliance: { due: dueSlots.length, filled, pct: dueSlots.length ? (filled / dueSlots.length) * 100 : null },
     openFlags: flagRows.length,
@@ -95,6 +102,8 @@ export async function loadDashboard(from: Date, to: Date, area: string | null): 
     openDowntime: events.filter((e) => e.status !== "Closed").length,
     onDuty: ((duty.data ?? []) as unknown as { areas: string[]; profile: { full_name: string } | null }[]).map((d) => ({ name: d.profile?.full_name ?? "", areas: d.areas })),
     outOfSpec24h: oos.count ?? 0,
+    early24h,
+    missingOpen: flagRows.filter((f) => f.kind === "reading_missing").length,
     kpis,
     fleet: {
       events: unplanned.length,

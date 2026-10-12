@@ -32,11 +32,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         {d.hasDemo && <span className="rounded bg-purple-100 px-2 py-1 text-xs font-bold uppercase text-purple-700">Includes DEMO data</span>}
       </section>
 
-      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <section className="grid grid-cols-2 gap-3 lg:grid-cols-3">
         <StatTile label="Readings on time today" value={pct(d.compliance.pct)} sub={`${d.compliance.filled} of ${d.compliance.due} slots due so far`}
           tone={d.compliance.pct === null ? "default" : d.compliance.pct >= 95 ? "ok" : d.compliance.pct >= 80 ? "warn" : "crit"} />
         <StatTile label="Open flags" value={String(d.openFlags)} sub={`${d.criticalFlags} critical`} tone={d.criticalFlags ? "crit" : d.openFlags ? "warn" : "ok"} />
         <StatTile label="Out of spec (24 h)" value={String(d.outOfSpec24h)} sub="values outside the standard" tone={d.outOfSpec24h ? "warn" : "ok"} />
+        <StatTile label="Missing slots" value={String(d.missingOpen)} sub="nothing recorded 1 h after slot time" tone={d.missingOpen ? "crit" : "ok"} />
+        <StatTile label="Early entries (24 h)" value={String(d.early24h)} sub="recorded before the slot opened" tone={d.early24h ? "warn" : "ok"} />
         <StatTile label="Open downtime" value={String(d.openDowntime)} sub="events not closed" tone={d.openDowntime ? "warn" : "ok"} />
       </section>
 

@@ -18,6 +18,8 @@ interface Props {
   existing: Record<string, Reading>;
   canEnter: boolean;
   userId: string;
+  /** When this slot opens; entries before it are flagged as early. */
+  opensAt: string;
 }
 
 export function EntryForm(p: Props) {
@@ -63,6 +65,10 @@ export function EntryForm(p: Props) {
   }
 
   const filledFromPhoto = Object.keys(fromPhoto).length;
+  const minutesEarly = Math.ceil((new Date(p.opensAt).getTime() - Date.now()) / 60_000);
+  const early = p.canEnter && pending_.length > 0 && minutesEarly > 0;
+  const opensLabel = new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lagos", hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" })
+    .format(new Date(p.opensAt));
 
   return (
     <form action={action} className="space-y-3">
@@ -75,6 +81,13 @@ export function EntryForm(p: Props) {
       <input type="hidden" name="numeric_fields" value={JSON.stringify(numeric)} />
       <input type="hidden" name="photo_path" value={capture?.photoPath ?? ""} />
       <input type="hidden" name="photo_fields" value={JSON.stringify(Object.keys(fromPhoto))} />
+
+      {early && (
+        <div role="alert" className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-warn">
+          <b>This slot is not open yet.</b> It opens at {opensLabel} ({minutesEarly} min from now). Readings entered now
+          will be saved but <b>flagged as an early entry</b> for the engineer to check. Record the value when you actually read it.
+        </div>
+      )}
 
       {p.canEnter && ocrFields.length > 0 && (
         <div className="card space-y-2">
@@ -178,7 +191,7 @@ export function EntryForm(p: Props) {
       {state.ok && <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-ok">Saved {state.saved} value(s).</p>}
       {p.canEnter && pending_.length > 0 && (
         <button type="submit" disabled={pending} className="btn-primary sticky bottom-3 w-full shadow-lg">
-          {pending ? "Saving…" : filledFromPhoto ? `I have checked the values, save` : `Save ${pending_.length > 1 ? "readings" : "reading"}`}
+          {pending ? "Saving…" : early ? "Save anyway (will be flagged early)" : filledFromPhoto ? `I have checked the values, save` : `Save ${pending_.length > 1 ? "readings" : "reading"}`}
         </button>
       )}
     </form>
