@@ -60,6 +60,21 @@ Each entry: date, decision, who decided, notes.
   `.claude/settings.json`. The Supabase connector still holds statements that delete rows until approved in its own
   prompt, so the two "clear demo data" functions must be pasted into the SQL Editor by the owner.
 
+## 2026-10-12: Water quality, calibration, and "snap the HMI"
+- Water quality: the CHICQARG24 plan is loaded (112 tests at 18 sampling points). Rule: outside the specification =
+  "out of spec" (flag, comment required); inside but at/above the alert limit = "alert"; "< 100" means 100 is out of spec.
+  21 tests have no or unclear limits and are marked "to be confirmed".
+- Calibration: no instrument list was supplied, so 6 DEMO instruments show how it works. Next due = last calibration +
+  interval; a flag is raised 30 days before (Admin → Settings → calibration_warn_days) and when overdue.
+- Snap the HMI (owner request): the operator photographs the equipment screen; text is read **on the phone**
+  (Tesseract.js, engine and English model served by the app itself — the photo is never sent to an outside AI service).
+  Numbers are matched to the form's fields by label words, HMI abbreviations, unit and plausible range; matched boxes are
+  highlighted "from photo — check" and the operator confirms before saving. Unclear numbers are left blank rather than
+  guessed. Each reading records entry_method (manual/photo) and the photo is kept in the private "hmi-photos" bucket
+  as evidence.
+- Option for later (needs owner approval and costs per photo): a cloud vision AI would read difficult screens
+  (seven-segment displays, glare) more reliably. It would mean sending plant photos to that provider.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.

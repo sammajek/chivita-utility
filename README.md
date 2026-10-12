@@ -26,7 +26,7 @@ The test database holds **DEMO** data (14 days of readings, downtime, RCAs), lab
 | Page | Who | What |
 |---|---|---|
 | Dashboard `/` | everyone | Compliance, open flags, who is on duty, KPIs per equipment, downtime Pareto and trend |
-| Registers `/registers` | everyone (entry: operators and up) | One form per paper register; day sheet for printing; trends and CSV |
+| Registers `/registers` | everyone (entry: operators and up) | One form per paper register; **snap the HMI** to fill values from a photo; day sheet for printing; trends and CSV |
 | On duty `/duty` | everyone | Check in/out by shift and area; handover note on check-out |
 | Flags `/flags` | everyone | Missing readings, out-of-spec values, no check-in, ageing downtime, overdue RCAs |
 | Downtime `/downtime` | operators and up | Downtime log; RCA required automatically at ≥ 4 h or ≥ 3 repeats |
@@ -34,6 +34,8 @@ The test database holds **DEMO** data (14 days of readings, downtime, RCAs), lab
 | PM `/pm` | everyone (entry: operators and up) | CHIENGUTRG08 PM log: tick √ / -- / X per task and period; schedule (last done, next due) and adherence % |
 | AMC `/amc` | engineers and up | AMC plan per month (Planned / Done / Past due), vendor visits, completion % |
 | Jobs & POs `/jobs` | engineers and up | Job requests and item orders from the Excel tracker: PO → execution → JCC → payment |
+| Water quality `/water` | everyone (entry: operators and up) | CHICQARG24 sampling plan: results judged in spec / alert / out of spec, flags |
+| Calibration `/calibration` | engineers and up | Instrument register: next due = last calibration + interval, overdue flags |
 | Cleaning `/cleaning` | everyone (entry: operators and up) | CHI/ENG/UTI/CLN/001 roster: Mon–Fri zones, Done / Not done, manager sign-off locks the week |
 | Admin `/admin` | managers and admin | Users and roles, items to review, equipment, limits, register monitoring, settings |
 
