@@ -35,6 +35,7 @@ create or replace function public.water_status(t public.water_tests, v numeric)
 returns text
 language sql
 immutable
+set search_path = public
 as $$
   select case
     when v is null then 'info'
