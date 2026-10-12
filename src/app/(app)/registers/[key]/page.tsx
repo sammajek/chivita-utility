@@ -127,6 +127,7 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
         fieldAssetCodes={fieldAssetCodes}
         existing={existing}
         canEnter={canEnter}
+        userId={profile.id}
       />
       {canEnter && (
         <Corrections

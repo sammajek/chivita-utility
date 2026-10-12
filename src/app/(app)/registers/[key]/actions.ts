@@ -23,6 +23,8 @@ export async function saveReadings(_prev: SaveState, form: FormData): Promise<Sa
   const readingFor = String(form.get("reading_for"));
   const fieldAsset = JSON.parse(String(form.get("field_assets") || "{}")) as Record<string, string>;
   const numeric = new Set(JSON.parse(String(form.get("numeric_fields") || "[]")) as string[]);
+  const photoPath = String(form.get("photo_path") || "") || null;
+  const photoFields = new Set(JSON.parse(String(form.get("photo_fields") || "[]")) as string[]);
 
   const rows = [];
   for (const [k, raw] of form.entries()) {
@@ -44,6 +46,8 @@ export async function saveReadings(_prev: SaveState, form: FormData): Promise<Sa
       comment: String(form.get(`c:${fieldId}`) ?? "").trim() || null,
       action_taken: String(form.get(`a:${fieldId}`) ?? "").trim() || null,
       recorded_by_type: "person",
+      entry_method: photoFields.has(fieldId) ? "photo" : "manual",
+      photo_path: photoPath,
     });
   }
   if (rows.length === 0) return { error: "Nothing to save. Enter at least one value." };
