@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { enhanceForOcr } from "@/lib/ocr-image";
 import { matchOcr, rowsFromWords, type MatchResult, type OcrField, type OcrWord } from "@/lib/ocr-match";
 
@@ -57,6 +56,7 @@ export function HmiCapture({ fields, folder, onResult }: {
       setBusy("Uploading photo…");
       let photoPath: string | null = null;
       try {
+        const { createClient } = await import("@/lib/supabase/client");
         const supabase = createClient();
         const path = `${folder}/${Date.now()}.jpg`;
         const { error: upErr } = await supabase.storage.from("hmi-photos").upload(path, jpeg, { contentType: "image/jpeg" });
