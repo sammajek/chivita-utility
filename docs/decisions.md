@@ -75,6 +75,22 @@ Each entry: date, decision, who decided, notes.
 - Option for later (needs owner approval and costs per photo): a cloud vision AI would read difficult screens
   (seven-segment displays, glare) more reliably. It would mean sending plant photos to that provider.
 
+## 2026-10-12: Reading slot timing and flags (owner request)
+- **Missing:** a slot is flagged when nothing has been recorded **60 minutes after its time** (owner: "flagged after 1 hr").
+  Setting: Admin → Settings → `reading_missing_after_min`.
+- **Early entry:** each slot **opens 15 minutes before its time** (to allow for the walking round). A reading entered before the slot
+  opens is saved but **flagged as an early entry** (owner: "recorded before time … should be flagged"), with who entered it and how
+  many minutes early. The entry screen warns first. More than a day ahead is refused (wrong date). Setting: `reading_early_window_min`.
+  Shift slots open at the start of the shift; daily slots at 07:00 of the log day.
+- **Applies to every Utility 1 and 2 register** (all switched on; one can be switched off under Admin → Registers if not in use).
+- **Each machine counts:** on registers that cover several machines (e.g. air compressors 2–12), every machine must be recorded;
+  the flag lists the machines still missing and closes itself when the last one is entered.
+- **Machines that are down are not expected:** a machine with an open downtime event at the slot time (breakdown, planned
+  maintenance, idle/standby) is skipped, so operators log "standby" once in Downtime instead of getting flags every hour.
+- **The reading time comes from the slot, not the phone**, and lateness/earliness are measured with the server clock.
+- **Go-live cut-off:** flags start from `reading_monitor_from` (set when this was switched on), so past days are not flooded.
+- Escalation e-mails list at most 30 items, then "…and N more".
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
