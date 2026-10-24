@@ -27,6 +27,13 @@ function times(f: FormData) {
   return { start, end };
 }
 
+function attendedBy(f: FormData) {
+  const parts = f.getAll("attended_by").map(String).filter(Boolean);
+  const other = s(f, "attended_by_other");
+  if (other) parts.push(`Other: ${other}`);
+  return parts.join("; ") || null;
+}
+
 export async function saveDowntime(_prev: FormState, f: FormData): Promise<FormState> {
   const id = s(f, "id");
   const { start, end } = times(f);
@@ -44,7 +51,7 @@ export async function saveDowntime(_prev: FormState, f: FormData): Promise<FormS
     override_reason: s(f, "override_reason"),
     immediate_action: s(f, "immediate_action"),
     spares_used: s(f, "spares_used"),
-    attended_by: s(f, "attended_by"),
+    attended_by: attendedBy(f),
     production_impact: s(f, "production_impact"),
     status: s(f, "status") ?? "Open",
     remarks: s(f, "remarks"),
@@ -58,7 +65,7 @@ export async function saveDowntime(_prev: FormState, f: FormData): Promise<FormS
     : await supabase.from("downtime_events").insert({ ...row, recorded_by_type: "person" } as never).select("id").single();
   if (error) return { error: error.message.includes("check constraint") ? "Override hours need a reason." : error.message };
   revalidatePath("/downtime");
-  redirect(`/downtime?saved=${(data as { id: string }).id}`);
+  redirect(`/downtime/${(data as { id: string }).id}`);
 }
 
 export async function saveRca(_prev: FormState, f: FormData): Promise<FormState> {
@@ -88,4 +95,44 @@ export async function saveRca(_prev: FormState, f: FormData): Promise<FormState>
   if (error) return { error: error.message };
   revalidatePath("/rca");
   redirect(`/rca/${(data as { id: string }).id}?saved=1`);
+}
+
+type Msg = { ok?: string; error?: string };
+
+/** Containment / request further action / completely resolved. */
+export async function addFollowup(_prev: Msg, f: FormData): Promise<Msg> {
+  const stage = s(f, "stage");
+  const row = {
+    downtime_id: s(f, "downtime_id"),
+    stage,
+    note: s(f, "note"),
+    action_owner: stage === "further_action" ? s(f, "action_owner") : null,
+    target_date: stage === "further_action" ? s(f, "target_date") : null,
+    recorded_by_type: "person",
+  };
+  if (!row.downtime_id || !stage || !row.note) return { error: "Pick the stage and describe what was done." };
+  if (stage === "further_action" && (!row.action_owner || !row.target_date)) {
+    return { error: "Further action needs who will do it and a target date." };
+  }
+  const supabase = await createClient();
+  const { error } = await supabase.from("downtime_followups").insert(row as never);
+  if (error) return { error: error.message };
+  revalidatePath(`/downtime/${row.downtime_id}`);
+  return { ok: "Follow-up saved." };
+}
+
+export async function completeFollowup(_prev: Msg, f: FormData): Promise<Msg> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("complete_followup", { p_id: s(f, "id"), p_note: s(f, "note") });
+  if (error) return { error: error.message };
+  revalidatePath(`/downtime/${s(f, "downtime_id")}`);
+  return { ok: "Marked done." };
+}
+
+export async function voidFollowup(_prev: Msg, f: FormData): Promise<Msg> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("void_followup", { p_id: s(f, "id"), p_reason: s(f, "reason") });
+  if (error) return { error: error.message };
+  revalidatePath(`/downtime/${s(f, "downtime_id")}`);
+  return { ok: "Voided." };
 }

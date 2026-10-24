@@ -36,6 +36,8 @@ const KIND: Record<string, string> = {
   water_alert: "Water alert",
   water_action: "Water out of spec",
   calibration_due: "Calibration due",
+  followup_overdue: "Further action overdue",
+  hours_service_due: "Running-hours service",
 };
 const SEV: Record<string, string> = { critical: "border-l-crit", warning: "border-l-warn", info: "border-l-gray-300" };
 const LEVEL = ["Reminder", "Escalated to on-duty engineer", "Escalated to shift manager"];

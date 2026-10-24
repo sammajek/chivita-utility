@@ -10,8 +10,13 @@ export const dynamic = "force-dynamic";
 interface Ev {
   id: string; event_no: string; start_at: string; end_at: string | null; override_hours: number | null; shift: string;
   downtime_type: string; failure_category: string; failure_mode: string; status: string; rca_required: boolean;
-  rca_reason: string | null; is_demo: boolean; asset: { code: string; name: string } | null; rcas: { id: string; rca_no: string }[];
+  rca_reason: string | null; followup_stage: string | null; is_demo: boolean; asset: { code: string; name: string } | null; rcas: { id: string; rca_no: string }[];
 }
+
+const FU_LABEL: Record<string, string> = { containment: "Contained", further_action: "Further action", resolved: "Resolved" };
+const FU_STYLE: Record<string, string> = {
+  containment: "bg-amber-100 text-warn", further_action: "bg-blue-100 text-brand-blue", resolved: "bg-green-100 text-ok",
+};
 
 export default async function DowntimePage({ searchParams }: { searchParams: Promise<{ saved?: string; open?: string }> }) {
   const profile = await requireProfile();
@@ -19,7 +24,7 @@ export default async function DowntimePage({ searchParams }: { searchParams: Pro
   const supabase = await createClient();
   let q = supabase
     .from("downtime_events")
-    .select("id, event_no, start_at, end_at, override_hours, shift, downtime_type, failure_category, failure_mode, status, rca_required, rca_reason, is_demo, asset:assets(code, name), rcas(id, rca_no)")
+    .select("id, event_no, start_at, end_at, override_hours, shift, downtime_type, failure_category, failure_mode, status, rca_required, rca_reason, followup_stage, is_demo, asset:assets(code, name), rcas(id, rca_no)")
     .is("voided_at", null)
     .order("start_at", { ascending: false })
     .limit(200);
@@ -53,6 +58,7 @@ export default async function DowntimePage({ searchParams }: { searchParams: Pro
               <div className="mt-1 flex flex-wrap items-center gap-2 text-sm">
                 <span className={`rounded px-2 py-0.5 text-xs font-semibold ${e.status === "Closed" ? "bg-gray-100" : "bg-amber-100 text-warn"}`}>{e.status}</span>
                 <span>{hrs.toFixed(2)} h{!e.end_at && " (running)"}</span>
+                {e.followup_stage && <span className={`rounded px-2 py-0.5 text-xs font-semibold ${FU_STYLE[e.followup_stage]}`}>{FU_LABEL[e.followup_stage]}</span>}
                 {e.rca_required && (
                   e.rcas.length ? (
                     <Link href={`/rca/${e.rcas[0].id}`} className="text-xs text-brand-blue">{e.rcas[0].rca_no}</Link>
@@ -62,6 +68,7 @@ export default async function DowntimePage({ searchParams }: { searchParams: Pro
                 )}
               </div>
               <div className="mt-2 flex gap-3 text-sm">
+                <Link href={`/downtime/${e.id}`} className="font-semibold text-brand-blue">Follow up / photos</Link>
                 {canLog && <Link href={`/downtime/new?id=${e.id}`} className="text-brand-blue">Update</Link>}
                 {canRca && e.rca_required && !e.rcas.length && <Link href={`/rca/new?downtime=${e.id}`} className="text-brand-blue">Start RCA</Link>}
               </div>

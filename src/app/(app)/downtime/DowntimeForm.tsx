@@ -43,6 +43,25 @@ function Select({ name, label, items, value, onChange, required }: {
   );
 }
 
+/** "Attended by": tick every section that worked on it; anyone else goes in "Other". Stored as "A; B; Other: X". */
+function AttendedBy({ items, value }: { items: string[]; value?: string }) {
+  const parts = (value ?? "").split(";").map((p) => p.trim()).filter(Boolean);
+  const other = parts.find((p) => p.startsWith("Other:"))?.slice(6).trim() ?? parts.filter((p) => !items.includes(p) && !p.startsWith("Other:")).join(", ");
+  return (
+    <fieldset className="block sm:col-span-2">
+      <legend className="text-xs font-medium text-gray-600">Attended by (tick all that apply)</legend>
+      <div className="mt-1 grid gap-1 sm:grid-cols-2">
+        {items.map((i) => (
+          <label key={i} className="flex min-h-10 items-center gap-2 rounded border px-2 text-sm">
+            <input type="checkbox" name="attended_by" value={i} defaultChecked={parts.includes(i)} className="h-5 w-5" /> {i}
+          </label>
+        ))}
+      </div>
+      <input name="attended_by_other" className="input mt-2" placeholder="Other section / company (optional)" defaultValue={other} />
+    </fieldset>
+  );
+}
+
 export function DowntimeForm({ lists, assets, d, canClose }: {
   lists: Record<string, ListItem[]>; assets: Asset[]; d: DowntimeDefaults; canClose: boolean;
 }) {
@@ -95,7 +114,7 @@ export function DowntimeForm({ lists, assets, d, canClose }: {
           <textarea name="immediate_action" rows={2} className="input" defaultValue={d.immediate_action} /></label>
         <label className="block"><span className="text-xs font-medium text-gray-600">Spares / materials used</span>
           <input name="spares_used" className="input" defaultValue={d.spares_used} /></label>
-        <Select name="attended_by" label="Attended by" items={v("attended_by")} value={d.attended_by} />
+        <AttendedBy items={v("attended_by")} value={d.attended_by} />
         <Select name="production_impact" label="Impact on production" items={v("production_impact")} value={d.production_impact} />
         <Select name="status" label="Status" items={statuses} value={d.status ?? "Open"} required />
         <label className="block"><span className="text-xs font-medium text-gray-600">Override hours (optional)</span>
