@@ -10,7 +10,10 @@ import { addDays, lagosDate } from "@/lib/time";
 import { StatTile } from "@/components/BarList";
 import { ActionForm } from "@/components/ActionForm";
 import { PmForm } from "./PmForm";
-import { voidPm } from "./actions";
+import { affirmPm, voidAffirmation, voidPm } from "./actions";
+import { createClient } from "@/lib/supabase/server";
+import { formatLagos } from "@/lib/time";
+import { EvidenceList } from "@/components/EvidenceList";
 
 export const dynamic = "force-dynamic";
 
@@ -45,6 +48,10 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
       <Link href={href({ view: "schedule" })}
         className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${view === "schedule" ? "border-brand-blue bg-brand-blue text-white" : "border-gray-300 bg-white"}`}>
         Schedule &amp; adherence
+      </Link>
+      <Link href={`/pm/report?freq=${freq}${area ? `&area=${area}` : ""}`}
+        className="shrink-0 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium">
+        Report
       </Link>
     </div>
   );
@@ -101,6 +108,9 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
       </div>
       {completions.some((c) => c.is_demo) && <p className="text-xs font-semibold text-purple-700">Includes DEMO data</p>}
 
+      <Affirmations freq={freq} period={period} areas={area ? [area] : ["U1", "U2"]} canAffirm={isEngineer && profile.active}
+        canWithdraw={["section_manager", "admin"].includes(profile.role)} tasks={tasks} completions={completions} />
+
       <PmForm key={`${freq}-${period}-${area}`} tasks={tasks} existing={existing} names={names} periodStart={period} canEnter={canEnter} />
 
       {canEnter && completions.some((c) => isEngineer || c.recorded_by_id === profile.id) && (
@@ -121,6 +131,55 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
           </div>
         </details>
       )}
+    </div>
+  );
+}
+
+/** Engineer / manager sign-off of a PM period, one per area. Counts are frozen when affirmed. */
+async function Affirmations({ freq, period, areas, canAffirm, canWithdraw, tasks, completions }: {
+  freq: PmFrequency; period: string; areas: string[]; canAffirm: boolean; canWithdraw: boolean;
+  tasks: { id: string; area: string }[]; completions: PmCompletion[];
+}) {
+  const supabase = await createClient();
+  const { data } = await supabase.from("pm_affirmations")
+    .select("id, area, total_tasks, done_ok, done_not_ok, not_done, not_recorded, note, recorded_by_id, recorded_at, is_demo")
+    .eq("frequency", freq).eq("period_start", period).is("voided_at", null);
+  const affs = (data ?? []) as { id: string; area: string; total_tasks: number; done_ok: number; done_not_ok: number; not_done: number; not_recorded: number; note: string | null; recorded_by_id: string; recorded_at: string }[];
+  const names = await namesFor(affs.map((a) => a.recorded_by_id));
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {areas.map((ar) => {
+        const a = affs.find((x) => x.area === ar);
+        const ids = new Set(tasks.filter((t) => t.area === ar).map((t) => t.id));
+        if (!ids.size) return null;
+        const got = completions.filter((c) => ids.has(c.task_id));
+        const gaps = ids.size - got.filter((c) => c.result === "done_ok").length;
+        return (
+          <div key={ar} className={`card space-y-2 ${a ? "border-green-300" : ""}`}>
+            <div className="flex items-center justify-between"><b>PM affirmation · {ar === "U1" ? "Utility 1" : "Utility 2"}</b>
+              {a ? <span className="rounded bg-green-100 px-2 py-0.5 text-xs font-semibold text-ok">Affirmed</span> : <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-warn">Not affirmed</span>}</div>
+            {a ? (
+              <>
+                <p className="text-sm">By <b>{names.get(a.recorded_by_id) ?? "—"}</b> on {formatLagos(a.recorded_at)}: {a.done_ok}/{a.total_tasks} √, {a.done_not_ok} X, {a.not_done} --, {a.not_recorded} not recorded.</p>
+                {a.note && <p className="text-xs text-gray-600">“{a.note}”</p>}
+                <EvidenceList entityType="pm_affirmation" entityId={a.id} canAdd={canAffirm} />
+                {canWithdraw && (
+                  <details className="text-xs"><summary className="cursor-pointer text-gray-500">Withdraw</summary>
+                    <ActionForm action={voidAffirmation} submit="Withdraw" className="mt-1 flex flex-wrap gap-2">
+                      <input type="hidden" name="id" value={a.id} /><input name="reason" className="input max-w-xs py-1" placeholder="Reason" required minLength={5} />
+                    </ActionForm></details>
+                )}
+              </>
+            ) : canAffirm ? (
+              <ActionForm action={affirmPm} submit="Affirm PM for this period" className="space-y-2">
+                <input type="hidden" name="freq" value={freq} /><input type="hidden" name="area" value={ar} /><input type="hidden" name="period_start" value={period} />
+                <p className="text-xs text-gray-600">{got.length}/{ids.size} recorded. {gaps > 0 ? "Some PMs are not done OK or not recorded: a note is required." : "All done OK."}</p>
+                <input name="note" className="input" placeholder={gaps > 0 ? "Note on what is outstanding *" : "Note (optional)"} required={gaps > 0} minLength={gaps > 0 ? 5 : undefined} />
+              </ActionForm>
+            ) : <p className="text-xs text-gray-500">An engineer or manager affirms the PM once the period’s work is checked.</p>}
+          </div>
+        );
+      })}
     </div>
   );
 }

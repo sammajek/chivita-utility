@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useState } from "react";
 import { setState } from "../actions";
 
@@ -42,7 +43,7 @@ export function StateForm({ assetId, code, current }: { assetId: string; code: s
       )}
       <input name="note" className="input" placeholder={reason === "Other" ? "Describe the reason *" : "Note (optional)"} required={reason === "Other"} />
       {pick === "unavailable" && reason === "Breakdown" && (
-        <p className="text-xs text-gray-600">For a breakdown, also <a href="/downtime/new" className="text-brand-blue">log the downtime event</a>: that keeps MTTR/MTBF and RCA correct. Logging downtime sets the state automatically.</p>
+        <p className="text-xs text-gray-600">For a breakdown, also <Link href="/downtime/new" className="text-brand-blue">log the downtime event</Link>: that keeps MTTR/MTBF and RCA correct. Logging downtime sets the state automatically.</p>
       )}
       {state.error && <p role="alert" className="text-sm text-crit">{state.error}</p>}
       {state.ok && <p className="text-sm text-ok">{state.ok}</p>}

@@ -45,3 +45,23 @@ export async function voidPm(_prev: { ok?: string; error?: string }, form: FormD
   revalidatePath("/pm");
   return { ok: "Voided. You can enter it again." };
 }
+
+/** Engineer / manager affirms (signs off) the PM for one frequency, area and period. */
+export async function affirmPm(_prev: { ok?: string; error?: string }, form: FormData): Promise<{ ok?: string; error?: string }> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("affirm_pm_period", {
+    p_freq: String(form.get("freq")), p_area: String(form.get("area")),
+    p_period: String(form.get("period_start")), p_note: String(form.get("note") ?? "").trim() || null,
+  });
+  if (error) return { error: error.message };
+  revalidatePath("/pm");
+  return { ok: "PM affirmed." };
+}
+
+export async function voidAffirmation(_prev: { ok?: string; error?: string }, form: FormData): Promise<{ ok?: string; error?: string }> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("void_pm_affirmation", { p_id: String(form.get("id")), p_reason: String(form.get("reason") ?? "") });
+  if (error) return { error: error.message };
+  revalidatePath("/pm");
+  return { ok: "Affirmation withdrawn." };
+}
