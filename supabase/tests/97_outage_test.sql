@@ -12,7 +12,7 @@ select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000a1
 do $$
 declare o uuid;
 begin
-  o := public.declare_outage('Internet down at Utility 1', now() - interval '30 hours');
+  o := public.declare_outage('Internet down at Utility 1', now() - interval '3 days');
   begin
     perform public.declare_outage('again', now());
     raise exception 'second open outage should fail';

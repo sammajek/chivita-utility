@@ -1,0 +1,842 @@
+{
+ "document": "7A.M Daily Utility Consumption Report",
+ "meters": [
+  {
+   "group": "daily",
+   "code": "B1-GAS",
+   "name": "Steam Boiler 1 – gas flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BLR-01",
+   "sort": 1
+  },
+  {
+   "group": "daily",
+   "code": "B1-STM",
+   "name": "Steam Boiler 1 – steam flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BLR-01",
+   "sort": 2
+  },
+  {
+   "group": "daily",
+   "code": "B1-DH",
+   "name": "Steam Boiler 1 – diesel hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "BLR-01",
+   "sort": 3
+  },
+  {
+   "group": "daily",
+   "code": "B1-GH",
+   "name": "Steam Boiler 1 – gas hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "BLR-01",
+   "sort": 4
+  },
+  {
+   "group": "daily",
+   "code": "B2-GAS",
+   "name": "Steam Boiler 2 – gas flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BLR-02",
+   "sort": 5
+  },
+  {
+   "group": "daily",
+   "code": "B2-STM",
+   "name": "Steam Boiler 2 – steam flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BLR-02",
+   "sort": 6
+  },
+  {
+   "group": "daily",
+   "code": "B2-DH",
+   "name": "Steam Boiler 2 – diesel hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "BLR-02",
+   "sort": 7
+  },
+  {
+   "group": "daily",
+   "code": "B2-GH",
+   "name": "Steam Boiler 2 – gas hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "BLR-02",
+   "sort": 8
+  },
+  {
+   "group": "daily",
+   "code": "B4-GAS",
+   "name": "Steam Boiler 4 – gas flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BLR-04",
+   "sort": 9
+  },
+  {
+   "group": "daily",
+   "code": "B4-STM",
+   "name": "Steam Boiler 4 – steam flow",
+   "unit": "t",
+   "kind": "totaliser",
+   "asset": "BLR-04",
+   "sort": 10
+  },
+  {
+   "group": "daily",
+   "code": "B4-STR",
+   "name": "Steam Boiler 4 – steam flow rate",
+   "unit": "kg/h",
+   "kind": "rate",
+   "asset": "BLR-04",
+   "sort": 11
+  },
+  {
+   "group": "daily",
+   "code": "B4-DH",
+   "name": "Steam Boiler 4 – diesel hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "BLR-04",
+   "sort": 12
+  },
+  {
+   "group": "daily",
+   "code": "B4-GH",
+   "name": "Steam Boiler 4 – gas hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "BLR-04",
+   "sort": 13
+  },
+  {
+   "group": "daily",
+   "code": "V1-TH",
+   "name": "VAM 1 – total hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHV-01",
+   "sort": 14
+  },
+  {
+   "group": "daily",
+   "code": "V1-GH",
+   "name": "VAM 1 – gas hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHV-01",
+   "sort": 15
+  },
+  {
+   "group": "daily",
+   "code": "V1-GAS",
+   "name": "VAM 1 – gas flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "CHV-01",
+   "sort": 16
+  },
+  {
+   "group": "daily",
+   "code": "V2-TH",
+   "name": "VAM 2 – total hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHV-02",
+   "sort": 17
+  },
+  {
+   "group": "daily",
+   "code": "V2-GH",
+   "name": "VAM 2 – gas hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHV-02",
+   "sort": 18
+  },
+  {
+   "group": "daily",
+   "code": "V2-GAS",
+   "name": "VAM 2 – gas flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "CHV-02",
+   "sort": 19
+  },
+  {
+   "group": "daily",
+   "code": "V3-TH",
+   "name": "VAM 3 – total hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHV-03",
+   "sort": 20
+  },
+  {
+   "group": "daily",
+   "code": "V3-GH",
+   "name": "VAM 3 – gas hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHV-03",
+   "sort": 21
+  },
+  {
+   "group": "daily",
+   "code": "V3-GAS",
+   "name": "VAM 3 – gas flow",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "CHV-03",
+   "sort": 22
+  },
+  {
+   "group": "daily",
+   "code": "T1-H",
+   "name": "Trane Chiller 1 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHT-01",
+   "sort": 23
+  },
+  {
+   "group": "daily",
+   "code": "T2-H",
+   "name": "Trane Chiller 2 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHT-02",
+   "sort": 24
+  },
+  {
+   "group": "daily",
+   "code": "T3-H",
+   "name": "Trane Chiller 3 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHT-03",
+   "sort": 25
+  },
+  {
+   "group": "daily",
+   "code": "T4-H",
+   "name": "Trane Chiller 4 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHT-04",
+   "sort": 26
+  },
+  {
+   "group": "daily",
+   "code": "T5-H",
+   "name": "Trane Chiller 5 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CHT-05",
+   "sort": 27
+  },
+  {
+   "group": "daily",
+   "code": "C2-H",
+   "name": "IR Air Compressor 2 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-02",
+   "sort": 28
+  },
+  {
+   "group": "daily",
+   "code": "C3-H",
+   "name": "IR Air Compressor 3 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-03",
+   "sort": 29
+  },
+  {
+   "group": "daily",
+   "code": "C4-H",
+   "name": "IR Air Compressor 4 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-04",
+   "sort": 30
+  },
+  {
+   "group": "daily",
+   "code": "C5-H",
+   "name": "IR Air Compressor 5 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-05",
+   "sort": 31
+  },
+  {
+   "group": "daily",
+   "code": "C6-H",
+   "name": "IR Air Compressor 6 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-06",
+   "sort": 32
+  },
+  {
+   "group": "daily",
+   "code": "C7-H",
+   "name": "IR Air Compressor 7 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-07",
+   "sort": 33
+  },
+  {
+   "group": "daily",
+   "code": "C8-H",
+   "name": "IR Air Compressor 8 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-08",
+   "sort": 34
+  },
+  {
+   "group": "daily",
+   "code": "C9-H",
+   "name": "IR Air Compressor 9 – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": "CMP-09",
+   "sort": 35
+  },
+  {
+   "group": "daily",
+   "code": "CATLAS-H",
+   "name": "Atlas Copco Compressor – hours",
+   "unit": "h",
+   "kind": "hours",
+   "asset": null,
+   "sort": 36
+  },
+  {
+   "group": "water",
+   "code": "W-WTP",
+   "name": "WTP output",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 37
+  },
+  {
+   "group": "water",
+   "code": "W-BWASH",
+   "name": "WTP backwash",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 38
+  },
+  {
+   "group": "water",
+   "code": "W-RECOV",
+   "name": "Water recovery",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 39
+  },
+  {
+   "group": "water",
+   "code": "W-L01",
+   "name": "Line 1 – Expansion",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 40
+  },
+  {
+   "group": "water",
+   "code": "W-L02",
+   "name": "Line 2 – RO section",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 41
+  },
+  {
+   "group": "water",
+   "code": "W-L03",
+   "name": "Line 3 – Debottleneck",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 42
+  },
+  {
+   "group": "water",
+   "code": "W-L04",
+   "name": "Line 4 – Pineapple land",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 43
+  },
+  {
+   "group": "water",
+   "code": "W-L05",
+   "name": "Line 5 – Miteco Sugar",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 44
+  },
+  {
+   "group": "water",
+   "code": "W-L06",
+   "name": "Line 6 – CHI Snacks",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 45
+  },
+  {
+   "group": "water",
+   "code": "W-L07",
+   "name": "Line 7 – New Capri-Sonne",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 46
+  },
+  {
+   "group": "water",
+   "code": "W-L08",
+   "name": "Line 8 – New Building",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 47
+  },
+  {
+   "group": "water",
+   "code": "W-L09",
+   "name": "Line 9 – Old Capri-Sonne",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 48
+  },
+  {
+   "group": "water",
+   "code": "W-L10",
+   "name": "Line 10 – Old Building",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 49
+  },
+  {
+   "group": "energy",
+   "code": "E-B1",
+   "name": "Boiler 1",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "BLR-01",
+   "sort": 50
+  },
+  {
+   "group": "energy",
+   "code": "E-B2",
+   "name": "Boiler 2",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "BLR-02",
+   "sort": 51
+  },
+  {
+   "group": "energy",
+   "code": "E-B3",
+   "name": "Boiler 3",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "BLR-03",
+   "sort": 52
+  },
+  {
+   "group": "energy",
+   "code": "E-B4",
+   "name": "Boiler 4",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "BLR-04",
+   "sort": 53
+  },
+  {
+   "group": "energy",
+   "code": "E-B5",
+   "name": "Boiler 5",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "BLR-05",
+   "sort": 54
+  },
+  {
+   "group": "energy",
+   "code": "E-T1",
+   "name": "Trane Chiller 1",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-01",
+   "sort": 55
+  },
+  {
+   "group": "energy",
+   "code": "E-T2",
+   "name": "Trane Chiller 2",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-02",
+   "sort": 56
+  },
+  {
+   "group": "energy",
+   "code": "E-T3",
+   "name": "Trane Chiller 3",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-03",
+   "sort": 57
+  },
+  {
+   "group": "energy",
+   "code": "E-T4",
+   "name": "Trane Chiller 4",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-04",
+   "sort": 58
+  },
+  {
+   "group": "energy",
+   "code": "E-T5",
+   "name": "Trane Chiller 5",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-05",
+   "sort": 59
+  },
+  {
+   "group": "energy",
+   "code": "E-CT1",
+   "name": "Cooling Tower 1",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-01",
+   "sort": 60
+  },
+  {
+   "group": "energy",
+   "code": "E-CT2",
+   "name": "Cooling Tower 2",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-02",
+   "sort": 61
+  },
+  {
+   "group": "energy",
+   "code": "E-CT3",
+   "name": "Cooling Tower 3",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-03",
+   "sort": 62
+  },
+  {
+   "group": "energy",
+   "code": "E-CT4",
+   "name": "Cooling Tower 4",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-04",
+   "sort": 63
+  },
+  {
+   "group": "energy",
+   "code": "E-CT5",
+   "name": "Cooling Tower 5",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHT-05",
+   "sort": 64
+  },
+  {
+   "group": "energy",
+   "code": "E-ICEP",
+   "name": "Ice water pumps",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": null,
+   "sort": 65
+  },
+  {
+   "group": "energy",
+   "code": "E-TWP",
+   "name": "Treated water pumps",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "PMP-TW",
+   "sort": 66
+  },
+  {
+   "group": "energy",
+   "code": "E-V1",
+   "name": "VAM Chiller 1",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHV-01",
+   "sort": 67
+  },
+  {
+   "group": "energy",
+   "code": "E-V2",
+   "name": "VAM Chiller 2",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHV-02",
+   "sort": 68
+  },
+  {
+   "group": "energy",
+   "code": "E-V3",
+   "name": "VAM Chiller 3",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CHV-03",
+   "sort": 69
+  },
+  {
+   "group": "energy",
+   "code": "E-C2",
+   "name": "Air Compressor 2",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-02",
+   "sort": 70
+  },
+  {
+   "group": "energy",
+   "code": "E-C3",
+   "name": "Air Compressor 3",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-03",
+   "sort": 71
+  },
+  {
+   "group": "energy",
+   "code": "E-C4",
+   "name": "Air Compressor 4",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-04",
+   "sort": 72
+  },
+  {
+   "group": "energy",
+   "code": "E-C5",
+   "name": "Air Compressor 5",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-05",
+   "sort": 73
+  },
+  {
+   "group": "energy",
+   "code": "E-C6",
+   "name": "Air Compressor 6",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-06",
+   "sort": 74
+  },
+  {
+   "group": "energy",
+   "code": "E-C7",
+   "name": "Air Compressor 7",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-07",
+   "sort": 75
+  },
+  {
+   "group": "energy",
+   "code": "E-C8",
+   "name": "Air Compressor 8",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-08",
+   "sort": 76
+  },
+  {
+   "group": "energy",
+   "code": "E-C9",
+   "name": "Air Compressor 9",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-09",
+   "sort": 77
+  },
+  {
+   "group": "energy",
+   "code": "E-C10",
+   "name": "Air Compressor 10",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-10",
+   "sort": 78
+  },
+  {
+   "group": "energy",
+   "code": "E-C11",
+   "name": "Air Compressor 11",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-11",
+   "sort": 79
+  },
+  {
+   "group": "energy",
+   "code": "E-C12",
+   "name": "Air Compressor 12",
+   "unit": "kWh",
+   "kind": "totaliser",
+   "asset": "CMP-12",
+   "sort": 80
+  },
+  {
+   "group": "borehole",
+   "code": "BH1",
+   "name": "Borehole 1",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BH-01",
+   "sort": 81
+  },
+  {
+   "group": "borehole",
+   "code": "BH2",
+   "name": "Borehole 2",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BH-02",
+   "sort": 82
+  },
+  {
+   "group": "borehole",
+   "code": "BH4",
+   "name": "Borehole 4",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BH-04",
+   "sort": 83
+  },
+  {
+   "group": "borehole",
+   "code": "BH5",
+   "name": "Borehole 5",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BH-05",
+   "sort": 84
+  },
+  {
+   "group": "borehole",
+   "code": "BH6",
+   "name": "Borehole 6",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BH-06",
+   "sort": 85
+  },
+  {
+   "group": "borehole",
+   "code": "BH7",
+   "name": "Borehole 7",
+   "unit": "m³",
+   "kind": "totaliser",
+   "asset": "BH-07",
+   "sort": 86
+  },
+  {
+   "group": "condensate",
+   "code": "CD-EA86",
+   "name": "Condensate – Expansion A",
+   "unit": null,
+   "kind": "rate",
+   "asset": null,
+   "sort": 87
+  },
+  {
+   "group": "condensate",
+   "code": "CD-EB87",
+   "name": "Condensate – Expansion B",
+   "unit": null,
+   "kind": "rate",
+   "asset": null,
+   "sort": 88
+  },
+  {
+   "group": "condensate",
+   "code": "CD-C88",
+   "name": "Condensate – Carpark",
+   "unit": null,
+   "kind": "rate",
+   "asset": null,
+   "sort": 89
+  },
+  {
+   "group": "condensate",
+   "code": "CD-UA89",
+   "name": "Condensate – UHT5 A",
+   "unit": null,
+   "kind": "rate",
+   "asset": null,
+   "sort": 90
+  },
+  {
+   "group": "condensate",
+   "code": "CD-UB90",
+   "name": "Condensate – UHT5 B",
+   "unit": null,
+   "kind": "rate",
+   "asset": null,
+   "sort": 91
+  },
+  {
+   "group": "condensate",
+   "code": "CD-L191",
+   "name": "Condensate – L-19",
+   "unit": null,
+   "kind": "rate",
+   "asset": null,
+   "sort": 92
+  },
+  {
+   "group": "condensate",
+   "code": "CD-OBCR92",
+   "name": "Condensate – Old Building CIP room",
+   "unit": null,
+   "kind": "rate",
+   "asset": null,
+   "sort": 93
+  }
+ ]
+}
