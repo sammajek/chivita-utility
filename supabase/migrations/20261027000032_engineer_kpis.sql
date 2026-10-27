@@ -167,10 +167,12 @@ as $$
      where mo.m0 <= public.lagos_now()::date
      group by mo.m0
   )
-  select m0, kpi, num, den from q
-  union all select m0, 'availability', den - down, den from avail where den > 0
-  union all select m0, 'pm', num, den from pm
-  union all select m0, 'amc', num, den from amc
+  select * from (
+    select m0, kpi, num, den from q
+    union all select m0, 'availability', den - down, den from avail where den > 0
+    union all select m0, 'pm', num, den from pm
+    union all select m0, 'amc', num, den from amc
+  ) x where public.is_active_user() or auth.uid() is null   -- only approved accounts (or the server itself)
 $$;
 revoke execute on function public.engineer_kpi_auto(uuid, int) from public, anon;
 
