@@ -56,7 +56,8 @@ export function EvidenceUpload({ entityType, entityId, label = "Add photo / docu
       const { error } = await supabase.from("attachments").insert({
         entity_type: entityType, entity_id: entityId, path, file_name: name, mime_type: type,
         size_bytes: body.size, caption: caption.trim() || null, recorded_by_type: "person",
-        doc_type: docType || (isImage ? "Photo" : null),
+        // doc_type only when chosen, so plain photo uploads work on databases without that column
+        ...(docType ? { doc_type: docType } : {}),
       } as never);
       if (error) throw new Error(error.message);
       setCaption("");
