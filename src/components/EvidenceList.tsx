@@ -11,7 +11,7 @@ export async function EvidenceList({ entityType, entityId, canAdd, docTypes = fa
   const supabase = await createClient();
   const { data } = await supabase
     .from("attachments")
-    .select("id, path, file_name, mime_type, caption, doc_type, recorded_at")
+    .select("*") // "*" so the list works whether or not the doc_type column exists yet
     .eq("entity_type", entityType).eq("entity_id", entityId).is("voided_at", null)
     .order("recorded_at");
   const files = (data ?? []) as Attachment[];
