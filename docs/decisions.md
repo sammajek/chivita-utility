@@ -142,6 +142,19 @@ Each entry: date, decision, who decided, notes.
 - To confirm with the owner: condensate unit; which compressor "Atlas Comp." is; whether compressor figures on the
   7 A.M. sheet are hours (assumed) or kWh; production and air-flow sources for kWh/m³ air, kWh/TR, water per unit product.
 
+## 2026-10-27: Individual Engineer KPI Tracker
+- The 11 KPIs and targets from Individual_Engineer_KPI_Tracker_FY2026.xlsx. Scorecard as "My Performance":
+  months, quarter and YTD, ✅/❌ against target.
+- **Calculated by the app** (no typing): PM completion (PM periods ending in the month in my areas carried out ÷ due),
+  AMC completion (visits ÷ planned), availability on my shifts (equipment-hours − unplanned breakdown hours), and
+  CW temperature / water quality / dew point compliance (readings in spec on my checked-in shifts).
+  "My shift" = the shifts the engineer checked in for on the On duty page.
+- **Weekly log** (as the Weekly Log sheet): GEMBA, unsafe acts, near misses, permits / non-routine jobs, leakages
+  (closed within 24 h), THERMAX callouts. Entered by the engineer for themself, or by a manager.
+- Quarter/YTD figures add up the counts behind each month (not an average of percentages).
+- Assumptions to confirm: "CW temp" = chilled water outlet temperature; PM and AMC are measured for the engineer's
+  areas (the PM log has no per-person assignment); leakage is weekly rather than per shift.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.

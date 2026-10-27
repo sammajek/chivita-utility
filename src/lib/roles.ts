@@ -37,6 +37,7 @@ export const NAV: NavItem[] = [
   { href: "/calibration", label: "Calibration", roles: [...ENGINEER_UP, "viewer"], ready: true },
   { href: "/cleaning", label: "Cleaning", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
   { href: "/outage", label: "Outage plan", roles: ALL, ready: true },
+  { href: "/kpi", label: "Engineer KPIs", roles: [...ENGINEER_UP, "viewer"], ready: true },
   { href: "/training", label: "Training", roles: ALL, ready: true },
   { href: "/admin", label: "Admin", roles: ["admin", "section_manager"], ready: true },
 ];
