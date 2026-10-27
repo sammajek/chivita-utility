@@ -130,6 +130,18 @@ Each entry: date, decision, who decided, notes.
   (manual, datasheet, drawing, certificate, calibration certificate, PM checklist, service/test report). Figures are
   not read out of the files automatically (owner's choice).
 
+## 2026-10-27: Utility consumption (7A.M Daily Utility Consumption Report)
+- 93 meters from the template's sheets: 7 A.M. report (boiler gas/steam totalisers and diesel/gas hours, VAM hours and
+  gas, Trane and compressor hours), water flowmeters (WTP, backwash, recovery, lines 1–10), energy meters (kWh),
+  boreholes, condensate. Read once a day at 07:00; daily use = today − previous reading.
+- A reading lower than the previous one is refused unless "meter reset/replaced" is ticked with a comment; a missed day
+  is carried by the next reading (so monthly totals stay right). Condensate and boiler 4 kg/h are recorded as read.
+- Monthly report: daily use per meter, totals, gas per steam (boilers 1, 2, 4) and lines ÷ WTP output; CSV.
+- The template's handover sheet (running / standby / maintenance per equipment group) is covered by the equipment
+  state toggle; a printable handover summary can be generated from it.
+- To confirm with the owner: condensate unit; which compressor "Atlas Comp." is; whether compressor figures on the
+  7 A.M. sheet are hours (assumed) or kWh; production and air-flow sources for kWh/m³ air, kWh/TR, water per unit product.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
