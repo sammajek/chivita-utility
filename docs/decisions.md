@@ -91,6 +91,34 @@ Each entry: date, decision, who decided, notes.
 - **Go-live cut-off:** flags start from `reading_monitor_from` (set when this was switched on), so past days are not flooded.
 - Escalation e-mails list at most 30 items, then "…and N more".
 
+## 2026-10-24/27: Owner's 14-item list, staff list, training needs
+- **Downtime follow-up:** each event gets a timeline of *Containment* (temporary fix), *Further action requested*
+  (needs who + target date; flagged when overdue) and *Completely resolved* (engineers/managers only, needs the end time).
+- **Attended by:** tick any number of sections (six from the template plus Mechanical, Production, QA, Projects, HSE,
+  Facilities/Civil) and type any other; stored as "A; B; Other: X".
+- **Equipment state:** Available / Standby / Unavailable, with a reason (PM, Breakdown, CBM, External supply, Awaiting
+  spares, Awaiting vendor, Low demand, Other). Logging an open downtime event sets it automatically and entering the
+  end time sets it back to Available. Standby/unavailable machines raise no "missing reading" flags. New downtime type
+  "Condition-Based Maintenance (CBM)".
+- **Equipment list:** /equipment shows every asset with PM code, PM schedule (frequency + S/N on CHIENGUTRG08),
+  make/model/capacity/specs; CSV download. PM codes and specs are typed in by the section manager (none were in the files).
+- **Running hours:** 44 service intervals (2000/4000/8000/16000 h for compressors 2–12) from the PM library. Flag
+  200 h before due (configurable per interval). Tracking starts once the last service hours are entered; a bigger service
+  resets the smaller ones.
+- **Evidence:** photos and documents (PDF, Word, Excel, PowerPoint, ≤10 MB; photos shrunk to 1600 px) in the private
+  "evidence" bucket, on downtime, follow-ups, PM affirmations, training and equipment.
+- **PM affirmation:** an engineer/manager signs off each frequency × area × period; counts are frozen; gaps need a note.
+  Printable PM report with adherence, affirmations and every exception.
+- **Staff:** the 15 people in Utility_Staff_List.xlsx are loaded (staff ID, band). An admin adds an email + role on
+  Admin → Staff; when that person taps "Request access" with that email, the account is active immediately with that role.
+  Names differ between files (e.g. Adeogun *Adewale* vs *Sulaimon*, Rotimi *Oluwaseun* vs *Isaac*, Enaebule vs Enabulele):
+  matched by staff ID; the staff list spelling is used.
+- **Training:** the FY2026 Training Needs (15 people, 11 courses, ETL Nigeria Limited, Nov–Dec 2026) are loaded.
+  Engineers/managers tick Done (with date) or Not attended / Postponed / Cancelled (with a note), and attach certificates.
+  A flag is raised 2 days after a planned end date that is not ticked.
+- **Access control:** reading any plant data now requires an *active* account (before, a pending sign-up could read).
+  Admin → Access shows the role/permission matrix, enforced in the database.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
