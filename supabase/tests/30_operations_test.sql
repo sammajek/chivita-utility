@@ -119,7 +119,10 @@ select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000d1
 do $$
 declare f public.flags; fld uuid;
 begin
-  select * into f from public.flags where kind = 'reading_missing' order by due_at limit 1;
+  -- (pick a slot of the section that has Steam Pressure; which slot is earliest depends on the time of day)
+  select * into f from public.flags fl where kind = 'reading_missing'
+     and exists (select 1 from public.register_fields rf where rf.section_id = fl.section_id and rf.label like 'Steam Pressure%')
+   order by due_at limit 1;
   assert f.section_id is not null and f.detail like '%BLR-01%', 'missing flag lists the machines';
   select id into fld from public.register_fields where section_id = f.section_id and label like 'Steam Pressure%';
   -- every boiler on the register is expected; enter them all (late)
@@ -130,7 +133,9 @@ reset role;
 do $$
 declare fid uuid;
 begin
-  select id into fid from public.flags where kind = 'reading_missing' order by due_at limit 1;
+  select id into fid from public.flags fl where kind = 'reading_missing'
+     and exists (select 1 from public.register_fields rf where rf.section_id = fl.section_id and rf.label like 'Steam Pressure%')
+   order by due_at limit 1;
   perform public.run_flag_job();
   assert (select resolved_at is not null from public.flags where id = fid), 'late reading resolves missing flag';
 end $$;

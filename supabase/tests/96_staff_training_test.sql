@@ -60,3 +60,17 @@ begin
   assert public.run_training_flags() = 14, 'past, unticked training flagged';
 end $$;
 rollback;
+
+-- an inactive (not yet approved) account reads nothing but its own profile
+begin;
+insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000000b9', 'waiting@test.local');
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000b9', true);
+do $$
+begin
+  assert (select count(*) from public.assets) = 0, 'inactive user cannot read assets';
+  assert (select count(*) from public.staff) = 0, 'inactive user cannot read staff';
+  assert (select count(*) from public.profiles) = 1, 'inactive user sees only own profile';
+  assert not exists (select 1 from pg_policies where schemaname = 'public' and cmd = 'SELECT' and qual = 'true'), 'no open read policies left';
+end $$;
+rollback;

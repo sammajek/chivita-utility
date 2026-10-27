@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { requireRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { ROLES, ROLE_LABELS } from "@/lib/roles";
+import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
 import { describeStandard } from "@/lib/evaluate";
-import { updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
+import { importStaffCsv, saveStaff, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
 import type { Parameter } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  ["users", "Users"], ["review", "To review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["settings", "Settings"],
+  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["settings", "Settings"],
 ] as const;
 
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string }> }) {
@@ -31,6 +31,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       </nav>
 
       {tab === "users" && <Users canEdit={profile.role === "admin"} />}
+      {tab === "staff" && <Staff canImport={profile.role === "admin"} />}
+      {tab === "access" && <Access />}
       {tab === "review" && <Review />}
       {tab === "assets" && <Assets q={q} />}
       {tab === "limits" && <Limits q={q} />}
@@ -63,6 +65,97 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             </div>
           </ActionForm>
         ))}
+      </div>
+    );
+  }
+
+  async function Staff({ canImport }: { canImport: boolean }) {
+    const { data } = await supabase.from("staff")
+      .select("id, staff_id, surname, first_name, full_name, band, job_title, area, email, phone, whatsapp, app_role, default_shift, active, profile:profiles(email, role, active)")
+      .order("active", { ascending: false }).order("first_name");
+    type S = { id: string; staff_id: string; surname: string; first_name: string; full_name: string; band: number | null; job_title: string | null;
+      area: string | null; email: string | null; phone: string | null; whatsapp: string | null; app_role: string | null; default_shift: string | null;
+      active: boolean; profile: { email: string; role: string; active: boolean } | null };
+    const staff = (data ?? []) as unknown as S[];
+    const fields = (s?: S) => (
+      <>
+        <input name="staff_id" defaultValue={s?.staff_id} placeholder="Staff ID *" className="input py-2" required />
+        <input name="first_name" defaultValue={s?.first_name} placeholder="First name *" className="input py-2" required />
+        <input name="surname" defaultValue={s?.surname} placeholder="Surname *" className="input py-2" required />
+        <input name="band" defaultValue={s?.band ?? ""} placeholder="Band" inputMode="numeric" className="input py-2" />
+        <input name="job_title" defaultValue={s?.job_title ?? ""} placeholder="Job title" className="input py-2" />
+        <select name="area" defaultValue={s?.area ?? ""} className="input py-2"><option value="">Area: both</option><option value="U1">Utility 1</option><option value="U2">Utility 2</option></select>
+        <input name="email" type="email" defaultValue={s?.email ?? ""} placeholder="Email (for login)" className="input py-2" />
+        <select name="app_role" defaultValue={s?.app_role ?? ""} className="input py-2">
+          <option value="">No pre-approval</option>{ROLES.map((r) => <option key={r} value={r}>Pre-approve as {ROLE_LABELS[r]}</option>)}
+        </select>
+        <input name="phone" defaultValue={s?.phone ?? ""} placeholder="Phone" inputMode="tel" className="input py-2" />
+        <input name="whatsapp" defaultValue={s?.whatsapp ?? ""} placeholder="WhatsApp" inputMode="tel" className="input py-2" />
+        <select name="default_shift" defaultValue={s?.default_shift ?? ""} className="input py-2"><option value="">Shift: —</option><option value="day">Day</option><option value="night">Night</option></select>
+        {s && <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="active" defaultChecked={s.active} /> Active</label>}
+      </>
+    );
+    return (
+      <div className="space-y-3">
+        <p className="text-sm text-gray-600">Everyone in the Utility section, with or without a login (used for training, KPIs and competency).
+          To give someone access: enter their <b>email</b> and pick <b>Pre-approve as…</b>. When they tap “Request access” on the sign-in page with that email, the account is active straight away with that role.</p>
+        {staff.map((s) => (
+          <ActionForm key={s.id} action={saveStaff} className={`card grid gap-2 sm:grid-cols-4 ${s.active ? "" : "opacity-60"}`}>
+            <input type="hidden" name="id" value={s.id} />
+            <div className="flex flex-wrap justify-between text-sm sm:col-span-4"><b>{s.full_name}</b>
+              <span className={s.profile ? "text-ok" : "text-gray-500"}>{s.profile ? `Login: ${s.profile.email} (${ROLE_LABELS[s.profile.role as keyof typeof ROLE_LABELS]}${s.profile.active ? "" : ", inactive"})` : s.email && s.app_role ? "Pre-approved – waiting for sign-up" : "No login"}</span></div>
+            {fields(s)}
+          </ActionForm>
+        ))}
+        <details className="card"><summary className="cursor-pointer font-semibold">Add a staff member</summary>
+          <ActionForm action={saveStaff} className="mt-2 grid gap-2 sm:grid-cols-4">{fields()}</ActionForm>
+        </details>
+        {canImport && (
+          <details className="card"><summary className="cursor-pointer font-semibold">Import from Excel (paste)</summary>
+            <p className="mt-1 text-xs text-gray-600">Copy the rows from Excel including a header row and paste below. Columns (any order): staff_id, surname, first_name, band, job_title, area (U1/U2), email, phone, whatsapp, role (operator / engineer / shift_manager / section_manager / admin / viewer), shift (day/night). Existing staff IDs are updated; only the columns you paste are changed.</p>
+            <ActionForm action={importStaffCsv} submit="Import" className="mt-2 space-y-2">
+              <textarea name="csv" rows={6} className="input font-mono text-xs" placeholder={"staff_id\tsurname\tfirst_name\temail\trole\n11102687\tAdeniji\tRasheed\trasheed@…\toperator"} />
+            </ActionForm>
+          </details>
+        )}
+      </div>
+    );
+  }
+
+  function Access() {
+    const can = (roles: readonly string[]) => ROLES.map((r) => <td key={r} className="p-1 text-center">{roles.includes(r) ? "✓" : ""}</td>);
+    const eng = ["engineer", "shift_manager", "section_manager", "admin"];
+    const entry = ["operator", ...eng];
+    const mgr = ["section_manager", "admin"];
+    const ACTIONS: [string, readonly string[]][] = [
+      ["Enter readings, PM results, downtime, water results, evidence photos", entry],
+      ["Change equipment state (available / standby / unavailable)", entry],
+      ["Correct or void own readings (with reason)", entry],
+      ["Correct or void anyone’s records; close downtime; resolve follow-ups", eng],
+      ["RCA, calibration, AMC, jobs & POs, cleaning sign-off", eng],
+      ["Affirm PM periods; tick training done", eng],
+      ["Withdraw a PM affirmation; remove training records", mgr],
+      ["Edit equipment specs and PM codes, limits, registers, staff", mgr],
+      ["Users: activate, change roles, import staff", ["admin"]],
+      ["Read-only: dashboards, reports, trends", ROLES],
+    ];
+    return (
+      <div className="space-y-4">
+        <p className="text-sm text-gray-600">Who can do what. These rules are enforced by the database itself (row-level security), not only by hiding buttons, so they also apply to anyone using the data another way. Every change is recorded in the audit trail with who, when and why. An account stays inactive (read nothing) until an admin activates it or pre-approves the email on the Staff tab.</p>
+        <div className="card overflow-x-auto">
+          <h2 className="mb-2 font-semibold">Actions</h2>
+          <table className="w-full min-w-[640px] text-sm">
+            <thead className="text-xs text-gray-500"><tr><th className="p-1 text-left">Action</th>{ROLES.map((r) => <th key={r} className="p-1">{ROLE_LABELS[r]}</th>)}</tr></thead>
+            <tbody>{ACTIONS.map(([l, r]) => <tr key={l} className="border-t"><td className="p-1">{l}</td>{can(r)}</tr>)}</tbody>
+          </table>
+        </div>
+        <div className="card overflow-x-auto">
+          <h2 className="mb-2 font-semibold">Screens</h2>
+          <table className="w-full min-w-[640px] text-sm">
+            <thead className="text-xs text-gray-500"><tr><th className="p-1 text-left">Screen</th>{ROLES.map((r) => <th key={r} className="p-1">{ROLE_LABELS[r]}</th>)}</tr></thead>
+            <tbody>{NAV.map((n) => <tr key={n.href} className="border-t"><td className="p-1">{n.label}</td>{can(n.roles)}</tr>)}</tbody>
+          </table>
+        </div>
       </div>
     );
   }
