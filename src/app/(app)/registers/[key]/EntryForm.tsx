@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import Link from "next/link";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { describeStandard, evaluateValue, type ReadingStatus } from "@/lib/evaluate";
 import { StatusBadge } from "@/components/StatusBadge";
 import { HmiCapture, type CaptureResult } from "@/components/HmiCapture";
@@ -22,9 +23,49 @@ interface Props {
   opensAt: string;
 }
 
+/** Server action wrapper: a dropped connection returns a message instead of crashing the page (values stay on the phone). */
+async function saveOrKeep(prev: SaveState, form: FormData): Promise<SaveState> {
+  try {
+    return await saveReadings(prev, form);
+  } catch {
+    return { error: "No connection. Your values are kept on this phone: press Save again when the network is back. If the app stays down, write the values on the paper sheet." };
+  }
+}
+
 export function EntryForm(p: Props) {
-  const [state, action, pending] = useActionState<SaveState, FormData>(saveReadings, {});
+  const [state, action, pending] = useActionState<SaveState, FormData>(saveOrKeep, {});
   const [values, setValues] = useState<Record<string, string>>({});
+  const [fromPaper, setFromPaper] = useState(false);
+  const [restored, setRestored] = useState(false);
+  const [online, setOnline] = useState(true);
+  const draftKey = `chi-draft:${p.registerKey}:${p.assetId ?? "-"}:${p.logDate}:${p.slotKey}`;
+
+  // Keep unsaved values on this phone (survives a dropped connection or a closed browser tab).
+  useEffect(() => {
+    try {
+      const d = JSON.parse(localStorage.getItem(draftKey) ?? "null") as Record<string, string> | null;
+      if (d && Object.keys(d).length) { setValues(d); setRestored(true); }
+    } catch { /* storage unavailable */ }
+    const on = () => setOnline(navigator.onLine);
+    on();
+    window.addEventListener("online", on);
+    window.addEventListener("offline", on);
+    return () => { window.removeEventListener("online", on); window.removeEventListener("offline", on); };
+  }, [draftKey]);
+  useEffect(() => {
+    try {
+      const keep = Object.fromEntries(Object.entries(values).filter(([id, v]) => v !== "" && !p.existing[id]));
+      if (Object.keys(keep).length) localStorage.setItem(draftKey, JSON.stringify(keep));
+      else localStorage.removeItem(draftKey);
+    } catch { /* storage unavailable */ }
+  }, [values, draftKey, p.existing]);
+  useEffect(() => {
+    if (state.ok) {
+      try { localStorage.removeItem(draftKey); } catch { /* ignore */ }
+      setValues({});
+      setRestored(false);
+    }
+  }, [state, draftKey]);
   const [fromPhoto, setFromPhoto] = useState<Record<string, true>>({});
   const [capture, setCapture] = useState<CaptureResult | null>(null);
   const [chip, setChip] = useState<string | null>(null); // leftover number waiting to be placed
@@ -66,7 +107,7 @@ export function EntryForm(p: Props) {
 
   const filledFromPhoto = Object.keys(fromPhoto).length;
   const minutesEarly = Math.ceil((new Date(p.opensAt).getTime() - Date.now()) / 60_000);
-  const early = p.canEnter && pending_.length > 0 && minutesEarly > 0;
+  const early = p.canEnter && pending_.length > 0 && minutesEarly > 0 && !fromPaper;
   const opensLabel = new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lagos", hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" })
     .format(new Date(p.opensAt));
 
@@ -81,6 +122,22 @@ export function EntryForm(p: Props) {
       <input type="hidden" name="numeric_fields" value={JSON.stringify(numeric)} />
       <input type="hidden" name="photo_path" value={capture?.photoPath ?? ""} />
       <input type="hidden" name="photo_fields" value={JSON.stringify(Object.keys(fromPhoto))} />
+      <input type="hidden" name="from_paper" value={fromPaper ? "1" : ""} />
+
+      {!online && (
+        <div role="alert" className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-crit">
+          <b>No network.</b> You can keep typing: values are kept on this phone until you can save. See the <Link href="/outage" className="underline">outage plan</Link>.
+        </div>
+      )}
+      {restored && (
+        <p className="rounded-lg bg-blue-50 px-3 py-2 text-sm text-brand-blue">Unsaved values from earlier were restored on this phone. Check them, then save.</p>
+      )}
+      {p.canEnter && pending_.length > 0 && (
+        <label className="flex min-h-11 items-center gap-2 rounded-lg border px-3 text-sm">
+          <input type="checkbox" checked={fromPaper} onChange={(e) => setFromPaper(e.target.checked)} className="h-5 w-5" />
+          Entered from a paper sheet (written during an outage). The time it was due is kept; it is marked “paper”.
+        </label>
+      )}
 
       {early && (
         <div role="alert" className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-warn">

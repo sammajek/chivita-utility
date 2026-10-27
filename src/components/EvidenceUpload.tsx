@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 
 export type EvidenceEntity =
   | "downtime" | "followup" | "pm_completion" | "pm_affirmation" | "cleaning" | "rca" | "asset"
-  | "water_result" | "calibration" | "job_request" | "external_report" | "training";
+  | "water_result" | "calibration" | "instrument" | "job_request" | "external_report" | "training" | "outage";
+
+export const DOC_TYPES = ["Photo", "Manual", "Datasheet", "Drawing", "Certificate", "Calibration certificate", "PM checklist",
+  "Service report", "Test report", "Other"] as const;
 
 const ACCEPT = "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx";
 const MAX_BYTES = 10 * 1024 * 1024;
@@ -22,9 +25,10 @@ async function shrinkImage(file: File): Promise<Blob> {
 }
 
 /** Take a photo or attach a document as evidence for a record. Files go to the private "evidence" bucket. */
-export function EvidenceUpload({ entityType, entityId, label = "Add photo / document" }: {
-  entityType: EvidenceEntity; entityId: string; label?: string;
+export function EvidenceUpload({ entityType, entityId, label = "Add photo / document", docTypes = false }: {
+  entityType: EvidenceEntity; entityId: string; label?: string; docTypes?: boolean;
 }) {
+  const [docType, setDocType] = useState("");
   const input = useRef<HTMLInputElement>(null);
   const [caption, setCaption] = useState("");
   const [busy, setBusy] = useState(false);
@@ -52,6 +56,7 @@ export function EvidenceUpload({ entityType, entityId, label = "Add photo / docu
       const { error } = await supabase.from("attachments").insert({
         entity_type: entityType, entity_id: entityId, path, file_name: name, mime_type: type,
         size_bytes: body.size, caption: caption.trim() || null, recorded_by_type: "person",
+        doc_type: docType || (isImage ? "Photo" : null),
       } as never);
       if (error) throw new Error(error.message);
       setCaption("");
@@ -67,6 +72,12 @@ export function EvidenceUpload({ entityType, entityId, label = "Add photo / docu
 
   return (
     <div className="flex flex-wrap items-center gap-2">
+      {docTypes && (
+        <select value={docType} onChange={(e) => setDocType(e.target.value)} className="input w-48 py-2" aria-label="Document type">
+          <option value="">Document type…</option>
+          {DOC_TYPES.map((d) => <option key={d}>{d}</option>)}
+        </select>
+      )}
       <input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="Caption (optional)" className="input max-w-xs py-2" />
       <button type="button" className="rounded-lg border border-brand-blue px-3 py-2 text-sm font-semibold text-brand-blue disabled:opacity-50"
         disabled={busy} onClick={() => input.current?.click()}>

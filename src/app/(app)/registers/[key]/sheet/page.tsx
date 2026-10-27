@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 
 const CELL: Record<string, string> = { out_of_spec: "bg-amber-100 font-semibold", critical: "bg-red-200 font-bold" };
 
-export default async function SheetPage({ params, searchParams }: { params: Promise<{ key: string }>; searchParams: Promise<{ date?: string; asset?: string }> }) {
+export default async function SheetPage({ params, searchParams }: { params: Promise<{ key: string }>; searchParams: Promise<{ date?: string; asset?: string; blank?: string }> }) {
   await requireProfile();
   const { key } = await params;
   const sp = await searchParams;
@@ -23,10 +23,12 @@ export default async function SheetPage({ params, searchParams }: { params: Prom
   const multi = assets.length > 0;
   const asset = multi ? (assets.find((a) => a.id === sp.asset) ?? assets[0]) : null;
   const logDate = sp.date ?? logDateOf(new Date());
+  // blank = empty paper sheet for logging during an app / internet outage (back-entered later as "from paper sheet")
+  const blank = sp.blank === "1";
 
   const allFields = sections.flatMap((s) => fieldsFor(s, asset?.id ?? null, multi));
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data } = blank ? { data: [] } : await supabase
     .from("readings")
     .select("id, field_id, asset_id, slot_key, value_num, value_text, status, recorded_by_id, amended, is_demo")
     .in("field_id", allFields.map((f) => f.id))
@@ -52,7 +54,7 @@ export default async function SheetPage({ params, searchParams }: { params: Prom
         </div>
         <div className="text-right text-sm">
           <div><b>Document No:</b> {register.document_no}</div>
-          <div><b>Date:</b> {logDate} (07:00–07:00)</div>
+          <div><b>Date:</b> {blank ? "____________" : logDate} (07:00–07:00)</div>
           {asset && <div><b>Equipment:</b> {asset.code} {asset.name}</div>}
           <PrintButton />
         </div>
@@ -81,18 +83,29 @@ export default async function SheetPage({ params, searchParams }: { params: Prom
                     {keys.map((k) => {
                       const r = cell.get(`${f.id}|${k}`);
                       return (
-                        <td key={k} className={`border px-1 py-1 text-center ${r ? CELL[r.status] ?? "" : ""}`}>
+                        <td key={k} className={`border px-1 ${blank ? "py-3" : "py-1"} text-center ${r ? CELL[r.status] ?? "" : ""}`}>
                           {r ? `${r.value_num ?? r.value_text}${r.amended ? "*" : ""}` : ""}
                         </td>
                       );
                     })}
                   </tr>
                 ))}
+                {blank && (
+                  <tr>
+                    <td className="border px-1 py-2 font-semibold">Time read / initials</td>
+                    <td className="border px-1 py-2"></td>
+                    {keys.map((k) => <td key={k} className="border px-1 py-2"></td>)}
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         );
       })}
+      {blank && (
+        <p className="text-xs font-semibold">OUTAGE PAPER SHEET: write the actual time you read each value. Enter these readings in the app
+          as soon as it is back (tick “Entered from paper sheet”), then file this sheet or attach a photo of it to the outage record.</p>
+      )}
       <p className="text-xs text-gray-600">
         Entered by: {(people ?? []).map((p) => p.full_name).join(", ") || "—"} · * amended (see audit trail) · shaded = out of spec ·
         printed {formatLagos(new Date())}

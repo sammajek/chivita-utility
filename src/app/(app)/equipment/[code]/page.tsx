@@ -148,7 +148,7 @@ export default async function EquipmentDetail({ params }: { params: Promise<{ co
 
       <section className="card space-y-2">
         <h2 className="font-semibold">Photos, manuals &amp; documents</h2>
-        <EvidenceList entityType="asset" entityId={a.id} canAdd={canAct} />
+        <EvidenceList entityType="asset" entityId={a.id} canAdd={canAct} docTypes />
       </section>
 
       {isAdmin && (

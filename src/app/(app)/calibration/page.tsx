@@ -5,6 +5,7 @@ import { calibrationState, type CalState } from "@/lib/water";
 import { StatTile } from "@/components/BarList";
 import { ActionForm } from "@/components/ActionForm";
 import { DemoBadge } from "@/components/StatusBadge";
+import { EvidenceList } from "@/components/EvidenceList";
 import { recordCalibration, saveInstrument, voidCalibration } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -78,6 +79,10 @@ export default async function CalibrationPage() {
               </div>
             </summary>
             <div className="mt-3 space-y-3 border-t pt-3">
+              <div>
+                <p className="text-xs font-medium text-gray-600">Certificates &amp; documents (PDF, Word, photos)</p>
+                <EvidenceList entityType="instrument" entityId={i.id} canAdd={canEdit} docTypes />
+              </div>
               {history.filter((c) => c.instrument_id === i.id).length > 0 && (
                 <ul className="space-y-1 text-sm">
                   {history.filter((c) => c.instrument_id === i.id).map((c) => (

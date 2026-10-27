@@ -119,6 +119,17 @@ Each entry: date, decision, who decided, notes.
 - **Access control:** reading any plant data now requires an *active* account (before, a pending sign-up could read).
   Admin → Access shows the role/permission matrix, enforced in the database.
 
+## 2026-10-27: Outage plan (app/internet down) and documents
+- **Outage plan** (/outage, printable): check → tell on-duty engineer → declare outage → log on blank paper sheets
+  (printed from each register) → phone critical values → end outage → back-enter within 24 h (setting
+  `outage_backfill_hours`) ticking "Entered from a paper sheet" → photo of sheets attached to the outage.
+- While an outage is open and for 24 h after it ends, no missing-reading flags are raised; after that, empty slots
+  flag as usual. Paper readings are marked `entry_method = paper` and linked to the outage for compliance reports.
+- Values typed on a phone are kept on that phone until saved, so a dropped connection loses nothing.
+- **Documents (item 9):** files are stored against the equipment or instrument record with a document type
+  (manual, datasheet, drawing, certificate, calibration certificate, PM checklist, service/test report). Figures are
+  not read out of the files automatically (owner's choice).
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.

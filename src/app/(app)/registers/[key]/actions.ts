@@ -25,6 +25,7 @@ export async function saveReadings(_prev: SaveState, form: FormData): Promise<Sa
   const numeric = new Set(JSON.parse(String(form.get("numeric_fields") || "[]")) as string[]);
   const photoPath = String(form.get("photo_path") || "") || null;
   const photoFields = new Set(JSON.parse(String(form.get("photo_fields") || "[]")) as string[]);
+  const fromPaper = form.get("from_paper") === "1";
 
   const rows = [];
   for (const [k, raw] of form.entries()) {
@@ -46,7 +47,7 @@ export async function saveReadings(_prev: SaveState, form: FormData): Promise<Sa
       comment: String(form.get(`c:${fieldId}`) ?? "").trim() || null,
       action_taken: String(form.get(`a:${fieldId}`) ?? "").trim() || null,
       recorded_by_type: "person",
-      entry_method: photoFields.has(fieldId) ? "photo" : "manual",
+      entry_method: fromPaper ? "paper" : photoFields.has(fieldId) ? "photo" : "manual",
       photo_path: photoPath,
     });
   }

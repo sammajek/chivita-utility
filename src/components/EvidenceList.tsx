@@ -3,15 +3,15 @@ import { formatLagos } from "@/lib/time";
 import { EvidenceUpload, type EvidenceEntity } from "./EvidenceUpload";
 
 interface Attachment {
-  id: string; path: string; file_name: string; mime_type: string | null; caption: string | null; recorded_at: string;
+  id: string; path: string; file_name: string; mime_type: string | null; caption: string | null; doc_type: string | null; recorded_at: string;
 }
 
 /** Evidence attached to one record (photos shown as thumbnails, documents as links), plus the upload button. */
-export async function EvidenceList({ entityType, entityId, canAdd }: { entityType: EvidenceEntity; entityId: string; canAdd: boolean }) {
+export async function EvidenceList({ entityType, entityId, canAdd, docTypes = false }: { entityType: EvidenceEntity; entityId: string; canAdd: boolean; docTypes?: boolean }) {
   const supabase = await createClient();
   const { data } = await supabase
     .from("attachments")
-    .select("id, path, file_name, mime_type, caption, recorded_at")
+    .select("id, path, file_name, mime_type, caption, doc_type, recorded_at")
     .eq("entity_type", entityType).eq("entity_id", entityId).is("voided_at", null)
     .order("recorded_at");
   const files = (data ?? []) as Attachment[];
@@ -39,13 +39,13 @@ export async function EvidenceList({ entityType, entityId, canAdd }: { entityTyp
                     </span>
                   )}
                 </a>
-                <span className="block truncate" title={f.caption ?? ""}>{f.caption ?? formatLagos(f.recorded_at)}</span>
+                <span className="block truncate" title={f.caption ?? ""}>{f.doc_type && f.doc_type !== "Photo" ? <b>{f.doc_type}: </b> : null}{f.caption ?? formatLagos(f.recorded_at)}</span>
               </li>
             );
           })}
         </ul>
       )}
-      {canAdd && <EvidenceUpload entityType={entityType} entityId={entityId} />}
+      {canAdd && <EvidenceUpload entityType={entityType} entityId={entityId} docTypes={docTypes} />}
     </div>
   );
 }
