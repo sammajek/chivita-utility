@@ -37,7 +37,9 @@ begin
     from generate_series(public.log_date_of(now()) - 1, public.log_date_of(now()), interval '1 day') d,
          lateral public.register_slots(d::date) rs
     join public.registers g on g.id = rs.register_id and g.key = 'u1-boiler'
-   where rs.due_at < now() - interval '2 hours' order by rs.due_at desc limit 1;
+   where rs.due_at < now() - interval '2 hours'
+     and exists (select 1 from public.register_fields f where f.section_id = rs.section_id and f.label like 'Steam Pressure%')
+   order by rs.due_at desc limit 1;
   insert into public.readings (field_id, asset_id, log_date, slot_key, reading_for, value_num, entry_method)
   select f.id, (select asset_id from public.register_assets ra join public.register_sections x on x.register_id = ra.register_id where x.id = s.section_id limit 1),
          s.log_date, s.slot_key, s.due_at, 8.2, 'paper'

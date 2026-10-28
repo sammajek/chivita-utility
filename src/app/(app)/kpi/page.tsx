@@ -71,7 +71,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
         <div>
           <h1 className="text-xl font-bold">Individual Engineer KPI Tracker – FY {year}</h1>
           <p className="text-sm">Engineer: <b>{person.full_name}</b> · Staff ID: {person.staff_id}{person.band ? ` · Band ${person.band}` : ""}{person.area ? ` · ${person.area}` : ""}</p>
-          <p className="text-xs text-gray-500">Maintenance and quality KPIs are calculated from the app (my checked-in shifts and areas); safety, leakage and THERMAX come from the weekly log below.</p>
+          <p className="text-xs text-gray-500">Maintenance and quality KPIs are calculated from the app (my checked-in shifts and areas); safety and THERMAX come from the weekly log below.</p>
           <PrintButton />
         </div>
         <Logo height={36} />
@@ -120,7 +120,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
       <details className="card text-sm">
         <summary className="cursor-pointer font-semibold">How each KPI is calculated</summary>
         <ul className="mt-2 space-y-1">{kpis.map((k) => <li key={k.code}><b>{k.name}</b> (target {k.target_text}): {k.formula}</li>)}</ul>
-        <p className="mt-2 text-xs text-gray-500">“My shifts” = the day/night shifts the engineer checked in for on the On duty page, in the areas they checked in for. CW temp uses the chilled water outlet temperature readings.</p>
+        <p className="mt-2 text-xs text-gray-500">“My shifts” = the day/night shifts the engineer checked in for on the On duty page, in the areas they checked in for. CW temp uses the cooling water inlet and outlet temperature readings. A leak is counted once from the first “Leak” answer on a register leak check, and is closed when “No Leak” is recorded within 24 h.</p>
       </details>
 
       {canWrite && (
@@ -140,15 +140,12 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
               {num("near_miss", "Near-miss reported")}{num("non_routine_jobs", "Non-routine jobs")}
               {num("permits_issued", "Work permits issued")}{num("permits_carried", "Open permits carried over")}
             </fieldset>
-            <fieldset className="grid grid-cols-2 gap-2 sm:grid-cols-4"><legend className="col-span-full text-xs font-semibold text-gray-700">Leakage</legend>
-              {num("leaks_identified", "Leakages identified")}{num("leaks_closed_24h", "Closed within 24 h")}{num("leaks_escalated", "Escalated")}
-            </fieldset>
             <fieldset className="grid grid-cols-2 gap-2 sm:grid-cols-4"><legend className="col-span-full text-xs font-semibold text-gray-700">Digital / THERMAX</legend>
               {num("thermax_callouts", "THERMAX callouts")}{num("thermax_acted", "Acted upon (me)")}{num("thermax_escalated", "Unresolved, escalated")}
             </fieldset>
             <textarea name="notes" rows={2} className="input" placeholder="Remarks / actions taken" defaultValue={thisWeek?.notes ? String(thisWeek.notes) : ""} />
           </ActionForm>
-          <p className="text-xs text-gray-500">PM, AMC, availability and quality readings are not entered here: they come from the PM log, AMC tracker, downtime log and equipment registers.</p>
+          <p className="text-xs text-gray-500">PM, AMC, availability, quality and leakage are not entered here: they come from the PM log, AMC tracker, downtime log and equipment registers (leakage = the Leak / No Leak checks).</p>
         </section>
       )}
 
@@ -156,13 +153,13 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
         <section className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Weekly log history</h2>
           <table className="w-full min-w-[640px] text-xs">
-            <thead className="text-left text-gray-500"><tr><th>Week</th><th>GEMBA</th><th>Unsafe acts</th><th>Permits / jobs</th><th>Leaks closed</th><th>THERMAX</th><th>Notes</th></tr></thead>
+            <thead className="text-left text-gray-500"><tr><th>Week</th><th>GEMBA</th><th>Unsafe acts</th><th>Permits / jobs</th><th>THERMAX</th><th>Notes</th></tr></thead>
             <tbody>
               {logs.map((l) => (
                 <tr key={l.week_start} className="border-t">
                   <td className="py-1"><Link href={qs({ week: l.week_start })} className="text-brand-blue">{l.week_start}</Link></td>
                   <td>{l.gemba_closed ?? "–"}/{l.gemba_raised ?? "–"}</td><td>{l.unsafe_reported ?? "–"}/{l.unsafe_observed ?? "–"}</td>
-                  <td>{l.permits_issued ?? "–"}/{l.non_routine_jobs ?? "–"}</td><td>{l.leaks_closed_24h ?? "–"}/{l.leaks_identified ?? "–"}</td>
+                  <td>{l.permits_issued ?? "–"}/{l.non_routine_jobs ?? "–"}</td>
                   <td>{l.thermax_acted ?? "–"}/{l.thermax_callouts ?? "–"}</td><td className="text-gray-600">{String(l.notes ?? "")}</td>
                 </tr>
               ))}

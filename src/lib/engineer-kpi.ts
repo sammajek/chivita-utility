@@ -10,11 +10,10 @@ export interface WeeklyLog {
   gemba_raised: number | null; gemba_closed: number | null;
   unsafe_observed: number | null; unsafe_reported: number | null;
   non_routine_jobs: number | null; permits_issued: number | null;
-  leaks_identified: number | null; leaks_closed_24h: number | null;
   thermax_callouts: number | null; thermax_acted: number | null;
 }
 
-/** Weekly-log KPIs, attributed to the month the week starts in (as the Weekly Log sheet). */
+/** Weekly-log KPIs (safety, THERMAX), attributed to the month the week starts in (as the Weekly Log sheet). Leakage comes from the registers. */
 export function weeklyParts(logs: WeeklyLog[]): Part[] {
   const out: Part[] = [];
   const add = (month: number, kpi: string, num: number | null, den: number | null) => {
@@ -25,7 +24,6 @@ export function weeklyParts(logs: WeeklyLog[]): Part[] {
     add(m, "gemba", w.gemba_closed, w.gemba_raised);
     add(m, "unsafe_act", w.unsafe_reported, w.unsafe_observed);
     add(m, "permit", w.permits_issued, w.non_routine_jobs);
-    add(m, "leakage", w.leaks_closed_24h, w.leaks_identified);
     add(m, "thermax", w.thermax_acted, w.thermax_callouts);
   }
   return out;

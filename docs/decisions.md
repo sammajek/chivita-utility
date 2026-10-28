@@ -152,8 +152,10 @@ Each entry: date, decision, who decided, notes.
 - **Weekly log** (as the Weekly Log sheet): GEMBA, unsafe acts, near misses, permits / non-routine jobs, leakages
   (closed within 24 h), THERMAX callouts. Entered by the engineer for themself, or by a manager.
 - Quarter/YTD figures add up the counts behind each month (not an average of percentages).
-- Assumptions to confirm: "CW temp" = chilled water outlet temperature; PM and AMC are measured for the engineer's
-  areas (the PM log has no per-person assignment); leakage is weekly rather than per shift.
+- Owner confirmed (2026-10-28): "CW temp" = **cooling water** temperature (VAM cooling water inlet 30–34 °C /
+  outlet 32–36 °C); PM and AMC by area is fine; **leakage comes automatically from the registers' Leak / No Leak checks**:
+  one leak per first "Leak" answer on a check and machine, closed when "No Leak" is recorded within 24 h, counted for
+  the engineer on duty when it was first recorded. The weekly log no longer asks for leakages.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

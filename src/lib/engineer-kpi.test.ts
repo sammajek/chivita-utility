@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ratioFor, status, weeklyParts } from "./engineer-kpi";
 
 const empty = { gemba_raised: null, gemba_closed: null, unsafe_observed: null, unsafe_reported: null, non_routine_jobs: null,
-  permits_issued: null, leaks_identified: null, leaks_closed_24h: null, thermax_callouts: null, thermax_acted: null };
+  permits_issued: null, thermax_callouts: null, thermax_acted: null };
 
 describe("engineer KPI scorecard", () => {
   it("uses summed counts, not an average of weekly % (worked example)", () => {
