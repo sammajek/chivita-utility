@@ -93,7 +93,7 @@ begin;
 do $$
 begin
   update public.app_settings set value = 'null'::jsonb where key = 'pm_monitor_from';
-  assert public.pm_kpi_start() = coalesce((select min(period_start) from public.pm_completions where voided_at is null), 'infinity'::date), 'first PM result';
+  assert public.pm_kpi_start() = coalesce((select public.log_date_of(min(recorded_at)) from public.pm_completions where voided_at is null), 'infinity'::date), 'day the first PM result was entered';
   update public.app_settings set value = '"2026-09-01"'::jsonb where key = 'pm_monitor_from';
   assert public.pm_kpi_start() = '2026-09-01', 'go-live date wins';
 end $$;

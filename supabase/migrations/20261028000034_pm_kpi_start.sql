@@ -1,5 +1,5 @@
 -- PM completion % counts PM periods from the PM go-live date (setting pm_monitor_from), or, until that is set,
--- from the first PM result ever recorded, so months before the PM log was used do not count as missed.
+-- from the day the first PM result was entered, so months before the PM log was used do not count as missed.
 create or replace function public.pm_kpi_start()
 returns date
 language sql
@@ -7,7 +7,7 @@ stable
 set search_path = public
 as $$
   select coalesce((select (value #>> '{}')::date from public.app_settings where key = 'pm_monitor_from'),
-                  (select min(period_start) from public.pm_completions where voided_at is null),
+                  (select public.log_date_of(min(recorded_at)) from public.pm_completions where voided_at is null),
                   'infinity'::date)
 $$;
 
