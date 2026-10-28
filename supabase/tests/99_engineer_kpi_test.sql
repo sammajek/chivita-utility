@@ -87,3 +87,14 @@ begin
   assert l.num = case when n = 3 then 1 else 0 end, 'closed when No Leak follows within 24 h';
 end $$;
 rollback;
+
+-- PM % starts from the first PM result when no go-live date is set
+begin;
+do $$
+begin
+  update public.app_settings set value = 'null'::jsonb where key = 'pm_monitor_from';
+  assert public.pm_kpi_start() = coalesce((select min(period_start) from public.pm_completions where voided_at is null), 'infinity'::date), 'first PM result';
+  update public.app_settings set value = '"2026-09-01"'::jsonb where key = 'pm_monitor_from';
+  assert public.pm_kpi_start() = '2026-09-01', 'go-live date wins';
+end $$;
+rollback;
