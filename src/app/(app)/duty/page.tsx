@@ -44,7 +44,7 @@ export default async function DutyPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">On duty</h1>
-        <p className="text-sm text-gray-600">Current shift: {SHIFT_LABELS[cur.shift]}, {cur.shiftDate}</p>
+        <p className="text-sm text-gray-600">Current shift: {SHIFT_LABELS[cur.shift]}, {cur.shiftDate} · <Link href="/duty/handover" className="text-brand-blue">Handover report (print)</Link></p>
       </div>
 
       {canCheckIn && (
