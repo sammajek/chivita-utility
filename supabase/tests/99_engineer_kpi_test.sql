@@ -27,7 +27,7 @@ begin
   exception when check_violation then null;
   end;
   begin
-    insert into public.engineer_weekly_logs (staff_ref, week_start) values (st, wk + 1);
+    insert into public.engineer_weekly_logs (staff_ref, week_start) values (st, wk - 6);
     raise exception 'week must start on Monday';
   exception when check_violation then null;
   end;

@@ -41,3 +41,16 @@ begin
   assert (select reading_for from public.meter_readings where meter_id = g and read_date = d) = public.lagos_ts(d, time '07:00'), '7 am reading';
 end $$;
 rollback;
+
+-- demo generator: rising totalisers, no validation errors, labelled DEMO
+begin;
+insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000000cd', 'consdemo@test.local');
+do $$
+declare n int;
+begin
+  n := public.generate_consumption_demo('00000000-0000-0000-0000-0000000000cd', 10);
+  assert n = 93 * 11, 'one reading per meter per day';
+  assert not exists (select 1 from public.meter_usage where kind <> 'rate' and used < 0), 'totalisers only rise';
+  assert (select bool_and(is_demo) from public.meter_readings), 'all DEMO';
+end $$;
+rollback;
