@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireProfile } from "@/lib/auth";
 import { loadDashboard } from "@/lib/data/dashboard";
+import { createClient } from "@/lib/supabase/server";
 import { addDays, formatLagos, lagosDate, lagosInstant, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { BarList, StatTile } from "@/components/BarList";
 
@@ -17,7 +18,26 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const now = new Date();
   const to = lagosInstant(addDays(lagosDate(now), 1), 0);
   const from = lagosInstant(addDays(lagosDate(now), 1 - days), 0);
-  const d = await loadDashboard(from, to, area);
+  const supabase = await createClient();
+  let aq = supabase.from("assets").select("code, name, op_state, op_reason, category:asset_categories(name)").neq("status", "retired");
+  if (area) aq = aq.eq("area", area);
+  const [d, { data: assetData }, { count: hoursDue }, { data: use }] = await Promise.all([
+    loadDashboard(from, to, area),
+    aq,
+    supabase.from("flags").select("id", { count: "exact", head: true }).eq("kind", "hours_service_due").is("resolved_at", null),
+    supabase.from("meter_usage").select("code, unit, used, grp, name, is_demo").eq("read_date", lagosDate(now)).not("used", "is", null),
+  ]);
+  const assets = (assetData ?? []) as unknown as { code: string; name: string; op_state: string; op_reason: string | null; category: { name: string } | null }[];
+  const down = assets.filter((a) => a.op_state === "unavailable");
+  const byCat = new Map<string, { a: number; s: number; u: number }>();
+  for (const a of assets) {
+    const c = byCat.get(a.category?.name ?? "Other") ?? { a: 0, s: 0, u: 0 };
+    if (a.op_state === "available") c.a++; else if (a.op_state === "standby") c.s++; else c.u++;
+    byCat.set(a.category?.name ?? "Other", c);
+  }
+  const usage = (use ?? []) as { code: string; unit: string | null; used: number; grp: string; name: string; is_demo: boolean }[];
+  const sumUse = (f: (u: (typeof usage)[number]) => boolean) => usage.filter(f).reduce((t, u) => t + Number(u.used), 0);
+  const gas = sumUse((u) => /GAS$/.test(u.code)), kwh = sumUse((u) => u.unit === "kWh"), wtp = sumUse((u) => u.code === "W-WTP");
   const shift = shiftAt(now);
   const link = (o: Record<string, string>) => `/?${new URLSearchParams({ days: String(days), ...(area ? { area } : {}), ...o })}`;
 
@@ -50,6 +70,38 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <p className="mt-1 text-sm">
           {d.onDuty.length ? d.onDuty.map((p) => `${p.name} (${p.areas.join("+")})`).join(", ") : "Nobody is checked in."}
         </p>
+      </section>
+
+      <section className="card space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold">Equipment status</h2>
+          <Link href="/equipment" className="text-sm text-brand-blue">Equipment →</Link>
+        </div>
+        <p className="text-sm">
+          <b className="text-ok">{assets.filter((a) => a.op_state === "available").length}</b> available ·{" "}
+          <b className="text-brand-blue">{assets.filter((a) => a.op_state === "standby").length}</b> standby ·{" "}
+          <b className="text-crit">{down.length}</b> unavailable
+          {hoursDue ? <> · <Link href="/flags" className="text-warn">{hoursDue} running-hours service{hoursDue > 1 ? "s" : ""} due</Link></> : null}
+        </p>
+        {down.length > 0 && (
+          <p className="text-sm text-crit">Unavailable: {down.map((a) => (
+            <Link key={a.code} href={`/equipment/${encodeURIComponent(a.code)}`} className="mr-2 underline">{a.code}{a.op_reason ? ` (${a.op_reason})` : ""}</Link>
+          ))}</p>
+        )}
+        <div className="flex flex-wrap gap-2 text-xs text-gray-600">
+          {[...byCat.entries()].map(([c, n]) => <span key={c} className="rounded bg-gray-100 px-2 py-0.5">{c}: {n.a}/{n.a + n.s + n.u}{n.u ? <b className="text-crit"> · {n.u} down</b> : null}</span>)}
+        </div>
+      </section>
+
+      <section className="card space-y-1">
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold">Consumption since yesterday 07:00</h2>
+          <Link href="/consumption" className="text-sm text-brand-blue">Consumption →</Link>
+        </div>
+        {usage.length ? (
+          <p className="text-sm">Gas <b>{Math.round(gas).toLocaleString()}</b> m³ · Electricity <b>{Math.round(kwh).toLocaleString()}</b> kWh · WTP output <b>{Math.round(wtp).toLocaleString()}</b> m³
+            {usage.some((u) => u.is_demo) && <span className="ml-2 rounded bg-purple-100 px-1 text-[10px] font-bold uppercase text-purple-700">Demo</span>}</p>
+        ) : <p className="text-sm text-gray-500">Today’s 07:00 readings are not entered yet.</p>}
       </section>
 
       <section className="space-y-3">
