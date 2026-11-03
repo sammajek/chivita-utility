@@ -181,6 +181,16 @@ Each entry: date, decision, who decided, notes.
   into messages, so switching on e-mail later does not send plant data to the e-mail provider beyond the subject line.
 - New Inbox page (header shows unread count): scheduled reports, escalations and digests; "mark as read".
 
+## 2026-11-03: Logger import (phase 3 item, started early)
+- Admin → Loggers: create a logger and issue its key (shown once; only a hash is stored; issuing again replaces it).
+- Devices POST to /api/logger/readings with "Authorization: Bearer <key>": rows {asset_code, parameter, value,
+  timestamp} or {meter_code, value, timestamp}, up to 5000 per request. Engineers can upload the same data as CSV.
+- Every value is kept in logger_data. A value within 15 min of a register slot fills that slot (if empty), tagged to the
+  logger, not late/early, judged against the standard; an out-of-spec value gets an automatic note so the engineer adds
+  the action. A meter value between 06:45 and 07:15 becomes that day's 07:00 reading (normal checks apply).
+- Unknown equipment / parameters / meters, bad or future timestamps are rejected with a reason in the reply.
+- To do with the owner: which devices exist (energy meters, flowmeters, SCADA/THERMAX) and how they export.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
