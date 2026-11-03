@@ -157,6 +157,21 @@ Each entry: date, decision, who decided, notes.
   one leak per first "Leak" answer on a check and machine, closed when "No Leak" is recorded within 24 h, counted for
   the engineer on duty when it was first recorded. The weekly log no longer asks for leakages.
 
+## 2026-11-03: Handover report, consumption DEMO data, presentation generator, security patch
+- **Handover report** (/duty/handover, printable): the consumption report's handover sheet, filled in from the app:
+  running / standby / maintenance per equipment group (equipment state), fuel use from the 07:00 report, latest tank
+  levels, open downtime and flags, engineers on duty and their handover notes, sign-off lines.
+- **Consumption DEMO**: 45 days of 07:00 readings for all 93 meters (labelled DEMO) so the screens can be reviewed.
+- **Presentation generator** (/reports): templates Weekly utility review, Monthly management report, Downtime & RCA,
+  PM & AMC compliance, Energy & consumption, Engineer performance, or a custom tick-list of 10 sections; scope by dates
+  and area; commentary per slide. Output .pptx (PptxGenJS): logo, data period and "generated at" on every slide, a
+  source line per slide, editable native charts, DEMO warning when demo data is included. Built from live data as the
+  signed-in user (access rules apply). The look is in one file (src/lib/deck/theme.ts) so the corporate template can be
+  swapped in. PDF: save from PowerPoint for now. Saved custom templates and scheduled (e-mailed) decks: next.
+- **Security**: Next.js 15.5.27 → 15.5.28 (fixes a critical image-optimisation remote-code-execution advisory); zod
+  updated. Remaining: a moderate Next.js advisory that needs the v16 major upgrade (planned separately), and an
+  image-size advisory inside PptxGenJS that only affects crafted image files (the decks only embed our own logo).
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
