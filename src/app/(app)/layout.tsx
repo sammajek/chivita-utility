@@ -5,12 +5,17 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const profile = await requireProfile();
-  const { data: outage } = profile.active
-    ? await (await createClient()).from("system_outages").select("started_at, reason").is("ended_at", null).maybeSingle()
-    : { data: null };
+  const supabase = await createClient();
+  const [{ data: outage }, { count: unread }] = profile.active
+    ? await Promise.all([
+        supabase.from("system_outages").select("started_at, reason").is("ended_at", null).maybeSingle(),
+        supabase.from("notifications").select("id", { count: "exact", head: true })
+          .eq("recipient_id", profile.id).or("channel.eq.in_app,kind.neq.report").is("acknowledged_at", null),
+      ])
+    : [{ data: null }, { count: 0 }];
   return (
     <>
-      <AppHeader profile={profile} />
+      <AppHeader profile={profile} unread={unread ?? 0} />
       {!profile.active && (
         <div className="bg-amber-50 px-4 py-2 text-center text-sm text-warn">
           Your account is not active yet. Ask an admin to set your role.

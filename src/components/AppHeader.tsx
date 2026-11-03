@@ -4,7 +4,7 @@ import { signOut } from "@/app/login/actions";
 import { navFor, ROLE_LABELS } from "@/lib/roles";
 import type { Profile } from "@/lib/auth";
 
-export function AppHeader({ profile }: { profile: Profile }) {
+export function AppHeader({ profile, unread = 0 }: { profile: Profile; unread?: number }) {
   const nav = navFor(profile.role);
   return (
     <header className="no-print sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -14,6 +14,10 @@ export function AppHeader({ profile }: { profile: Profile }) {
           <span className="hidden text-sm font-semibold text-brand-blue sm:inline">Utility Ops</span>
         </Link>
         <div className="flex items-center gap-3">
+          <Link href="/inbox" className="relative rounded-md px-2 py-2 text-sm text-gray-700 hover:bg-gray-100" aria-label={`Inbox, ${unread} unread`}>
+            Inbox
+            {unread > 0 && <span className="absolute -right-1 -top-0.5 rounded-full bg-brand-red px-1.5 text-[10px] font-bold text-white">{unread > 99 ? "99+" : unread}</span>}
+          </Link>
           <div className="text-right leading-tight">
             <div className="text-sm font-medium">{profile.full_name}</div>
             <div className="text-xs text-gray-500">{ROLE_LABELS[profile.role]}</div>

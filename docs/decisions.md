@@ -172,6 +172,15 @@ Each entry: date, decision, who decided, notes.
   updated. Remaining: a moderate Next.js advisory that needs the v16 major upgrade (planned separately), and an
   image-size advisory inside PptxGenJS that only affects crafted image files (the decks only embed our own logo).
 
+## 2026-11-03: Saved and scheduled decks, Inbox
+- Reports → "Save these sections as a template": name, rolling period (last week Mon–Sun, last 7 days, last month,
+  month to date, last 30 days), area, visible to everyone or private. Engineers and managers can schedule it weekly
+  (day + hour) or monthly (day 1–28 + hour), Lagos time, to chosen people.
+- At that hour each recipient gets an Inbox message (and a queued e-mail) containing only the report name and a link;
+  the deck is built from live data, with the recipient's own access, when they open the link. No plant figures go
+  into messages, so switching on e-mail later does not send plant data to the e-mail provider beyond the subject line.
+- New Inbox page (header shows unread count): scheduled reports, escalations and digests; "mark as read".
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.

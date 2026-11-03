@@ -1,12 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { SECTIONS, SECTION_KEYS, TEMPLATES, type SectionKey } from "@/lib/deck/sections";
+import { PERIODS } from "@/lib/deck/period";
+import { saveDeckTemplate } from "./actions";
+
+const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T12:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
 
 /** Choose a template or tick sections, set the scope, add commentary per slide, download the .pptx. */
-export function DeckForm({ today }: { today: string }) {
+export function DeckForm({ today, people, canSchedule }: { today: string; people: { id: string; name: string }[]; canSchedule: boolean }) {
+  const [saved, saveAction, saving] = useActionState(saveDeckTemplate, {});
+  const [schedule, setSchedule] = useState("none");
   const [template, setTemplate] = useState("weekly");
   const [picked, setPicked] = useState<SectionKey[]>(TEMPLATES.weekly.sections);
   const [from, setFrom] = useState(addDays(today, -6));
@@ -70,6 +76,35 @@ export function DeckForm({ today }: { today: string }) {
       </section>
 
       <button className="btn-primary w-full" disabled={busy || !picked.length}>{busy ? "Building the deck… (download starts shortly)" : "Download PowerPoint (.pptx)"}</button>
+
+      <details className="card space-y-3">
+        <summary className="cursor-pointer font-semibold">Save these sections as a template (optionally scheduled)</summary>
+        <p className="text-xs text-gray-500">A saved template uses a rolling period, so “last week” is always the most recent week. Scheduled reports arrive in each person’s Inbox
+          (and by e-mail once an e-mail provider is approved) as a link; the deck is built from live data when they open it.</p>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <input name="save_name" className="input" placeholder="Template name (e.g. Monday utility review)" />
+          <select name="period" className="input" defaultValue="last_week">{Object.entries(PERIODS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
+          <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="shared" defaultChecked className="h-5 w-5" /> Visible to everyone</label>
+          {canSchedule && (
+            <select name="schedule" className="input" value={schedule} onChange={(e) => setSchedule(e.target.value)}>
+              <option value="none">Not scheduled</option><option value="weekly">Every week</option><option value="monthly">Every month</option>
+            </select>
+          )}
+          {schedule === "weekly" && <select name="schedule_dow" className="input" defaultValue="1">{DAYS.map((d, i) => <option key={d} value={i + 1}>{d}</option>)}</select>}
+          {schedule === "monthly" && <label className="text-sm">Day of month <input name="schedule_day" type="number" min={1} max={28} defaultValue={1} className="input" /></label>}
+          {schedule !== "none" && (
+            <label className="text-sm">Hour (Lagos) <input name="schedule_hour" type="number" min={0} max={23} defaultValue={7} className="input" /></label>
+          )}
+        </div>
+        {schedule !== "none" && (
+          <fieldset className="grid gap-1 sm:grid-cols-3"><legend className="text-xs font-medium text-gray-600">Send to</legend>
+            {people.map((p) => <label key={p.id} className="flex items-center gap-2 text-sm"><input type="checkbox" name="recipients" value={p.id} className="h-4 w-4" /> {p.name}</label>)}
+          </fieldset>
+        )}
+        <button formAction={saveAction} className="btn-secondary" disabled={saving || !picked.length}>{saving ? "Saving…" : "Save template"}</button>
+        {saved.error && <p className="text-sm text-crit">{saved.error}</p>}
+        {saved.ok && <p className="text-sm text-ok">{saved.ok}</p>}
+      </details>
     </form>
   );
 }
