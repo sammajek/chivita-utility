@@ -48,8 +48,8 @@ insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000000cd
 do $$
 declare n int;
 begin
-  n := public.generate_consumption_demo('00000000-0000-0000-0000-0000000000cd', 10);
-  assert n = 93 * 11, 'one reading per meter per day';
+  n := public.generate_consumption_demo('00000000-0000-0000-0000-0000000000cd', 45);
+  assert n = 93 * 46, 'one reading per meter per day';
   assert not exists (select 1 from public.meter_usage where kind <> 'rate' and used < 0), 'totalisers only rise';
   assert (select bool_and(is_demo) from public.meter_readings), 'all DEMO';
 end $$;

@@ -10,7 +10,7 @@ as $$
 declare
   today date := public.lagos_now()::date;
   d date;
-  n int := 0; k int;
+  n int := 0; k int; got int;
 begin
   if auth.uid() is not null and not public.has_role('admin') then
     raise exception 'Only an admin can generate demo data.' using errcode = 'P0001';
@@ -33,14 +33,15 @@ begin
                                        reading_for, is_demo)
     select t.id, d,
            case when t.kind = 'rate' then round((t.typical * (0.85 + 0.3 * random()))::numeric, 1)
-                else round((t.start_value + t.typical * (p_days - k) * (0.95 + 0.1 * random()))::numeric, 1) end,
+                -- steady daily use ± 30 %: the running total always rises
+                else round((t.start_value + t.typical * (p_days - k) + 0.3 * t.typical * random())::numeric, 1) end,
            'DEMO', 'person', p_user, public.lagos_ts(d, time '07:10'), public.lagos_ts(d, time '07:00'), true
       from t_demo_meter t
      where not exists (select 1 from public.meter_readings r where r.meter_id = t.id and r.read_date = d and r.voided_at is null)
        and not (t.kind <> 'rate' and exists (select 1 from public.meter_readings r where r.meter_id = t.id and r.read_date > d
                                                                                     and r.voided_at is null and not r.is_demo));
-    get diagnostics k = row_count;
-    n := n + k;
+    get diagnostics got = row_count;
+    n := n + got;
   end loop;
   return n;
 end;
