@@ -45,7 +45,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
           <h1 className="text-2xl font-bold">Equipment</h1>
           <p className="text-sm text-gray-600">All Utility equipment with PM code, PM schedule and specifications. Tap a machine to change its state, log running-hours services or add photos.</p>
         </div>
-        <a href={`/equipment/csv${qs({}).slice(10)}`} className="btn-secondary">Download CSV</a>
+        <div className="flex gap-2"><a href={`/equipment/csv${qs({}).slice(10)}`} className="btn-secondary">Download CSV</a><Link href="/equipment/labels" className="btn-secondary">QR labels</Link></div>
       </div>
       <form className="flex flex-wrap gap-2">
         <input name="q" defaultValue={sp.q} placeholder="Search code, name, make, PM code" className="input max-w-xs py-2" />

@@ -191,6 +191,14 @@ Each entry: date, decision, who decided, notes.
 - Unknown equipment / parameters / meters, bad or future timestamps are rejected with a reason in the reply.
 - To do with the owner: which devices exist (energy meters, flowmeters, SCADA/THERMAX) and how they export.
 
+## 2026-11-03: QR labels; dev-tool security update
+- Equipment → QR labels: printable sheet (filter by area / category), one label per machine with logo, code, name and a
+  QR code that opens the machine's page (state, running hours, PM, photos, downtime). Plus a control-room label per
+  area that opens On duty for check-in. Signed-out phones go to sign-in, then straight to the scanned page.
+  The QR points at the address the sheet was printed from, so print the final sheets from the live (production) address.
+- Proof-of-presence check-in (rotating code that only works in the control room) is not built yet.
+- Vitest 3 → 5 and @types/node 20 → 22 (test tools only) to clear two critical advisories.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.
