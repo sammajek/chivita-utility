@@ -82,7 +82,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex gap-2">
           {[["jobs", `Job requests (${jobs.length})`], ["orders", `Item orders (${orders.length})`]].map(([k, l]) => (
-            <Link key={k} href={link({ tab: k })} className={`rounded-lg border px-3 py-2 text-sm font-medium ${tab === k ? "border-brand-red bg-brand-red text-white" : "border-gray-300 bg-white"}`}>{l}</Link>
+            <Link key={k} href={link({ tab: k })} className={`tab ${tab === k ? "tab-on" : ""}`}>{l}</Link>
           ))}
         </div>
         <form className="flex gap-2" action="/jobs">

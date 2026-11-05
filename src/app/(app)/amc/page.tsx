@@ -55,7 +55,7 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
         </div>
         <div className="flex gap-2 text-sm">
           {[thisYear - 1, thisYear, thisYear + 1].map((y) => (
-            <Link key={y} href={`/amc?year=${y}`} className={`rounded px-3 py-1.5 ${y === year ? "bg-gray-900 text-white" : "bg-gray-100"}`}>{y}</Link>
+            <Link key={y} href={`/amc?year=${y}`} className={`tab ${y === year ? "tab-on" : ""}`}>{y}</Link>
           ))}
         </div>
       </div>
