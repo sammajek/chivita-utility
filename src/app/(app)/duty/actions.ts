@@ -42,3 +42,15 @@ export async function resolveFlag(_prev: ActionState, form: FormData): Promise<A
   revalidatePath("/flags");
   return { ok: "Closed." };
 }
+
+/** Scanned control-room QR: verify presence (and check in for that area if not yet on duty). */
+export async function verifyPresence(_prev: ActionState, form: FormData): Promise<ActionState> {
+  const area = String(form.get("room"));
+  if (area !== "U1" && area !== "U2") return { error: "Unknown control room." };
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("verify_presence", { p_area: area, p_code: String(form.get("code") ?? "") } as never);
+  if (error) return { error: error.message };
+  revalidatePath("/duty");
+  revalidatePath("/");
+  return { ok: `Verified: you are on duty in the ${area === "U1" ? "Utility 1" : "Utility 2"} control room.` };
+}

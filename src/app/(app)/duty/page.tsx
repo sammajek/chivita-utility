@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatLagos, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { ROLE_LABELS, type Role } from "@/lib/roles";
 import { DemoBadge } from "@/components/StatusBadge";
-import { CheckInForm, CheckOutForm } from "./DutyForms";
+import { CheckInForm, CheckOutForm, VerifyPresenceForm } from "./DutyForms";
 
 export const dynamic = "force-dynamic";
 
@@ -19,17 +19,20 @@ interface Session {
   handover_note: string | null;
   open_flags_at_checkout: number | null;
   is_demo: boolean;
+  presence_verified_at: string | null;
+  presence_area: string | null;
   profile: { full_name: string; role: Role } | null;
 }
 
-export default async function DutyPage() {
+export default async function DutyPage({ searchParams }: { searchParams: Promise<{ room?: string; code?: string }> }) {
   const profile = await requireProfile();
+  const sp = await searchParams;
   const supabase = await createClient();
   const cur = shiftAt(new Date());
   const [{ data: sessions }, { count: openFlags }] = await Promise.all([
     supabase
       .from("duty_sessions")
-      .select("id, profile_id, shift_date, shift, areas, checked_in_at, checked_out_at, handover_note, open_flags_at_checkout, is_demo, profile:profiles(full_name, role)")
+      .select("id, profile_id, shift_date, shift, areas, checked_in_at, checked_out_at, handover_note, open_flags_at_checkout, is_demo, presence_verified_at, presence_area, profile:profiles(full_name, role)")
       .order("checked_in_at", { ascending: false })
       .limit(30),
     supabase.from("flags").select("id", { count: "exact", head: true }).is("resolved_at", null),
@@ -46,6 +49,8 @@ export default async function DutyPage() {
         <h1 className="page-title">On duty</h1>
         <p className="page-sub">Current shift: {SHIFT_LABELS[cur.shift]}, {cur.shiftDate} · <Link href="/duty/handover" className="text-brand-blue">Handover report (print)</Link></p>
       </div>
+
+      {canCheckIn && (sp.room === "U1" || sp.room === "U2") && sp.code && <VerifyPresenceForm room={sp.room} code={sp.code} />}
 
       {canCheckIn && (
         <section className="card space-y-3">
@@ -76,7 +81,10 @@ export default async function DutyPage() {
             {onNow.map((s) => (
               <li key={s.id} className="card flex justify-between text-sm">
                 <span><b>{s.profile?.full_name}</b> · {s.profile ? ROLE_LABELS[s.profile.role] : ""}</span>
-                <span className="text-gray-500">{s.areas.join(" + ")} since {formatLagos(s.checked_in_at).slice(-5)}</span>
+                <span className="flex items-center gap-2 text-gray-500">{s.areas.join(" + ")} since {formatLagos(s.checked_in_at).slice(-5)}
+                  {s.presence_verified_at
+                    ? <span className="rounded bg-green-100 px-1.5 py-0.5 text-xs font-semibold text-ok" title={`Scanned the ${s.presence_area} control-room code at ${formatLagos(s.presence_verified_at)}`}>✓ in control room</span>
+                    : <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">not verified</span>}</span>
               </li>
             ))}
           </ul>

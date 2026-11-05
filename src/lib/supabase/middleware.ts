@@ -36,7 +36,8 @@ export async function updateSession(request: NextRequest) {
   if (!user && !isPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("next", pathname);
+    url.search = "";
+    url.searchParams.set("next", pathname + request.nextUrl.search); // keep e.g. the scanned control-room code
     return NextResponse.redirect(url);
   }
   return response;

@@ -199,6 +199,14 @@ Each entry: date, decision, who decided, notes.
 - Proof-of-presence check-in (rotating code that only works in the control room) is not built yet.
 - Vitest 3 → 5 and @types/node 20 → 22 (test tools only) to clear two critical advisories.
 
+## 2026-11-05: New look; proof-of-presence check-in
+- Layout: grouped navigation (Overview, Operations, Maintenance, Quality, People, Reports & data, Admin) as a sidebar on
+  computers and a full "Menu" sheet on phones — no sideways scrolling. Page tabs are pills that wrap. One style for
+  page titles, cards, buttons and data tables (src/app/globals.css: tab, page-title, data-table, table-wrap…).
+- Control-room check-in codes (Equipment → QR labels, admin / section manager): a secret code per control room printed
+  as a QR label. Scanning it during the shift checks the person in (if needed) and marks the session "✓ in control room"
+  on On duty. Issuing new codes invalidates old printouts. Only a hash is stored. Sign-in keeps the scanned link.
+
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
   the Equipment Standard sheet's main-block value is loaded and marked `needs_review`.

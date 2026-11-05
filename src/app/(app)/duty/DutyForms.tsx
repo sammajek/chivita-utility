@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { checkIn, checkOut, type ActionState } from "./actions";
+import { checkIn, checkOut, verifyPresence, type ActionState } from "./actions";
 
 export function CheckInForm({ defaultAreas }: { defaultAreas: string[] }) {
   const [state, action, pending] = useActionState<ActionState, FormData>(checkIn, {});
@@ -37,6 +37,22 @@ export function CheckOutForm({ openFlags }: { openFlags: number }) {
       {state.error && <p className="text-sm text-crit">{state.error}</p>}
       {state.ok && <p className="text-sm text-ok">{state.ok}</p>}
       <button className="btn-secondary w-full" disabled={pending}>{pending ? "…" : "Check out"}</button>
+    </form>
+  );
+}
+
+/** Shown after scanning a control-room QR code: one tap to check in / confirm presence. */
+export function VerifyPresenceForm({ room, code }: { room: string; code: string }) {
+  const [state, action, pending] = useActionState<ActionState, FormData>(verifyPresence, {});
+  const name = room === "U1" ? "Utility 1" : "Utility 2";
+  return (
+    <form action={action} className="card space-y-3 border-brand-blue">
+      <input type="hidden" name="room" value={room} /><input type="hidden" name="code" value={code} />
+      <p className="section-title">You scanned the {name} control-room code</p>
+      <p className="text-sm text-gray-600">Tap to check in (if you are not yet on duty) and record that you are in the control room for this shift.</p>
+      {state.error && <p role="alert" className="text-sm text-crit">{state.error}</p>}
+      {state.ok ? <p className="text-sm font-semibold text-ok">✓ {state.ok}</p>
+        : <button className="btn-primary w-full" disabled={pending}>{pending ? "…" : `I am in the ${name} control room`}</button>}
     </form>
   );
 }
