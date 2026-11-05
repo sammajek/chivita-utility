@@ -23,8 +23,8 @@ export default async function InboxPage() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold">Inbox</h1>
-          <p className="text-sm text-gray-600">Scheduled reports, escalations and digests sent to you (the same messages go by e-mail once e-mail is switched on). {unread.length} unread.</p>
+          <h1 className="page-title">Inbox</h1>
+          <p className="page-sub">Scheduled reports, escalations and digests sent to you (the same messages go by e-mail once e-mail is switched on). {unread.length} unread.</p>
         </div>
         {unread.length > 1 && (
           <ActionForm action={acknowledge} submit="Mark all as read">{unread.map((n) => <input key={n.id} type="hidden" name="id" value={n.id} />)}</ActionForm>

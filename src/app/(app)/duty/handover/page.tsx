@@ -74,7 +74,7 @@ export default async function HandoverReport({ searchParams }: { searchParams: P
           <Link href={href(prev.date, prev.shift)} className="btn-secondary px-3 py-1">← Previous shift</Link>
           <Link href={href(next.date, next.shift)} className="btn-secondary px-3 py-1">Next shift →</Link>
           {[["", "Both"], ["U1", "Utility 1"], ["U2", "Utility 2"]].map(([v, l]) => (
-            <Link key={v} href={`/duty/handover?date=${date}&shift=${shift}${v ? `&area=${v}` : ""}`} className={`rounded px-2 py-1 ${area === v ? "bg-gray-900 text-white" : "bg-gray-100"}`}>{l}</Link>
+            <Link key={v} href={`/duty/handover?date=${date}&shift=${shift}${v ? `&area=${v}` : ""}`} className={`tab ${area === v ? "tab-on" : ""}`}>{l}</Link>
           ))}
         </div>
       </div>

@@ -51,7 +51,7 @@ export default async function EquipmentDetail({ params }: { params: Promise<{ co
       <Link href="/equipment" className="text-sm text-brand-blue">← Equipment</Link>
       <div className="card space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h1 className="text-xl font-bold">{a.code} · {a.name}</h1>
+          <h1 className="page-title">{a.code} · {a.name}</h1>
           <StateBadge state={a.op_state} reason={a.op_reason} />
         </div>
         {a.op_since && <p className="text-xs text-gray-500">Since {formatLagos(a.op_since)}</p>}

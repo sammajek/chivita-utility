@@ -81,15 +81,15 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
 
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold">Preventive maintenance report</h1>
-          <p className="text-sm text-gray-600">CHIENGUTRG08 · {from} to {to} · {area ? (area === "U1" ? "Utility 1" : "Utility 2") : "Utility 1 & 2"}</p>
+          <h1 className="page-title">Preventive maintenance report</h1>
+          <p className="page-sub">CHIENGUTRG08 · {from} to {to} · {area ? (area === "U1" ? "Utility 1" : "Utility 2") : "Utility 1 & 2"}</p>
           <p className="text-xs text-gray-500">Generated {formatLagos(new Date())}. Adherence = PMs carried out (√ or X) ÷ PMs due, for periods that have ended.</p>
           <PrintButton />
         </div>
-        <Logo height={40} />
+        <Logo height={40} className="hidden print:block" />
       </div>
 
-      <table className="w-full text-sm">
+      <table className="data-table w-full text-sm">
         <thead className="text-left text-xs text-gray-500"><tr><th>Frequency</th><th>Adherence</th><th>Carried out / due</th><th>Periods affirmed</th></tr></thead>
         <tbody>
           {sections.map((s) => (
@@ -104,7 +104,7 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
         <section key={s.f} className="space-y-1 break-inside-avoid">
           <h2 className="font-semibold">{FREQ_LABEL[s.f]}</h2>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
+            <table className="data-table w-full min-w-[640px] text-sm">
               <thead className="text-left text-xs text-gray-500">
                 <tr><th className="py-1">Period</th><th>Area</th><th>Tasks</th><th>√</th><th>X</th><th>--</th><th>Blank</th><th>Adherence</th><th>Affirmed by</th></tr>
               </thead>
@@ -127,7 +127,7 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
       <section className="space-y-1">
         <h2 className="font-semibold">Exceptions: not done (--) and done not OK (X)</h2>
         {exceptions.length === 0 && <p className="text-sm text-gray-500">None in this period.</p>}
-        <table className="w-full text-sm">
+        <table className="data-table w-full text-sm">
           <tbody>
             {exceptions.map(({ c, t }) => (
               <tr key={c.id} className="border-t align-top">

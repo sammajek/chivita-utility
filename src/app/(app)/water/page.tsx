@@ -48,8 +48,8 @@ export default async function WaterPage({ searchParams }: { searchParams: Promis
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl font-bold">Water quality</h1>
-        <p className="text-sm text-gray-600">Process water sampling plan · CHICQARG24 · results judged against specification and alert limit</p>
+        <h1 className="page-title">Water quality</h1>
+        <p className="page-sub">Process water sampling plan · CHICQARG24 · results judged against specification and alert limit</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="In spec (30 days)" value={judged.length ? `${Math.round((inSpec / judged.length) * 1000) / 10}%` : "–"} sub={`${inSpec} of ${judged.length} results`} tone="ok" />
@@ -90,7 +90,7 @@ export default async function WaterPage({ searchParams }: { searchParams: Promis
       {dates.length > 0 && (
         <div className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Recent results · {point}</h2>
-          <table className="w-full min-w-[600px] text-xs">
+          <table className="data-table w-full min-w-[600px] text-xs">
             <thead><tr className="text-left text-gray-500"><th className="py-1">Parameter</th>{dates.map((d) => <th key={d} className="px-1"><Link className="text-brand-blue" href={href({ date: d })}>{d.slice(5)}</Link></th>)}</tr></thead>
             <tbody>
               {shown.map((t) => (

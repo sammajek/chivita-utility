@@ -35,8 +35,8 @@ export default async function ReportsPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">Reports &amp; presentations</h1>
-        <p className="text-sm text-gray-600">Build a PowerPoint deck from live data: logo, data period and “generated at” on every slide, editable charts, a source line on each slide, and your commentary.</p>
+        <h1 className="page-title">Reports &amp; presentations</h1>
+        <p className="page-sub">Build a PowerPoint deck from live data: logo, data period and “generated at” on every slide, editable charts, a source line on each slide, and your commentary.</p>
       </div>
 
       {saved.length > 0 && (

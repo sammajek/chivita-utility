@@ -36,8 +36,8 @@ export default async function TrendPage({ params, searchParams }: { params: Prom
     <div className="space-y-4">
       <div>
         <Link href={`/registers/${key}`} className="text-sm text-brand-blue">← {detail.register.title}</Link>
-        <h1 className="text-xl font-bold">Trend</h1>
-        <p className="text-sm text-gray-600">{detail.register.document_no}</p>
+        <h1 className="page-title">Trend</h1>
+        <p className="page-sub">{detail.register.document_no}</p>
       </div>
 
       <form className="card grid gap-3 sm:grid-cols-4" action={`/registers/${key}/trend`}>
@@ -114,7 +114,7 @@ export default async function TrendPage({ params, searchParams }: { params: Prom
           <details>
             <summary className="cursor-pointer text-sm font-medium">Table of readings ({points.length})</summary>
             <div className="mt-2 max-h-96 overflow-auto">
-              <table className="w-full text-sm">
+              <table className="data-table w-full text-sm">
                 <thead className="sticky top-0 bg-white text-left text-xs text-gray-500">
                   <tr><th className="py-1">Reading for</th><th>Value</th><th>Status</th><th>By</th><th>Comment</th></tr>
                 </thead>

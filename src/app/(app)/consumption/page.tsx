@@ -30,19 +30,19 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
   const meters = (mdata ?? []) as unknown as Meter[];
   const canEnter = profile.active && profile.role !== "viewer";
   const tab = (g: string, label: string, on: boolean, href: string) => (
-    <Link key={g} href={href} className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${on ? "border-brand-red bg-brand-red text-white" : "border-gray-300 bg-white"}`}>{label}</Link>
+    <Link key={g} href={href} className={`tab ${on ? "tab-on" : ""}`}>{label}</Link>
   );
   const header = (
     <div className="flex items-start justify-between gap-3">
       <div>
-        <h1 className="text-xl font-bold">Utility consumption</h1>
-        <p className="text-sm text-gray-600">7A.M Daily Utility Consumption Report · read every meter at 07:00. Daily use = today’s reading − the previous reading.</p>
+        <h1 className="page-title">Utility consumption</h1>
+        <p className="page-sub">7A.M Daily Utility Consumption Report · read every meter at 07:00. Daily use = today’s reading − the previous reading.</p>
       </div>
-      <Logo height={32} />
+      <Logo height={32} className="hidden print:block" />
     </div>
   );
   const tabs = (
-    <div className="no-print flex gap-2 overflow-x-auto pb-1">
+    <div className="no-print flex flex-wrap gap-2">
       {GROUPS.map(([g, l]) => tab(g, l, !report && g === grp, `/consumption?g=${g}&date=${date}`))}
       {tab("report", "Monthly report", report, `/consumption?view=report&g=${grp}`)}
     </div>
@@ -126,8 +126,8 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
           return (
             <section key={g} className="space-y-1 break-inside-avoid">
               <h2 className="font-semibold">{label}</h2>
-              <div className="overflow-x-auto rounded-lg border bg-white">
-                <table className="w-full text-xs">
+              <div className="table-wrap">
+                <table className="data-table w-full text-xs">
                   <thead className="bg-gray-50 text-gray-500">
                     <tr><th className="sticky left-0 bg-gray-50 p-1 text-left">Meter</th><th className="p-1">Unit</th><th className="p-1">Total</th>
                       {days.map((d) => <th key={d} className="p-1">{Number(d.slice(8))}</th>)}</tr>

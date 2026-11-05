@@ -46,8 +46,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       {sp.denied && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-crit">You don&apos;t have access to that page.</p>}
       <section className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Utility section overview</h1>
-          <p className="text-sm text-gray-600">{formatLagos(now)} (Lagos) · {SHIFT_LABELS[shift.shift]} · signed in as {profile.full_name}</p>
+          <h1 className="page-title">Utility section overview</h1>
+          <p className="page-sub">{formatLagos(now)} (Lagos) · {SHIFT_LABELS[shift.shift]} · signed in as {profile.full_name}</p>
         </div>
         {d.hasDemo && <span className="rounded bg-purple-100 px-2 py-1 text-xs font-bold uppercase text-purple-700">Includes DEMO data</span>}
       </section>
@@ -109,11 +109,11 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <h2 className="text-lg font-semibold">Maintenance KPIs</h2>
           <div className="flex flex-wrap gap-1 text-sm">
             {[7, 30, 90].map((n) => (
-              <Link key={n} href={link({ days: String(n) })} className={`rounded border px-2 py-1 ${n === days ? "border-brand-blue bg-blue-50" : ""}`}>{n} days</Link>
+              <Link key={n} href={link({ days: String(n) })} className={`tab ${n === days ? "tab-on" : ""}`}>{n} days</Link>
             ))}
             {[["", "Both areas"], ["U1", "Utility 1"], ["U2", "Utility 2"]].map(([v, l]) => (
               <Link key={v} href={`/?${new URLSearchParams({ days: String(days), ...(v ? { area: v } : {}) })}`}
-                className={`rounded border px-2 py-1 ${(area ?? "") === v ? "border-brand-blue bg-blue-50" : ""}`}>{l}</Link>
+                className={`tab ${(area ?? "") === v ? "tab-on" : ""}`}>{l}</Link>
             ))}
           </div>
         </div>
@@ -137,7 +137,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
         <div className="card overflow-x-auto">
           <h3 className="mb-2 font-semibold">Per equipment</h3>
-          <table className="w-full text-sm">
+          <table className="data-table w-full text-sm">
             <thead className="text-left text-xs text-gray-500">
               <tr><th className="py-1">Equipment</th><th>Breakdowns</th><th>Down (h)</th><th>MTTR</th><th>MTBF</th><th>Availability</th></tr>
             </thead>

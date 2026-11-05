@@ -23,10 +23,10 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Admin</h1>
-      <nav className="flex gap-1 overflow-x-auto">
+      <h1 className="page-title">Admin</h1>
+      <nav className="flex flex-wrap gap-2">
         {TABS.map(([t, l]) => (
-          <Link key={t} href={`/admin?tab=${t}`} className={`shrink-0 rounded-lg px-3 py-2 text-sm font-medium ${t === tab ? "bg-brand-blue text-white" : "bg-white border"}`}>{l}</Link>
+          <Link key={t} href={`/admin?tab=${t}`} className={`tab ${t === tab ? "tab-on" : ""}`}>{l}</Link>
         ))}
       </nav>
 
@@ -144,14 +144,14 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         <p className="text-sm text-gray-600">Who can do what. These rules are enforced by the database itself (row-level security), not only by hiding buttons, so they also apply to anyone using the data another way. Every change is recorded in the audit trail with who, when and why. An account stays inactive (read nothing) until an admin activates it or pre-approves the email on the Staff tab.</p>
         <div className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Actions</h2>
-          <table className="w-full min-w-[640px] text-sm">
+          <table className="data-table w-full min-w-[640px] text-sm">
             <thead className="text-xs text-gray-500"><tr><th className="p-1 text-left">Action</th>{ROLES.map((r) => <th key={r} className="p-1">{ROLE_LABELS[r]}</th>)}</tr></thead>
             <tbody>{ACTIONS.map(([l, r]) => <tr key={l} className="border-t"><td className="p-1">{l}</td>{can(r)}</tr>)}</tbody>
           </table>
         </div>
         <div className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Screens</h2>
-          <table className="w-full min-w-[640px] text-sm">
+          <table className="data-table w-full min-w-[640px] text-sm">
             <thead className="text-xs text-gray-500"><tr><th className="p-1 text-left">Screen</th>{ROLES.map((r) => <th key={r} className="p-1">{ROLE_LABELS[r]}</th>)}</tr></thead>
             <tbody>{NAV.map((n) => <tr key={n.href} className="border-t"><td className="p-1">{n.label}</td>{can(n.roles)}</tr>)}</tbody>
           </table>

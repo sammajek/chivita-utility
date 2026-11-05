@@ -10,38 +10,41 @@ export const ROLE_LABELS: Record<Role, string> = {
   viewer: "Viewer",
 };
 
+export const NAV_GROUPS = ["Overview", "Operations", "Maintenance", "Quality", "People", "Reports & data"] as const;
+export type NavGroup = (typeof NAV_GROUPS)[number] | "Admin";
+
 export interface NavItem {
   href: string;
   label: string;
+  group: NavGroup;
   roles: readonly Role[];
-  /** Phase-1 step that delivers the screen; shown as "coming soon" until built. */
-  ready: boolean;
 }
 
 const ALL: readonly Role[] = ROLES;
 const ENGINEER_UP: readonly Role[] = ["engineer", "shift_manager", "section_manager", "admin"];
+const FLOOR: readonly Role[] = ["operator", ...ENGINEER_UP, "viewer"];
 
 export const NAV: NavItem[] = [
-  { href: "/", label: "Dashboard", roles: ALL, ready: true },
-  { href: "/registers", label: "Registers", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/duty", label: "On duty", roles: ALL, ready: true },
-  { href: "/flags", label: "Flags", roles: ALL, ready: true },
-  { href: "/equipment", label: "Equipment", roles: ALL, ready: true },
-  { href: "/downtime", label: "Downtime", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/rca", label: "RCA", roles: [...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/consumption", label: "Consumption", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/pm", label: "PM", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/amc", label: "AMC", roles: [...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/jobs", label: "Jobs & POs", roles: [...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/water", label: "Water quality", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/calibration", label: "Calibration", roles: [...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/cleaning", label: "Cleaning", roles: ["operator", ...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/outage", label: "Outage plan", roles: ALL, ready: true },
-  { href: "/kpi", label: "Engineer KPIs", roles: [...ENGINEER_UP, "viewer"], ready: true },
-  { href: "/training", label: "Training", roles: ALL, ready: true },
-  { href: "/loggers", label: "Loggers", roles: ENGINEER_UP, ready: true },
-  { href: "/reports", label: "Reports", roles: ALL, ready: true },
-  { href: "/admin", label: "Admin", roles: ["admin", "section_manager"], ready: true },
+  { href: "/", label: "Dashboard", group: "Overview", roles: ALL },
+  { href: "/flags", label: "Flags", group: "Overview", roles: ALL },
+  { href: "/duty", label: "On duty", group: "Overview", roles: ALL },
+  { href: "/registers", label: "Registers", group: "Operations", roles: FLOOR },
+  { href: "/equipment", label: "Equipment", group: "Operations", roles: ALL },
+  { href: "/downtime", label: "Downtime", group: "Operations", roles: FLOOR },
+  { href: "/rca", label: "RCA", group: "Operations", roles: [...ENGINEER_UP, "viewer"] },
+  { href: "/consumption", label: "Consumption", group: "Operations", roles: FLOOR },
+  { href: "/outage", label: "Outage plan", group: "Operations", roles: ALL },
+  { href: "/pm", label: "PM", group: "Maintenance", roles: FLOOR },
+  { href: "/amc", label: "AMC", group: "Maintenance", roles: [...ENGINEER_UP, "viewer"] },
+  { href: "/jobs", label: "Jobs & POs", group: "Maintenance", roles: [...ENGINEER_UP, "viewer"] },
+  { href: "/cleaning", label: "Cleaning", group: "Maintenance", roles: FLOOR },
+  { href: "/water", label: "Water quality", group: "Quality", roles: FLOOR },
+  { href: "/calibration", label: "Calibration", group: "Quality", roles: [...ENGINEER_UP, "viewer"] },
+  { href: "/kpi", label: "Engineer KPIs", group: "People", roles: [...ENGINEER_UP, "viewer"] },
+  { href: "/training", label: "Training", group: "People", roles: ALL },
+  { href: "/reports", label: "Reports", group: "Reports & data", roles: ALL },
+  { href: "/loggers", label: "Loggers", group: "Reports & data", roles: ENGINEER_UP },
+  { href: "/admin", label: "Admin", group: "Admin", roles: ["admin", "section_manager"] },
 ];
 
 export function navFor(role: Role | null | undefined): NavItem[] {

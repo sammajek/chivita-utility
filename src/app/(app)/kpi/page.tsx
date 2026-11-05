@@ -39,7 +39,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
   if (!person) {
     return (
       <div className="space-y-3">
-        <h1 className="text-2xl font-bold">Engineer KPI tracker</h1>
+        <h1 className="page-title">Engineer KPI tracker</h1>
         <p className="card text-sm text-gray-600">Your login is not linked to a staff record yet. Ask an admin to add your email on Admin → Staff.</p>
       </div>
     );
@@ -69,12 +69,12 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
     <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold">Individual Engineer KPI Tracker – FY {year}</h1>
+          <h1 className="page-title">Individual Engineer KPI Tracker – FY {year}</h1>
           <p className="text-sm">Engineer: <b>{person.full_name}</b> · Staff ID: {person.staff_id}{person.band ? ` · Band ${person.band}` : ""}{person.area ? ` · ${person.area}` : ""}</p>
           <p className="text-xs text-gray-500">Maintenance and quality KPIs are calculated from the app (my checked-in shifts and areas); safety and THERMAX come from the weekly log below.</p>
           <PrintButton />
         </div>
-        <Logo height={36} />
+        <Logo height={36} className="hidden print:block" />
       </div>
       <form className="no-print flex flex-wrap gap-2">
         {isMgr && (
@@ -88,10 +88,10 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
       </form>
       {!person.profile_id && <p className="rounded bg-amber-50 px-3 py-2 text-sm text-warn">{person.full_name} has no login yet, so only the weekly-log KPIs can be shown.</p>}
 
-      <div className="overflow-x-auto rounded-lg border bg-white">
-        <table className="w-full min-w-[980px] text-xs">
+      <div className="table-wrap">
+        <table className="data-table compact min-w-[1040px]">
           <thead className="bg-gray-50 text-gray-600">
-            <tr><th className="p-1 text-left">KPI</th><th className="p-1 text-left">Category</th><th className="p-1">Target</th>
+            <tr><th className="min-w-56">KPI</th><th>Category</th><th className="num">Target</th>
               {QUARTERS.map(([q, ms]) => [...ms.map((m) => <th key={m} className="p-1">{MONTHS[m - 1]}</th>), <th key={q} className="bg-gray-100 p-1">{q}</th>])}
               <th className="bg-gray-200 p-1">YTD</th></tr>
           </thead>
@@ -104,8 +104,8 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
               };
               return (
                 <tr key={k.code} className="border-t">
-                  <td className="p-1" title={k.formula}>{k.name}<span className="ml-1 text-[10px] text-gray-400">{k.source === "auto" ? "auto" : "weekly"}</span></td>
-                  <td className="p-1 text-gray-500">{k.category}</td>
+                  <td className="font-medium" title={k.formula}>{k.name}<span className="ml-1.5 rounded bg-gray-100 px-1 text-[10px] font-normal text-gray-500">{k.source === "auto" ? "auto" : "weekly"}</span></td>
+                  <td className="whitespace-nowrap text-gray-500">{k.category}</td>
                   <td className="p-1 text-center">{k.target_text}</td>
                   {QUARTERS.map(([q, ms]) => [...ms.map((m) => cell([m], `${k.code}${m}`)), cell(ms, `${k.code}${q}`, true)])}
                   {cell([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], `${k.code}ytd`, true)}
@@ -152,7 +152,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
       {logs.length > 0 && (
         <section className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Weekly log history</h2>
-          <table className="w-full min-w-[640px] text-xs">
+          <table className="data-table w-full min-w-[640px] text-xs">
             <thead className="text-left text-gray-500"><tr><th>Week</th><th>GEMBA</th><th>Unsafe acts</th><th>Permits / jobs</th><th>THERMAX</th><th>Notes</th></tr></thead>
             <tbody>
               {logs.map((l) => (

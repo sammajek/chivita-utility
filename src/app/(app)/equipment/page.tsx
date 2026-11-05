@@ -42,10 +42,10 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold">Equipment</h1>
-          <p className="text-sm text-gray-600">All Utility equipment with PM code, PM schedule and specifications. Tap a machine to change its state, log running-hours services or add photos.</p>
+          <h1 className="page-title">Equipment</h1>
+          <p className="page-sub">All Utility equipment with PM code, PM schedule and specifications. Tap a machine to change its state, log running-hours services or add photos.</p>
         </div>
-        <div className="flex gap-2"><a href={`/equipment/csv${qs({}).slice(10)}`} className="btn-secondary">Download CSV</a><Link href="/equipment/labels" className="btn-secondary">QR labels</Link></div>
+        <div className="flex gap-2"><a href={`/equipment/csv${qs({}).slice(10)}`} className="btn-secondary btn-sm">Download CSV</a><Link href="/equipment/labels" className="btn-secondary btn-sm">QR labels</Link></div>
       </div>
       <form className="flex flex-wrap gap-2">
         <input name="q" defaultValue={sp.q} placeholder="Search code, name, make, PM code" className="input max-w-xs py-2" />
@@ -54,7 +54,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
       </form>
       <div className="flex flex-wrap gap-2 text-sm">
         {[["", "All"], ["available", "Available"], ["standby", "Standby"], ["unavailable", "Unavailable"]].map(([v, l]) => (
-          <Link key={v} href={qs({ state: v })} className={`rounded px-2 py-1 ${(sp.state ?? "") === v ? "bg-gray-900 text-white" : "bg-gray-100"}`}>
+          <Link key={v} href={qs({ state: v })} className={`tab ${(sp.state ?? "") === v ? "tab-on" : ""}`}>
             {l}{v && counts[v] ? ` (${counts[v]})` : ""}
           </Link>
         ))}
@@ -62,9 +62,11 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
       {Object.entries(byCat).map(([cat, list]) => (
         <section key={cat} className="space-y-1">
           <h2 className="font-semibold">{cat} <span className="text-sm font-normal text-gray-500">({list.length})</span></h2>
-          <div className="overflow-x-auto rounded-lg border bg-white">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-left text-xs text-gray-500">
+          <div className="table-wrap">
+            <table className="data-table min-w-[900px] table-fixed">
+              {/* same column widths in every category table, so they line up down the page */}
+              <colgroup><col className="w-24" /><col /><col className="w-14" /><col className="w-36" /><col className="w-24" /><col className="w-28" /><col className="w-36" /><col className="w-44" /></colgroup>
+              <thead>
                 <tr><th className="p-2">Code</th><th className="p-2">Name</th><th className="p-2">Area</th><th className="p-2">Make / model</th>
                   <th className="p-2">Capacity</th><th className="p-2">PM code</th><th className="p-2">PM schedule (S/N)</th><th className="p-2">State</th></tr>
               </thead>
@@ -73,7 +75,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
                   const pm = a.pm_tasks.filter((t) => t.active).sort((x, y) => Object.keys(FREQ_SHORT).indexOf(x.frequency) - Object.keys(FREQ_SHORT).indexOf(y.frequency));
                   return (
                     <tr key={a.id} className="border-t align-top">
-                      <td className="p-2 font-semibold"><Link href={`/equipment/${encodeURIComponent(a.code)}`} className="text-brand-blue">{a.code}</Link></td>
+                      <td className="code"><Link href={`/equipment/${encodeURIComponent(a.code)}`} className="text-brand-blue">{a.code}</Link></td>
                       <td className="p-2">{a.name}{a.criticality && <span className="ml-1 text-xs text-gray-500">({a.criticality})</span>}</td>
                       <td className="p-2">{a.area ?? "—"}</td>
                       <td className="p-2">{[a.make, a.model].filter(Boolean).join(" ") || "—"}</td>
@@ -82,7 +84,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
                       <td className="p-2 text-xs">
                         {pm.length ? pm.map((t) => <span key={t.frequency + t.register_sn} title={FREQ_LABEL[t.frequency]} className="mr-1 inline-block rounded bg-gray-100 px-1">{FREQ_SHORT[t.frequency]}{t.register_sn}</span>) : <span className="text-gray-400">no PM</span>}
                       </td>
-                      <td className="p-2"><StateBadge state={a.op_state} reason={a.op_reason} /></td>
+                      <td><StateBadge state={a.op_state} reason={a.op_reason} /></td>
                     </tr>
                   );
                 })}

@@ -64,11 +64,11 @@ export default async function TrainingPage({ searchParams }: { searchParams: Pro
     <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Training needs · {fy}</h1>
-          <p className="text-sm text-gray-600">Training Needs for Utility Section. Engineers and managers tick each training when it has been done and can attach the certificate.</p>
+          <h1 className="page-title">Training needs · {fy}</h1>
+          <p className="page-sub">Training Needs for Utility Section. Engineers and managers tick each training when it has been done and can attach the certificate.</p>
           <PrintButton />
         </div>
-        <Logo height={36} />
+        <Logo height={36} className="hidden print:block" />
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="Trainings planned" value={String(all.length)} sub={`${new Set(all.map((p) => p.staff?.id)).size} people · ${new Set(all.map((p) => p.course?.id)).size} courses`} />
@@ -78,9 +78,9 @@ export default async function TrainingPage({ searchParams }: { searchParams: Pro
           tone={all.some((p) => p.status === "planned" && p.planned_end && p.planned_end < today) ? "warn" : "default"} />
       </div>
       <div className="no-print flex flex-wrap gap-2 text-sm">
-        <Link href={link({ view: byCourse ? "" : "course" })} className="rounded bg-gray-900 px-2 py-1 text-white">{byCourse ? "Group by person" : "Group by course"}</Link>
+        <Link href={link({ view: byCourse ? "" : "course" })} className="tab tab-on">{byCourse ? "Group by person" : "Group by course"}</Link>
         {[["", "All"], ...Object.entries(TRAINING_STATUS).map(([k, v]) => [k, v.label])].map(([k, l]) => (
-          <Link key={k} href={link({ status: k })} className={`rounded px-2 py-1 ${(sp.status ?? "") === k ? "bg-brand-blue text-white" : "bg-gray-100"}`}>{l}</Link>
+          <Link key={k} href={link({ status: k })} className={`tab ${(sp.status ?? "") === k ? "tab-on" : ""}`}>{l}</Link>
         ))}
       </div>
 

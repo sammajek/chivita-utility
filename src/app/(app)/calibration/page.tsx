@@ -48,8 +48,8 @@ export default async function CalibrationPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl font-bold">Instrument calibration</h1>
-        <p className="text-sm text-gray-600">Calibration register: next due = last calibration + interval. Flags {warnDays} days before the due date.</p>
+        <h1 className="page-title">Instrument calibration</h1>
+        <p className="page-sub">Calibration register: next due = last calibration + interval. Flags {warnDays} days before the due date.</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="In date" value={inDate === null ? "–" : `${inDate}%`} sub={`${count("ok") + count("due_soon")} of ${instruments.length}`} tone="ok" />

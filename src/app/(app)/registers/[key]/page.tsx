@@ -87,8 +87,8 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <Link href="/registers" className="text-sm text-brand-blue">← Registers</Link>
-          <h1 className="text-xl font-bold">{register.title}</h1>
-          <p className="text-sm text-gray-600">
+          <h1 className="page-title">{register.title}</h1>
+          <p className="page-sub">
             {register.document_no} · {register.area === "U1" ? "Utility 1" : "Utility 2"}
           </p>
           {register.description && <p className="mt-1 text-xs text-warn">{register.description}</p>}
@@ -125,12 +125,12 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
         <button className="btn-secondary sm:col-span-3">Show</button>
       </form>
 
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="flex flex-wrap gap-2">
         {keys.map((k) => {
           const st = slotState(section.slot_kind, logDate, k, filled.has(k), now, earlyMin, missingMin);
           return (
             <Link key={k} href={href({ slot: k })} title={SLOT_TITLE[st]}
-              className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${SLOT_STYLE[st]} ${k === slot ? "ring-2 ring-brand-red ring-offset-1" : ""}`}>
+              className={`inline-flex min-h-10 min-w-16 items-center justify-center rounded-lg border px-3 text-sm font-medium tabular-nums ${SLOT_STYLE[st]} ${k === slot ? "ring-2 ring-brand-red ring-offset-1" : ""}`}>
               {slotLabel(section.slot_kind, k)}{st === "done" ? " ✓" : st === "missing" ? " !" : ""}
             </Link>
           );

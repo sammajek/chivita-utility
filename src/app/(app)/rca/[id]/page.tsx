@@ -30,7 +30,7 @@ export default async function RcaPage({ params, searchParams }: { params: Promis
   return (
     <div className="space-y-4">
       <Link href="/rca" className="text-sm text-brand-blue">← RCA register</Link>
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="page-title">{title}</h1>
       {sp.saved && <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-ok">Saved.</p>}
       <RcaForm r={r} assets={assets} lists={l} readOnly={!canEdit} />
     </div>

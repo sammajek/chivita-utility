@@ -38,19 +38,19 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
   };
 
   const tabs = (
-    <div className="flex gap-2 overflow-x-auto pb-1">
+    <div className="flex flex-wrap gap-2">
       {PM_FREQUENCIES.map((f) => (
         <Link key={f} href={href({ freq: f, date: today })}
-          className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${f === freq && view === "log" ? "border-brand-red bg-brand-red text-white" : "border-gray-300 bg-white"}`}>
+          className={`tab ${f === freq && view === "log" ? "tab-on" : ""}`}>
           {FREQ_LABEL[f]}
         </Link>
       ))}
       <Link href={href({ view: "schedule" })}
-        className={`shrink-0 rounded-lg border px-3 py-2 text-sm font-medium ${view === "schedule" ? "border-brand-blue bg-brand-blue text-white" : "border-gray-300 bg-white"}`}>
+        className={`tab ${view === "schedule" ? "tab-on" : ""}`}>
         Schedule &amp; adherence
       </Link>
       <Link href={`/pm/report?freq=${freq}${area ? `&area=${area}` : ""}`}
-        className="shrink-0 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium">
+        className="tab">
         Report
       </Link>
     </div>
@@ -58,14 +58,14 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
   const areaPicker = (
     <div className="flex gap-2 text-sm">
       {[["", "Both areas"], ["U1", "Utility 1"], ["U2", "Utility 2"]].map(([v, l]) => (
-        <Link key={v} href={href({ area: v })} className={`rounded px-2 py-1 ${area === v ? "bg-gray-900 text-white" : "bg-gray-100"}`}>{l}</Link>
+        <Link key={v} href={href({ area: v })} className={`tab ${area === v ? "tab-on" : ""}`}>{l}</Link>
       ))}
     </div>
   );
   const header = (
     <div>
-      <h1 className="text-xl font-bold">Preventive maintenance</h1>
-      <p className="text-sm text-gray-600">Utility PM log · CHIENGUTRG08 · Done OK “√”, Not done “--”, Done not OK “X”</p>
+      <h1 className="page-title">Preventive maintenance</h1>
+      <p className="page-sub">Utility PM log · CHIENGUTRG08 · Done OK “√”, Not done “--”, Done not OK “X”</p>
     </div>
   );
 
@@ -239,7 +239,7 @@ async function Schedule({ today, area, header, tabs, areaPicker }: {
 
       <div className="card overflow-x-auto">
         <h2 className="mb-2 font-semibold">Equipment PM: last done and next due</h2>
-        <table className="w-full min-w-[640px] text-sm">
+        <table className="data-table w-full min-w-[640px] text-sm">
           <thead className="text-left text-xs text-gray-500">
             <tr><th className="py-1">Equipment</th><th>Frequency</th><th>Last done</th><th>Next due by</th><th></th></tr>
           </thead>

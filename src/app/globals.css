@@ -11,8 +11,15 @@
   --color-crit: #b91c1c;
 }
 
+/* Tailwind v4 draws plain borders/dividers in the text colour; keep them light grey as in v3. */
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
 :root {
-  --background: #f6f7f9;
+  --background: #f4f5f7;
   --foreground: #111827;
 }
 
@@ -20,26 +27,92 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-feature-settings: "cv11", "ss01";
 }
 
-/* Large, finger-friendly controls for plant-floor use */
+/* ---------- Controls: large, finger-friendly for plant-floor use ---------- */
 @utility input {
-  @apply block w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-base shadow-sm focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30 focus:outline-none;
+  @apply block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-base text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/25 focus:outline-none;
 }
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center rounded-lg px-5 text-base font-semibold transition disabled:opacity-50;
+  @apply inline-flex min-h-11 items-center justify-center gap-1.5 rounded-lg px-4 text-sm font-semibold whitespace-nowrap transition disabled:opacity-50;
 }
 @utility btn-primary {
-  @apply btn bg-brand-red text-white hover:bg-brand-red-dark;
+  @apply btn bg-brand-red text-white shadow-sm hover:bg-brand-red-dark;
 }
 @utility btn-secondary {
-  @apply btn border border-gray-300 bg-white text-gray-800 hover:bg-gray-50;
+  @apply btn border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50;
 }
+/* toolbar-sized buttons (page headers, table rows) */
+@utility btn-sm {
+  @apply min-h-9 px-3 text-sm;
+}
+
+/* ---------- Surfaces and text ---------- */
 @utility card {
-  @apply rounded-xl border border-gray-200 bg-white p-4 shadow-sm;
+  @apply rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5;
 }
+@utility page-title {
+  @apply text-2xl font-semibold tracking-tight text-gray-900;
+}
+@utility page-sub {
+  @apply mt-1 max-w-3xl text-sm leading-relaxed text-gray-600;
+}
+@utility section-title {
+  @apply text-base font-semibold text-gray-900;
+}
+
+/* ---------- Tabs: pills that wrap onto the next line (never scroll sideways) ---------- */
+@utility tab {
+  @apply inline-flex min-h-9 items-center rounded-full border border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:bg-gray-50;
+}
+@utility tab-on {
+  @apply border-brand-blue bg-brand-blue text-white hover:border-brand-blue hover:bg-brand-blue;
+}
+
+/* ---------- Data tables: one look everywhere ----------
+   Unlayered on purpose so it wins over spacing utilities left on individual cells. */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.875rem;
+}
+.data-table thead th {
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.data-table tbody td {
+  padding: 0.6rem 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #f1f2f4;
+}
+.data-table tbody tr:first-child td { border-top: 0; }
+.data-table tbody tr:hover td { background: #fafbfc; }
+.data-table .num, .data-table th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.data-table .code { white-space: nowrap; font-weight: 600; }
+.data-table.compact thead th, .data-table.compact tbody td { padding: 0.35rem 0.5rem; }
+/* framed tables: rounded white box with scrolling inside on small screens */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: white;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+.table-wrap > .data-table thead th:first-child { border-top-left-radius: 0.75rem; }
+.table-wrap > .data-table thead th:last-child { border-top-right-radius: 0.75rem; }
 
 @media print {
   .no-print { display: none !important; }
   body { background: white; }
+  .table-wrap { border: 0; box-shadow: none; overflow: visible; }
 }

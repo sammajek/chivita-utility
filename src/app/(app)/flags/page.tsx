@@ -62,8 +62,8 @@ export default async function FlagsPage({ searchParams }: { searchParams: Promis
     <div className="space-y-4">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Flags</h1>
-          <p className="text-sm text-gray-600">Raised automatically every 5 minutes: missing or late readings, out-of-spec values, no check-in, open downtime, overdue RCAs.</p>
+          <h1 className="page-title">Flags</h1>
+          <p className="page-sub">Raised automatically every 5 minutes: missing or late readings, out-of-spec values, no check-in, open downtime, overdue RCAs.</p>
         </div>
         <Link href={closed ? "/flags" : "/flags?show=closed"} className="text-sm text-brand-blue">{closed ? "Open flags" : "Closed flags"}</Link>
       </div>

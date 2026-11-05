@@ -24,8 +24,8 @@ export default async function LoggersPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">Loggers &amp; data import</h1>
-        <p className="text-sm text-gray-600">Energy meters, flowmeters, SCADA / THERMAX exports. Every value is kept. A value within 15 minutes of a register reading time fills that slot
+        <h1 className="page-title">Loggers &amp; data import</h1>
+        <p className="page-sub">Energy meters, flowmeters, SCADA / THERMAX exports. Every value is kept. A value within 15 minutes of a register reading time fills that slot
           (tagged to the logger, checked against the standard and flagged as usual); a meter value between 06:45 and 07:15 becomes that day’s 07:00 consumption reading.</p>
       </div>
 
@@ -64,7 +64,7 @@ Content-Type: application/json
       <section className="card overflow-x-auto">
         <h2 className="mb-2 font-semibold">Latest logger data</h2>
         {rows.length === 0 ? <p className="text-sm text-gray-500">Nothing received yet.</p> : (
-          <table className="w-full min-w-[640px] text-xs">
+          <table className="data-table w-full min-w-[640px] text-xs">
             <thead className="text-left text-gray-500"><tr><th>Time</th><th>Logger</th><th>Point</th><th>Value</th><th>Used as</th></tr></thead>
             <tbody>{rows.map((r) => (
               <tr key={r.id} className="border-t">

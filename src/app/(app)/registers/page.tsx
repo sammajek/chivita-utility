@@ -23,8 +23,8 @@ export default async function RegistersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Registers</h1>
-        <p className="text-sm text-gray-600">Digital log sheets. Log date {today} (07:00 to 07:00).</p>
+        <h1 className="page-title">Registers</h1>
+        <p className="page-sub">Digital log sheets. Log date {today} (07:00 to 07:00).</p>
       </div>
       {Object.entries(byArea).map(([area, list]) => (
         <section key={area}>

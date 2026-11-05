@@ -38,7 +38,7 @@ export default async function DowntimePage({ searchParams }: { searchParams: Pro
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold">Downtime log</h1>
+          <h1 className="page-title">Downtime log</h1>
           <Link href={sp.open ? "/downtime" : "/downtime?open=1"} className="text-sm text-brand-blue">{sp.open ? "Show all" : "Open events only"}</Link>
         </div>
         {canLog && <Link href="/downtime/new" className="btn-primary">+ Log downtime</Link>}

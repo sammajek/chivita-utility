@@ -38,11 +38,11 @@ export default async function OutagePage() {
     <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Outage response plan</h1>
-          <p className="text-sm text-gray-600">What to do when the app or the internet is down. Print this page and keep it in each control room with a stock of blank sheets.</p>
+          <h1 className="page-title">Outage response plan</h1>
+          <p className="page-sub">What to do when the app or the internet is down. Print this page and keep it in each control room with a stock of blank sheets.</p>
           <PrintButton />
         </div>
-        <Logo height={36} />
+        <Logo height={36} className="hidden print:block" />
       </div>
 
       {open ? (

@@ -49,8 +49,8 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl font-bold">Cleaning roster</h1>
-        <p className="text-sm text-gray-600">Cleaning of Utility 1, 2 environment &amp; equipment · CHI/ENG/UTI/CLN/001</p>
+        <h1 className="page-title">Cleaning roster</h1>
+        <p className="page-sub">Cleaning of Utility 1, 2 environment &amp; equipment · CHI/ENG/UTI/CLN/001</p>
       </div>
 
       <div className="card flex flex-wrap items-center justify-between gap-3">
@@ -107,7 +107,7 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
 
       <div className="card overflow-x-auto">
         <h2 className="mb-2 font-semibold">Last 8 weeks</h2>
-        <table className="w-full text-sm">
+        <table className="data-table w-full text-sm">
           <thead className="text-left text-xs text-gray-500"><tr><th className="py-1">Week</th><th>Done</th><th>Compliance</th><th>Sign-off</th></tr></thead>
           <tbody>
             {history.map((h) => (

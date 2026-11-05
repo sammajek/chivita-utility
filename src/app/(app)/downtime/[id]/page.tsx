@@ -53,7 +53,7 @@ export default async function DowntimeDetail({ params }: { params: Promise<{ id:
       <Link href="/downtime" className="text-sm text-brand-blue">← Downtime log</Link>
       <div className="card space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h1 className="text-xl font-bold">{e.event_no} {e.is_demo && <DemoBadge />}</h1>
+          <h1 className="page-title">{e.event_no} {e.is_demo && <DemoBadge />}</h1>
           <div className="flex gap-2 text-xs">
             <span className={`rounded px-2 py-0.5 font-semibold ${e.status === "Closed" ? "bg-gray-100" : "bg-amber-100 text-warn"}`}>{e.status}</span>
             {e.followup_stage && <span className={`rounded px-2 py-0.5 font-semibold ${STAGE_STYLE[e.followup_stage]}`}>{STAGE_LABEL[e.followup_stage]}</span>}

@@ -39,8 +39,8 @@ export default async function NewDowntimePage({ searchParams }: { searchParams: 
   const canClose = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">{id ? "Update downtime event" : "Log downtime"}</h1>
-      <p className="text-sm text-gray-600">Same fields and lists as the 603-001 Utility Downtime Analysis template. RCA is required automatically at ≥ 4 h or ≥ 3 repeats.</p>
+      <h1 className="page-title">{id ? "Update downtime event" : "Log downtime"}</h1>
+      <p className="page-sub">Same fields and lists as the 603-001 Utility Downtime Analysis template. RCA is required automatically at ≥ 4 h or ≥ 3 repeats.</p>
       <DowntimeForm lists={lists} assets={assets} d={d} canClose={canClose} />
     </div>
   );

@@ -69,8 +69,8 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl font-bold">Job requests &amp; item orders</h1>
-        <p className="text-sm text-gray-600">From request to PO, execution, job completion certificate (JCC) and payment</p>
+        <h1 className="page-title">Job requests &amp; item orders</h1>
+        <p className="page-sub">From request to PO, execution, job completion certificate (JCC) and payment</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="Awaiting PO" value={String(counts.awaitingPo)} tone={counts.awaitingPo ? "warn" : "default"} />
