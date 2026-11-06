@@ -57,6 +57,8 @@ export async function updateAsset(_p: AdminState, f: FormData): Promise<AdminSta
     criticality: String(f.get("criticality") ?? "") || null,
     confirmed: f.get("confirmed") === "on",
     notes: String(f.get("notes") ?? "").trim() || null,
+    rated_output: String(f.get("rated_output") ?? "").trim() === "" ? null : Number(String(f.get("rated_output")).replace(",", ".")),
+    rated_unit: String(f.get("rated_unit") ?? "").trim() || null,
   } as never).eq("id", String(f.get("id")));
   return done(error, "Equipment saved.");
 }

@@ -206,7 +206,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   }
 
   async function Assets({ q }: { q: string }) {
-    let query = supabase.from("assets").select("id, code, name, area, status, criticality, confirmed, notes").order("code");
+    let query = supabase.from("assets").select("id, code, name, area, status, criticality, confirmed, notes, rated_output, rated_unit").order("code");
     if (q) query = query.or(`code.ilike.%${q}%,name.ilike.%${q}%`);
     const { data } = await query;
     return (
@@ -220,7 +220,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             <select name="area" defaultValue={a.area ?? ""} className="input py-2"><option value="">—</option><option>U1</option><option>U2</option></select>
             <select name="status" defaultValue={a.status} className="input py-2"><option>active</option><option>standby</option><option>retired</option></select>
             <select name="criticality" defaultValue={a.criticality ?? ""} className="input py-2"><option value="">Criticality</option><option>A</option><option>B</option><option>C</option></select>
-            <input name="notes" defaultValue={a.notes ?? ""} placeholder="Notes" className="input py-2 sm:col-span-4" />
+            <input name="rated_output" defaultValue={a.rated_output ?? ""} placeholder="Rated output (e.g. 3.5)" inputMode="decimal" className="input py-2" />
+            <input name="rated_unit" defaultValue={a.rated_unit ?? ""} placeholder="Unit (t/h, m³/h, TR)" className="input py-2" />
+            <input name="notes" defaultValue={a.notes ?? ""} placeholder="Notes" className="input py-2 sm:col-span-2" />
             <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="confirmed" defaultChecked={a.confirmed} /> Confirmed</label>
           </ActionForm>
         ))}

@@ -206,6 +206,24 @@ Each entry: date, decision, who decided, notes.
 - Control-room check-in codes (Equipment → QR labels, admin / section manager): a secret code per control room printed
   as a QR label. Scanning it during the shift checks the person in (if needed) and marks the session "✓ in control room"
   on On duty. Issuing new codes invalidates old printouts. Only a hash is stored. Sign-in keeps the scanned link.
+- Next.js 16 upgrade (owner asked, 2026-11-06): Next 16 + React 19; middleware renamed to src/proxy.ts; ESLint flat config.
+- Handover (owner: "not detailed as in the template, no checklist"): own Handover tab. The report follows the
+  UTILITY HANDOVER REPORT sheet — per group (compressors, dryer, chiller, cooling tower, boiler, fire hydrant, borehole,
+  degasser) running / standby / maintenance-faults, fuel usage, water treatment plant (pumps, pH, raw/treated levels),
+  caustic mixing, footnote — pre-filled from the app, plus a checklist (Admin → Settings "handover_checklist") where
+  every item is Yes / No / N/A and "No" needs a note. Submitting checks the engineer out. The incoming engineer
+  acknowledges it and a manager signs it off. Printable with the logo.
+- Area patrols (owner's idea, 2026-11-06): patrol points (e.g. remote borehole field) each get a QR label with a secret
+  code (Patrols → "Issue code & label"; only a hash is stored, a new label invalidates the old one). The operator or
+  engineer scans it on site, answers the point's checks (OK / Issue, a note required for an issue, optional photo);
+  that proves the visit. Each point needs N rounds per shift; a missed round is flagged 30 min after the shift ends,
+  and an issue raises a flag immediately.
+- OEE confirmed by the owner: Availability × Performance × Quality (OEE page under Overview).
+  Availability = (scheduled − unplanned downtime) ÷ scheduled; Performance = output-meter total ÷ (rated output ×
+  running hours), capped at 100 %; Quality = readings in spec ÷ readings judged. Blank until all three exist —
+  rated outputs must be entered under Admin → Equipment (none are in the source files).
+- Presentation layout: keep the app's own deck layout until the corporate template arrives (owner, 2026-11-06).
+- Live address: the Vercel production link (*.vercel.app) is acceptable as the live address; custom domain optional.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
@@ -214,4 +232,3 @@ Each entry: date, decision, who decided, notes.
   Clivet/Carrier/nitrogen counts, Utility 1 vs 2 split, asset code scheme).
 - Register document numbers (keep as printed or correct), night-hour slots, late vs missing threshold.
 - Email sender (M365 SMTP vs Resend), IT approval for cloud hosting, Supabase region.
-- OEE definition (Phase 3).

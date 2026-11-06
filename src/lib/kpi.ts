@@ -116,3 +116,21 @@ export function compliance(expected: number, filled: number, onTime: number) {
     onTimePct: expected ? (onTime / expected) * 100 : null,
   };
 }
+
+/**
+ * Utility OEE = Availability × Performance × Quality (confirmed by the section manager).
+ * Performance = actual output ÷ (rated output per hour × operating hours), capped at 100 %.
+ * Quality = readings in spec ÷ readings judged against a standard (info-only readings excluded).
+ */
+export function performance(actualOutput: number | null, ratedPerHour: number | null, operatingHours: number): number | null {
+  if (actualOutput === null || !ratedPerHour || ratedPerHour <= 0 || operatingHours <= 0) return null;
+  return Math.min(1, Math.max(0, actualOutput / (ratedPerHour * operatingHours)));
+}
+
+export function quality(inSpec: number, judged: number): number | null {
+  return judged > 0 ? inSpec / judged : null;
+}
+
+export function oee(a: number | null, p: number | null, q: number | null): number | null {
+  return a === null || p === null || q === null ? null : a * p * q;
+}

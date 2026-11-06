@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assetKpis, availability, hoursInPeriod, mtbf, mttr, operatingHoursFromCounter, type DowntimeEvent } from "./kpi";
+import { assetKpis, availability, hoursInPeriod, mtbf, mttr, oee, operatingHoursFromCounter, performance, quality, type DowntimeEvent } from "./kpi";
 import { describeStandard, evaluateValue, type ParamSpec } from "./evaluate";
 
 const from = new Date("2026-09-01T00:00:00+01:00");
@@ -92,5 +92,30 @@ describe("spec check matches the database rules", () => {
   it("describes standards", () => {
     expect(describeStandard(steam, "bar")).toBe("8–8.5 bar");
     expect(describeStandard({ std_min: 90, std_max: null, ok_options: null }, "%")).toBe("≥ 90 %");
+  });
+});
+
+describe("worked example: Boiler 4 OEE over 30 days", () => {
+  // 720 h scheduled, 36 h unplanned breakdowns → A = 684/720 = 95 %.
+  // Rated 3.5 t/h, ran 600 h, made 1,680 t → P = 1680 / (3.5 × 600) = 80 %.
+  // 1,000 readings checked against a standard, 980 in spec → Q = 98 %.
+  // OEE = 0.95 × 0.80 × 0.98 = 74.48 %.
+  it("multiplies the three factors", () => {
+    const a = availability(720, 36)!;
+    const p = performance(1680, 3.5, 600)!;
+    const q = quality(980, 1000)!;
+    expect(a).toBeCloseTo(0.95, 6);
+    expect(p).toBeCloseTo(0.8, 6);
+    expect(q).toBeCloseTo(0.98, 6);
+    expect(oee(a, p, q)).toBeCloseTo(0.7448, 6);
+  });
+  it("is blank when a factor cannot be worked out", () => {
+    expect(performance(1680, null, 600)).toBeNull();
+    expect(performance(null, 3.5, 600)).toBeNull();
+    expect(quality(0, 0)).toBeNull();
+    expect(oee(0.95, null, 0.98)).toBeNull();
+  });
+  it("caps performance at 100 % (meter or rating error)", () => {
+    expect(performance(3000, 3.5, 600)).toBe(1);
   });
 });
