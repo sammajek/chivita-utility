@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { describeStandard, evaluateValue, type ReadingStatus } from "@/lib/evaluate";
 import { StatusBadge } from "@/components/StatusBadge";
 import { HmiCapture, type CaptureResult } from "@/components/HmiCapture";
@@ -21,6 +21,8 @@ interface Props {
   userId: string;
   /** When this slot opens; entries before it are flagged as early. */
   opensAt: string;
+  /** Server time when the page was built (the phone's clock is not trusted). */
+  serverNow: string;
 }
 
 /** Server action wrapper: a dropped connection returns a message instead of crashing the page (values stay on the phone). */
@@ -32,25 +34,28 @@ async function saveOrKeep(prev: SaveState, form: FormData): Promise<SaveState> {
   }
 }
 
+function subscribeOnline(cb: () => void) {
+  window.addEventListener("online", cb);
+  window.addEventListener("offline", cb);
+  return () => { window.removeEventListener("online", cb); window.removeEventListener("offline", cb); };
+}
+
 export function EntryForm(p: Props) {
   const [state, action, pending] = useActionState<SaveState, FormData>(saveOrKeep, {});
   const [values, setValues] = useState<Record<string, string>>({});
   const [fromPaper, setFromPaper] = useState(false);
   const [restored, setRestored] = useState(false);
-  const [online, setOnline] = useState(true);
+  const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
   const draftKey = `chi-draft:${p.registerKey}:${p.assetId ?? "-"}:${p.logDate}:${p.slotKey}`;
 
   // Keep unsaved values on this phone (survives a dropped connection or a closed browser tab).
   useEffect(() => {
     try {
       const d = JSON.parse(localStorage.getItem(draftKey) ?? "null") as Record<string, string> | null;
+      // restoring from browser storage can only happen after mounting (the server has no storage)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (d && Object.keys(d).length) { setValues(d); setRestored(true); }
     } catch { /* storage unavailable */ }
-    const on = () => setOnline(navigator.onLine);
-    on();
-    window.addEventListener("online", on);
-    window.addEventListener("offline", on);
-    return () => { window.removeEventListener("online", on); window.removeEventListener("offline", on); };
   }, [draftKey]);
   useEffect(() => {
     try {
@@ -59,13 +64,12 @@ export function EntryForm(p: Props) {
       else localStorage.removeItem(draftKey);
     } catch { /* storage unavailable */ }
   }, [values, draftKey, p.existing]);
-  useEffect(() => {
-    if (state.ok) {
-      try { localStorage.removeItem(draftKey); } catch { /* ignore */ }
-      setValues({});
-      setRestored(false);
-    }
-  }, [state, draftKey]);
+  // after a successful save, start from an empty form (the draft is then removed by the effect above)
+  const [handled, setHandled] = useState(state);
+  if (state !== handled) {
+    setHandled(state);
+    if (state.ok) { setValues({}); setRestored(false); }
+  }
   const [fromPhoto, setFromPhoto] = useState<Record<string, true>>({});
   const [capture, setCapture] = useState<CaptureResult | null>(null);
   const [chip, setChip] = useState<string | null>(null); // leftover number waiting to be placed
@@ -106,7 +110,7 @@ export function EntryForm(p: Props) {
   }
 
   const filledFromPhoto = Object.keys(fromPhoto).length;
-  const minutesEarly = Math.ceil((new Date(p.opensAt).getTime() - Date.now()) / 60_000);
+  const minutesEarly = Math.ceil((new Date(p.opensAt).getTime() - new Date(p.serverNow).getTime()) / 60_000);
   const early = p.canEnter && pending_.length > 0 && minutesEarly > 0 && !fromPaper;
   const opensLabel = new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Lagos", hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" })
     .format(new Date(p.opensAt));

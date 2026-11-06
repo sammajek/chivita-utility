@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Logo } from "@/components/Logo";
 import { NAV_GROUPS, type NavItem } from "@/lib/roles";
 
@@ -70,8 +70,10 @@ function UserBox({ name, roleLabel, unread, signOut }: Pick<Props, "name" | "rol
 
 export function AppShell({ nav, name, roleLabel, unread, signOut, banners, children }: Props) {
   const path = usePathname();
-  const [open, setOpen] = useState(false);
-  useEffect(() => setOpen(false), [path]);
+  // the menu belongs to the page it was opened on, so it is closed again after navigating
+  const [openOn, setOpenOn] = useState<string | null>(null);
+  const open = openOn === path;
+  const setOpen = (v: boolean | ((o: boolean) => boolean)) => setOpenOn((typeof v === "function" ? v(open) : v) ? path : null);
   const current = nav.find((n) => isActive(n.href, path));
 
   return (

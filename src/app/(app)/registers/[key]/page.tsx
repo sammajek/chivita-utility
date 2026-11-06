@@ -155,6 +155,7 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
         canEnter={canEnter}
         userId={profile.id}
         opensAt={opens.toISOString()}
+        serverNow={now.toISOString()}
       />
       {canEnter && (
         <Corrections
