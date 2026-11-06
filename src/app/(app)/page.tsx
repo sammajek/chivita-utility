@@ -37,7 +37,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   }
   const usage = (use ?? []) as { code: string; unit: string | null; used: number; grp: string; name: string; is_demo: boolean }[];
   const sumUse = (f: (u: (typeof usage)[number]) => boolean) => usage.filter(f).reduce((t, u) => t + Number(u.used), 0);
-  const gas = sumUse((u) => /GAS$/.test(u.code)), kwh = sumUse((u) => u.unit === "kWh"), wtp = sumUse((u) => u.code === "W-WTP");
+  const gas = sumUse((u) => /GAS$/.test(u.code)), kwh = sumUse((u) => u.unit === "kWh" && u.grp === "energy"), wtp = sumUse((u) => u.code === "W-WTP");
   const shift = shiftAt(now);
   const link = (o: Record<string, string>) => `/?${new URLSearchParams({ days: String(days), ...(area ? { area } : {}), ...o })}`;
 

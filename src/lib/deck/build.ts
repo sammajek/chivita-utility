@@ -128,11 +128,11 @@ export async function buildDeck(d: DeckData, logoData: string, generatedAt: stri
       const c = d.consumption;
       const sum = (pred: (x: (typeof c)[number]) => boolean) => c.filter(pred).reduce((a, x) => a + x.total, 0);
       const gas = sum((x) => x.kind === "totaliser" && x.unit === "m³" && /gas/i.test(x.name));
-      const kwh = sum((x) => x.unit === "kWh");
+      const kwh = sum((x) => x.unit === "kWh" && x.group === "energy"); // the 7 A.M. sheet repeats some compressor meters
       const wtp = sum((x) => x.name === "WTP output");
       const bh = sum((x) => x.group === "borehole");
       tiles(sl, [["Gas (boilers + VAM), m³", num(gas)], ["Electricity, kWh", num(kwh)], ["WTP output, m³", num(wtp)], ["Borehole abstraction, m³", num(bh)]]);
-      const energy = c.filter((x) => x.unit === "kWh").sort((a, b) => b.total - a.total).slice(0, 10);
+      const energy = c.filter((x) => x.unit === "kWh" && x.group === "energy").sort((a, b) => b.total - a.total).slice(0, 10);
       bar(sl, energy.map((x) => x.name), [{ name: "kWh", values: energy.map((x) => Math.round(x.total)) }], 0.4, 2.65, 6.1, bodyH - 1.5);
       const water = c.filter((x) => x.group === "water" && x.name.startsWith("Line")).sort((a, b) => b.total - a.total).slice(0, 10);
       bar(sl, water.map((x) => x.name.replace(/^Line \d+ – /, "")), [{ name: "m³", values: water.map((x) => Math.round(x.total)) }], 6.8, 2.65, 6.1, bodyH - 1.5);

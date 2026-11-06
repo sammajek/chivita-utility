@@ -224,6 +224,10 @@ Each entry: date, decision, who decided, notes.
   rated outputs must be entered under Admin → Equipment (none are in the source files).
 - Presentation layout: keep the app's own deck layout until the corporate template arrives (owner, 2026-11-06).
 - Live address: the Vercel production link (*.vercel.app) is acceptable as the live address; custom domain optional.
+- 7 A.M. consumption sheet (owner, 2026-11-06): condensate flow is kg/h; "ATLAS COMP." is an Atlas Copco air
+  compressor (added as CMP-AC1, unconfirmed — number, area and model to confirm); the compressor figures on that sheet
+  are kWh readings (meters C2–C9-KWH, CATLAS-KWH). Electricity totals use only the Energy sheet meters so compressors
+  are not counted twice. No air flow meters yet, so kWh per m³ of air waits until they are installed.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

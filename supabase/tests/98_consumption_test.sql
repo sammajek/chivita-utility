@@ -5,7 +5,7 @@ update public.profiles set role = 'operator', active = true where email = 'conso
 do $$
 begin
   assert (select count(*) from public.meters) = 93, '93 meters from the template';
-  assert (select count(*) from public.meters where asset_id is null) = 22, 'most meters mapped to equipment';
+  assert (select count(*) from public.meters where asset_id is null) = 21, 'most meters mapped to equipment';
 end $$;
 
 set local role authenticated;

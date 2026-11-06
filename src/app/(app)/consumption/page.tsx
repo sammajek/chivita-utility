@@ -119,7 +119,7 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
           <StatTile label="Water: lines ÷ WTP output" value={wtp > 0 ? `${Math.round((lines / wtp) * 100)}%` : "–"}
             sub={`${Math.round(lines).toLocaleString()} of ${Math.round(wtp).toLocaleString()} m³`} />
         </div>
-        <p className="text-xs text-gray-500">Gas per steam uses the boiler’s own gas and steam totalisers for the month. Lines ÷ WTP shows how much treated water reaches the metered lines (the rest is backwash, unmetered use or losses). More KPIs (kWh per m³ air, kWh/TR, water per unit product) need production and air-flow figures: tell me where those come from.</p>
+        <p className="text-xs text-gray-500">Gas per steam uses the boiler’s own gas and steam totalisers for the month. Lines ÷ WTP shows how much treated water reaches the metered lines (the rest is backwash, unmetered use or losses). kWh per m³ of air will be added once air flow meters are installed; kWh/TR and water per unit of product need chiller output and production figures.</p>
 
         {GROUPS.map(([g, label]) => {
           const ms = meters.filter((m) => m.grp === g);

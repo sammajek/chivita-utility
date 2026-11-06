@@ -1,6 +1,6 @@
 -- The seed loaded everything and every field points at a parameter.
 do $$ begin
-  assert (select count(*) from public.assets) = 93, 'assets loaded';
+  assert (select count(*) from public.assets) = 94, 'assets loaded (93 + Atlas Copco compressor)';
   assert (select count(*) from public.parameters) = 251, 'parameters loaded';
   assert (select count(*) from public.registers) = 28, 'registers loaded';
   assert (select count(*) from public.register_fields) = 428, 'fields loaded';
