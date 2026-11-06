@@ -39,6 +39,8 @@ const KIND: Record<string, string> = {
   followup_overdue: "Further action overdue",
   hours_service_due: "Running-hours service",
   training_unconfirmed: "Training not confirmed",
+  patrol_missed: "Patrol round missed",
+  patrol_issue: "Patrol issue",
 };
 const SEV: Record<string, string> = { critical: "border-l-crit", warning: "border-l-warn", info: "border-l-gray-300" };
 const LEVEL = ["Reminder", "Escalated to on-duty engineer", "Escalated to shift manager"];

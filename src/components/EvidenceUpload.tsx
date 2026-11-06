@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export type EvidenceEntity =
   | "downtime" | "followup" | "pm_completion" | "pm_affirmation" | "cleaning" | "rca" | "asset"
-  | "water_result" | "calibration" | "instrument" | "job_request" | "external_report" | "training" | "outage";
+  | "water_result" | "calibration" | "instrument" | "job_request" | "external_report" | "training" | "outage" | "patrol_visit";
 
 export const DOC_TYPES = ["Photo", "Manual", "Datasheet", "Drawing", "Certificate", "Calibration certificate", "PM checklist",
   "Service report", "Test report", "Other"] as const;
