@@ -28,6 +28,7 @@ export const NAV: NavItem[] = [
   { href: "/", label: "Dashboard", group: "Overview", roles: ALL },
   { href: "/flags", label: "Flags", group: "Overview", roles: ALL },
   { href: "/duty", label: "On duty", group: "Overview", roles: ALL },
+  { href: "/handover", label: "Handover", group: "Overview", roles: ALL },
   { href: "/registers", label: "Registers", group: "Operations", roles: FLOOR },
   { href: "/equipment", label: "Equipment", group: "Operations", roles: ALL },
   { href: "/downtime", label: "Downtime", group: "Operations", roles: FLOOR },

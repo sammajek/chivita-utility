@@ -19,16 +19,6 @@ export async function checkIn(_prev: ActionState, form: FormData): Promise<Actio
   return { ok: "You are on duty." };
 }
 
-export async function checkOut(_prev: ActionState, form: FormData): Promise<ActionState> {
-  if (form.get("ack") !== "on") return { error: "Tick the box to confirm you have reviewed the open flags." };
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("check_out", { p_handover: String(form.get("handover") ?? "") } as never);
-  if (error) return { error: error.message };
-  revalidatePath("/duty");
-  revalidatePath("/");
-  return { ok: "Checked out. Handover saved." };
-}
-
 export async function acknowledgeFlag(id: string) {
   const supabase = await createClient();
   await supabase.rpc("acknowledge_flag", { p_id: id } as never);

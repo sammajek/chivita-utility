@@ -66,7 +66,7 @@ export default async function ReportsPage() {
       )}
 
       <DeckForm today={lagosDate(new Date())} people={people} canSchedule={canSchedule} />
-      <p className="text-xs text-gray-500">Layout is a clean placeholder in Chivita colours; it switches to the corporate PowerPoint template once that is supplied. Printable reports are also on each page (PM report, consumption report, <Link href="/duty/handover" className="text-brand-blue">handover</Link>, training, KPIs).</p>
+      <p className="text-xs text-gray-500">Layout is a clean placeholder in Chivita colours; it switches to the corporate PowerPoint template once that is supplied. Printable reports are also on each page (PM report, consumption report, <Link href="/handover" className="text-brand-blue">handover</Link>, training, KPIs).</p>
     </div>
   );
 }

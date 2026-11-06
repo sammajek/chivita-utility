@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatLagos, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { ROLE_LABELS, type Role } from "@/lib/roles";
 import { DemoBadge } from "@/components/StatusBadge";
-import { CheckInForm, CheckOutForm, VerifyPresenceForm } from "./DutyForms";
+import { CheckInForm, VerifyPresenceForm } from "./DutyForms";
 
 export const dynamic = "force-dynamic";
 
@@ -47,7 +47,7 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
     <div className="space-y-6">
       <div>
         <h1 className="page-title">On duty</h1>
-        <p className="page-sub">Current shift: {SHIFT_LABELS[cur.shift]}, {cur.shiftDate} · <Link href="/duty/handover" className="text-brand-blue">Handover report (print)</Link></p>
+        <p className="page-sub">Current shift: {SHIFT_LABELS[cur.shift]}, {cur.shiftDate} · <Link href="/handover" className="text-brand-blue">Handover notes</Link></p>
       </div>
 
       {canCheckIn && (sp.room === "U1" || sp.room === "U2") && sp.code && <VerifyPresenceForm room={sp.room} code={sp.code} />}
@@ -60,8 +60,11 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
                 You checked in at <b>{formatLagos(mine.checked_in_at)}</b> for{" "}
                 {mine.areas.map((a) => (a === "U1" ? "Utility 1" : "Utility 2")).join(" & ")}.
               </p>
-              <CheckOutForm openFlags={openFlags ?? 0} />
-              <Link href="/flags" className="text-sm text-brand-blue">Review open flags →</Link>
+              <p className="text-sm text-gray-600">At the end of your shift, fill in the handover report (equipment, fuel, water treatment plant, checklist). Submitting it checks you out.</p>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/handover/new" className="btn-primary">Write handover &amp; check out</Link>
+                <Link href="/flags" className="btn-secondary">Review open flags ({openFlags ?? 0})</Link>
+              </div>
             </>
           ) : (
             <>
