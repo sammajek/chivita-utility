@@ -3,8 +3,7 @@ import { requireProfile } from "@/lib/auth";
 import { loadPmCompletions, loadPmTasks, namesFor, type PmCompletion } from "@/lib/data/pm";
 import {
   completedPeriods, FREQ_LABEL, PM_FREQUENCIES, pmAdherence, pmPeriodEnd, pmPeriodLabel, pmPeriodStart,
-  RESULT_LABEL, type PmFrequency,
-} from "@/lib/pm";
+  RESULT_LABEL, type PmFrequency, CARRIED_OUT } from "@/lib/pm";
 import { logDateOf } from "@/lib/registers";
 import { addDays, lagosDate } from "@/lib/time";
 import { StatTile } from "@/components/BarList";
@@ -65,7 +64,7 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
   const header = (
     <div>
       <h1 className="page-title">Preventive Maintenance</h1>
-      <p className="page-sub">Utility PM log · CHIENGUTRG08 · Done OK “√”, Not done “--”, Done not OK “X”</p>
+      <p className="page-sub">Utility PM log · CHIENGUTRG08 · √ Completed – no issue found · X Completed – issue found · P Pending (with a date) · -- Skipped</p>
     </div>
   );
 
@@ -100,11 +99,12 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
         {areaPicker}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         <StatTile label="Recorded" value={`${completions.length}/${tasks.length}`} />
-        <StatTile label={`${RESULT_LABEL.done_ok.code} Done OK`} value={String(count("done_ok"))} tone="ok" />
-        <StatTile label={`${RESULT_LABEL.done_not_ok.code} Not OK`} value={String(count("done_not_ok"))} tone={count("done_not_ok") ? "crit" : "default"} />
-        <StatTile label={`${RESULT_LABEL.not_done.code} Not done`} value={String(count("not_done"))} tone={count("not_done") ? "warn" : "default"} />
+        <StatTile label={`${RESULT_LABEL.done_ok.code} No issue`} value={String(count("done_ok"))} tone="ok" />
+        <StatTile label={`${RESULT_LABEL.done_not_ok.code} Issue found`} value={String(count("done_not_ok"))} tone={count("done_not_ok") ? "crit" : "default"} />
+        <StatTile label={`${RESULT_LABEL.pending.code} Pending`} value={String(count("pending"))} tone={count("pending") ? "warn" : "default"} />
+        <StatTile label={`${RESULT_LABEL.not_done.code} Skipped`} value={String(count("not_done"))} tone={count("not_done") ? "warn" : "default"} />
       </div>
       {completions.some((c) => c.is_demo) && <p className="text-xs font-semibold text-purple-700">Includes DEMO data</p>}
 
@@ -160,7 +160,7 @@ async function Affirmations({ freq, period, areas, canAffirm, canWithdraw, tasks
               {a ? <span className="rounded bg-green-100 px-2 py-0.5 text-xs font-semibold text-ok">Affirmed</span> : <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-warn">Not affirmed</span>}</div>
             {a ? (
               <>
-                <p className="text-sm">By <b>{names.get(a.recorded_by_id) ?? "—"}</b> on {formatLagos(a.recorded_at)}: {a.done_ok}/{a.total_tasks} √, {a.done_not_ok} X, {a.not_done} --, {a.not_recorded} not recorded.</p>
+                <p className="text-sm">By <b>{names.get(a.recorded_by_id) ?? "—"}</b> on {formatLagos(a.recorded_at)}: {a.done_ok}/{a.total_tasks} √ no issue, {a.done_not_ok} X issue found, {a.not_done} pending or skipped, {a.not_recorded} not recorded.</p>
                 {a.note && <p className="text-xs text-gray-600">“{a.note}”</p>}
                 <EvidenceList entityType="pm_affirmation" entityId={a.id} canAdd={canAffirm} />
                 {canWithdraw && (
@@ -173,7 +173,7 @@ async function Affirmations({ freq, period, areas, canAffirm, canWithdraw, tasks
             ) : canAffirm ? (
               <ActionForm action={affirmPm} submit="Affirm PM for this period" className="space-y-2">
                 <input type="hidden" name="freq" value={freq} /><input type="hidden" name="area" value={ar} /><input type="hidden" name="period_start" value={period} />
-                <p className="text-xs text-gray-600">{got.length}/{ids.size} recorded. {gaps > 0 ? "Some PMs are not done OK or not recorded: a note is required." : "All done OK."}</p>
+                <p className="text-xs text-gray-600">{got.length}/{ids.size} recorded. {gaps > 0 ? "Some PMs are pending, skipped, have an issue or are not recorded: a note is required." : "All completed with no issue."}</p>
                 <input name="note" className="input" placeholder={gaps > 0 ? "Note on what is outstanding *" : "Note (optional)"} required={gaps > 0} minLength={gaps > 0 ? 5 : undefined} />
               </ActionForm>
             ) : <p className="text-xs text-gray-500">An engineer or manager affirms the PM once the period’s work is checked.</p>}
@@ -200,7 +200,7 @@ async function Schedule({ today, area, header, tabs, areaPicker }: {
     for (const t of ft) {
       const periods = completedPeriods(f, from, today);
       due += periods.length;
-      const got = new Set((byTask.get(t.id) ?? []).filter((c) => c.result !== "not_done").map((c) => c.period_start));
+      const got = new Set((byTask.get(t.id) ?? []).filter((c) => CARRIED_OUT.includes(c.result)).map((c) => c.period_start));
       done += periods.filter((p) => got.has(p)).length;
     }
     return { f, tasks: ft.length, due, done, pct: pmAdherence(due, done) };
@@ -209,7 +209,7 @@ async function Schedule({ today, area, header, tabs, areaPicker }: {
   const totalDone = perFreq.reduce((s, x) => s + x.done, 0);
 
   const rows = tasks.map((t) => {
-    const cs = (byTask.get(t.id) ?? []).filter((c) => c.result !== "not_done").sort((a, b) => b.period_start.localeCompare(a.period_start));
+    const cs = (byTask.get(t.id) ?? []).filter((c) => CARRIED_OUT.includes(c.result)).sort((a, b) => b.period_start.localeCompare(a.period_start));
     const current = pmPeriodStart(t.frequency, today);
     const prevStart = pmPeriodStart(t.frequency, addDays(current, -1));
     const doneNow = cs.some((c) => c.period_start === current);

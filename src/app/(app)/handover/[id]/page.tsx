@@ -39,6 +39,7 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
   const names = await namesFor([h.recorded_by_id, h.received_by, h.manager_by, ...team, ...notes.map((n) => n.recorded_by_id)]);
   const c = h.content;
   const cell = (v: string | undefined) => (v && v.trim() ? v : "—");
+  const pctCell = (v: string | undefined) => (v && v.trim() ? (v.includes("%") ? v : `${v.trim()} %`) : "—");
   const canAck = onNextShift && !acks.some((a) => a.recorded_by_id === profile.id);
   const canSign = !h.manager_at && ["shift_manager", "section_manager", "admin"].includes(profile.role);
 
@@ -91,8 +92,8 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
               <div><dt className="text-xs text-gray-500">Standby</dt><dd>{cell(c.wtp?.standby)}</dd></div>
               <div><dt className="text-xs text-gray-500">pH</dt><dd>{cell(c.wtp?.ph)}</dd></div>
             </>)}
-            <div><dt className="text-xs text-gray-500">Water level – raw</dt><dd>{cell(c.wtp?.raw_level)}</dd></div>
-            <div><dt className="text-xs text-gray-500">Water level – treated</dt><dd>{cell(c.wtp?.treated_level)}</dd></div>
+            <div><dt className="text-xs text-gray-500">Water level – raw water</dt><dd>{pctCell(c.wtp?.raw_level)}</dd></div>
+            <div><dt className="text-xs text-gray-500">Water level – treated water</dt><dd>{pctCell(c.wtp?.treated_level)}</dd></div>
             <div className="sm:col-span-3"><dt className="text-xs text-gray-500">Maintenance / faults</dt><dd className={c.wtp?.faults ? "text-crit" : ""}>{cell(c.wtp?.faults)}</dd></div>
           </dl>
         </div>

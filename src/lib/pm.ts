@@ -2,7 +2,9 @@ import { addDays } from "@/lib/time";
 
 export const PM_FREQUENCIES = ["daily", "weekly", "monthly", "quarterly", "bi_annual", "annual"] as const;
 export type PmFrequency = (typeof PM_FREQUENCIES)[number];
-export type PmResult = "done_ok" | "not_done" | "done_not_ok";
+export type PmResult = "done_ok" | "done_not_ok" | "pending" | "not_done";
+/** Results that count as carried out (KPIs, last done, next due). */
+export const CARRIED_OUT: PmResult[] = ["done_ok", "done_not_ok"];
 
 export const FREQ_LABEL: Record<PmFrequency, string> = {
   daily: "Daily",
@@ -13,11 +15,12 @@ export const FREQ_LABEL: Record<PmFrequency, string> = {
   annual: "Annual",
 };
 
-/** Paper-log codes: Done OK "√", Not Done "--", Done Not OK "X". */
+/** PM results (paper-log codes kept: √, X, --; P is new). */
 export const RESULT_LABEL: Record<PmResult, { code: string; text: string }> = {
-  done_ok: { code: "√", text: "Done OK" },
-  not_done: { code: "--", text: "Not done" },
-  done_not_ok: { code: "X", text: "Done, not OK" },
+  done_ok: { code: "√", text: "Completed – no issue found" },
+  done_not_ok: { code: "X", text: "Completed – issue found" },
+  pending: { code: "P", text: "Pending" },
+  not_done: { code: "--", text: "Skipped" },
 };
 
 const ymd = (y: number, m: number, d: number) =>
@@ -91,7 +94,7 @@ export function completedPeriods(freq: PmFrequency, from: string, to: string): s
 
 /**
  * PM adherence = PMs carried out (Done OK + Done Not OK) ÷ PMs due, for periods that have ended.
- * "Not done" and blanks count as missed.
+ * Pending, skipped ("--") and blanks count as missed.
  */
 export function pmAdherence(due: number, carriedOut: number): number | null {
   return due > 0 ? Math.round((carriedOut / due) * 1000) / 10 : null;

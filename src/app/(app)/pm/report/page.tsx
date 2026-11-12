@@ -43,7 +43,7 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
       const cs = at.map((t) => byKey.get(`${t.id}|${p}`)).filter(Boolean);
       const ok = cs.filter((c) => c!.result === "done_ok").length;
       const nok = cs.filter((c) => c!.result === "done_not_ok").length;
-      const nd = cs.filter((c) => c!.result === "not_done").length;
+      const nd = cs.filter((c) => c!.result === "not_done" || c!.result === "pending").length;
       const ended = pmPeriodEnd(f, p) <= today;
       const aff = affs.find((a) => a.frequency === f && a.area === ar && a.period_start === p);
       return { p, ar, total: at.length, ok, nok, nd, blank: at.length - cs.length, ended, pct: ended ? pmAdherence(at.length, ok + nok) : null, aff };
@@ -106,7 +106,7 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
           <div className="table-wrap">
             <table className="data-table min-w-[640px]">
               <thead>
-                <tr><th>Period</th><th>Area</th><th className="num">Tasks</th><th className="num">√</th><th className="num">X</th><th className="num">--</th><th className="num">Blank</th><th className="num">Adherence</th><th>Affirmed by</th></tr>
+                <tr><th>Period</th><th>Area</th><th className="num">Tasks</th><th className="num">√</th><th className="num">X</th><th className="num" title="Pending or skipped">P / --</th><th className="num">Blank</th><th className="num">Adherence</th><th>Affirmed by</th></tr>
               </thead>
               <tbody>
                 {s.rows.map((r) => (

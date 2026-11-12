@@ -267,6 +267,10 @@ Each entry: date, decision, who decided, notes.
     category → failure mode → suggested issue descriptions, with machine-specific causes for 15 equipment types plus
     causes for every machine. The form shows only the causes that fit the chosen machine and the previous step; issue
     description can be picked or typed. Editable in Admin → Downtime causes.
+- PM results renamed (owner, 2026-11-12): √ "Completed – no issue found", X "Completed – issue found" (opens a follow-up),
+  P "Pending" (new; must give the date it will be done by; flagged when that date passes; finished later with the final
+  result, the pending entry kept), -- "Skipped" (reason required). Only √ and X count as carried out.
+- Handover water levels are entered and shown as % (owner, 2026-11-12).
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

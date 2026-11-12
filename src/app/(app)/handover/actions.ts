@@ -40,7 +40,7 @@ export async function submitHandover(_p: Msg, f: FormData): Promise<Msg> {
       raw_count: s(f, "wtp:raw_count"), treated_count: s(f, "wtp:treated_count"),
       ph_raw: s(f, "wtp:ph_raw"), ph_treated: s(f, "wtp:ph_treated"),
       standby: wtpSum ? wtpSum.standby : s(f, "wtp:standby"),
-      ph: "", raw_level: s(f, "wtp:raw_level"), treated_level: s(f, "wtp:treated_level"),
+      ph: "", raw_level: s(f, "wtp:raw_level").replace("%", "").trim(), treated_level: s(f, "wtp:treated_level").replace("%", "").trim(),
       faults: wtpSum ? wtpSum.faults : s(f, "wtp:faults"),
       ...(wtpItems ? { items: wtpItems, note: wtpNote } : {}),
     },

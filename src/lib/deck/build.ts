@@ -113,7 +113,7 @@ export async function buildDeck(d: DeckData, logoData: string, generatedAt: stri
       const { sl, bodyH } = slide(key, SECTIONS.pm, "PM log CHIENGUTRG08: periods ending in the data period; carried out = √ or X");
       const due = d.pm.reduce((a, x) => a + x.due, 0), done = d.pm.reduce((a, x) => a + x.ok + x.nok, 0);
       tiles(sl, [["PM adherence", pct(done, due), due && done / due < 0.85 ? THEME.warn : THEME.ok], ["PMs due", num(due)], ["Done OK (√)", num(d.pm.reduce((a, x) => a + x.ok, 0))],
-        ["Done, not OK (X)", num(d.pm.reduce((a, x) => a + x.nok, 0))], ["Not done / blank", num(due - done)]]);
+        ["Completed – issue found (X)", num(d.pm.reduce((a, x) => a + x.nok, 0))], ["Pending / skipped / blank", num(due - done)]]);
       bar(sl, d.pm.map((x) => FREQ_LABEL[x.frequency as PmFrequency] ?? x.frequency),
         [{ name: "Adherence %", values: d.pm.map((x) => (x.due ? Math.round(((x.ok + x.nok) / x.due) * 1000) / 10 : 0)) }], 0.4, 2.65, W - 0.8, bodyH - 1.5, { valAxisMaxVal: 100 });
     }

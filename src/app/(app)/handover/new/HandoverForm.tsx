@@ -4,11 +4,15 @@ import { useActionState, useState } from "react";
 import { HANDOVER_GROUPS, MACHINE_STATUS, type HandoverContent, type MachineItem, type MachineStatus } from "@/lib/handover";
 import { submitHandover, type Msg } from "../actions";
 
-const Field = ({ name, label, value, rows = 1, mode }: { name: string; label: string; value: string; rows?: number; mode?: "numeric" | "decimal" }) => (
+const Field = ({ name, label, value, rows = 1, mode, suffix }: { name: string; label: string; value: string; rows?: number; mode?: "numeric" | "decimal"; suffix?: string }) => (
   <label className="block">
     <span className="text-xs font-medium text-gray-600">{label}</span>
-    {rows > 1 ? <textarea name={name} defaultValue={value} rows={rows} className="input text-sm" />
-      : <input name={name} defaultValue={value} inputMode={mode} pattern={mode === "numeric" ? "[0-9]*" : undefined} className="input text-sm" />}
+    {rows > 1 ? <textarea name={name} defaultValue={value} rows={rows} className="input text-sm" /> : (
+      <span className="relative block">
+        <input name={name} defaultValue={value} inputMode={mode} pattern={mode === "numeric" ? "[0-9]*" : undefined} className={`input text-sm ${suffix ? "pr-10" : ""}`} />
+        {suffix && <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm font-semibold text-gray-500">{suffix}</span>}
+      </span>
+    )}
   </label>
 );
 
@@ -93,8 +97,8 @@ export function HandoverForm({ prefill, checklist, openFlags }: { prefill: Omit<
           <Field name="wtp:treated_count" label="No. of treated water pumps running" value={prefill.wtp.treated_count ?? ""} mode="numeric" />
           <Field name="wtp:ph_raw" label="pH – raw water" value={prefill.wtp.ph_raw ?? ""} mode="decimal" />
           <Field name="wtp:ph_treated" label="pH – treated water" value={prefill.wtp.ph_treated ?? ""} mode="decimal" />
-          <Field name="wtp:raw_level" label="Water level – raw water" value={prefill.wtp.raw_level} />
-          <Field name="wtp:treated_level" label="Water level – treated water" value={prefill.wtp.treated_level} />
+          <Field name="wtp:raw_level" label="Water level – raw water (%)" value={prefill.wtp.raw_level} mode="decimal" suffix="%" />
+          <Field name="wtp:treated_level" label="Water level – treated water (%)" value={prefill.wtp.treated_level} mode="decimal" suffix="%" />
         </div>
       </section>
 

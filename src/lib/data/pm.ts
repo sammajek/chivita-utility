@@ -20,6 +20,7 @@ export interface PmCompletion {
   period_start: string;
   result: PmResult;
   note: string | null;
+  pending_until?: string | null;
   recorded_by_id: string | null;
   recorded_at: string;
   is_demo: boolean;
@@ -46,7 +47,7 @@ export async function loadPmCompletions(taskIds: string[], fromPeriod: string, t
   for (let i = 0; i < taskIds.length; i += 150) {
     let q = supabase
       .from("pm_completions")
-      .select("id, task_id, period_start, result, note, recorded_by_id, recorded_at, is_demo")
+      .select("id, task_id, period_start, result, note, pending_until, recorded_by_id, recorded_at, is_demo")
       .in("task_id", taskIds.slice(i, i + 150))
       .gte("period_start", fromPeriod)
       .is("voided_at", null)
