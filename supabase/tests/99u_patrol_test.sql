@@ -24,7 +24,15 @@ begin
   assert (select issues from public.patrol_visits) = 1 and (select recorded_by_id from public.patrol_visits) = auth.uid(), 'visit tagged';
   assert exists (select 1 from public.flags where kind = 'patrol_issue'), 'issue flagged';
 end $$;
+-- a manager can edit and remove (retire) a point
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000d7', true);
+update public.patrol_points set name = 'Borehole field (north)', rounds_per_shift = 2 where id = (select pt from t_p);
+update public.patrol_points set active = false, code_hash = null where id = (select pt from t_p);
 reset role;
+do $$ begin
+  assert (select not active and code_hash is null and name = 'Borehole field (north)' from public.patrol_points where id = (select pt from t_p)), 'edited and removed';
+  update public.patrol_points set active = true where id = (select pt from t_p);
+end $$;
 do $$
 begin
   -- pretend the code existed three days ago: earlier finished shifts without visits are flagged

@@ -46,3 +46,25 @@ export async function recordVisit(_p: VisitState, f: FormData): Promise<VisitSta
   revalidatePath("/patrol");
   return { visitId: String(data) };
 }
+
+/** Edit a patrol point (managers). */
+export async function updatePoint(_p: Msg, f: FormData): Promise<Msg> {
+  const checks = s(f, "checks").split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+  if (!checks.length) return { error: "Keep at least one check." };
+  const supabase = await createClient();
+  const { error } = await supabase.from("patrol_points").update({
+    name: s(f, "name"), area: s(f, "area"), location: s(f, "location") || null, rounds_per_shift: Number(s(f, "rounds") || 1), checks,
+  } as never).eq("id", s(f, "id"));
+  if (error) return { error: error.code === "23505" ? "A patrol point with that name exists." : error.message };
+  revalidatePath("/patrol");
+  return { ok: "Saved." };
+}
+
+/** Remove a patrol point (managers). It is retired, not erased: its past rounds stay on record and no more rounds are expected. */
+export async function removePoint(_p: Msg, f: FormData): Promise<Msg> {
+  const supabase = await createClient();
+  const { error } = await supabase.from("patrol_points").update({ active: false, code_hash: null } as never).eq("id", s(f, "id"));
+  if (error) return { error: error.message };
+  revalidatePath("/patrol");
+  return { ok: "Patrol point removed." };
+}

@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { namesFor } from "@/lib/data/pm";
 import { formatLagos, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { ActionForm } from "@/components/ActionForm";
-import { addPoint } from "./actions";
+import { addPoint, removePoint, updatePoint } from "./actions";
 import { LabelButton } from "./Forms";
 
 export const dynamic = "force-dynamic";
@@ -82,6 +82,30 @@ export default async function PatrolPage() {
           </table>
         </div>
       </section>
+
+      {isMgr && points.length > 0 && (
+        <details className="card">
+          <summary className="cursor-pointer section-title">Edit or remove patrol points</summary>
+          <div className="mt-3 divide-y">
+            {points.map((p) => (
+              <div key={p.id} className="space-y-2 py-3">
+                <ActionForm action={updatePoint} submit="Save changes" className="grid gap-2 sm:grid-cols-2">
+                  <input type="hidden" name="id" value={p.id} />
+                  <input name="name" required minLength={3} defaultValue={p.name} className="input" />
+                  <input name="location" defaultValue={p.location ?? ""} placeholder="Where exactly (optional)" className="input" />
+                  <select name="area" defaultValue={p.area} className="input"><option value="U1">Utility 1</option><option value="U2">Utility 2</option></select>
+                  <label className="text-sm">Rounds per shift <input name="rounds" type="number" min={1} max={12} defaultValue={p.rounds_per_shift} className="input" /></label>
+                  <textarea name="checks" rows={3} defaultValue={p.checks.join("\n")} className="input sm:col-span-2" />
+                </ActionForm>
+                <ActionForm action={removePoint} submit={`Remove “${p.name}”`} className="flex items-center gap-2">
+                  <input type="hidden" name="id" value={p.id} />
+                  <span className="text-xs text-gray-500">Its label stops working; past rounds stay on record.</span>
+                </ActionForm>
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
 
       {isMgr && (
         <details className="card">
