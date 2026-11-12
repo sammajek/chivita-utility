@@ -278,6 +278,11 @@ Each entry: date, decision, who decided, notes.
   satisfactory" reopens the PM; "Breakdown soon after PM" flag (within 7 days); photo required (flag after 24 h) for
   monthly-and-longer PMs on criticality A equipment. All thresholds in Admin → Settings.
 - Cleaning Schedule: photo evidence per cleaned zone; the manager's sign-off needs a comment if any cleaned zone has no photo.
+- Water Quality plan (owner, 2026-11-12): treated water keeps only "Water from utility"; "Utilities – ETP" removed
+  (both inactive, results kept); "Borehole 1, 2, 4, 5, 6, 7" (Borehole 3 decommissioned); "Lithium Bromide" spelling.
+  Owner will adjust the parameters.
+- AMC: managers edit contracts and can end one (no more flags, open flags closed, history kept, can be brought back).
+- Audit trail viewer: Admin → Audit trail lists every create / change / void by anyone (who, when, old → new, reason).
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

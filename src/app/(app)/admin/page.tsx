@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
+import { formatLagos } from "@/lib/time";
 import { describeStandard } from "@/lib/evaluate";
 import { importStaffCsv, saveCause, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
@@ -11,10 +12,10 @@ import type { Parameter } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["causes", "Downtime causes"], ["settings", "Settings"],
+  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["causes", "Downtime causes"], ["audit", "Audit trail"], ["settings", "Settings"],
 ] as const;
 
-export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; type?: string; eq?: string }> }) {
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string }> }) {
   const profile = await requireRole("admin", "section_manager");
   const sp = await searchParams;
   const tab = TABS.some(([t]) => t === sp.tab) ? sp.tab! : "review";
@@ -38,9 +39,64 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       {tab === "limits" && <Limits q={q} />}
       {tab === "registers" && <Registers />}
       {tab === "causes" && <Causes type={sp.type ?? "Unplanned Breakdown"} eq={sp.eq ?? ""} />}
+      {tab === "audit" && <Audit who={sp.who ?? ""} t={sp.t ?? ""} act={sp.act ?? ""} from={sp.from ?? ""} q={q} />}
       {tab === "settings" && <Settings />}
     </div>
   );
+
+  async function Audit({ who, t, act, from, q }: { who: string; t: string; act: string; from: string; q: string }) {
+    let query = supabase.from("audit_log").select("id, table_name, record_id, action, changed_by, changed_at, changed_fields, old_data, new_data, reason")
+      .order("changed_at", { ascending: false }).limit(200);
+    if (who) query = query.eq("changed_by", who);
+    if (t) query = query.eq("table_name", t);
+    if (act) query = query.eq("action", act);
+    if (from) query = query.gte("changed_at", `${from}T00:00:00+01:00`);
+    if (q) query = query.or(`reason.ilike.%${q}%,record_id.ilike.%${q}%`);
+    const [{ data }, { data: people }] = await Promise.all([query, supabase.from("profiles").select("id, full_name").order("full_name")]);
+    const rows = (data ?? []) as { id: number; table_name: string; record_id: string; action: string; changed_by: string | null; changed_at: string;
+      changed_fields: string[] | null; old_data: Record<string, unknown> | null; new_data: Record<string, unknown> | null; reason: string | null }[];
+    const name = new Map(((people ?? []) as { id: string; full_name: string }[]).map((p) => [p.id, p.full_name]));
+    const show = (v: unknown) => (v === null || v === undefined ? "—" : typeof v === "object" ? JSON.stringify(v) : String(v)).slice(0, 120);
+    const label = (tbl: string) => tbl.replace(/^public\./, "").replace(/_/g, " ");
+    const tables = [...new Set(rows.map((r) => r.table_name))].sort();
+    const ACTION: Record<string, string> = { insert: "Created", update: "Changed", void: "Voided / deleted" };
+    return (
+      <div className="space-y-3">
+        <p className="text-sm text-gray-600">Every record created, changed or voided (deleted) in the app, by anyone: who, when, what changed (old → new) and the reason. Entries cannot be edited or removed. Latest 200 matching entries.</p>
+        <form className="flex flex-wrap items-center gap-2" action="/admin">
+          <input type="hidden" name="tab" value="audit" />
+          <select name="who" defaultValue={who} className="input w-auto py-2"><option value="">Anyone</option>{[...name.entries()].map(([id, n]) => <option key={id} value={id}>{n}</option>)}</select>
+          <select name="act" defaultValue={act} className="input w-auto py-2"><option value="">Any action</option><option value="insert">Created</option><option value="update">Changed</option><option value="void">Voided / deleted</option></select>
+          <select name="t" defaultValue={t} className="input w-auto py-2"><option value="">Any record type</option>{[...new Set([...tables, t].filter(Boolean))].map((x) => <option key={x} value={x}>{label(x)}</option>)}</select>
+          <input type="date" name="from" defaultValue={from} className="input w-auto py-2" aria-label="From date" />
+          <input name="q" defaultValue={q} placeholder="Reason or record id" className="input w-48 py-2" />
+          <button className="btn-secondary btn-sm">Filter</button>
+        </form>
+        <div className="table-wrap">
+          <table className="data-table min-w-[900px]">
+            <thead><tr><th>When</th><th>Who</th><th>Action</th><th>Record</th><th>What changed</th><th>Reason</th></tr></thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.id}>
+                  <td className="whitespace-nowrap">{formatLagos(r.changed_at)}</td>
+                  <td>{r.changed_by ? name.get(r.changed_by) ?? "—" : <span className="text-gray-500">System / logger</span>}</td>
+                  <td><span className={`rounded px-1.5 py-0.5 text-xs font-semibold ${r.action === "void" ? "bg-red-100 text-crit" : r.action === "update" ? "bg-amber-100 text-warn" : "bg-gray-100 text-gray-700"}`}>{ACTION[r.action] ?? r.action}</span></td>
+                  <td className="capitalize">{label(r.table_name)}</td>
+                  <td className="text-xs">
+                    {r.action === "update" && r.changed_fields?.length
+                      ? r.changed_fields.slice(0, 6).map((f) => <div key={f}><b>{f.replace(/_/g, " ")}</b>: {show(r.old_data?.[f])} → {show(r.new_data?.[f])}</div>)
+                      : r.action === "void" ? <span>{show(r.old_data?.void_reason ?? r.new_data?.void_reason ?? "")}</span> : <span className="text-gray-500">new record</span>}
+                  </td>
+                  <td className="text-sm">{r.reason ?? "—"}</td>
+                </tr>
+              ))}
+              {rows.length === 0 && <tr><td colSpan={6} className="text-gray-500">No entries match.</td></tr>}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
 
   async function Causes({ type, eq }: { type: string; eq: string }) {
     const [{ data: types }, { data: cats }, { data: rows }] = await Promise.all([
