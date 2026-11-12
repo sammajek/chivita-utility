@@ -101,7 +101,7 @@ export default async function OeePage({ searchParams }: { searchParams: Promise<
           <li><b>OEE</b> = Availability × Performance × Quality. It stays blank until all three can be worked out.</li>
           <li>Worked example: 95 % available × 80 % performance × 98 % in spec = <b>74.5 % OEE</b>.</li>
         </ul>
-        <p className="mt-2 text-xs text-gray-500">Performance needs each equipment&apos;s rated output (e.g. 3.5 t/h){isAdmin ? <> — enter it under <Link href="/admin?tab=assets" className="text-brand-blue">Admin → Equipment</Link></> : " — the section manager enters it under Admin → Equipment"}, and an output meter whose unit matches (t for t/h, m³ for m³/h).</p>
+        <p className="mt-2 text-xs text-gray-500">Performance needs each equipment&apos;s rated output (e.g. 3.5 t/h){isAdmin ? <> — enter it under <Link href="/admin?tab=assets" className="text-brand-blue">Admin → Equipment Inventory</Link></> : " — the section manager enters it under Admin → Equipment Inventory"}, and an output meter whose unit matches (t for t/h, m³ for m³/h).</p>
       </details>
     </div>
   );

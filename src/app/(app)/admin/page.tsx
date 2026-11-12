@@ -12,7 +12,7 @@ import type { Parameter } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["pm", "PM Tasks"], ["lists", "Pick Lists"], ["cleaning", "Cleaning Setup"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
+  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment Inventory"], ["limits", "Limits"], ["registers", "Equipment Registers"], ["pm", "PM Tasks"], ["lists", "Pick Lists"], ["cleaning", "Cleaning Setup"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
 ] as const;
 
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; freq?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string }> }) {
