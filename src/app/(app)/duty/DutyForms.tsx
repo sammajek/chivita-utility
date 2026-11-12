@@ -29,7 +29,7 @@ export function VerifyPresenceForm({ room, code }: { room: string; code: string 
   return (
     <form action={action} className="card space-y-3 border-brand-blue">
       <input type="hidden" name="room" value={room} /><input type="hidden" name="code" value={code} />
-      <p className="section-title">You scanned the {name} control-room code</p>
+      <p className="section-title">You Scanned the {name} control-room code</p>
       <p className="text-sm text-gray-600">Tap to check in (if you are not yet on duty) and record that you are in the control room for this shift.</p>
       {state.error && <p role="alert" className="text-sm text-crit">{state.error}</p>}
       {state.ok ? <p className="text-sm font-semibold text-ok">✓ {state.ok}</p>

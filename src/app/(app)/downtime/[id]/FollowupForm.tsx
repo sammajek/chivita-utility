@@ -14,7 +14,7 @@ export function FollowupForm({ downtimeId, canResolve, hasEnd }: { downtimeId: s
   const [stage, setStage] = useState("containment");
   return (
     <form action={action} className="card space-y-3">
-      <h2 className="font-semibold">Add follow-up</h2>
+      <h2 className="font-semibold">Add Follow-Up</h2>
       <input type="hidden" name="downtime_id" value={downtimeId} />
       <div className="grid gap-2 sm:grid-cols-3">
         {Object.entries(STAGE_LABEL).map(([k, l]) => {

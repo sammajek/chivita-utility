@@ -63,7 +63,7 @@ export function DeckForm({ today, people, canSchedule }: { today: string; people
       </section>
 
       <section className="card space-y-3">
-        <h2 className="font-semibold">3. Sections and commentary</h2>
+        <h2 className="font-semibold">3. Sections and Commentary</h2>
         <p className="text-xs text-gray-500">Each ticked section becomes one slide. Anything you type under it appears in a commentary box on that slide.</p>
         {SECTION_KEYS.map((k) => (
           <div key={k} className="space-y-1">
@@ -78,7 +78,7 @@ export function DeckForm({ today, people, canSchedule }: { today: string; people
       <button className="btn-primary w-full" disabled={busy || !picked.length}>{busy ? "Building the deck… (download starts shortly)" : "Download PowerPoint (.pptx)"}</button>
 
       <details className="card space-y-3">
-        <summary className="cursor-pointer font-semibold">Save these sections as a template (optionally scheduled)</summary>
+        <summary className="cursor-pointer font-semibold">Save These Sections as a Template (Optionally Scheduled)</summary>
         <p className="text-xs text-gray-500">A saved template uses a rolling period, so “last week” is always the most recent week. Scheduled reports arrive in each person’s Inbox
           (and by e-mail once an e-mail provider is approved) as a link; the deck is built from live data when they open it.</p>
         <div className="grid gap-2 sm:grid-cols-2">

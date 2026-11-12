@@ -33,7 +33,7 @@ export default async function PatrolPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="page-title">Area patrols</h1>
+        <h1 className="page-title">Area Patrols</h1>
         <p className="page-sub">Scan the QR label at each patrol point on your round, answer the checks and add a photo if needed. The scan proves the visit. A missed round is flagged after the shift.</p>
       </div>
 
@@ -66,7 +66,7 @@ export default async function PatrolPage() {
       </section>
 
       <section className="space-y-2">
-        <h2 className="section-title">Recent rounds</h2>
+        <h2 className="section-title">Recent Rounds</h2>
         <div className="table-wrap">
           <table className="data-table min-w-[640px]">
             <thead><tr><th>When</th><th>Point</th><th>By</th><th>Result</th></tr></thead>
@@ -87,7 +87,7 @@ export default async function PatrolPage() {
 
       {isMgr && points.length > 0 && (
         <details className="card">
-          <summary className="cursor-pointer section-title">Edit or remove patrol points</summary>
+          <summary className="cursor-pointer section-title">Edit or Remove Patrol Points</summary>
           <div className="mt-3 divide-y">
             {points.map((p) => (
               <div key={p.id} className="space-y-2 py-3">
@@ -111,7 +111,7 @@ export default async function PatrolPage() {
 
       {isMgr && (
         <details className="card">
-          <summary className="cursor-pointer section-title">Add a patrol point</summary>
+          <summary className="cursor-pointer section-title">Add a Patrol Point</summary>
           <ActionForm action={addPoint} submit="Add patrol point" className="mt-3 grid gap-2 sm:grid-cols-2">
             <input name="name" required minLength={3} className="input" placeholder="Name (e.g. Borehole field, Cooling tower area)" />
             <input name="location" className="input" placeholder="Where exactly (optional)" />

@@ -32,7 +32,7 @@ export default async function RcaListPage() {
       </div>
       {awaiting.length > 0 && (
         <section className="card border-l-4 border-l-crit">
-          <h2 className="font-semibold">Downtime events waiting for an RCA ({awaiting.length})</h2>
+          <h2 className="font-semibold">Downtime Events Waiting for an RCA ({awaiting.length})</h2>
           <ul className="mt-2 space-y-1 text-sm">
             {awaiting.map((e) => (
               <li key={e.id} className="flex justify-between gap-2">

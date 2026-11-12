@@ -39,7 +39,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
   if (!person) {
     return (
       <div className="space-y-3">
-        <h1 className="page-title">Engineer KPI tracker</h1>
+        <h1 className="page-title">Engineer KPI Tracker</h1>
         <p className="card text-sm text-gray-600">Your login is not linked to a staff record yet. Ask an admin to add your email on Admin → Staff.</p>
       </div>
     );
@@ -118,7 +118,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
       <p className="text-xs text-gray-500">✅ on/above target · ❌ below target · — no data yet. Quarter and year figures add up the counts behind each month, so busy weeks count more than quiet ones. Hover a KPI for how it is calculated.</p>
 
       <details className="card text-sm">
-        <summary className="cursor-pointer font-semibold">How each KPI is calculated</summary>
+        <summary className="cursor-pointer font-semibold">How Each KPI Is Calculated</summary>
         <ul className="mt-2 space-y-1">{kpis.map((k) => <li key={k.code}><b>{k.name}</b> (target {k.target_text}): {k.formula}</li>)}</ul>
         <p className="mt-2 text-xs text-gray-500">“My shifts” = the day/night shifts the engineer checked in for on the On duty page, in the areas they checked in for. CW temp uses the cooling water inlet and outlet temperature readings. A leak is counted once from the first “Leak” answer on a register leak check, and is closed when “No Leak” is recorded within 24 h.</p>
       </details>
@@ -126,7 +126,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
       {canWrite && (
         <section className="no-print card space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-semibold">Weekly log · week starting {week}</h2>
+            <h2 className="font-semibold">Weekly Log · Week Starting {week}</h2>
             <div className="flex gap-2 text-sm">
               <Link href={qs({ week: addDays(week, -7) })} className="btn-secondary px-3 py-1">← Previous week</Link>
               {addDays(week, 7) <= today && <Link href={qs({ week: addDays(week, 7) })} className="btn-secondary px-3 py-1">Next week →</Link>}
@@ -151,7 +151,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
 
       {logs.length > 0 && (
         <section className="card overflow-x-auto">
-          <h2 className="mb-2 font-semibold">Weekly log history</h2>
+          <h2 className="mb-2 font-semibold">Weekly Log History</h2>
           <table className="data-table min-w-[640px]">
             <thead><tr><th>Week</th><th className="num">GEMBA</th><th className="num">Unsafe acts</th><th className="num">Permits / jobs</th><th className="num">THERMAX</th><th>Notes</th></tr></thead>
             <tbody>

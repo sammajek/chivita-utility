@@ -93,7 +93,7 @@ export default async function OeePage({ searchParams }: { searchParams: Promise<
       </div>
 
       <details className="card text-sm text-gray-700" open={full.length === 0}>
-        <summary className="cursor-pointer section-title">How OEE is calculated</summary>
+        <summary className="cursor-pointer section-title">How OEE Is Calculated</summary>
         <ul className="mt-2 list-disc space-y-1 pl-5">
           <li><b>Availability</b> = (scheduled hours − unplanned breakdown hours) ÷ scheduled hours (24 h a day).</li>
           <li><b>Performance</b> = actual output ÷ (rated output per hour × running hours). Output comes from the equipment&apos;s output meter on the Consumption page (for example the boiler steam totaliser in tonnes for a boiler rated in t/h). Running hours come from the register&apos;s running-hours counter, or scheduled hours minus downtime when there is none. Capped at 100 %.</li>

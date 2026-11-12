@@ -10,7 +10,7 @@ export function RoomCodes({ issued }: { issued: { area: string; issued_at: strin
   return (
     <div className="space-y-3">
       <form action={action} className="no-print card space-y-2">
-        <b className="section-title">Control-room check-in codes</b>
+        <b className="section-title">Control-Room Check-in Codes</b>
         <p className="text-sm text-gray-600">Stick the code inside each control room. Scanning it during check-in marks the shift “verified in control room”.
           Issuing new codes makes the old printouts stop working (do it if a code is photographed or monthly).</p>
         <p className="text-xs text-gray-500">{issued.length ? issued.map((i) => `${i.area}: issued ${i.issued_at.slice(0, 10)}`).join(" · ") : "No codes issued yet."}</p>

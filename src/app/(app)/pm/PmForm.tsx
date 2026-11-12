@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { RESULT_LABEL, type PmResult } from "@/lib/pm";
+import { RESULT_LABEL, type PmResult, pmName } from "@/lib/pm";
 import type { PmCompletion, PmTask } from "@/lib/data/pm";
 import { DemoBadge } from "@/components/StatusBadge";
 import { EvidenceUpload } from "@/components/EvidenceUpload";
@@ -70,7 +70,7 @@ export function PmForm({ tasks, existing, names, periodStart, canEnter, photos }
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div className="font-semibold">
                 <span className="mr-1 text-xs text-gray-400">#{t.register_sn}</span>
-                {t.equipment_as_written.replace(/\.$/, "")}
+                {pmName(t.equipment_as_written)}
                 {t.asset ? (
                   <span className="ml-1 text-xs font-normal text-gray-500">({t.asset.code})</span>
                 ) : (

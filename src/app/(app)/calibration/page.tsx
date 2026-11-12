@@ -115,7 +115,7 @@ export default async function CalibrationPage() {
 
       {canEdit && (
         <details className="card">
-          <summary className="cursor-pointer font-semibold">+ Add an instrument</summary>
+          <summary className="cursor-pointer font-semibold">+ Add an Instrument</summary>
           <ActionForm action={saveInstrument} submit="Add instrument" className="mt-3 grid gap-2 sm:grid-cols-3">
             <input name="tag" required className="input" placeholder="Tag (e.g. PG-BLR01-01)" />
             <input name="description" required className="input sm:col-span-2" placeholder="Description" />

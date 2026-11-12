@@ -32,7 +32,7 @@ export function VisitForm({ point, code, name, checks }: { point: string; code: 
   if (s.visitId) {
     return (
       <div className="card space-y-3 border-green-300">
-        <p className="section-title text-ok">✓ Round recorded at {name}</p>
+        <p className="section-title text-ok">✓ Round Recorded at {name}</p>
         <p className="text-sm text-gray-600">Add a photo if there is something to show (optional).</p>
         <EvidenceUpload entityType="patrol_visit" entityId={s.visitId} label="Add photo" />
       </div>

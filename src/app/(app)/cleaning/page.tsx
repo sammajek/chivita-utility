@@ -90,7 +90,7 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
       <CleaningForm key={week} zones={zones} activities={activities} checks={checks} names={names} weekStart={week} canEnter={canEnter} />
 
       <section className="card space-y-3">
-        <h2 className="section-title">Photo evidence</h2>
+        <h2 className="section-title">Photo Evidence</h2>
         <p className="text-xs text-gray-500">After cleaning a zone, add photos of the cleaned area (before and after if possible). The manager checks them before signing off the week.</p>
         <div className="divide-y">
           {zones.map((zn) => {
@@ -111,7 +111,7 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
 
       {canSign && !signed && (
         <div className="card">
-          <h2 className="font-semibold">Manager sign-off</h2>
+          <h2 className="font-semibold">Manager Sign-Off</h2>
           <p className="text-xs text-gray-500">Signing off locks this week&apos;s entries.</p>
           {missingPhotos > 0 && <p className="mt-1 text-sm text-warn">{missingPhotos} cleaned zone(s) have no photo. Check them before signing, and say why in the comment.</p>}
           <ActionForm action={signOff} submit="Sign off week" className="mt-2 space-y-2">
@@ -124,7 +124,7 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
 
       {!signed && checks.some((x) => isEngineer || x.recorded_by_id === profile.id) && (
         <details className="card">
-          <summary className="cursor-pointer font-medium">Void an entry made by mistake</summary>
+          <summary className="cursor-pointer font-medium">Void an Entry Made by Mistake</summary>
           <div className="mt-2 space-y-3">
             {checks.filter((x) => isEngineer || x.recorded_by_id === profile.id).map((x) => (
               <ActionForm key={x.id} action={voidCleaning} submit="Void" className="space-y-1 border-t pt-2 text-sm">
@@ -138,7 +138,7 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
       )}
 
       <div className="card overflow-x-auto">
-        <h2 className="mb-2 font-semibold">Last 8 weeks</h2>
+        <h2 className="mb-2 font-semibold">Last 8 Weeks</h2>
         <table className="data-table w-full text-sm">
           <thead><tr><th>Week</th><th className="num">Done</th><th className="num">Compliance</th><th className="center">Sign-off</th></tr></thead>
           <tbody>

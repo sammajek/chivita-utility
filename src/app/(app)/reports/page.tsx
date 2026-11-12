@@ -35,13 +35,13 @@ export default async function ReportsPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="page-title">Reports &amp; presentations</h1>
+        <h1 className="page-title">Reports &amp; Presentations</h1>
         <p className="page-sub">Build a PowerPoint deck from live data: logo, data period and “generated at” on every slide, editable charts, a source line on each slide, and your commentary.</p>
       </div>
 
       {saved.length > 0 && (
         <section className="card space-y-2">
-          <h2 className="font-semibold">Saved templates</h2>
+          <h2 className="font-semibold">Saved Templates</h2>
           <ul className="divide-y">
             {saved.map((t) => (
               <li key={t.id} className="flex flex-wrap items-center justify-between gap-2 py-2 text-sm">

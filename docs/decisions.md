@@ -283,6 +283,10 @@ Each entry: date, decision, who decided, notes.
   Owner will adjust the parameters.
 - AMC: managers edit contracts and can end one (no more flags, open flags closed, history kept, can be brought back).
 - Audit trail viewer: Admin → Audit trail lists every create / change / void by anyone (who, when, old → new, reason).
+- Casing (owner, 2026-11-12): page and section headings and Admin tabs in Title Case; PM equipment names from the paper
+  log shown in normal casing (stored text unchanged); AMC names and vendors converted from capitals; Water Quality
+  categories and points in Title Case. Water points renamed: "Raw Water – Water from Raw Water Storage Tank",
+  "Treated Water – Water to Distribution Header".
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

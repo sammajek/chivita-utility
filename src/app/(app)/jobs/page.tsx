@@ -116,7 +116,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
           </GridList>
           {canEdit && (
             <details className="card">
-              <summary className="cursor-pointer font-semibold">+ New job request</summary>
+              <summary className="cursor-pointer font-semibold">+ New Job Request</summary>
               <JobForm />
             </details>
           )}
@@ -140,7 +140,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
           </GridList>
           {canEdit && (
             <details className="card">
-              <summary className="cursor-pointer font-semibold">+ New item order</summary>
+              <summary className="cursor-pointer font-semibold">+ New Item Order</summary>
               <OrderForm />
             </details>
           )}

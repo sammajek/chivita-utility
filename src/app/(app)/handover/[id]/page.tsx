@@ -49,7 +49,7 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
       <div className="card space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-lg font-bold uppercase tracking-wide">Utility handover report</h1>
+            <h1 className="text-lg font-bold uppercase tracking-wide">Utility Handover Report</h1>
             <p className="text-sm">Date: <b>{h.shift_date}</b> · Duty: <b>{SHIFT_LABELS[h.shift]}</b> · {h.areas.map((a) => (a === "U1" ? "Utility 1" : "Utility 2")).join(" & ")}</p>
             <p className="text-sm">On duty: <b>{team.map((t) => names.get(t) ?? "—").join(", ")}</b></p>
             <PrintButton />
@@ -73,12 +73,12 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div><h2 className="section-title">Fuel usage (PNG / CNG / diesel)</h2><p className="text-sm">{cell(c.fuel)}</p></div>
-          <div><h2 className="section-title">Caustic mixing</h2><p className="text-sm">{cell(c.caustic)}</p></div>
+          <div><h2 className="section-title">Fuel Usage (PNG / CNG / Diesel)</h2><p className="text-sm">{cell(c.fuel)}</p></div>
+          <div><h2 className="section-title">Caustic Mixing</h2><p className="text-sm">{cell(c.caustic)}</p></div>
         </div>
 
         <div>
-          <h2 className="section-title">Water treatment plant</h2>
+          <h2 className="section-title">Water Treatment Plant</h2>
           <dl className="mt-1 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-3">
             {c.wtp?.raw_count !== undefined ? (<>
               <div><dt className="text-xs text-gray-500">No. of raw water pumps running</dt><dd>{cell(c.wtp?.raw_count)}</dd></div>
@@ -99,7 +99,7 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
         </div>
 
         <div>
-          <h2 className="section-title">End-of-shift checklist</h2>
+          <h2 className="section-title">End-of-Shift Checklist</h2>
           <ul className="mt-1 divide-y text-sm">
             {Object.entries(c.checklist ?? {}).map(([item, a]) => (
               <li key={item} className="flex flex-wrap justify-between gap-2 py-1.5">
@@ -115,7 +115,7 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
 
         {addenda.length > 0 && (
           <div>
-            <h2 className="section-title">Notes added by the shift</h2>
+            <h2 className="section-title">Notes Added by the Shift</h2>
             <ul className="mt-1 space-y-1 text-sm">
               {addenda.map((n) => <li key={n.id}><b>{names.get(n.recorded_by_id) ?? "—"}</b> <span className="text-xs text-gray-500">{formatLagos(n.recorded_at)}</span><p className="whitespace-pre-line">{n.note}</p></li>)}
             </ul>

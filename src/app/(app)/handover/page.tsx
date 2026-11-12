@@ -34,7 +34,7 @@ export default async function HandoverList() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="page-title">Handover notes</h1>
+          <h1 className="page-title">Handover Notes</h1>
           <p className="page-sub">One handover report per shift (Utility Handover Report), written by anyone on duty and acknowledged by anyone on the next shift.</p>
         </div>
         {onDuty
@@ -69,7 +69,7 @@ export default async function HandoverList() {
       </div>
       {(legacy ?? []).length > 0 && (
         <details className="card text-sm">
-          <summary className="cursor-pointer font-semibold">Earlier short handover notes</summary>
+          <summary className="cursor-pointer font-semibold">Earlier Short Handover Notes</summary>
           <ul className="mt-2 space-y-2">
             {((legacy ?? []) as unknown as { id: string; shift_date: string; shift: "day" | "night"; handover_note: string; checked_out_at: string; profile: { full_name: string } | null }[]).map((l) => (
               <li key={l.id}><b>{l.profile?.full_name}</b> · {SHIFT_LABELS[l.shift]} {l.shift_date}<p className="whitespace-pre-line text-gray-700">{l.handover_note}</p></li>

@@ -99,3 +99,19 @@ export function completedPeriods(freq: PmFrequency, from: string, to: string): s
 export function pmAdherence(due: number, carriedOut: number): number | null {
   return due > 0 ? Math.round((carriedOut / due) * 1000) / 10 : null;
 }
+
+const ACRONYMS = new Set(["VAM", "RO", "UV", "CIP", "WTP", "AC", "IR", "LPFO", "PHCN", "CO2", "N2", "AMC", "PM", "U1", "U2", "HVAC", "ETP", "TMS", "MH75"]);
+const SMALL = new Set(["a", "an", "and", "or", "of", "the", "to", "in", "on", "at", "for", "by", "with"]);
+
+/** PM equipment names come from the paper log in capitals ("AIR COMPRESSOR NO.10 (OIL-FREE)."): shown in normal casing. */
+export function pmName(raw: string): string {
+  const s = raw.trim().replace(/\.$/, "").replace(/\s+/g, " ");
+  if (s !== s.toUpperCase()) return s.replace(/\bNO\.\s*(\d)/gi, "No. $1");
+  return s.split(" ").map((w, i) => w.replace(/[A-Za-z][A-Za-z0-9']*/g, (word) => {
+    const up = word.toUpperCase();
+    if (ACRONYMS.has(up)) return up;
+    const low = word.toLowerCase();
+    if (i > 0 && SMALL.has(low)) return low;
+    return low.charAt(0).toUpperCase() + low.slice(1);
+  })).join(" ").replace(/\bNo\.\s*(\d)/g, "No. $1");
+}

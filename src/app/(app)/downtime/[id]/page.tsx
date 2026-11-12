@@ -82,12 +82,12 @@ export default async function DowntimeDetail({ params }: { params: Promise<{ id:
       </div>
 
       <section className="card space-y-2">
-        <h2 className="font-semibold">Photos &amp; documents</h2>
+        <h2 className="font-semibold">Photos &amp; Documents</h2>
         <EvidenceList entityType="downtime" entityId={id} canAdd={canAct} />
       </section>
 
       <section className="space-y-2">
-        <h2 className="font-semibold">Follow-up</h2>
+        <h2 className="font-semibold">Follow-Up</h2>
         {followups.length === 0 && <p className="card text-sm text-gray-500">No follow-up yet.</p>}
         <ol className="space-y-2">
           {followups.map((f) => {

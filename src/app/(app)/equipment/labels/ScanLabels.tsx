@@ -10,7 +10,7 @@ export function ScanLabels({ assets, withCode }: { assets: { id: string; code: s
   return (
     <div className="space-y-3">
       <form action={action} className="no-print card space-y-2">
-        <b className="section-title">PM verification labels (scan at the machine)</b>
+        <b className="section-title">PM Verification Labels (Scan at the Machine)</b>
         <p className="text-sm text-gray-600">These labels carry a secret code. Scanning one at the machine proves the person was there; PMs from monthly up can then be
           completed for that machine (for 12 hours). Once a machine has a code, its monthly-and-longer PMs need the scan. Issuing again makes the old labels stop working.</p>
         <p className="text-xs text-gray-500">{withCode} of {assets.length} machines shown already have a scan code.</p>

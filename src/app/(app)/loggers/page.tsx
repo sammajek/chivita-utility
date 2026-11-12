@@ -24,7 +24,7 @@ export default async function LoggersPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="page-title">Loggers &amp; data import</h1>
+        <h1 className="page-title">Loggers &amp; Data Import</h1>
         <p className="page-sub">Energy meters, flowmeters, SCADA / THERMAX exports. Every value is kept. A value within 15 minutes of a register reading time fills that slot
           (tagged to the logger, checked against the standard and flagged as usual); a meter value between 06:45 and 07:15 becomes that day’s 07:00 consumption reading.</p>
       </div>
@@ -39,16 +39,16 @@ export default async function LoggersPage() {
             </li>
           ))}
         </ul>
-        {profile.role === "admin" && (<><h3 className="pt-2 text-sm font-semibold">Add a logger or issue a new key (admin)</h3><KeyForm /></>)}
+        {profile.role === "admin" && (<><h3 className="pt-2 text-sm font-semibold">Add a Logger or Issue a New Key (Admin)</h3><KeyForm /></>)}
       </section>
 
       <section className="card space-y-2">
-        <h2 className="font-semibold">Upload a logger’s CSV export</h2>
+        <h2 className="font-semibold">Upload a Logger’s CSV Export</h2>
         <UploadForm loggers={loggers.filter((l) => l.active).map((l) => ({ id: l.id, name: l.name }))} />
       </section>
 
       <details className="card text-sm">
-        <summary className="cursor-pointer font-semibold">For IT / the logger supplier: how a device sends data</summary>
+        <summary className="cursor-pointer font-semibold">For IT / the Logger Supplier: How a Device Sends Data</summary>
         <pre className="mt-2 overflow-x-auto whitespace-pre rounded bg-gray-50 p-2 text-xs">{`POST https://<app address>/api/logger/readings
 Authorization: Bearer <logger key>
 Content-Type: application/json
@@ -62,7 +62,7 @@ Content-Type: application/json
       </details>
 
       <section className="card overflow-x-auto">
-        <h2 className="mb-2 font-semibold">Latest logger data</h2>
+        <h2 className="mb-2 font-semibold">Latest Logger Data</h2>
         {rows.length === 0 ? <p className="text-sm text-gray-500">Nothing received yet.</p> : (
           <table className="data-table min-w-[640px]">
             <thead><tr><th>Time</th><th>Logger</th><th>Point</th><th className="num">Value</th><th>Used as</th></tr></thead>

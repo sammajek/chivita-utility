@@ -72,7 +72,7 @@ export default async function EquipmentDetail({ params, searchParams }: { params
 
       {canAct && (
         <section className="card space-y-2">
-          <h2 className="font-semibold">Equipment state</h2>
+          <h2 className="font-semibold">Equipment State</h2>
           <p className="text-xs text-gray-500">Standby and unavailable machines are not expected to log readings, so they raise no “missing reading” flags.</p>
           <StateForm assetId={a.id} code={code} current={a.op_state} />
         </section>
@@ -80,7 +80,7 @@ export default async function EquipmentDetail({ params, searchParams }: { params
 
       {(intervals ?? []).length > 0 && (
         <section className="card space-y-2">
-          <h2 className="font-semibold">Running-hours services</h2>
+          <h2 className="font-semibold">Running-Hours Services</h2>
           <p className="text-xs text-gray-500">From the running hours logged in the equipment register. A flag is raised {(intervals as Interval[])[0].warn_before_hours} h before a service is due. Recording a bigger service also resets the smaller ones (e.g. 8000 h covers 4000 h and 2000 h).</p>
           <ul className="divide-y">
             {(intervals as Interval[]).map((i) => {
@@ -117,7 +117,7 @@ export default async function EquipmentDetail({ params, searchParams }: { params
       )}
 
       <section className="card space-y-2">
-        <h2 className="font-semibold">PM tasks</h2>
+        <h2 className="font-semibold">PM Tasks</h2>
         {(pm ?? []).length === 0 && <p className="text-sm text-gray-500">No PM tasks linked to this equipment.</p>}
         <ul className="space-y-2 text-sm">
           {(pm ?? []).map((t) => (
@@ -129,7 +129,7 @@ export default async function EquipmentDetail({ params, searchParams }: { params
       </section>
 
       <section className="card space-y-2">
-        <h2 className="font-semibold">Recent downtime</h2>
+        <h2 className="font-semibold">Recent Downtime</h2>
         {(dts ?? []).length === 0 && <p className="text-sm text-gray-500">None.</p>}
         <ul className="space-y-1 text-sm">
           {(dts ?? []).map((d) => (
@@ -139,7 +139,7 @@ export default async function EquipmentDetail({ params, searchParams }: { params
       </section>
 
       <section className="card space-y-2">
-        <h2 className="font-semibold">State history</h2>
+        <h2 className="font-semibold">State History</h2>
         {st.length === 0 && <p className="text-sm text-gray-500">No changes recorded yet.</p>}
         <ul className="space-y-1 text-sm">
           {st.map((s) => (
@@ -152,13 +152,13 @@ export default async function EquipmentDetail({ params, searchParams }: { params
       </section>
 
       <section className="card space-y-2">
-        <h2 className="font-semibold">Photos, manuals &amp; documents</h2>
+        <h2 className="font-semibold">Photos, Manuals &amp; Documents</h2>
         <EvidenceList entityType="asset" entityId={a.id} canAdd={canAct} docTypes />
       </section>
 
       {isAdmin && (
         <section className="card space-y-2">
-          <h2 className="font-semibold">Edit PM code &amp; specifications</h2>
+          <h2 className="font-semibold">Edit PM Code &amp; Specifications</h2>
           <ActionForm action={updateSpecs} className="grid gap-2 sm:grid-cols-3">
             <input type="hidden" name="asset_id" value={a.id} /><input type="hidden" name="code" value={code} />
             {[["pm_code", "PM code"], ["make", "Make"], ["model", "Model"], ["serial_no", "Serial no"], ["capacity", "Capacity"], ["location", "Location"], ["year_installed", "Year installed"]].map(([k, l]) => (

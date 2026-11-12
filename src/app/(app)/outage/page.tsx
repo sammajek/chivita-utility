@@ -38,7 +38,7 @@ export default async function OutagePage() {
     <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="page-title">Outage response plan</h1>
+          <h1 className="page-title">Outage Response Plan</h1>
           <p className="page-sub">What to do when the app or the internet is down. Print this page and keep it in each control room with a stock of blank sheets.</p>
           <PrintButton />
         </div>
@@ -86,7 +86,7 @@ export default async function OutagePage() {
       </section>
 
       <section className="card space-y-2">
-        <h2 className="font-semibold">Blank paper sheets</h2>
+        <h2 className="font-semibold">Blank Paper Sheets</h2>
         <p className="text-xs text-gray-600">Open and print. Multi-machine registers print the first machine; choose another on the sheet page.</p>
         <ul className="grid gap-1 text-sm sm:grid-cols-2">
           {(regs ?? []).map((r) => (
@@ -96,7 +96,7 @@ export default async function OutagePage() {
       </section>
 
       <section className="card space-y-1">
-        <h2 className="font-semibold">Outage history</h2>
+        <h2 className="font-semibold">Outage History</h2>
         {outages.length === 0 && <p className="text-sm text-gray-500">None recorded.</p>}
         <ul className="space-y-1 text-sm">
           {outages.map((o) => (

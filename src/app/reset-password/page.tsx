@@ -14,7 +14,7 @@ export default async function ResetPasswordPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-3 text-center">
           <Logo height={51} />
-          <h1 className="text-xl font-bold text-gray-900">Choose a new password</h1>
+          <h1 className="text-xl font-bold text-gray-900">Choose a New Password</h1>
           {user?.email && <p className="text-sm text-gray-600">For {user.email}</p>}
         </div>
         <div className="card">

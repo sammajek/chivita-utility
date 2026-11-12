@@ -39,3 +39,13 @@ describe("PM adherence worked example", () => {
     expect(pmAdherence(0, 0)).toBeNull();
   });
 });
+
+import { pmName } from "./pm";
+describe("PM names from the paper log are shown in normal casing", () => {
+  it("title-cases capitals and keeps acronyms", () => {
+    expect(pmName("AIR COMPRESSOR NO.10 (OIL-FREE).")).toBe("Air Compressor No. 10 (Oil-Free)");
+    expect(pmName("VAM CHILLER 1 AND COOLING TOWER")).toBe("VAM Chiller 1 and Cooling Tower");
+    expect(pmName("AIR RECEIVER TANKS (UTILITY 2)")).toBe("Air Receiver Tanks (Utility 2)");
+    expect(pmName("Softener plant")).toBe("Softener plant");
+  });
+});

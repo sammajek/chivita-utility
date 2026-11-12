@@ -64,7 +64,7 @@ export default async function TrainingPage({ searchParams }: { searchParams: Pro
     <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="page-title">Training needs · {fy}</h1>
+          <h1 className="page-title">Training Needs · {fy}</h1>
           <p className="page-sub">Training Needs for Utility Section. Engineers and managers tick each training when it has been done and can attach the certificate.</p>
           <PrintButton />
         </div>
@@ -133,7 +133,7 @@ export default async function TrainingPage({ searchParams }: { searchParams: Pro
 
       {isEng && (
         <section className="no-print card space-y-2">
-          <h2 className="font-semibold">Add a training need</h2>
+          <h2 className="font-semibold">Add a Training Need</h2>
           <ActionForm action={addTraining} submit="Add" className="grid gap-2 sm:grid-cols-2">
             <input type="hidden" name="fy" value={fy} />
             <select name="staff_ref" className="input py-2" required defaultValue="">

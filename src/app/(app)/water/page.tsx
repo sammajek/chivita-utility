@@ -74,7 +74,7 @@ export default async function WaterPage({ searchParams }: { searchParams: Promis
 
       {canEnter && results.some((r) => r.sampled_on === date && (isEngineer || r.recorded_by_id === profile.id)) && (
         <details className="card">
-          <summary className="cursor-pointer font-medium">Void a result entered by mistake</summary>
+          <summary className="cursor-pointer font-medium">Void a Result Entered by Mistake</summary>
           <div className="mt-2 space-y-3">
             {results.filter((r) => r.sampled_on === date && (isEngineer || r.recorded_by_id === profile.id)).map((r) => (
               <ActionForm key={r.id} action={voidWater} submit="Void" className="space-y-1 border-t pt-2 text-sm">
@@ -89,7 +89,7 @@ export default async function WaterPage({ searchParams }: { searchParams: Promis
 
       {dates.length > 0 && (
         <div className="card overflow-x-auto">
-          <h2 className="mb-2 font-semibold">Recent results · {point}</h2>
+          <h2 className="mb-2 font-semibold">Recent Results · {point}</h2>
           <table className="data-table min-w-[600px]">
             <thead><tr><th>Parameter</th>{dates.map((d) => <th key={d} className="center px-2"><Link className="text-brand-blue" href={href({ date: d })}>{d.slice(5)}</Link></th>)}</tr></thead>
             <tbody>

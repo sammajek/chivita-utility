@@ -177,7 +177,7 @@ export function EntryForm(p: Props) {
                   </div>
                 )}
                 <details className="mt-1">
-                  <summary className="cursor-pointer">Text read from the photo</summary>
+                  <summary className="cursor-pointer">Text Read from the Photo</summary>
                   <pre className="mt-1 max-h-32 overflow-auto whitespace-pre-wrap rounded bg-gray-50 p-1">{capture.text || "—"}</pre>
                 </details>
               </div>

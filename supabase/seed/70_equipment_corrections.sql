@@ -140,3 +140,22 @@ update public.water_tests set sampling_point = 'Borehole 1, 2, 4, 5, 6, 7' where
 update public.water_tests set sampling_point = replace(sampling_point, 'Bore Hole', 'Borehole') where sampling_point like '%Bore Hole%';
 update public.water_tests set parameter = replace(parameter, 'Bore Hole', 'Borehole') where parameter like '%Bore Hole%';
 update public.water_tests set sampling_point = 'VAM Chiller Lithium Bromide' where sampling_point = 'VAM Chiller Lithiu Bromide';
+-- AMC contract names and vendors were stored in capitals (from the Excel tracker): normal casing, acronyms kept.
+update public.amc_contracts
+   set description = regexp_replace(initcap(description), '\mVam\M', 'VAM', 'g'),
+       vendor = initcap(vendor)
+ where description = upper(description) or vendor = upper(vendor);
+update public.amc_contracts set description = replace(replace(replace(description, ' And ', ' and '), ' Across ', ' across '), ' Of ', ' of ');
+-- Water Quality categories and sampling points in title case (owner, 2026-11-12), e.g. "Source Water",
+-- "RO Reject Water". Acronyms kept; small joining words lower case.
+update public.water_tests
+   set sample_type = initcap(sample_type),
+       sampling_point = replace(replace(replace(replace(replace(replace(
+                          regexp_replace(regexp_replace(regexp_replace(initcap(sampling_point), '\mRo\M', 'RO', 'g'), '\mVam\M', 'VAM', 'g'), '\mEtp\M', 'ETP', 'g'),
+                          ' Into ', ' into '), ' And ', ' and '), ' From ', ' from '), ' Of ', ' of '), ' For ', ' for '), ' The ', ' the ')
+ where sample_type <> initcap(sample_type) or sampling_point ~ '(^| )[a-z]' or sampling_point ~ '\m(Ro|Vam)\M';
+-- Owner's names for the two main points (2026-11-12).
+update public.water_tests set sampling_point = 'Water from Raw Water Storage Tank'
+ where sample_type = 'Raw Water' and sampling_point in ('Inlet into Water Treatment and Water Storage Tank', 'Inlet into water treatment and water storage tank');
+update public.water_tests set sampling_point = 'Water to Distribution Header'
+ where sample_type = 'Treated Water' and sampling_point in ('Water from Utility', 'Water from utility');

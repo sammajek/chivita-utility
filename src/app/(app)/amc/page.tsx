@@ -113,7 +113,7 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
 
       {isEngineer && (
         <div className="card">
-          <h2 className="mb-2 font-semibold">Record a vendor visit</h2>
+          <h2 className="mb-2 font-semibold">Record a Vendor Visit</h2>
           <ActionForm action={recordVisit} submit="Save visit" className="grid gap-2 sm:grid-cols-2">
             <select name="contract_id" className="input sm:col-span-2" required>
               {contracts.map((c) => <option key={c.id} value={c.id}>{c.description} · {c.vendor}</option>)}
@@ -147,7 +147,7 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
                   {v.recommendations && <div className="text-xs text-gray-600">Recommendations: {v.recommendations}</div>}
                   {isEngineer && (
                     <details className="mt-1 text-xs">
-                      <summary className="cursor-pointer text-gray-500">Void this visit</summary>
+                      <summary className="cursor-pointer text-gray-500">Void This Visit</summary>
                       <ActionForm action={voidVisit} submit="Void" className="mt-1 flex flex-wrap gap-2">
                         <input type="hidden" name="id" value={v.id} />
                         <input name="reason" required minLength={5} className="input max-w-sm" placeholder="Reason (required)" />
@@ -165,7 +165,7 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
 
       {isManager && (
         <details className="card">
-          <summary className="cursor-pointer font-semibold">Add a contract</summary>
+          <summary className="cursor-pointer font-semibold">Add a Contract</summary>
           <ActionForm action={addContract} submit="Add contract" className="mt-3 grid gap-2 sm:grid-cols-2">
             <input name="description" className="input sm:col-span-2" placeholder="AMC description" required />
             <input name="vendor" className="input" placeholder="Vendor" required />
@@ -188,7 +188,7 @@ async function ManageContracts() {
   const rows = (data ?? []) as { id: string; description: string; vendor: string; area: string | null; start_date: string | null; end_date: string | null; notes: string | null; active: boolean }[];
   return (
     <details className="card">
-      <summary className="cursor-pointer font-semibold">Edit or end contracts</summary>
+      <summary className="cursor-pointer font-semibold">Edit or End Contracts</summary>
       <p className="mt-1 text-xs text-gray-500">Ending a contract removes it from the tracker and stops its flags. Its visit history is kept, and it can be brought back.</p>
       <div className="mt-3 divide-y">
         {rows.map((c) => (

@@ -112,7 +112,7 @@ export default async function TrendPage({ params, searchParams }: { params: Prom
           )}
 
           <details>
-            <summary className="cursor-pointer text-sm font-medium">Table of readings ({points.length})</summary>
+            <summary className="cursor-pointer text-sm font-medium">Table of Readings ({points.length})</summary>
             <div className="mt-2 max-h-96 overflow-auto">
               <table className="data-table w-full text-sm">
                 <thead>

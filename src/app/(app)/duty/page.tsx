@@ -47,7 +47,7 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="page-title">On duty</h1>
+        <h1 className="page-title">On Duty</h1>
         <p className="page-sub">Current shift: {SHIFT_LABELS[cur.shift]}, {cur.shiftDate} · <Link href="/handover" className="text-brand-blue">Handover notes</Link></p>
       </div>
 
@@ -78,7 +78,7 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
       )}
 
       <section>
-        <h2 className="mb-2 font-semibold">On duty now</h2>
+        <h2 className="mb-2 font-semibold">On Duty Now</h2>
         {onNow.length === 0 ? (
           <p className="card text-sm text-gray-500">Nobody has checked in for this shift yet.</p>
         ) : (
@@ -97,7 +97,7 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
       </section>
 
       <section>
-        <h2 className="mb-2 font-semibold">Recent handovers</h2>
+        <h2 className="mb-2 font-semibold">Recent Handovers</h2>
         <ul className="space-y-2">
           {handovers.map((s) => (
             <li key={s.id} className="card text-sm">

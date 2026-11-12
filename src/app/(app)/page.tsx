@@ -46,7 +46,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       {sp.denied && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-crit">You don&apos;t have access to that page.</p>}
       <section className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="page-title">Utility section overview</h1>
+          <h1 className="page-title">Utility Section Overview</h1>
           <p className="page-sub">{formatLagos(now)} (Lagos) · {SHIFT_LABELS[shift.shift]} · signed in as {profile.full_name}</p>
         </div>
         {d.hasDemo && <span className="rounded bg-purple-100 px-2 py-1 text-xs font-bold uppercase text-purple-700">Includes DEMO data</span>}
@@ -64,7 +64,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       <section className="card">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold">On duty now</h2>
+          <h2 className="font-semibold">On Duty Now</h2>
           <Link href="/duty" className="text-sm text-brand-blue">Duty register →</Link>
         </div>
         <p className="mt-1 text-sm">
@@ -74,7 +74,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       <section className="card space-y-2">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Equipment status</h2>
+          <h2 className="font-semibold">Equipment Status</h2>
           <Link href="/equipment" className="text-sm text-brand-blue">Equipment →</Link>
         </div>
         <p className="text-sm">
@@ -95,7 +95,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
       <section className="card space-y-1">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold">Consumption since yesterday 07:00</h2>
+          <h2 className="font-semibold">Consumption Since Yesterday 07:00</h2>
           <Link href="/consumption" className="text-sm text-brand-blue">Consumption →</Link>
         </div>
         {usage.length ? (
@@ -126,17 +126,17 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
         <div className="grid gap-3 lg:grid-cols-2">
           <div className="card">
-            <h3 className="mb-3 font-semibold">Downtime by failure mode (Pareto)</h3>
+            <h3 className="mb-3 font-semibold">Downtime by Failure Mode (Pareto)</h3>
             <BarList rows={d.pareto.map((p) => ({ label: p.label, value: p.hours, note: `${p.events}×` }))} unit="h" empty="No breakdowns in this period." />
           </div>
           <div className="card">
-            <h3 className="mb-3 font-semibold">Unplanned downtime per week</h3>
+            <h3 className="mb-3 font-semibold">Unplanned Downtime per Week</h3>
             <BarList rows={d.trend.map((t) => ({ label: `Week of ${t.label}`, value: t.hours, note: `${t.events}×` }))} unit="h" empty="No breakdowns in this period." />
           </div>
         </div>
 
         <div className="card overflow-x-auto">
-          <h3 className="mb-2 font-semibold">Per equipment</h3>
+          <h3 className="mb-2 font-semibold">Per Equipment</h3>
           <table className="data-table w-full text-sm">
             <thead>
               <tr><th>Equipment</th><th className="num">Breakdowns</th><th className="num">Lost (h)</th><th className="num">Planned (h)</th><th className="num">External (h)</th><th className="num">MTTR</th><th className="num">MTBF</th><th className="num">Availability</th></tr>
@@ -160,7 +160,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             </tbody>
           </table>
           <details className="mt-3 text-xs text-gray-600">
-            <summary className="cursor-pointer font-medium">How these are calculated</summary>
+            <summary className="cursor-pointer font-medium">How These Are Calculated</summary>
             <ul className="mt-1 list-disc space-y-1 pl-4">
               <li><b>MTTR</b> = total unplanned breakdown hours ÷ number of unplanned breakdowns (breakdowns only).</li>
               <li><b>MTBF</b> = operating hours of that equipment ÷ its breakdowns. Operating hours come from the running-hours counters on the registers; * means no counter readings, so scheduled hours minus downtime were used.</li>

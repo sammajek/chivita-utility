@@ -12,7 +12,7 @@ import type { Parameter } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["causes", "Downtime causes"], ["audit", "Audit trail"], ["settings", "Settings"],
+  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
 ] as const;
 
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string }> }) {
@@ -128,7 +128,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           <span className="text-xs text-gray-500">{list.length} cause(s)</span>
         </form>
         <details className="card">
-          <summary className="cursor-pointer section-title">+ Add a cause</summary>
+          <summary className="cursor-pointer section-title">+ Add a Cause</summary>
           <ActionForm action={saveCause} submit="Add cause" className="mt-3 grid gap-2 sm:grid-cols-2">
             <select name="downtime_type" defaultValue={type} className="input">{((types ?? []) as { value: string }[]).map((t) => <option key={t.value}>{t.value}</option>)}</select>
             <select name="equipment_category" defaultValue={eq && eq !== "_all" ? eq : ""} className="input"><option value="">Every machine</option>{catNames.map((c) => <option key={c}>{c}</option>)}</select>
@@ -179,7 +179,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </ActionForm>
           {canEdit && (
             <details className="border-t pt-2 text-sm">
-              <summary className="cursor-pointer text-gray-600">Forgotten password? Set a temporary one</summary>
+              <summary className="cursor-pointer text-gray-600">Forgotten Password? Set a Temporary One</summary>
               <ActionForm action={setTempPassword} submit="Set temporary password" className="mt-2 flex flex-wrap items-center gap-2">
                 <input type="hidden" name="id" value={u.id} />
                 <input name="password" type="text" minLength={8} required autoComplete="off" placeholder="Temporary password (8+ characters, shown as typed)" className="input max-w-xs py-2" />
@@ -230,11 +230,11 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             {fields(s)}
           </ActionForm>
         ))}
-        <details className="card"><summary className="cursor-pointer font-semibold">Add a staff member</summary>
+        <details className="card"><summary className="cursor-pointer font-semibold">Add a Staff Member</summary>
           <ActionForm action={saveStaff} className="mt-2 grid gap-2 sm:grid-cols-4">{fields()}</ActionForm>
         </details>
         {canImport && (
-          <details className="card"><summary className="cursor-pointer font-semibold">Import from Excel (paste)</summary>
+          <details className="card"><summary className="cursor-pointer font-semibold">Import from Excel (Paste)</summary>
             <p className="mt-1 text-xs text-gray-600">Copy the rows from Excel including a header row and paste below. Columns (any order): staff_id, surname, first_name, band, job_title, area (U1/U2), email, phone, whatsapp, role (operator / engineer / shift_manager / section_manager / admin / viewer), shift (day/night). Existing staff IDs are updated; only the columns you paste are changed.</p>
             <ActionForm action={importStaffCsv} submit="Import" className="mt-2 space-y-2">
               <textarea name="csv" rows={6} className="input font-mono text-xs" placeholder={"staff_id\tsurname\tfirst_name\temail\trole\n11102687\tAdeniji\tRasheed\trasheed@…\toperator"} />
@@ -292,7 +292,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     return (
       <div className="space-y-4">
         <section className="card">
-          <h2 className="font-semibold">Standards to decide ({(params ?? []).length})</h2>
+          <h2 className="font-semibold">Standards to Decide ({(params ?? []).length})</h2>
           <p className="text-xs text-gray-500">Conflicts and gaps found in the spreadsheets. Edit them on the Limits tab and untick “needs review”.</p>
           <ul className="mt-2 divide-y text-sm">
             {((params ?? []) as (Parameter & { review_note: string })[]).map((p) => (
@@ -304,7 +304,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </ul>
         </section>
         <section className="card">
-          <h2 className="font-semibold">Equipment to confirm ({(assets ?? []).length})</h2>
+          <h2 className="font-semibold">Equipment to Confirm ({(assets ?? []).length})</h2>
           <ul className="mt-2 divide-y text-sm">
             {(assets ?? []).map((a) => (
               <li key={a.id} className="py-2"><b>{a.code}</b> {a.name}<div className="text-xs text-gray-500">{a.notes}</div></li>
@@ -313,7 +313,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           <Link href="/admin?tab=assets" className="text-sm text-brand-blue">Edit on the Equipment tab →</Link>
         </section>
         <section className="card">
-          <h2 className="font-semibold">Name mappings to confirm ({(aliases ?? []).length})</h2>
+          <h2 className="font-semibold">Name Mappings to Confirm ({(aliases ?? []).length})</h2>
           <p className="text-xs text-gray-500">How each spreadsheet names a machine. Confirm if the mapping is right.</p>
           <ul className="mt-2 divide-y text-sm">
             {((aliases ?? []) as unknown as { id: string; alias: string; source: string; confirmed: boolean; asset: { code: string; name: string } }[]).map((a) => (

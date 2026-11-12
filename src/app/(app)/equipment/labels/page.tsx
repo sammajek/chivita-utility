@@ -46,7 +46,7 @@ export default async function LabelsPage({ searchParams }: { searchParams: Promi
       </form>
       {canIssue && <RoomCodes issued={(issued ?? []) as { area: string; issued_at: string }[]} />}
       {canIssueScan && <ScanLabels assets={assets.map((a) => ({ id: a.id, code: a.code }))} withCode={assets.filter((a) => coded.has(a.id)).length} />}
-      <h2 className="no-print section-title">Information labels (open the machine’s page)</h2>
+      <h2 className="no-print section-title">Information Labels (Open the Machine’s Page)</h2>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 print:grid-cols-3">
         {labels.map((a) => (
           <div key={a.code} className="flex break-inside-avoid items-center gap-2 rounded border p-2">

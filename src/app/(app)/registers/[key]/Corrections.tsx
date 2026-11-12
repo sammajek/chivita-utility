@@ -17,7 +17,7 @@ export function Corrections({ fields, existing, path, userId, isEngineer }: {
   if (editable.length === 0) return null;
   return (
     <details className="card">
-      <summary className="cursor-pointer font-medium">Correct or void a saved value</summary>
+      <summary className="cursor-pointer font-medium">Correct or Void a Saved Value</summary>
       <p className="mt-1 text-xs text-gray-500">
         The old value, who changed it, when and why are kept in the audit log. You can change values you entered;
         engineers and managers can change any.

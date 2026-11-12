@@ -51,8 +51,8 @@ export async function voidVisit(_prev: State, form: FormData): Promise<State> {
 }
 
 export async function addContract(_prev: State, form: FormData): Promise<State> {
-  const description = String(form.get("description") ?? "").trim().toUpperCase();
-  const vendor = String(form.get("vendor") ?? "").trim().toUpperCase();
+  const description = String(form.get("description") ?? "").trim();
+  const vendor = String(form.get("vendor") ?? "").trim();
   if (!description || !vendor) return { error: "Enter the description and the vendor." };
   const area = String(form.get("area") ?? "");
   const supabase = await createClient();
@@ -68,8 +68,8 @@ export async function addContract(_prev: State, form: FormData): Promise<State> 
 
 /** Edit a contract's details (managers). */
 export async function updateContract(_prev: State, form: FormData): Promise<State> {
-  const description = String(form.get("description") ?? "").trim().toUpperCase();
-  const vendor = String(form.get("vendor") ?? "").trim().toUpperCase();
+  const description = String(form.get("description") ?? "").trim();
+  const vendor = String(form.get("vendor") ?? "").trim();
   if (!description || !vendor) return { error: "Enter the description and the vendor." };
   const area = String(form.get("area") ?? "");
   const supabase = await createClient();

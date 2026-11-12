@@ -3,7 +3,7 @@ import { requireProfile } from "@/lib/auth";
 import { loadPmCompletions, loadPmTasks, namesFor, type PmCompletion } from "@/lib/data/pm";
 import {
   completedPeriods, FREQ_LABEL, PM_FREQUENCIES, pmAdherence, pmPeriodEnd, pmPeriodLabel, pmPeriodStart,
-  RESULT_LABEL, type PmFrequency, CARRIED_OUT } from "@/lib/pm";
+  RESULT_LABEL, type PmFrequency, CARRIED_OUT, pmName } from "@/lib/pm";
 import { logDateOf } from "@/lib/registers";
 import { addDays, lagosDate } from "@/lib/time";
 import { StatTile } from "@/components/BarList";
@@ -122,7 +122,7 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
 
       {canEnter && completions.some((c) => isEngineer || c.recorded_by_id === profile.id) && (
         <details className="card">
-          <summary className="cursor-pointer font-medium">Void a PM result entered by mistake</summary>
+          <summary className="cursor-pointer font-medium">Void a PM Result Entered by Mistake</summary>
           <p className="mt-1 text-xs text-gray-500">The result stays in the audit log with your reason; you can then enter it again.</p>
           <div className="mt-3 space-y-3">
             {completions.filter((c) => isEngineer || c.recorded_by_id === profile.id).map((c) => {
@@ -130,7 +130,7 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
               return (
                 <ActionForm key={c.id} action={voidPm} submit="Void" className="space-y-2 border-t pt-3">
                   <input type="hidden" name="id" value={c.id} />
-                  <p className="text-sm"><b>{t?.equipment_as_written}</b>: {RESULT_LABEL[c.result].code} {RESULT_LABEL[c.result].text}</p>
+                  <p className="text-sm"><b>{t ? pmName(t.equipment_as_written) : ""}</b>: {RESULT_LABEL[c.result].code} {RESULT_LABEL[c.result].text}</p>
                   <input name="reason" required minLength={5} className="input" placeholder="Reason (required)" />
                 </ActionForm>
               );
@@ -245,7 +245,7 @@ async function Schedule({ today, area, header, tabs, areaPicker }: {
       </div>
 
       <div className="card overflow-x-auto">
-        <h2 className="mb-2 font-semibold">Equipment PM: last done and next due</h2>
+        <h2 className="mb-2 font-semibold">Equipment PM: Last Done and Next Due</h2>
         <table className="data-table w-full min-w-[640px] text-sm">
           <thead>
             <tr><th>Equipment</th><th>Frequency</th><th>Last done</th><th>Next due by</th><th></th></tr>
@@ -254,7 +254,7 @@ async function Schedule({ today, area, header, tabs, areaPicker }: {
             {rows.map(({ t, last, lastResult, nextDue, overdue }) => (
               <tr key={t.id}>
                 <td>
-                  {t.equipment_as_written.replace(/\.$/, "")}
+                  {pmName(t.equipment_as_written)}
                   {t.asset && <span className="ml-1 text-xs text-gray-500">({t.asset.code})</span>}
                   {t.hours_interval && <div className="text-xs text-gray-500">{t.hours_interval.toLocaleString()} h service</div>}
                 </td>
@@ -285,14 +285,14 @@ async function SpotChecks({ profileId }: { profileId: string }) {
   const open = rows.filter((r) => !r.result);
   return (
     <section className="card space-y-3">
-      <h2 className="section-title">PM spot-checks {open.length > 0 && <span className="ml-2 rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-warn">{open.length} to check</span>}</h2>
+      <h2 className="section-title">PM Spot-Checks {open.length > 0 && <span className="ml-2 rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-warn">{open.length} to check</span>}</h2>
       <p className="text-xs text-gray-500">Each week a few PMs marked “Completed – no issue found” are picked at random. Go to the machine and check the work. “Not satisfactory” reopens the PM and raises a follow-up.</p>
       <ul className="divide-y">
         {rows.map((r) => {
           const t = r.completion?.task;
           return (
             <li key={r.id} className="space-y-2 py-3 text-sm">
-              <p><b>{t?.equipment_as_written}</b>{t?.asset && <span className="text-gray-500"> ({t.asset.code})</span>} · {t?.frequency.replace("_", "-")} · done by {names.get(r.completion?.recorded_by_id ?? "") ?? "—"} on {r.completion ? formatLagos(r.completion.recorded_at) : "—"} · {r.area} · week of {r.week_start}</p>
+              <p><b>{t ? pmName(t.equipment_as_written) : ""}</b>{t?.asset && <span className="text-gray-500"> ({t.asset.code})</span>} · {t?.frequency.replace("_", "-")} · done by {names.get(r.completion?.recorded_by_id ?? "") ?? "—"} on {r.completion ? formatLagos(r.completion.recorded_at) : "—"} · {r.area} · week of {r.week_start}</p>
               {r.result ? (
                 <p className={r.result === "confirmed" ? "text-ok" : "text-crit"}>{r.result === "confirmed" ? "✓ Confirmed" : "✗ Not satisfactory"} by {names.get(r.checked_by ?? "") ?? "—"}{r.note ? `: ${r.note}` : ""}</p>
               ) : r.completion?.recorded_by_id === profileId ? (

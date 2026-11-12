@@ -10,7 +10,7 @@ do $$
 declare t public.water_tests;
 begin
   assert (select count(*) from public.water_tests) = 112, '112 water tests loaded';
-  select * into t from public.water_tests where sampling_point = 'Water from utility' and parameter = 'Total count';
+  select * into t from public.water_tests where sampling_point = 'Water to Distribution Header' and parameter = 'Total count';
   assert public.water_status(t, 20) = 'ok', 'below alert is ok';
   assert public.water_status(t, 75) = 'alert', '75 cfu ≥ alert 70';
   assert public.water_status(t, 100) = 'action', '100 is not < 100 → out of spec';
@@ -23,7 +23,7 @@ end $$;
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000b1', true);
 do $$
-declare tid uuid := (select id from public.water_tests where sampling_point = 'Water from utility' and parameter = 'Total count');
+declare tid uuid := (select id from public.water_tests where sampling_point = 'Water to Distribution Header' and parameter = 'Total count');
         r public.water_results;
 begin
   insert into public.water_results (test_id, sampled_on, value_num) values (tid, current_date - 1, 12) returning * into r;

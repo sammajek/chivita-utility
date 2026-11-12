@@ -80,12 +80,12 @@ export function HandoverForm({ prefill, checklist, openFlags }: { prefill: Omit<
       </section>
 
       <section className="card space-y-3">
-        <h2 className="section-title">Fuel usage (PNG / CNG / diesel)</h2>
+        <h2 className="section-title">Fuel Usage (PNG / CNG / Diesel)</h2>
         <Field name="fuel" label="From the 07:00 report where available" value={prefill.fuel} rows={2} />
       </section>
 
       <section className="card space-y-3">
-        <h2 className="section-title">Water treatment plant</h2>
+        <h2 className="section-title">Water Treatment Plant</h2>
         {prefill.wtp.items?.length ? <MachineGroup prefix="w" label="Other water treatment equipment" items={prefill.wtp.items} note={prefill.wtp.note ?? ""} /> : (
           <div className="grid gap-3 sm:grid-cols-2">
             <Field name="wtp:standby" label="Standby" value={prefill.wtp.standby} />
@@ -103,12 +103,12 @@ export function HandoverForm({ prefill, checklist, openFlags }: { prefill: Omit<
       </section>
 
       <section className="card space-y-3">
-        <h2 className="section-title">Caustic mixing</h2>
+        <h2 className="section-title">Caustic Mixing</h2>
         <Field name="caustic" label="Status / quantity mixed" value={prefill.caustic} rows={2} />
       </section>
 
       <section className="card space-y-3">
-        <h2 className="section-title">End-of-shift checklist</h2>
+        <h2 className="section-title">End-of-Shift Checklist</h2>
         <p className="text-xs text-gray-500">{openFlags} open flag(s) will be passed on with this handover.</p>
         <ul className="divide-y">
           {checklist.map((item, i) => (

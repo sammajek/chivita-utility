@@ -8,7 +8,7 @@ export default function SignupPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-3 text-center">
           <Logo height={51} />
-          <h1 className="text-xl font-bold text-gray-900">Request access</h1>
+          <h1 className="text-xl font-bold text-gray-900">Request Access</h1>
           <p className="text-sm text-gray-600">Utility Ops, Engineering Department</p>
         </div>
         <div className="card">

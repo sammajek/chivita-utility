@@ -2,7 +2,7 @@ import Link from "next/link";
 import { requireProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { loadPmCompletions, loadPmTasks, namesFor } from "@/lib/data/pm";
-import { FREQ_LABEL, PM_FREQUENCIES, pmAdherence, pmPeriodEnd, pmPeriodLabel, pmPeriodStart, RESULT_LABEL, type PmFrequency } from "@/lib/pm";
+import { FREQ_LABEL, PM_FREQUENCIES, pmAdherence, pmPeriodEnd, pmPeriodLabel, pmPeriodStart, RESULT_LABEL, type PmFrequency, pmName } from "@/lib/pm";
 import { logDateOf } from "@/lib/registers";
 import { addDays, formatLagos } from "@/lib/time";
 import { Logo } from "@/components/Logo";
@@ -81,7 +81,7 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
 
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="page-title">Preventive maintenance report</h1>
+          <h1 className="page-title">Preventive Maintenance Report</h1>
           <p className="page-sub">CHIENGUTRG08 · {from} to {to} · {area ? (area === "U1" ? "Utility 1" : "Utility 2") : "Utility 1 & 2"}</p>
           <p className="text-xs text-gray-500">Generated {formatLagos(new Date())}. Adherence = PMs carried out (√ or X) ÷ PMs due, for periods that have ended.</p>
           <PrintButton />
@@ -125,14 +125,14 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
       ))}
 
       <section className="space-y-1">
-        <h2 className="font-semibold">Exceptions: not done (--) and done not OK (X)</h2>
+        <h2 className="font-semibold">Exceptions: Skipped or Pending (P / --) and Completed – Issue Found (X)</h2>
         {exceptions.length === 0 && <p className="text-sm text-gray-500">None in this period.</p>}
         <table className="data-table w-full text-sm">
           <tbody>
             {exceptions.map(({ c, t }) => (
               <tr key={c.id}>
                 <td className="py-1 pr-2 whitespace-nowrap">{pmPeriodLabel(t.frequency, c.period_start)}</td>
-                <td className="pr-2">{t.equipment_as_written.replace(/\.$/, "")}{t.asset ? ` (${t.asset.code})` : ""}</td>
+                <td className="pr-2">{pmName(t.equipment_as_written)}{t.asset ? ` (${t.asset.code})` : ""}</td>
                 <td className="pr-2 font-semibold">{RESULT_LABEL[c.result].code}</td>
                 <td className="pr-2">{c.note}</td>
                 <td className="text-xs text-gray-500">{names.get(c.recorded_by_id ?? "") ?? "—"}{c.is_demo ? " · DEMO" : ""}</td>
