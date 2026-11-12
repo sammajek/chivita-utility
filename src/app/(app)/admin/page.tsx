@@ -70,7 +70,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
               <summary className="cursor-pointer text-gray-600">Forgotten password? Set a temporary one</summary>
               <ActionForm action={setTempPassword} submit="Set temporary password" className="mt-2 flex flex-wrap items-center gap-2">
                 <input type="hidden" name="id" value={u.id} />
-                <input name="password" type="text" minLength={8} required autoComplete="off" placeholder="Temporary password (8+ characters)" className="input max-w-xs py-2" />
+                <input name="password" type="text" minLength={8} required autoComplete="off" placeholder="Temporary password (8+ characters, shown as typed)" className="input max-w-xs py-2" />
               </ActionForm>
             </details>
           )}

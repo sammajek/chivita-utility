@@ -1,5 +1,7 @@
 "use client";
 
+import { PasswordInput } from "@/components/PasswordInput";
+
 import Link from "next/link";
 import { useActionState } from "react";
 import { signIn, type LoginState } from "./actions";
@@ -15,7 +17,7 @@ export function LoginForm({ next }: { next: string }) {
       </label>
       <label className="block">
         <span className="mb-1 block text-sm font-medium text-gray-700">Password</span>
-        <input name="password" type="password" autoComplete="current-password" required className="input" />
+        <PasswordInput name="password" autoComplete="current-password" required className="input" />
       </label>
       <p className="-mt-2 text-right text-sm"><Link href="/forgot-password" className="font-medium text-brand-blue underline">Forgot password?</Link></p>
       {state.error && (

@@ -1,5 +1,7 @@
 "use client";
 
+import { PasswordInput } from "@/components/PasswordInput";
+
 import Link from "next/link";
 import { useActionState } from "react";
 import { requestAccess, type SignupState } from "./actions";
@@ -32,11 +34,11 @@ export function SignupForm() {
       </label>
       <label className="block">
         <span className="mb-1 block text-sm font-medium text-gray-700">Password (8+ characters)</span>
-        <input name="password" type="password" autoComplete="new-password" minLength={8} required className="input" />
+        <PasswordInput name="password" autoComplete="new-password" minLength={8} required className="input" />
       </label>
       <label className="block">
         <span className="mb-1 block text-sm font-medium text-gray-700">Confirm password</span>
-        <input name="confirm" type="password" autoComplete="new-password" minLength={8} required className="input" />
+        <PasswordInput name="confirm" autoComplete="new-password" minLength={8} required className="input" />
       </label>
       {state.error && (
         <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-crit">
