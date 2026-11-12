@@ -95,11 +95,12 @@ begin
   update public.assets set name = replace(name, 'TRANE ', 'Trane ') where code like 'CHT-%';
   update public.assets set name = replace(name, '(air-cooled)', '(Air-Cooled)') where code in ('CHC-01', 'CHK-01');
   update public.registers set title = replace(title, 'THERMAX', 'Thermax') where title like '%THERMAX%';
+  -- each word gets a capital first letter (also after "3-"); words already capitalised and "&/and/of/to" are kept
   update public.register_sections s
-     set title = (select string_agg(case when w in ('&', 'and', 'of', 'to') then w
-                                         else regexp_replace(w, '^([0-9]+-)?([a-z])', '\1' || upper(substring(w from '^(?:[0-9]+-)?([a-z])'))) end,
-                                    ' ' order by i)
-                    from regexp_split_to_table(s.title, ' ') with ordinality t(w, i))
+     set title = (select string_agg(case when w in ('&', 'and', 'of', 'to') or wm is null then w
+                                         else coalesce(wm[1], '') || upper(wm[2]) || wm[3] end, ' ' order by i)
+                    from regexp_split_to_table(s.title, ' ') with ordinality t(w, i)
+                    cross join lateral (select regexp_match(w, '^([0-9]+-)?([a-z])(.*)$') as wm) x)
    where s.title ~ '(^| |-)[a-z]';
   update public.meters set name = 'Air Compressor 10 (Atlas Copco) – energy' where code = 'CATLAS-KWH';
 end $$;

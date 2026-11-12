@@ -4,11 +4,13 @@ import { namesFor } from "@/lib/data/pm";
 import { formatLagos, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { ActionForm } from "@/components/ActionForm";
 import { addPoint, removePoint, updatePoint } from "./actions";
-import { LabelButton } from "./Forms";
+import { AreaPicker, LabelButton } from "./Forms";
 
 export const dynamic = "force-dynamic";
 
-interface Point { id: string; name: string; area: string; location: string | null; checks: string[]; rounds_per_shift: number; code_issued_at: string | null; active: boolean }
+const areaName = (p: { area: string | null; area_label: string | null }) => p.area_label ?? (p.area === "U1" ? "Utility 1" : p.area === "U2" ? "Utility 2" : "—");
+
+interface Point { id: string; name: string; area: string | null; area_label: string | null; location: string | null; checks: string[]; rounds_per_shift: number; code_issued_at: string | null; active: boolean }
 interface Visit { id: string; point_id: string; shift_date: string; shift: string; issues: number; note: string | null; recorded_by_id: string; recorded_at: string; is_demo: boolean }
 
 /** Area patrols: this shift's rounds per point, recent visits, and (managers) points and their QR labels. */
@@ -17,7 +19,7 @@ export default async function PatrolPage() {
   const cur = shiftAt(new Date());
   const supabase = await createClient();
   const [{ data: pts }, { data: vis }] = await Promise.all([
-    supabase.from("patrol_points").select("id, name, area, location, checks, rounds_per_shift, code_issued_at, active").eq("active", true).order("area").order("name"),
+    supabase.from("patrol_points").select("id, name, area, area_label, location, checks, rounds_per_shift, code_issued_at, active").eq("active", true).order("area").order("name"),
     supabase.from("patrol_visits").select("id, point_id, shift_date, shift, issues, note, recorded_by_id, recorded_at, is_demo").is("voided_at", null)
       .order("recorded_at", { ascending: false }).limit(200),
   ]);
@@ -47,12 +49,12 @@ export default async function PatrolPage() {
                 return (
                   <tr key={p.id}>
                     <td className="font-medium">{p.name}{p.location && <span className="block text-xs text-gray-500">{p.location}</span>}</td>
-                    <td>{p.area}</td>
+                    <td>{areaName(p)}</td>
                     <td className="num">{nv.length}/{p.rounds_per_shift}</td>
                     <td>{nv.length >= p.rounds_per_shift ? <span className="text-ok">✓ Done</span> : <span className="text-warn">Due</span>}
                       {nv.some((v) => v.issues) && <span className="ml-2 rounded bg-red-100 px-1.5 text-xs font-semibold text-crit">issue reported</span>}</td>
                     <td className="text-xs">{last ? <>{names.get(last.recorded_by_id) ?? "—"} · {formatLagos(last.recorded_at)}</> : "—"}</td>
-                    {isMgr && <td>{!p.code_issued_at && <span className="mr-2 text-xs text-warn">no label yet</span>}<LabelButton id={p.id} name={p.name} area={p.area} /></td>}
+                    {isMgr && <td>{!p.code_issued_at && <span className="mr-2 text-xs text-warn">no label yet</span>}<LabelButton id={p.id} name={p.name} area={areaName(p)} /></td>}
                   </tr>
                 );
               })}
@@ -93,7 +95,7 @@ export default async function PatrolPage() {
                   <input type="hidden" name="id" value={p.id} />
                   <input name="name" required minLength={3} defaultValue={p.name} className="input" />
                   <input name="location" defaultValue={p.location ?? ""} placeholder="Where exactly (optional)" className="input" />
-                  <select name="area" defaultValue={p.area} className="input"><option value="U1">Utility 1</option><option value="U2">Utility 2</option></select>
+                  <AreaPicker area={p.area} label={p.area_label} />
                   <label className="text-sm">Rounds per shift <input name="rounds" type="number" min={1} max={12} defaultValue={p.rounds_per_shift} className="input" /></label>
                   <textarea name="checks" rows={3} defaultValue={p.checks.join("\n")} className="input sm:col-span-2" />
                 </ActionForm>
@@ -113,7 +115,7 @@ export default async function PatrolPage() {
           <ActionForm action={addPoint} submit="Add patrol point" className="mt-3 grid gap-2 sm:grid-cols-2">
             <input name="name" required minLength={3} className="input" placeholder="Name (e.g. Borehole field, Cooling tower area)" />
             <input name="location" className="input" placeholder="Where exactly (optional)" />
-            <select name="area" className="input" defaultValue="U1"><option value="U1">Utility 1</option><option value="U2">Utility 2</option></select>
+            <AreaPicker />
             <label className="text-sm">Rounds per shift <input name="rounds" type="number" min={1} max={12} defaultValue={1} className="input" /></label>
             <textarea name="checks" rows={4} className="input sm:col-span-2" placeholder={"Checks, one per line (leave empty for the standard three):\nNo leaks (water, steam, air, oil)\nNo abnormal noise, vibration or smell\nArea clean, safe and secure"} />
           </ActionForm>

@@ -13,5 +13,7 @@ begin
          (select count(*) from public.pm_tasks p join public.assets a on a.id = p.asset_id where a.code = 'SOF-01'), 'softener PM copied';
   assert (select name from public.assets where code = 'SYS-U1') = 'Utility 1 General Plant', 'casing';
   assert not exists (select 1 from public.register_sections where title ~ '(^| )[a-z]{4,}'), 'section titles in title case';
+  assert exists (select 1 from public.register_sections where title = 'Boiler Water & Utility'), 'capitalised words kept';
+  assert exists (select 1 from public.register_sections where title = '3-Hourly Readings'), 'number prefix handled';
   assert not exists (select 1 from public.register_assets ra join public.assets a on a.id = ra.asset_id where a.status = 'retired' and ra.active), 'retired off registers';
 end $$;

@@ -7,12 +7,21 @@ import { createClient } from "@/lib/supabase/server";
 
 export interface Msg { ok?: string; error?: string }
 const s = (f: FormData, k: string) => String(f.get(k) ?? "").trim();
+/** Utility 1 / 2, or another place named by the manager (area_label). */
+function areaOf(f: FormData): { area: string | null; area_label: string | null } | { error: string } {
+  const a = s(f, "area");
+  if (a === "U1" || a === "U2") return { area: a, area_label: null };
+  const label = s(f, "area_label");
+  return label.length >= 2 ? { area: null, area_label: label } : { error: "Name the area (e.g. Tank farm, Borehole field)." };
+}
 
 export async function addPoint(_p: Msg, f: FormData): Promise<Msg> {
   const checks = s(f, "checks").split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+  const ar = areaOf(f);
+  if ("error" in ar) return ar;
   const supabase = await createClient();
   const { error } = await supabase.from("patrol_points").insert({
-    name: s(f, "name"), area: s(f, "area"), location: s(f, "location") || null,
+    name: s(f, "name"), ...ar, location: s(f, "location") || null,
     rounds_per_shift: Number(s(f, "rounds") || 1), ...(checks.length ? { checks } : {}),
   } as never);
   if (error) return { error: error.code === "23505" ? "A patrol point with that name exists." : error.message };
@@ -51,9 +60,11 @@ export async function recordVisit(_p: VisitState, f: FormData): Promise<VisitSta
 export async function updatePoint(_p: Msg, f: FormData): Promise<Msg> {
   const checks = s(f, "checks").split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
   if (!checks.length) return { error: "Keep at least one check." };
+  const ar = areaOf(f);
+  if ("error" in ar) return ar;
   const supabase = await createClient();
   const { error } = await supabase.from("patrol_points").update({
-    name: s(f, "name"), area: s(f, "area"), location: s(f, "location") || null, rounds_per_shift: Number(s(f, "rounds") || 1), checks,
+    name: s(f, "name"), ...ar, location: s(f, "location") || null, rounds_per_shift: Number(s(f, "rounds") || 1), checks,
   } as never).eq("id", s(f, "id"));
   if (error) return { error: error.code === "23505" ? "A patrol point with that name exists." : error.message };
   revalidatePath("/patrol");

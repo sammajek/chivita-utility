@@ -10,14 +10,14 @@ export default async function ScanPage({ searchParams }: { searchParams: Promise
   const profile = await requireProfile();
   const sp = await searchParams;
   const supabase = await createClient();
-  const { data } = sp.p ? await supabase.from("patrol_points").select("id, name, area, location, checks").eq("id", sp.p).eq("active", true).maybeSingle() : { data: null };
+  const { data } = sp.p ? await supabase.from("patrol_points").select("id, name, area, area_label, location, checks").eq("id", sp.p).eq("active", true).maybeSingle() : { data: null };
   if (!data || !sp.c) return <p className="card text-sm">This patrol label is not recognised. <Link href="/patrol" className="text-brand-blue">Patrols</Link></p>;
-  const pt = data as { id: string; name: string; area: string; location: string | null; checks: string[] };
+  const pt = data as { id: string; name: string; area: string | null; area_label: string | null; location: string | null; checks: string[] };
   return (
     <div className="space-y-4">
       <div>
         <h1 className="page-title">{pt.name}</h1>
-        <p className="page-sub">Patrol point · {pt.area === "U1" ? "Utility 1" : "Utility 2"}{pt.location ? ` · ${pt.location}` : ""}. Check each item and record the round.</p>
+        <p className="page-sub">Patrol point · {pt.area_label ?? (pt.area === "U1" ? "Utility 1" : "Utility 2")}{pt.location ? ` · ${pt.location}` : ""}. Check each item and record the round.</p>
       </div>
       {profile.active && profile.role !== "viewer"
         ? <VisitForm point={pt.id} code={sp.c} name={pt.name} checks={pt.checks} />

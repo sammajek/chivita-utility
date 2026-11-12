@@ -16,7 +16,7 @@ export function LabelButton({ id, name, area }: { id: string; name: string; area
         <div className="mt-2 flex max-w-md break-inside-avoid items-center gap-4 rounded-xl border-2 border-brand-red bg-white p-4">
           <div className="h-36 w-36 shrink-0" dangerouslySetInnerHTML={{ __html: s.svg }} />
           <div className="space-y-1"><Logo height={20} /><b className="block text-lg">{s.name}</b>
-            <span className="block text-sm">Patrol point · {area === "U1" ? "Utility 1" : "Utility 2"}</span>
+            <span className="block text-sm">Patrol point · {area}</span>
             <span className="block text-xs text-gray-500">Scan on every round to record your check. Print this card (Ctrl+P) and fix it at the point.</span></div>
         </div>
       )}
@@ -61,5 +61,18 @@ export function VisitForm({ point, code, name, checks }: { point: string; code: 
       {s.error && <p role="alert" className="text-sm text-crit">{s.error}</p>}
       <button className="btn-primary w-full" disabled={pending}>{pending ? "Saving…" : "Record this round"}</button>
     </form>
+  );
+}
+
+/** Utility 1, Utility 2, or another area typed in (patrol points can be outside the utility areas). */
+export function AreaPicker({ area, label }: { area?: string | null; label?: string | null }) {
+  const [v, setV] = useState(area ?? (label ? "other" : "U1"));
+  return (
+    <div className="grid gap-2 sm:col-span-2 sm:grid-cols-2">
+      <select name="area" value={v} onChange={(e) => setV(e.target.value)} className="input" aria-label="Area">
+        <option value="U1">Utility 1</option><option value="U2">Utility 2</option><option value="other">Other area…</option>
+      </select>
+      {v === "other" && <input name="area_label" required minLength={2} defaultValue={label ?? ""} placeholder="Area name (e.g. Tank farm)" className="input" />}
+    </div>
   );
 }

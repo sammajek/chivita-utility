@@ -9,6 +9,7 @@ grant all on t_p to authenticated;
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000d7', true);
 insert into public.patrol_points (name, area, checks) values ('Borehole field', 'U1', '{"No leaks","Area secure"}');
+insert into public.patrol_points (name, area, area_label) values ('Diesel tank farm', null, 'Tank farm');
 insert into t_p select public.issue_patrol_code(id), id from public.patrol_points where name = 'Borehole field';
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000d8', true);
 do $$
