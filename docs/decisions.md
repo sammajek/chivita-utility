@@ -305,6 +305,10 @@ Each entry: date, decision, who decided, notes.
 - Meter readings in one place (owner, 2026-11-12): register totalisers switched off (Boiler and VAM "Gas Flowmeter
   Reading", Nitrogen "Total flow"); entered on Utility Consumption (new Nitrogen Flowmeters tab, N2G 1–4).
 - Menu: "Area Patrols".
+- Removal rule (owner, 2026-11-12): equipment that never existed is removed completely; equipment that existed and was
+  decommissioned (e.g. Borehole 3) is retired. Removed: N2G-U2-01/02, DRY-11, DRY-12 and the duplicate entries BLR-06,
+  BLR-07, CMP-13, CMP-AC1, CHV-U2, plus the Utility 2 Nitrogen Generator log. Deletion stays blocked everywhere else;
+  the admin-only removal refuses anything with real records and writes every removed row to the audit trail.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

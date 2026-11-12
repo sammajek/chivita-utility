@@ -258,3 +258,9 @@ begin
     from generate_series(1, 4) n join public.assets a on a.code = 'N2G-0' || n
   on conflict (code) do nothing;
 end $$;
+-- (fresh databases) remove what never existed — see migration 20261112000061
+select public.purge_never_existed_assets(
+  array['N2G-U2-01', 'N2G-U2-02', 'DRY-11', 'DRY-12', 'BLR-06', 'BLR-07', 'CMP-13', 'CMP-AC1', 'CHV-U2'],
+  'Never existed: Utility 2 nitrogen generators, Air Dryer 11, IR TMS dryer and duplicate entries (owner, 2026-11-12)');
+select public.purge_never_existed_register(id, 'Utility 2 has never had nitrogen generators (owner, 2026-11-12)')
+  from public.registers where area = 'U2' and title = 'Nitrogen Generator Log Report';

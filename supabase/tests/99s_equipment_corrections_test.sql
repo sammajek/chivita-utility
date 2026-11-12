@@ -1,7 +1,8 @@
 -- Owner's equipment corrections: merges, retirements, areas, new U2 equipment with copied PM, casing.
 do $$
 begin
-  assert (select status from public.assets where code = 'BLR-06') = 'retired', 'duplicate boiler retired';
+  assert not exists (select 1 from public.assets where code in ('BLR-06', 'N2G-U2-01', 'DRY-11')), 'never-existed entries removed';
+  assert not exists (select 1 from public.registers where area = 'U2' and title = 'Nitrogen Generator Log Report'), 'U2 nitrogen log removed';
   assert (select area from public.assets where code = 'BLR-03') = 'U2', 'boiler 3 in Utility 2';
   assert exists (select 1 from public.register_assets ra join public.assets a on a.id = ra.asset_id
                   join public.registers r on r.id = ra.register_id
