@@ -3,6 +3,7 @@ import { requireProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { namesFor } from "@/lib/data/pm";
 import { formatLagos, SHIFT_LABELS } from "@/lib/time";
+import { PreviousHandover } from "./PreviousHandover";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function HandoverList() {
   const rows = (data ?? []) as Row[];
   const names = await namesFor(rows.flatMap((r) => [r.recorded_by_id, r.received_by]));
   const onDuty = (mine ?? []).length > 0;
-  const toAck = rows.filter((r) => !r.received_at && r.recorded_by_id !== profile.id);
+  const toAck = rows.filter((r) => !r.received_at && !r.is_demo);
   const isMgr = ["shift_manager", "section_manager", "admin"].includes(profile.role);
   const toSign = isMgr ? rows.filter((r) => !r.manager_at) : [];
 
@@ -34,21 +35,22 @@ export default async function HandoverList() {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="page-title">Handover notes</h1>
-          <p className="page-sub">Shift handover reports (Utility Handover Report): equipment running / standby / faults, fuel, water treatment plant, caustic mixing, checklist and footnote.</p>
+          <p className="page-sub">One handover report per shift (Utility Handover Report), written by anyone on duty and acknowledged by anyone on the next shift.</p>
         </div>
         {onDuty
-          ? <Link href="/handover/new" className="btn-primary btn-sm">Write handover &amp; check out</Link>
+          ? <Link href="/handover/new" className="btn-primary btn-sm">Shift handover &amp; check out</Link>
           : <Link href="/duty" className="btn-secondary btn-sm">Check in first</Link>}
       </div>
+      {onDuty && <PreviousHandover profileId={profile.id} />}
       {(toAck.length > 0 || toSign.length > 0) && (
         <p className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-warn">
-          {toAck.length > 0 && `${toAck.length} handover(s) not yet acknowledged by the incoming engineer. `}
+          {toAck.length > 0 && `${toAck.length} handover(s) not yet acknowledged by the next shift. `}
           {toSign.length > 0 && `${toSign.length} waiting for a manager’s signature.`}
         </p>
       )}
       <div className="table-wrap">
         <table className="data-table min-w-[760px]">
-          <thead><tr><th>Shift</th><th>Areas</th><th>Handed over by</th><th>Received by</th><th>Manager</th><th className="num">Open flags</th></tr></thead>
+          <thead><tr><th>Shift</th><th>Areas</th><th>Written by</th><th>Acknowledged by</th><th>Manager</th><th className="num">Open flags</th></tr></thead>
           <tbody>
             {rows.map((r) => (
               <tr key={r.id}>

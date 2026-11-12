@@ -3,22 +3,46 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { HANDOVER_GROUPS, type HandoverContent } from "@/lib/handover";
+import { HANDOVER_GROUPS, summarise, type GroupStatus, type HandoverContent, type MachineItem, type MachineStatus } from "@/lib/handover";
 
 export interface Msg { ok?: string; error?: string }
 const s = (f: FormData, k: string) => String(f.get(k) ?? "").trim();
 
-/** Builds the handover from the form (fields named g:<group>:<running|standby|faults>, wtp:<field>, ck:<n>, cn:<n>). */
+/** Ticked machines for a prefix: fields `<prefix>:<code>` = status, `<prefix>-name:<code>` = name. */
+function machines(f: FormData, prefix: string): MachineItem[] | null {
+  const out: MachineItem[] = [];
+  for (const [k, v] of f.entries()) {
+    if (!k.startsWith(`${prefix}:`)) continue;
+    const code = k.slice(prefix.length + 1);
+    out.push({ code, name: s(f, `${prefix}-name:${code}`), status: String(v) as MachineStatus });
+  }
+  return out.length ? out : null;
+}
+
+function group(f: FormData, key: string): GroupStatus {
+  const items = machines(f, `m:${key}`);
+  if (!items) return { running: s(f, `g:${key}:running`), standby: s(f, `g:${key}:standby`), faults: s(f, `g:${key}:faults`) };
+  const note = s(f, `m:${key}-note`);
+  return { ...summarise(items, note), items, note };
+}
+
+/** Builds the shift handover from the form and submits it (writer is checked out). */
 export async function submitHandover(_p: Msg, f: FormData): Promise<Msg> {
   const items = JSON.parse(s(f, "checklist_items") || "[]") as string[];
+  const wtpItems = machines(f, "w");
+  const wtpNote = s(f, "w-note");
+  const wtpSum = wtpItems ? summarise(wtpItems, wtpNote) : null;
+  const pump = (code: string) => { const st = wtpItems?.find((i) => i.code === code)?.status; return st === "running" ? "Yes" : st || ""; };
   const content: HandoverContent = {
-    groups: Object.fromEntries(HANDOVER_GROUPS.map((g) => [g.key, {
-      running: s(f, `g:${g.key}:running`), standby: s(f, `g:${g.key}:standby`), faults: s(f, `g:${g.key}:faults`),
-    }])),
+    groups: Object.fromEntries(HANDOVER_GROUPS.map((g) => [g.key, group(f, g.key)])),
     fuel: s(f, "fuel"),
     wtp: {
-      raw_running: s(f, "wtp:raw_running"), treated_running: s(f, "wtp:treated_running"), standby: s(f, "wtp:standby"),
-      ph: s(f, "wtp:ph"), raw_level: s(f, "wtp:raw_level"), treated_level: s(f, "wtp:treated_level"), faults: s(f, "wtp:faults"),
+      raw_running: wtpItems ? pump("PMP-RW") : s(f, "wtp:raw_running"),
+      treated_running: wtpItems ? pump("PMP-TW") : s(f, "wtp:treated_running"),
+      standby: wtpSum ? wtpSum.standby : s(f, "wtp:standby"),
+      ph: s(f, "wtp:ph"), raw_level: s(f, "wtp:raw_level"), treated_level: s(f, "wtp:treated_level"),
+      faults: wtpSum ? wtpSum.faults : s(f, "wtp:faults"),
+      ...(wtpItems ? { items: wtpItems, note: wtpNote } : {}),
     },
     caustic: s(f, "caustic"),
     checklist: Object.fromEntries(items.map((item, i) => [item, { answer: (s(f, `ck:${i}`) || "") as "yes" | "no" | "na", note: s(f, `cn:${i}`) || undefined }])),
@@ -36,11 +60,30 @@ export async function submitHandover(_p: Msg, f: FormData): Promise<Msg> {
   redirect(`/handover/${data}`);
 }
 
+/** Team-mate checks out once the shift's handover is written. */
+export async function checkOutCovered(): Promise<Msg> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("check_out_covered");
+  if (error) return { error: error.message };
+  revalidatePath("/duty");
+  revalidatePath("/handover");
+  redirect(`/handover/${data}`);
+}
+
+export async function addHandoverNote(_p: Msg, f: FormData): Promise<Msg> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("add_handover_note", { p_id: s(f, "id"), p_note: s(f, "note") });
+  if (error) return { error: error.message };
+  revalidatePath(`/handover/${s(f, "id")}`);
+  return { ok: "Note added to the handover." };
+}
+
 export async function receiveHandover(_p: Msg, f: FormData): Promise<Msg> {
   const supabase = await createClient();
   const { error } = await supabase.rpc("receive_handover", { p_id: s(f, "id"), p_note: s(f, "note") });
   if (error) return { error: error.message };
   revalidatePath("/handover");
+  revalidatePath("/duty");
   return { ok: "Acknowledged." };
 }
 

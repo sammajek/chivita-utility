@@ -5,6 +5,7 @@ import { formatLagos, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { ROLE_LABELS, type Role } from "@/lib/roles";
 import { DemoBadge } from "@/components/StatusBadge";
 import { CheckInForm, VerifyPresenceForm } from "./DutyForms";
+import { PreviousHandover } from "../handover/PreviousHandover";
 
 export const dynamic = "force-dynamic";
 
@@ -60,9 +61,10 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
                 You checked in at <b>{formatLagos(mine.checked_in_at)}</b> for{" "}
                 {mine.areas.map((a) => (a === "U1" ? "Utility 1" : "Utility 2")).join(" & ")}.
               </p>
-              <p className="text-sm text-gray-600">At the end of your shift, fill in the handover report (equipment, fuel, water treatment plant, checklist). Submitting it checks you out.</p>
+              <PreviousHandover profileId={profile.id} />
+              <p className="text-sm text-gray-600">At the end of the shift, one person on duty writes the shift handover report (equipment, fuel, water treatment plant, checklist); the others check out “covered” by it.</p>
               <div className="flex flex-wrap gap-2">
-                <Link href="/handover/new" className="btn-primary">Write handover &amp; check out</Link>
+                <Link href="/handover/new" className="btn-primary">Shift handover &amp; check out</Link>
                 <Link href="/flags" className="btn-secondary">Review open flags ({openFlags ?? 0})</Link>
               </div>
             </>

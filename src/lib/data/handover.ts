@@ -1,12 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 import { addDays } from "@/lib/time";
-import { HANDOVER_GROUPS, type GroupStatus, type HandoverContent } from "@/lib/handover";
+import { HANDOVER_GROUPS, summarise, type GroupStatus, type HandoverContent, type MachineItem } from "@/lib/handover";
 
 export { HANDOVER_GROUPS, type GroupStatus, type HandoverContent };
 
 interface Asset { code: string; name: string; area: string | null; op_state: string; op_reason: string | null; category: { name: string } | null }
 
-/** Pre-fills a handover from the app: equipment states, the 07:00 fuel readings and the latest WTP readings. */
+const statusOf = (a: Asset): MachineItem["status"] => (a.op_state === "available" ? "running" : a.op_state === "standby" ? "standby" : a.op_state === "unavailable" ? "fault" : "");
+
+/** Pre-fills a handover from the app: each machine ticked from its state, the 07:00 fuel readings and the latest WTP readings. */
 export async function prefillHandover(areas: string[], shiftDate: string, shift: "day" | "night"): Promise<Omit<HandoverContent, "checklist">> {
   const supabase = await createClient();
   const [{ data: a }, { data: fuel }, { data: params }] = await Promise.all([
@@ -15,15 +17,14 @@ export async function prefillHandover(areas: string[], shiftDate: string, shift:
     supabase.from("parameters").select("id, name, unit").in("name", ["Raw Water Tank Level", "Process Water Tank Level", "pH", "Treated Water pH", "Raw Water pH"]),
   ]);
   const assets = ((a ?? []) as unknown as Asset[]).filter((x) => !x.area || areas.includes(x.area));
-  const list = (xs: Asset[]) => xs.map((x) => x.code + (x.op_reason ? ` (${x.op_reason})` : "")).join(", ");
+  const reasons = (xs: Asset[]) => xs.filter((x) => x.op_state === "unavailable" && x.op_reason).map((x) => `${x.code}: ${x.op_reason}`).join("; ");
   const groups: Record<string, GroupStatus> = {};
   for (const g of HANDOVER_GROUPS) {
     const xs = assets.filter((x) => g.cats.includes(x.category?.name ?? "") && (!g.nameHas || x.name.includes(g.nameHas)));
-    groups[g.key] = {
-      running: list(xs.filter((x) => x.op_state === "available")),
-      standby: list(xs.filter((x) => x.op_state === "standby")),
-      faults: list(xs.filter((x) => x.op_state === "unavailable")),
-    };
+    // a group with no equipment in the register (e.g. fire hydrant) still gets one tick-box row
+    const items: MachineItem[] = xs.length ? xs.map((x) => ({ code: x.code, name: x.name, status: statusOf(x) })) : [{ code: g.label, name: "", status: "" }];
+    const note = reasons(xs);
+    groups[g.key] = { ...summarise(items, note), items, note };
   }
   const f = ((fuel ?? []) as { code: string; name: string; unit: string | null; used: number | null }[]).filter((x) => /GAS|DH|GH/.test(x.code) && x.used !== null);
   const pids = (params ?? []).map((p) => p.id);
@@ -37,21 +38,20 @@ export async function prefillHandover(areas: string[], shiftDate: string, shift:
     }
   }
   const wtpAssets = assets.filter((x) => ["Water Treatment", "Filtration", "UV Systems", "Pumps"].includes(x.category?.name ?? ""));
-  const pump = (code: string) => {
-    const p = assets.find((x) => x.code === code);
-    return p ? (p.op_state === "available" ? "Yes" : `${p.op_state}${p.op_reason ? ` (${p.op_reason})` : ""}`) : "";
-  };
+  const wtpItems = wtpAssets.map((x) => ({ code: x.code, name: x.name, status: statusOf(x) }));
+  const wtpNote = reasons(wtpAssets);
+  const label = (code: string) => { const s = wtpItems.find((i) => i.code === code)?.status; return s === "running" ? "Yes" : s ?? ""; };
   const ph = latest.get("pH") ?? latest.get("Treated Water pH") ?? latest.get("Raw Water pH");
+  const sum = summarise(wtpItems, wtpNote);
   return {
     groups,
     fuel: f.map((x) => `${x.name}: ${Math.round(Number(x.used)).toLocaleString()} ${x.unit ?? ""}`).join("; "),
     wtp: {
-      raw_running: pump("PMP-RW"), treated_running: pump("PMP-TW"),
-      standby: list(wtpAssets.filter((x) => x.op_state === "standby")),
+      raw_running: label("PMP-RW"), treated_running: label("PMP-TW"), standby: sum.standby,
       ph: ph != null ? String(ph) : "",
       raw_level: latest.has("Raw Water Tank Level") ? `${latest.get("Raw Water Tank Level")} %` : "",
       treated_level: latest.has("Process Water Tank Level") ? `${latest.get("Process Water Tank Level")} %` : "",
-      faults: list(wtpAssets.filter((x) => x.op_state === "unavailable")),
+      faults: sum.faults, items: wtpItems, note: wtpNote,
     },
     caustic: "",
   };

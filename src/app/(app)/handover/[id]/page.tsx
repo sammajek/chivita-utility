@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { requireProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { namesFor } from "@/lib/data/pm";
-import { HANDOVER_GROUPS, type HandoverContent } from "@/lib/handover";
+import { HANDOVER_GROUPS, nextShift, type HandoverContent } from "@/lib/handover";
 import { formatLagos, SHIFT_LABELS } from "@/lib/time";
 import { ActionForm } from "@/components/ActionForm";
 import { Logo } from "@/components/Logo";
 import { PrintButton } from "@/components/PrintButton";
-import { receiveHandover, signHandover } from "../actions";
+import { addHandoverNote, receiveHandover, signHandover } from "../actions";
 
 export const dynamic = "force-dynamic";
 
@@ -23,11 +23,23 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
   if (!data) notFound();
   const h = data as { id: string; shift_date: string; shift: "day" | "night"; areas: string[]; content: HandoverContent; footnote: string | null;
     open_flags: number | null; recorded_by_id: string; recorded_at: string; received_by: string | null; received_at: string | null; received_note: string | null;
-    manager_by: string | null; manager_at: string | null; manager_note: string | null };
-  const names = await namesFor([h.recorded_by_id, h.received_by, h.manager_by]);
+    manager_by: string | null; manager_at: string | null; manager_note: string | null; on_duty: string[] | null };
+  const nx = nextShift({ shiftDate: h.shift_date, shift: h.shift });
+  const [{ data: nd }, { data: mineSessions }] = await Promise.all([
+    supabase.from("handover_notes").select("id, kind, note, recorded_by_id, recorded_at").eq("handover_id", h.id).order("recorded_at"),
+    supabase.from("duty_sessions").select("shift_date, shift").eq("profile_id", profile.id).in("shift_date", [h.shift_date, nx.shiftDate]),
+  ]);
+  const notes = (nd ?? []) as { id: string; kind: "ack" | "addendum"; note: string | null; recorded_by_id: string; recorded_at: string }[];
+  const mine = (mineSessions ?? []) as { shift_date: string; shift: string }[];
+  const onThisShift = mine.some((m) => m.shift_date === h.shift_date && m.shift === h.shift);
+  const onNextShift = mine.some((m) => m.shift_date === nx.shiftDate && m.shift === nx.shift);
+  const acks = notes.filter((n) => n.kind === "ack");
+  const addenda = notes.filter((n) => n.kind === "addendum");
+  const team = h.on_duty?.length ? h.on_duty : [h.recorded_by_id];
+  const names = await namesFor([h.recorded_by_id, h.received_by, h.manager_by, ...team, ...notes.map((n) => n.recorded_by_id)]);
   const c = h.content;
   const cell = (v: string | undefined) => (v && v.trim() ? v : "—");
-  const canAck = !h.received_at && h.recorded_by_id !== profile.id && profile.active && profile.role !== "viewer";
+  const canAck = onNextShift && !acks.some((a) => a.recorded_by_id === profile.id);
   const canSign = !h.manager_at && ["shift_manager", "section_manager", "admin"].includes(profile.role);
 
   return (
@@ -38,6 +50,7 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
           <div>
             <h1 className="text-lg font-bold uppercase tracking-wide">Utility handover report</h1>
             <p className="text-sm">Date: <b>{h.shift_date}</b> · Duty: <b>{SHIFT_LABELS[h.shift]}</b> · {h.areas.map((a) => (a === "U1" ? "Utility 1" : "Utility 2")).join(" & ")}</p>
+            <p className="text-sm">On duty: <b>{team.map((t) => names.get(t) ?? "—").join(", ")}</b></p>
             <PrintButton />
           </div>
           <Logo height={36} />
@@ -91,17 +104,36 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
 
         <div><h2 className="section-title">Footnote</h2><p className="whitespace-pre-line text-sm">{cell(h.footnote ?? undefined)}</p></div>
 
+        {addenda.length > 0 && (
+          <div>
+            <h2 className="section-title">Notes added by the shift</h2>
+            <ul className="mt-1 space-y-1 text-sm">
+              {addenda.map((n) => <li key={n.id}><b>{names.get(n.recorded_by_id) ?? "—"}</b> <span className="text-xs text-gray-500">{formatLagos(n.recorded_at)}</span><p className="whitespace-pre-line">{n.note}</p></li>)}
+            </ul>
+          </div>
+        )}
+
         <div className="grid gap-6 border-t pt-4 text-sm sm:grid-cols-3">
-          <div><span className="text-xs text-gray-500">Utility Engineer (handed over)</span><b className="block">{names.get(h.recorded_by_id) ?? "—"}</b><span className="text-xs">{formatLagos(h.recorded_at)}</span></div>
-          <div><span className="text-xs text-gray-500">Received by (incoming)</span><b className="block">{h.received_at ? names.get(h.received_by ?? "") : "—"}</b>
-            {h.received_at && <span className="text-xs">{formatLagos(h.received_at)}{h.received_note ? ` · ${h.received_note}` : ""}</span>}</div>
+          <div><span className="text-xs text-gray-500">Written by (outgoing shift)</span><b className="block">{names.get(h.recorded_by_id) ?? "—"}</b><span className="text-xs">{formatLagos(h.recorded_at)}</span></div>
+          <div><span className="text-xs text-gray-500">Acknowledged by (next shift: {SHIFT_LABELS[nx.shift]} {nx.shiftDate})</span>
+            {acks.length ? acks.map((a) => (
+              <span key={a.id} className="block"><b>{names.get(a.recorded_by_id) ?? "—"}</b> <span className="text-xs">{formatLagos(a.recorded_at)}{a.note ? ` · ${a.note}` : ""}</span></span>
+            )) : h.received_at
+              ? <span className="block"><b>{names.get(h.received_by ?? "") ?? "—"}</b> <span className="text-xs">{formatLagos(h.received_at)}</span></span>
+              : <b className="block text-warn">Not yet</b>}</div>
           <div><span className="text-xs text-gray-500">Manager</span><b className="block">{h.manager_at ? names.get(h.manager_by ?? "") : "—"}</b>
             {h.manager_at && <span className="text-xs">{formatLagos(h.manager_at)}{h.manager_note ? ` · ${h.manager_note}` : ""}</span>}</div>
         </div>
       </div>
 
+      {onThisShift && !acks.length && (
+        <ActionForm action={addHandoverNote} submit="Add note" className="no-print card flex flex-wrap items-center gap-2">
+          <input type="hidden" name="id" value={h.id} />
+          <input name="note" required minLength={5} className="input max-w-xl py-2" placeholder="Something to add for the next shift (you were on this shift)" />
+        </ActionForm>
+      )}
       {canAck && (
-        <ActionForm action={receiveHandover} submit="I have read this handover" className="no-print card flex flex-wrap items-center gap-2">
+        <ActionForm action={receiveHandover} submit="I have read this handover (acknowledge)" className="no-print card flex flex-wrap items-center gap-2">
           <input type="hidden" name="id" value={h.id} /><input name="note" className="input max-w-md py-2" placeholder="Comment (optional)" />
         </ActionForm>
       )}

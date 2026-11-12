@@ -228,6 +228,12 @@ Each entry: date, decision, who decided, notes.
   compressor (added as CMP-AC1, unconfirmed — number, area and model to confirm); the compressor figures on that sheet
   are kWh readings (meters C2–C9-KWH, CATLAS-KWH). Electricity totals use only the Energy sheet meters so compressors
   are not counted twice. No air flow meters yet, so kWh per m³ of air waits until they are installed.
+- Shift handover for the team (owner, 2026-11-12): equipment on the handover is ticked per machine (Running / Standby /
+  Maint.-fault, pre-ticked from the app; a group with no listed equipment, e.g. fire hydrant, gets one tick row), with a
+  fault-details box per group. One handover per shift covering everyone on duty and all their areas: anyone on the shift
+  writes it; team-mates add notes to it and check out "covered by the shift handover". Anyone on duty in the next shift
+  acknowledges it (every acknowledgement is recorded); people checked in see a "Read & acknowledge" prompt on On duty and
+  Handover. Flags: no handover 30 min after a shift ended; not acknowledged 1 h into the next shift.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,
