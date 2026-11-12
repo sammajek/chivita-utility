@@ -74,7 +74,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
                 {list.map((a) => {
                   const pm = a.pm_tasks.filter((t) => t.active).sort((x, y) => Object.keys(FREQ_SHORT).indexOf(x.frequency) - Object.keys(FREQ_SHORT).indexOf(y.frequency));
                   return (
-                    <tr key={a.id} className="border-t align-top">
+                    <tr key={a.id}>
                       <td className="code"><Link href={`/equipment/${encodeURIComponent(a.code)}`} className="text-brand-blue">{a.code}</Link></td>
                       <td className="p-2">{a.name}{a.criticality && <span className="ml-1 text-xs text-gray-500">({a.criticality})</span>}</td>
                       <td className="p-2">{a.area ?? "—"}</td>

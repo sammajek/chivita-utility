@@ -89,32 +89,32 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
         <Logo height={40} className="hidden print:block" />
       </div>
 
-      <table className="data-table w-full text-sm">
-        <thead className="text-left text-xs text-gray-500"><tr><th>Frequency</th><th>Adherence</th><th>Carried out / due</th><th>Periods affirmed</th></tr></thead>
+      <div className="table-wrap"><table className="data-table">
+        <thead><tr><th>Frequency</th><th className="num">Adherence</th><th className="num">Carried out / due</th><th className="num">Periods affirmed</th></tr></thead>
         <tbody>
           {sections.map((s) => (
-            <tr key={s.f} className="border-t"><td className="py-1">{FREQ_LABEL[s.f]}</td>
-              <td className={(s.pct ?? 100) < 90 ? "font-semibold text-warn" : "font-semibold text-ok"}>{s.pct === null ? "–" : `${s.pct}%`}</td>
-              <td>{s.done} / {s.due}</td><td>{s.affirmed} / {s.endedRows}</td></tr>
+            <tr key={s.f}><td>{FREQ_LABEL[s.f]}</td>
+              <td className={`num font-semibold ${(s.pct ?? 100) < 90 ? "text-warn" : "text-ok"}`}>{s.pct === null ? "–" : `${s.pct}%`}</td>
+              <td className="num">{s.done} / {s.due}</td><td className="num">{s.affirmed} / {s.endedRows}</td></tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
 
       {sections.map((s) => (
         <section key={s.f} className="space-y-1 break-inside-avoid">
           <h2 className="font-semibold">{FREQ_LABEL[s.f]}</h2>
-          <div className="overflow-x-auto">
-            <table className="data-table w-full min-w-[640px] text-sm">
-              <thead className="text-left text-xs text-gray-500">
-                <tr><th className="py-1">Period</th><th>Area</th><th>Tasks</th><th>√</th><th>X</th><th>--</th><th>Blank</th><th>Adherence</th><th>Affirmed by</th></tr>
+          <div className="table-wrap">
+            <table className="data-table min-w-[640px]">
+              <thead>
+                <tr><th>Period</th><th>Area</th><th className="num">Tasks</th><th className="num">√</th><th className="num">X</th><th className="num">--</th><th className="num">Blank</th><th className="num">Adherence</th><th>Affirmed by</th></tr>
               </thead>
               <tbody>
                 {s.rows.map((r) => (
-                  <tr key={r.p + r.ar} className="border-t">
-                    <td className="py-1">{pmPeriodLabel(s.f, r.p)}{!r.ended && <span className="text-xs text-gray-500"> (current)</span>}</td>
-                    <td>{r.ar}</td><td>{r.total}</td><td>{r.ok}</td><td className={r.nok ? "text-crit" : ""}>{r.nok}</td>
-                    <td className={r.nd ? "text-warn" : ""}>{r.nd}</td><td className={r.blank && r.ended ? "text-warn" : ""}>{r.blank}</td>
-                    <td>{r.pct === null ? "–" : `${r.pct}%`}</td>
+                  <tr key={r.p + r.ar}>
+                    <td>{pmPeriodLabel(s.f, r.p)}{!r.ended && <span className="text-xs text-gray-500"> (current)</span>}</td>
+                    <td>{r.ar}</td><td className="num">{r.total}</td><td className="num">{r.ok}</td><td className={`num ${r.nok ? "text-crit" : ""}`}>{r.nok}</td>
+                    <td className={`num ${r.nd ? "text-warn" : ""}`}>{r.nd}</td><td className={`num ${r.blank && r.ended ? "text-warn" : ""}`}>{r.blank}</td>
+                    <td className="num">{r.pct === null ? "–" : `${r.pct}%`}</td>
                     <td className="text-xs">{r.aff ? `${names.get(r.aff.recorded_by_id) ?? "—"} · ${formatLagos(r.aff.recorded_at)}` : r.ended ? <span className="text-warn">not affirmed</span> : ""}</td>
                   </tr>
                 ))}
@@ -130,7 +130,7 @@ export default async function PmReport({ searchParams }: { searchParams: Promise
         <table className="data-table w-full text-sm">
           <tbody>
             {exceptions.map(({ c, t }) => (
-              <tr key={c.id} className="border-t align-top">
+              <tr key={c.id}>
                 <td className="py-1 pr-2 whitespace-nowrap">{pmPeriodLabel(t.frequency, c.period_start)}</td>
                 <td className="pr-2">{t.equipment_as_written.replace(/\.$/, "")}{t.asset ? ` (${t.asset.code})` : ""}</td>
                 <td className="pr-2 font-semibold">{RESULT_LABEL[c.result].code}</td>

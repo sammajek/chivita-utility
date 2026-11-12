@@ -70,18 +70,18 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
       {visits.some((v) => v.is_demo) && <p className="text-xs font-semibold text-purple-700">Includes DEMO data</p>}
 
       <div className="card overflow-x-auto">
-        <table className="data-table w-full min-w-[900px] text-xs">
+        <table className="data-table min-w-[900px] text-sm">
           <thead>
-            <tr className="text-left text-gray-500">
-              <th className="py-1 pr-2">AMC</th><th className="pr-2">Vendor</th>
+            <tr>
+              <th>AMC</th><th>Vendor</th>
               {MONTHS.map((m) => <th key={m} className="px-0.5 text-center">{m}</th>)}
             </tr>
           </thead>
           <tbody>
             {contracts.map((c) => (
-              <tr key={c.id} className="border-t align-middle">
-                <td className="py-2 pr-2 font-medium">{c.description}</td>
-                <td className="pr-2">{c.vendor}</td>
+              <tr key={c.id}>
+                <td className="font-medium">{c.description}</td>
+                <td>{c.vendor}</td>
                 {months.map((m) => {
                   const isPlanned = planned.has(`${c.id}|${m}`);
                   const st = amcStatus(isPlanned, visited.has(`${c.id}|${m}`), m, thisMonth);

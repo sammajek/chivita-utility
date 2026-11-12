@@ -4,10 +4,11 @@ import { useActionState, useState } from "react";
 import { HANDOVER_GROUPS, MACHINE_STATUS, type HandoverContent, type MachineItem, type MachineStatus } from "@/lib/handover";
 import { submitHandover, type Msg } from "../actions";
 
-const Field = ({ name, label, value, rows = 1 }: { name: string; label: string; value: string; rows?: number }) => (
+const Field = ({ name, label, value, rows = 1, mode }: { name: string; label: string; value: string; rows?: number; mode?: "numeric" | "decimal" }) => (
   <label className="block">
     <span className="text-xs font-medium text-gray-600">{label}</span>
-    {rows > 1 ? <textarea name={name} defaultValue={value} rows={rows} className="input text-sm" /> : <input name={name} defaultValue={value} className="input text-sm" />}
+    {rows > 1 ? <textarea name={name} defaultValue={value} rows={rows} className="input text-sm" />
+      : <input name={name} defaultValue={value} inputMode={mode} pattern={mode === "numeric" ? "[0-9]*" : undefined} className="input text-sm" />}
   </label>
 );
 
@@ -81,16 +82,17 @@ export function HandoverForm({ prefill, checklist, openFlags }: { prefill: Omit<
 
       <section className="card space-y-3">
         <h2 className="section-title">Water treatment plant</h2>
-        {prefill.wtp.items?.length ? <MachineGroup prefix="w" label="Pumps and treatment equipment" items={prefill.wtp.items} note={prefill.wtp.note ?? ""} /> : (
-          <div className="grid gap-3 sm:grid-cols-3">
-            <Field name="wtp:raw_running" label="Raw water pump running" value={prefill.wtp.raw_running} />
-            <Field name="wtp:treated_running" label="Treated water pump running" value={prefill.wtp.treated_running} />
+        {prefill.wtp.items?.length ? <MachineGroup prefix="w" label="Other water treatment equipment" items={prefill.wtp.items} note={prefill.wtp.note ?? ""} /> : (
+          <div className="grid gap-3 sm:grid-cols-2">
             <Field name="wtp:standby" label="Standby" value={prefill.wtp.standby} />
             <Field name="wtp:faults" label="Maintenance / faults" value={prefill.wtp.faults} />
           </div>
         )}
-        <div className="grid gap-3 sm:grid-cols-3">
-          <Field name="wtp:ph" label="pH" value={prefill.wtp.ph} />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field name="wtp:raw_count" label="No. of raw water pumps running" value={prefill.wtp.raw_count ?? ""} mode="numeric" />
+          <Field name="wtp:treated_count" label="No. of treated water pumps running" value={prefill.wtp.treated_count ?? ""} mode="numeric" />
+          <Field name="wtp:ph_raw" label="pH – raw water" value={prefill.wtp.ph_raw ?? ""} mode="decimal" />
+          <Field name="wtp:ph_treated" label="pH – treated water" value={prefill.wtp.ph_treated ?? ""} mode="decimal" />
           <Field name="wtp:raw_level" label="Water level – raw water" value={prefill.wtp.raw_level} />
           <Field name="wtp:treated_level" label="Water level – treated water" value={prefill.wtp.treated_level} />
         </div>

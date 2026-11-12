@@ -128,15 +128,15 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
               <h2 className="font-semibold">{label}</h2>
               <div className="table-wrap">
                 <table className="data-table w-full text-xs">
-                  <thead className="bg-gray-50 text-gray-500">
-                    <tr><th className="sticky left-0 bg-gray-50 p-1 text-left">Meter</th><th className="p-1">Unit</th><th className="p-1">Total</th>
-                      {days.map((d) => <th key={d} className="p-1">{Number(d.slice(8))}</th>)}</tr>
+                  <thead>
+                    <tr><th className="sticky left-0 bg-gray-50 p-1 text-left">Meter</th><th className="center p-1">Unit</th><th className="num p-1">Total</th>
+                      {days.map((d) => <th key={d} className="num p-1">{Number(d.slice(8))}</th>)}</tr>
                   </thead>
                   <tbody>
                     {ms.map((m) => {
                       const u = byMeter.get(m.id);
                       return (
-                        <tr key={m.id} className="border-t">
+                        <tr key={m.id}>
                           <td className="sticky left-0 whitespace-nowrap bg-white p-1">{m.name}</td>
                           <td className="p-1 text-center text-gray-500">{m.unit ?? ""}</td>
                           <td className="p-1 text-right font-semibold">{u && m.kind !== "rate" ? Math.round(u.total).toLocaleString() : m.kind === "rate" && u?.avg != null ? `avg ${Math.round(u.avg).toLocaleString()}` : ""}</td>

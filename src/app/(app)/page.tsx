@@ -138,20 +138,20 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <div className="card overflow-x-auto">
           <h3 className="mb-2 font-semibold">Per equipment</h3>
           <table className="data-table w-full text-sm">
-            <thead className="text-left text-xs text-gray-500">
-              <tr><th className="py-1">Equipment</th><th>Breakdowns</th><th>Down (h)</th><th>MTTR</th><th>MTBF</th><th>Availability</th></tr>
+            <thead>
+              <tr><th>Equipment</th><th className="num">Breakdowns</th><th className="num">Down (h)</th><th className="num">MTTR</th><th className="num">MTBF</th><th className="num">Availability</th></tr>
             </thead>
             <tbody className="tabular-nums">
               {d.kpis.map((k) => (
-                <tr key={k.asset_id} className="border-t">
-                  <td className="py-1.5"><b>{k.code}</b> <span className="text-gray-500">{k.name}</span></td>
-                  <td>{k.failures}</td>
-                  <td>{k.unplanned_hours.toFixed(1)}</td>
-                  <td>{h(k.mttr)}</td>
-                  <td title={k.operating_hours_estimated ? "Estimated: no running-hours counter readings" : `${k.operating_hours.toFixed(0)} running hours from counter`}>
+                <tr key={k.asset_id}>
+                  <td><b>{k.code}</b> <span className="text-gray-500">{k.name}</span></td>
+                  <td className="num">{k.failures}</td>
+                  <td className="num">{k.unplanned_hours.toFixed(1)}</td>
+                  <td className="num">{h(k.mttr)}</td>
+                  <td className="num" title={k.operating_hours_estimated ? "Estimated: no running-hours counter readings" : `${k.operating_hours.toFixed(0)} running hours from counter`}>
                     {h(k.mtbf)}{k.operating_hours_estimated && k.mtbf !== null ? "*" : ""}
                   </td>
-                  <td>{pct(k.availability === null ? null : k.availability * 100)}</td>
+                  <td className="num">{pct(k.availability === null ? null : k.availability * 100)}</td>
                 </tr>
               ))}
               {d.kpis.length === 0 && <tr><td colSpan={6} className="py-2 text-gray-500">No downtime recorded in this period.</td></tr>}

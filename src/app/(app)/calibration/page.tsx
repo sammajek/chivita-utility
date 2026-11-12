@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { lagosDate } from "@/lib/time";
 import { calibrationState, type CalState } from "@/lib/water";
 import { StatTile } from "@/components/BarList";
+import { GridList, GridRow } from "@/components/GridList";
 import { ActionForm } from "@/components/ActionForm";
 import { DemoBadge } from "@/components/StatusBadge";
 import { EvidenceList } from "@/components/EvidenceList";
@@ -61,24 +62,20 @@ export default async function CalibrationPage() {
         <p className="text-xs font-semibold text-purple-700">The instruments tagged DEMO- are examples. Add your real instrument list below (or send it to be imported).</p>
       )}
 
-      <div className="space-y-2">
+      <GridList cols="minmax(0,2.4fr) minmax(0,1fr) minmax(0,1.2fr) 5.5rem 6.5rem 6.5rem 7.5rem"
+        head={[{ label: "Instrument" }, { label: "Type" }, { label: "Location / range" }, { label: "Interval" }, { label: "Last" }, { label: "Next due" }, { label: "Status" }]}
+        empty="No instruments yet.">
         {withState.map(({ i, st }) => (
-          <details key={i.id} className="card">
-            <summary className="cursor-pointer list-none">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <span className="font-medium">{i.tag} · {i.description} {i.is_demo && <DemoBadge />}</span>
-                <span className={`rounded px-2 py-0.5 text-xs font-semibold ${STATE[st].cls}`}>{STATE[st].text}</span>
-              </div>
-              <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-gray-600">
-                <span>{i.instrument_type}</span>
-                {i.location && <span>{i.location}</span>}
-                {i.range_text && <span>{i.range_text}</span>}
-                <span>Every {i.interval_months} months</span>
-                <span>Last: {i.last_calibrated ?? "—"}</span>
-                <span className={st === "overdue" ? "font-semibold text-crit" : ""}>Next due: {i.next_due ?? "—"}</span>
-              </div>
-            </summary>
-            <div className="mt-3 space-y-3 border-t pt-3">
+          <GridRow key={i.id} cells={[
+            { content: <><b className="font-medium">{i.tag}</b> {i.is_demo && <DemoBadge />}<span className="block text-gray-600">{i.description}</span></> },
+            { content: i.instrument_type, muted: true },
+            { content: [i.location, i.range_text].filter(Boolean).join(" · ") || "—", muted: true },
+            { content: `${i.interval_months} mo`, muted: true },
+            { content: i.last_calibrated ?? "—", muted: true },
+            { content: <span className={st === "overdue" ? "font-semibold text-crit" : ""}>{i.next_due ?? "—"}</span> },
+            { content: <span className={`inline-block rounded px-2 py-0.5 text-xs font-semibold ${STATE[st].cls}`}>{STATE[st].text}</span> },
+          ]}>
+            <div className="space-y-3">
               <div>
                 <p className="text-xs font-medium text-gray-600">Certificates &amp; documents (PDF, Word, photos)</p>
                 <EvidenceList entityType="instrument" entityId={i.id} canAdd={canEdit} docTypes />
@@ -112,9 +109,9 @@ export default async function CalibrationPage() {
                 </ActionForm>
               )}
             </div>
-          </details>
+          </GridRow>
         ))}
-      </div>
+      </GridList>
 
       {canEdit && (
         <details className="card">

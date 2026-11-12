@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
 import { describeStandard } from "@/lib/evaluate";
-import { importStaffCsv, saveStaff, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
+import { importStaffCsv, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
 import type { Parameter } from "@/lib/types";
 
@@ -48,7 +48,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       <div className="space-y-2">
         <p className="text-sm text-gray-600">New people request access from the sign-in page (“Request access”). They stay inactive until you set their role and tick Active.</p>
         {users.map((u) => (
-          <ActionForm key={u.id} action={updateUser} className={`card grid gap-2 sm:grid-cols-4 ${u.active ? "" : "border-amber-300"}`}>
+          <div key={u.id} className={`card space-y-3 ${u.active ? "" : "border-amber-300"}`}>
+          <ActionForm action={updateUser} className="grid gap-2 sm:grid-cols-4">
             <input type="hidden" name="id" value={u.id} />
             <div className="sm:col-span-4 flex justify-between text-sm"><b>{u.full_name}</b><span className="text-gray-500">{u.email}</span></div>
             <select name="role" defaultValue={u.role} className="input py-2" disabled={!canEdit}>
@@ -64,6 +65,16 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
               <label className="flex items-center gap-1"><input type="checkbox" name="active" defaultChecked={u.active} disabled={!canEdit} /> Active</label>
             </div>
           </ActionForm>
+          {canEdit && (
+            <details className="border-t pt-2 text-sm">
+              <summary className="cursor-pointer text-gray-600">Forgotten password? Set a temporary one</summary>
+              <ActionForm action={setTempPassword} submit="Set temporary password" className="mt-2 flex flex-wrap items-center gap-2">
+                <input type="hidden" name="id" value={u.id} />
+                <input name="password" type="text" minLength={8} required autoComplete="off" placeholder="Temporary password (8+ characters)" className="input max-w-xs py-2" />
+              </ActionForm>
+            </details>
+          )}
+          </div>
         ))}
       </div>
     );
@@ -123,7 +134,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   }
 
   function Access() {
-    const can = (roles: readonly string[]) => ROLES.map((r) => <td key={r} className="p-1 text-center">{roles.includes(r) ? "✓" : ""}</td>);
+    const can = (roles: readonly string[]) => ROLES.map((r) => <td key={r} className="center">{roles.includes(r) ? "✓" : ""}</td>);
     const eng = ["engineer", "shift_manager", "section_manager", "admin"];
     const entry = ["operator", ...eng];
     const mgr = ["section_manager", "admin"];
@@ -145,15 +156,15 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         <div className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Actions</h2>
           <table className="data-table w-full min-w-[640px] text-sm">
-            <thead className="text-xs text-gray-500"><tr><th className="p-1 text-left">Action</th>{ROLES.map((r) => <th key={r} className="p-1">{ROLE_LABELS[r]}</th>)}</tr></thead>
-            <tbody>{ACTIONS.map(([l, r]) => <tr key={l} className="border-t"><td className="p-1">{l}</td>{can(r)}</tr>)}</tbody>
+            <thead><tr><th>Action</th>{ROLES.map((r) => <th key={r} className="center">{ROLE_LABELS[r]}</th>)}</tr></thead>
+            <tbody>{ACTIONS.map(([l, r]) => <tr key={l}><td>{l}</td>{can(r)}</tr>)}</tbody>
           </table>
         </div>
         <div className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Screens</h2>
           <table className="data-table w-full min-w-[640px] text-sm">
-            <thead className="text-xs text-gray-500"><tr><th className="p-1 text-left">Screen</th>{ROLES.map((r) => <th key={r} className="p-1">{ROLE_LABELS[r]}</th>)}</tr></thead>
-            <tbody>{NAV.map((n) => <tr key={n.href} className="border-t"><td className="p-1">{n.label}</td>{can(n.roles)}</tr>)}</tbody>
+            <thead><tr><th>Screen</th>{ROLES.map((r) => <th key={r} className="center">{ROLE_LABELS[r]}</th>)}</tr></thead>
+            <tbody>{NAV.map((n) => <tr key={n.href}><td>{n.label}</td>{can(n.roles)}</tr>)}</tbody>
           </table>
         </div>
       </div>

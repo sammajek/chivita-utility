@@ -30,7 +30,7 @@ export async function loadRegister(key: string): Promise<RegisterDetail | null> 
       .order("sort"),
     supabase
       .from("register_assets")
-      .select("sort, asset:assets(id, code, name, area, category_id, confirmed, status, make, notes)")
+      .select("sort, active, asset:assets(id, code, name, area, category_id, confirmed, status, make, notes)")
       .eq("register_id", register.id)
       .order("sort"),
   ]);
@@ -45,7 +45,9 @@ export async function loadRegister(key: string): Promise<RegisterDetail | null> 
     sort: s.sort,
     fields: s.register_fields.filter((f) => f.active).sort((a, b) => a.sort - b.sort),
   }));
-  const assets = ((ra ?? []) as unknown as { asset: Asset }[]).map((r) => r.asset);
+  // machines taken off a register (active = false) or retired are not shown on its form
+  const assets = ((ra ?? []) as unknown as { active?: boolean; asset: Asset & { status?: string } }[])
+    .filter((r) => r.active !== false && r.asset && r.asset.status !== "retired").map((r) => r.asset);
 
   const pinnedIds = [...new Set(sections.flatMap((s) => s.fields.map((f) => f.asset_id)).filter(Boolean))] as string[];
   const fieldAssets: Record<string, Asset> = {};

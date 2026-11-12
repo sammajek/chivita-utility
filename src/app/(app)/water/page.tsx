@@ -90,15 +90,15 @@ export default async function WaterPage({ searchParams }: { searchParams: Promis
       {dates.length > 0 && (
         <div className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Recent results · {point}</h2>
-          <table className="data-table w-full min-w-[600px] text-xs">
-            <thead><tr className="text-left text-gray-500"><th className="py-1">Parameter</th>{dates.map((d) => <th key={d} className="px-1"><Link className="text-brand-blue" href={href({ date: d })}>{d.slice(5)}</Link></th>)}</tr></thead>
+          <table className="data-table min-w-[600px]">
+            <thead><tr><th>Parameter</th>{dates.map((d) => <th key={d} className="center px-2"><Link className="text-brand-blue" href={href({ date: d })}>{d.slice(5)}</Link></th>)}</tr></thead>
             <tbody>
               {shown.map((t) => (
-                <tr key={t.id} className="border-t">
-                  <td className="py-1 pr-2">{t.parameter}</td>
+                <tr key={t.id}>
+                  <td>{t.parameter}</td>
                   {dates.map((d) => {
                     const r = results.find((x) => x.test_id === t.id && x.sampled_on === d);
-                    return <td key={d} className="px-1">{r ? <span className={`rounded px-1 ${WATER_STYLE[r.status]}`} title={WATER_LABEL[r.status]}>{r.value_num ?? "✓"}</span> : ""}</td>;
+                    return <td key={d} className="center px-2">{r ? <span className={`rounded px-1 ${WATER_STYLE[r.status]}`} title={WATER_LABEL[r.status]}>{r.value_num ?? "✓"}</span> : ""}</td>;
                   })}
                 </tr>
               ))}

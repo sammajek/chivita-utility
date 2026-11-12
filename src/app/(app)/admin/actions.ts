@@ -148,3 +148,12 @@ export async function importStaffCsv(_p: AdminState, f: FormData): Promise<Admin
   await supabase.rpc("link_staff_profiles");
   return done(null, `${rows.length} staff imported / updated.`);
 }
+
+/** Admin gives someone a temporary password (they should change it after signing in: menu → Change password). */
+export async function setTempPassword(_p: AdminState, f: FormData): Promise<AdminState> {
+  await requireRole("admin");
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("admin_set_temp_password", { p_user: String(f.get("id")), p_password: String(f.get("password") ?? "") });
+  if (error) return { error: error.message };
+  return { ok: "Temporary password set. Give it to the person and ask them to change it (menu → Change password)." };
+}

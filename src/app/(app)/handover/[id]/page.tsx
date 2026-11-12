@@ -79,10 +79,18 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
         <div>
           <h2 className="section-title">Water treatment plant</h2>
           <dl className="mt-1 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-3">
-            <div><dt className="text-xs text-gray-500">Raw water pump running</dt><dd>{cell(c.wtp?.raw_running)}</dd></div>
-            <div><dt className="text-xs text-gray-500">Treated water pump running</dt><dd>{cell(c.wtp?.treated_running)}</dd></div>
-            <div><dt className="text-xs text-gray-500">Standby</dt><dd>{cell(c.wtp?.standby)}</dd></div>
-            <div><dt className="text-xs text-gray-500">pH</dt><dd>{cell(c.wtp?.ph)}</dd></div>
+            {c.wtp?.raw_count !== undefined ? (<>
+              <div><dt className="text-xs text-gray-500">No. of raw water pumps running</dt><dd>{cell(c.wtp?.raw_count)}</dd></div>
+              <div><dt className="text-xs text-gray-500">No. of treated water pumps running</dt><dd>{cell(c.wtp?.treated_count)}</dd></div>
+              <div><dt className="text-xs text-gray-500">Standby</dt><dd>{cell(c.wtp?.standby)}</dd></div>
+              <div><dt className="text-xs text-gray-500">pH – raw water</dt><dd>{cell(c.wtp?.ph_raw)}</dd></div>
+              <div><dt className="text-xs text-gray-500">pH – treated water</dt><dd>{cell(c.wtp?.ph_treated)}</dd></div>
+            </>) : (<>
+              <div><dt className="text-xs text-gray-500">Raw water pump running</dt><dd>{cell(c.wtp?.raw_running)}</dd></div>
+              <div><dt className="text-xs text-gray-500">Treated water pump running</dt><dd>{cell(c.wtp?.treated_running)}</dd></div>
+              <div><dt className="text-xs text-gray-500">Standby</dt><dd>{cell(c.wtp?.standby)}</dd></div>
+              <div><dt className="text-xs text-gray-500">pH</dt><dd>{cell(c.wtp?.ph)}</dd></div>
+            </>)}
             <div><dt className="text-xs text-gray-500">Water level – raw</dt><dd>{cell(c.wtp?.raw_level)}</dd></div>
             <div><dt className="text-xs text-gray-500">Water level – treated</dt><dd>{cell(c.wtp?.treated_level)}</dd></div>
             <div className="sm:col-span-3"><dt className="text-xs text-gray-500">Maintenance / faults</dt><dd className={c.wtp?.faults ? "text-crit" : ""}>{cell(c.wtp?.faults)}</dd></div>

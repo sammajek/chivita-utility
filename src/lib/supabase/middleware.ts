@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { isSupabaseConfigured, supabaseAnonKey, supabaseUrl } from "@/lib/env";
 
 // /api/logger: devices authenticate with their own logger key, not a login.
-const PUBLIC_PATHS = ["/login", "/signup", "/setup", "/api/logger"];
+const PUBLIC_PATHS = ["/login", "/signup", "/setup", "/api/logger", "/forgot-password", "/reset-password", "/auth"];
 
 /** Refreshes the auth session cookie and sends signed-out users to /login. */
 export async function updateSession(request: NextRequest) {

@@ -8,7 +8,8 @@ update public.profiles set role = 'engineer', active = true where email = 'pmeng
 
 do $$
 begin
-  assert (select count(*) from public.pm_tasks) = 277, 'all 277 PM rows loaded';
+  assert (select count(*) from public.pm_tasks where equipment_as_written not like '% (UTILITY 2)') = 277, 'all 277 PM rows loaded';
+  assert (select count(*) from public.pm_tasks where equipment_as_written like '% (UTILITY 2)') = 5, 'Utility 2 copies (air receivers, softener)';
   assert (select count(*) from public.pm_tasks where asset_id is not null) > 230, 'most PM rows mapped to assets';
   assert public.pm_period_start('weekly', '2026-10-10') = '2026-10-04', 'week starts Sunday';
   assert public.pm_period_start('quarterly', '2026-11-20') = '2026-10-01', 'quarter start';

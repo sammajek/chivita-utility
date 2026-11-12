@@ -37,18 +37,20 @@ export async function prefillHandover(areas: string[], shiftDate: string, shift:
       if (x.value_num !== null && !latest.has(k)) latest.set(k, x.value_num);
     }
   }
-  const wtpAssets = assets.filter((x) => ["Water Treatment", "Filtration", "UV Systems", "Pumps"].includes(x.category?.name ?? ""));
+  // raw / treated water pumps are entered as "number running", so they are not in the tick list
+  const wtpAssets = assets.filter((x) => ["Water Treatment", "Filtration", "UV Systems", "Pumps"].includes(x.category?.name ?? "") && !["PMP-RW", "PMP-TW"].includes(x.code));
   const wtpItems = wtpAssets.map((x) => ({ code: x.code, name: x.name, status: statusOf(x) }));
   const wtpNote = reasons(wtpAssets);
-  const label = (code: string) => { const s = wtpItems.find((i) => i.code === code)?.status; return s === "running" ? "Yes" : s ?? ""; };
-  const ph = latest.get("pH") ?? latest.get("Treated Water pH") ?? latest.get("Raw Water pH");
+  const phRaw = latest.get("Raw Water pH");
+  const phTreated = latest.get("Treated Water pH") ?? latest.get("pH");
   const sum = summarise(wtpItems, wtpNote);
   return {
     groups,
     fuel: f.map((x) => `${x.name}: ${Math.round(Number(x.used)).toLocaleString()} ${x.unit ?? ""}`).join("; "),
     wtp: {
-      raw_running: label("PMP-RW"), treated_running: label("PMP-TW"), standby: sum.standby,
-      ph: ph != null ? String(ph) : "",
+      raw_running: "", treated_running: "", standby: sum.standby, ph: "",
+      raw_count: "", treated_count: "",
+      ph_raw: phRaw != null ? String(phRaw) : "", ph_treated: phTreated != null ? String(phTreated) : "",
       raw_level: latest.has("Raw Water Tank Level") ? `${latest.get("Raw Water Tank Level")} %` : "",
       treated_level: latest.has("Process Water Tank Level") ? `${latest.get("Process Water Tank Level")} %` : "",
       faults: sum.faults, items: wtpItems, note: wtpNote,

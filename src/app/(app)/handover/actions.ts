@@ -32,15 +32,15 @@ export async function submitHandover(_p: Msg, f: FormData): Promise<Msg> {
   const wtpItems = machines(f, "w");
   const wtpNote = s(f, "w-note");
   const wtpSum = wtpItems ? summarise(wtpItems, wtpNote) : null;
-  const pump = (code: string) => { const st = wtpItems?.find((i) => i.code === code)?.status; return st === "running" ? "Yes" : st || ""; };
   const content: HandoverContent = {
     groups: Object.fromEntries(HANDOVER_GROUPS.map((g) => [g.key, group(f, g.key)])),
     fuel: s(f, "fuel"),
     wtp: {
-      raw_running: wtpItems ? pump("PMP-RW") : s(f, "wtp:raw_running"),
-      treated_running: wtpItems ? pump("PMP-TW") : s(f, "wtp:treated_running"),
+      raw_running: s(f, "wtp:raw_count"), treated_running: s(f, "wtp:treated_count"),
+      raw_count: s(f, "wtp:raw_count"), treated_count: s(f, "wtp:treated_count"),
+      ph_raw: s(f, "wtp:ph_raw"), ph_treated: s(f, "wtp:ph_treated"),
       standby: wtpSum ? wtpSum.standby : s(f, "wtp:standby"),
-      ph: s(f, "wtp:ph"), raw_level: s(f, "wtp:raw_level"), treated_level: s(f, "wtp:treated_level"),
+      ph: "", raw_level: s(f, "wtp:raw_level"), treated_level: s(f, "wtp:treated_level"),
       faults: wtpSum ? wtpSum.faults : s(f, "wtp:faults"),
       ...(wtpItems ? { items: wtpItems, note: wtpNote } : {}),
     },

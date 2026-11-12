@@ -90,10 +90,10 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
 
       <div className="table-wrap">
         <table className="data-table compact min-w-[1040px]">
-          <thead className="bg-gray-50 text-gray-600">
-            <tr><th className="min-w-56">KPI</th><th>Category</th><th className="num">Target</th>
-              {QUARTERS.map(([q, ms]) => [...ms.map((m) => <th key={m} className="p-1">{MONTHS[m - 1]}</th>), <th key={q} className="bg-gray-100 p-1">{q}</th>])}
-              <th className="bg-gray-200 p-1">YTD</th></tr>
+          <thead>
+            <tr><th className="min-w-56">KPI</th><th>Category</th><th className="center">Target</th>
+              {QUARTERS.map(([q, ms]) => [...ms.map((m) => <th key={m} className="center p-1">{MONTHS[m - 1]}</th>), <th key={q} className="center bg-gray-100 p-1">{q}</th>])}
+              <th className="center bg-gray-200 p-1">YTD</th></tr>
           </thead>
           <tbody>
             {kpis.map((k) => {
@@ -103,7 +103,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
                 return <td key={key} className={`p-1 text-center ${CELL[st]} ${strong ? "font-semibold" : ""}`}>{v === null ? "—" : `${v}%`}{strong && v !== null ? ` ${ICON[st]}` : ""}</td>;
               };
               return (
-                <tr key={k.code} className="border-t">
+                <tr key={k.code}>
                   <td className="font-medium" title={k.formula}>{k.name}<span className="ml-1.5 rounded bg-gray-100 px-1 text-[10px] font-normal text-gray-500">{k.source === "auto" ? "auto" : "weekly"}</span></td>
                   <td className="whitespace-nowrap text-gray-500">{k.category}</td>
                   <td className="p-1 text-center">{k.target_text}</td>
@@ -152,15 +152,15 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
       {logs.length > 0 && (
         <section className="card overflow-x-auto">
           <h2 className="mb-2 font-semibold">Weekly log history</h2>
-          <table className="data-table w-full min-w-[640px] text-xs">
-            <thead className="text-left text-gray-500"><tr><th>Week</th><th>GEMBA</th><th>Unsafe acts</th><th>Permits / jobs</th><th>THERMAX</th><th>Notes</th></tr></thead>
+          <table className="data-table min-w-[640px]">
+            <thead><tr><th>Week</th><th className="num">GEMBA</th><th className="num">Unsafe acts</th><th className="num">Permits / jobs</th><th className="num">THERMAX</th><th>Notes</th></tr></thead>
             <tbody>
               {logs.map((l) => (
-                <tr key={l.week_start} className="border-t">
-                  <td className="py-1"><Link href={qs({ week: l.week_start })} className="text-brand-blue">{l.week_start}</Link></td>
-                  <td>{l.gemba_closed ?? "–"}/{l.gemba_raised ?? "–"}</td><td>{l.unsafe_reported ?? "–"}/{l.unsafe_observed ?? "–"}</td>
-                  <td>{l.permits_issued ?? "–"}/{l.non_routine_jobs ?? "–"}</td>
-                  <td>{l.thermax_acted ?? "–"}/{l.thermax_callouts ?? "–"}</td><td className="text-gray-600">{String(l.notes ?? "")}</td>
+                <tr key={l.week_start}>
+                  <td><Link href={qs({ week: l.week_start })} className="text-brand-blue">{l.week_start}</Link></td>
+                  <td className="num">{l.gemba_closed ?? "–"}/{l.gemba_raised ?? "–"}</td><td className="num">{l.unsafe_reported ?? "–"}/{l.unsafe_observed ?? "–"}</td>
+                  <td className="num">{l.permits_issued ?? "–"}/{l.non_routine_jobs ?? "–"}</td>
+                  <td className="num">{l.thermax_acted ?? "–"}/{l.thermax_callouts ?? "–"}</td><td className="text-gray-600">{String(l.notes ?? "")}</td>
                 </tr>
               ))}
             </tbody>

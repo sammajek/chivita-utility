@@ -240,13 +240,13 @@ async function Schedule({ today, area, header, tabs, areaPicker }: {
       <div className="card overflow-x-auto">
         <h2 className="mb-2 font-semibold">Equipment PM: last done and next due</h2>
         <table className="data-table w-full min-w-[640px] text-sm">
-          <thead className="text-left text-xs text-gray-500">
-            <tr><th className="py-1">Equipment</th><th>Frequency</th><th>Last done</th><th>Next due by</th><th></th></tr>
+          <thead>
+            <tr><th>Equipment</th><th>Frequency</th><th>Last done</th><th>Next due by</th><th></th></tr>
           </thead>
           <tbody>
             {rows.map(({ t, last, lastResult, nextDue, overdue }) => (
-              <tr key={t.id} className="border-t align-top">
-                <td className="py-1.5">
+              <tr key={t.id}>
+                <td>
                   {t.equipment_as_written.replace(/\.$/, "")}
                   {t.asset && <span className="ml-1 text-xs text-gray-500">({t.asset.code})</span>}
                   {t.hours_interval && <div className="text-xs text-gray-500">{t.hours_interval.toLocaleString()} h service</div>}

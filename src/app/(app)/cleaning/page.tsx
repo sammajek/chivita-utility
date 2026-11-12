@@ -108,14 +108,14 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
       <div className="card overflow-x-auto">
         <h2 className="mb-2 font-semibold">Last 8 weeks</h2>
         <table className="data-table w-full text-sm">
-          <thead className="text-left text-xs text-gray-500"><tr><th className="py-1">Week</th><th>Done</th><th>Compliance</th><th>Sign-off</th></tr></thead>
+          <thead><tr><th>Week</th><th className="num">Done</th><th className="num">Compliance</th><th className="center">Sign-off</th></tr></thead>
           <tbody>
             {history.map((h) => (
-              <tr key={h.w} className="border-t">
-                <td className="py-1"><Link className="text-brand-blue" href={`/cleaning?week=${h.w}`}>{pmPeriodLabel("weekly", h.w)}</Link></td>
-                <td>{h.done}/{perWeek}</td>
-                <td className={(h.pct ?? 0) < 80 ? "text-warn" : ""}>{h.pct === null ? "–" : `${h.pct}%`}</td>
-                <td>{h.signed ? "✓" : "—"}</td>
+              <tr key={h.w}>
+                <td><Link className="text-brand-blue" href={`/cleaning?week=${h.w}`}>{pmPeriodLabel("weekly", h.w)}</Link></td>
+                <td className="num">{h.done}/{perWeek}</td>
+                <td className={`num ${(h.pct ?? 0) < 80 ? "text-warn" : ""}`}>{h.pct === null ? "–" : `${h.pct}%`}</td>
+                <td className="center">{h.signed ? "✓" : "—"}</td>
               </tr>
             ))}
           </tbody>

@@ -43,23 +43,29 @@ export default async function RcaListPage() {
           </ul>
         </section>
       )}
-      <ul className="space-y-2">
-        {rows.map((r) => (
-          <li key={r.id}>
-            <Link href={`/rca/${r.id}`} className="card block hover:border-brand-blue">
-              <div className="flex justify-between gap-2 text-xs text-gray-500">
-                <span className="font-semibold">{r.rca_no} · {r.asset?.code} {r.is_demo && <DemoBadge />}</span>
-                <span className={r.target_date && r.target_date < today && !r.status.startsWith("Closed") ? "font-semibold text-crit" : ""}>
-                  Target {r.target_date ?? "—"}
-                </span>
-              </div>
-              <div className="mt-1 text-sm">{r.problem}</div>
-              <div className="mt-1 text-xs text-gray-500">{r.status} · {r.category_6m ?? "6M not set"} · owner {r.owner?.full_name ?? "—"}{r.cost_ngn ? ` · ₦${r.cost_ngn.toLocaleString()}` : ""}</div>
-            </Link>
-          </li>
-        ))}
-        {rows.length === 0 && <li className="card text-sm text-gray-500">No RCAs yet.</li>}
-      </ul>
+      <div className="table-wrap">
+        <table className="data-table min-w-[900px]">
+          <thead><tr><th>RCA</th><th>Equipment</th><th>Problem</th><th>6M</th><th>Owner</th><th>Target</th><th className="num">Cost (₦)</th><th>Status</th></tr></thead>
+          <tbody>
+            {rows.map((r) => {
+              const late = r.target_date && r.target_date < today && !r.status.startsWith("Closed");
+              return (
+                <tr key={r.id}>
+                  <td className="code"><Link href={`/rca/${r.id}`} className="text-brand-blue">{r.rca_no}</Link>{r.is_demo && <span className="ml-1"><DemoBadge /></span>}</td>
+                  <td className="code">{r.asset?.code ?? "—"}</td>
+                  <td className="max-w-md">{r.problem}</td>
+                  <td>{r.category_6m ?? "—"}</td>
+                  <td>{r.owner?.full_name ?? "—"}</td>
+                  <td className={`whitespace-nowrap ${late ? "font-semibold text-crit" : ""}`}>{r.target_date ?? "—"}</td>
+                  <td className="num">{r.cost_ngn ? r.cost_ngn.toLocaleString() : "—"}</td>
+                  <td>{r.status}</td>
+                </tr>
+              );
+            })}
+            {rows.length === 0 && <tr><td colSpan={8} className="text-gray-500">No RCAs yet.</td></tr>}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

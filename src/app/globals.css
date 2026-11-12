@@ -72,6 +72,7 @@ body {
 
 /* ---------- Data tables: one look everywhere ----------
    Unlayered on purpose so it wins over spacing utilities left on individual cells. */
+@layer components {
 .data-table {
   width: 100%;
   border-collapse: separate;
@@ -100,6 +101,7 @@ body {
 .data-table .num, .data-table th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .data-table .code { white-space: nowrap; font-weight: 600; }
 .data-table.compact thead th, .data-table.compact tbody td { padding: 0.35rem 0.5rem; }
+}
 /* framed tables: rounded white box with scrolling inside on small screens */
 .table-wrap {
   overflow-x: auto;
@@ -115,4 +117,36 @@ body {
   .no-print { display: none !important; }
   body { background: white; }
   .table-wrap { border: 0; box-shadow: none; overflow: visible; }
+}
+
+/* Expandable table: aligned columns (set --cols on .grid-list), rows open to show details / forms.
+   On phones each row stacks its cells; from 640px it is a real column grid with a header. */
+.grid-list { border: 1px solid #e5e7eb; border-radius: 0.75rem; background: white; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04); overflow: hidden; }
+.grid-list-head { display: none; }
+.grid-list-row + .grid-list-row { border-top: 1px solid #f1f2f4; }
+.grid-list-row > summary { list-style: none; cursor: pointer; padding: 0.7rem 0.9rem; display: flex; flex-wrap: wrap; gap: 0.15rem 0.9rem; font-size: 0.875rem; }
+.grid-list-row > summary::-webkit-details-marker { display: none; }
+.grid-list-row > summary:hover { background: #fafbfc; }
+.grid-list-row[open] > summary { background: #f9fafb; border-bottom: 1px solid #f1f2f4; }
+.grid-list-row > .grid-list-body { padding: 0.9rem; }
+.grid-list-cell { min-width: 0; }
+.grid-list-row > summary > .grid-list-cell:first-child { flex-basis: 100%; }
+.grid-list-cell.muted { color: #4b5563; font-size: 0.8rem; }
+.grid-list-cell.num { font-variant-numeric: tabular-nums; }
+@media (min-width: 640px) {
+  .grid-list-row > summary > .grid-list-cell:first-child { flex-basis: auto; }
+  .grid-list-head, .grid-list-row > summary { display: grid; grid-template-columns: var(--cols); gap: 0 0.9rem; align-items: start; }
+  .grid-list-head { background: #f9fafb; border-bottom: 1px solid #e5e7eb; padding: 0.6rem 0.9rem; color: #6b7280; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+  .grid-list-cell.muted { font-size: 0.875rem; }
+  .grid-list-cell.num, .grid-list-head .num { text-align: right; }
+}
+
+/* Tables inside a card line up with the card's heading (no extra indent, no grey header strip). */
+@layer components {
+.card .data-table:not(.table-wrap .data-table) thead th { background: transparent; padding-top: 0.4rem; }
+.card .data-table:not(.table-wrap .data-table) th:first-child,
+.card .data-table:not(.table-wrap .data-table) td:first-child { padding-left: 0; }
+.card .data-table:not(.table-wrap .data-table) th:last-child,
+.card .data-table:not(.table-wrap .data-table) td:last-child { padding-right: 0; }
+.data-table .center, .data-table th.center { text-align: center; }
 }

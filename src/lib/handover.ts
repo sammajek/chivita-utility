@@ -24,7 +24,9 @@ export interface HandoverContent {
   groups: Record<string, GroupStatus>;
   fuel: string;
   wtp: { raw_running: string; treated_running: string; standby: string; ph: string; raw_level: string; treated_level: string; faults: string;
-    items?: MachineItem[]; note?: string };
+    items?: MachineItem[]; note?: string;
+    /** number of raw / treated water pumps running, and pH of raw / treated water (template fields) */
+    raw_count?: string; treated_count?: string; ph_raw?: string; ph_treated?: string };
   caustic: string;
   checklist: Record<string, { answer: "yes" | "no" | "na"; note?: string }>;
 }

@@ -1,6 +1,6 @@
 -- The seed loaded everything and every field points at a parameter.
 do $$ begin
-  assert (select count(*) from public.assets) = 94, 'assets loaded (93 + Atlas Copco compressor)';
+  assert (select count(*) from public.assets) = 101, 'assets loaded (93 + Atlas Copco + 7 Utility 2 additions from the owner)';
   assert (select count(*) from public.parameters) = 251, 'parameters loaded';
   assert (select count(*) from public.registers) = 28, 'registers loaded';
   assert (select count(*) from public.register_fields) = 428, 'fields loaded';
@@ -11,5 +11,5 @@ end $$;
 -- Re-running the loader is harmless.
 select public.load_master_data('{"assets":[{"code":"BLR-01","name":"changed","category":"Boilers"}]}');
 do $$ begin
-  assert (select name from public.assets where code = 'BLR-01') = 'Boiler 1 (LOOS)', 'reload never overwrites';
+  assert (select name from public.assets where code = 'BLR-01') = 'Boiler 1 (Loos)', 'reload never overwrites';
 end $$;

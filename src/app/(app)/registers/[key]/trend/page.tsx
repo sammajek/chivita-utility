@@ -115,12 +115,12 @@ export default async function TrendPage({ params, searchParams }: { params: Prom
             <summary className="cursor-pointer text-sm font-medium">Table of readings ({points.length})</summary>
             <div className="mt-2 max-h-96 overflow-auto">
               <table className="data-table w-full text-sm">
-                <thead className="sticky top-0 bg-white text-left text-xs text-gray-500">
-                  <tr><th className="py-1">Reading for</th><th>Value</th><th>Status</th><th>By</th><th>Comment</th></tr>
+                <thead>
+                  <tr><th>Reading for</th><th>Value</th><th>Status</th><th>By</th><th>Comment</th></tr>
                 </thead>
                 <tbody>
                   {[...points].reverse().map((d, i) => (
-                    <tr key={i} className="border-t">
+                    <tr key={i}>
                       <td className="py-1 whitespace-nowrap">{formatLagos(d.at)}</td>
                       <td>{d.value ?? d.text} {p.unit}</td>
                       <td><StatusBadge status={d.status as Status} /></td>

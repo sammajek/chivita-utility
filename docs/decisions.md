@@ -234,6 +234,23 @@ Each entry: date, decision, who decided, notes.
   writes it; team-mates add notes to it and check out "covered by the shift handover". Anyone on duty in the next shift
   acknowledges it (every acknowledgement is recorded); people checked in see a "Read & acknowledge" prompt on On duty and
   Handover. Flags: no handover 30 min after a shift ended; not acknowledged 1 h into the next shift.
+- Equipment list corrections (owner, 2026-11-12): BLR-06 = BLR-03 (2 t/h) and BLR-07 = BLR-04 (3.5 t/h waste heat),
+  both Utility 2; IR MH75 (CMP-13) = CMP-11, CMP-11 and CMP-12 in Utility 2; Atlas Copco compressor = CMP-10
+  ("Air Compressor 10 - Oil-free (Atlas Copco)"); DRY-09/10 Utility 2 Ingersoll Rand; DRY-04/05/08 Atlas Copco; Carrier
+  chiller Utility 1; VAM Chiller 4 Utility 2. Removed: DRY-11, DRY-12, VAM Chiller (Utility 2) (merged into CHV-04),
+  Nitrogen Generators 1-2 (Utility 2), Borehole 3 (decommissioned). Added for Utility 2: air receiver tanks and softener
+  plant (PM copied from Utility 1), and the five distribution systems. Nothing is deleted: duplicates are merged and
+  retired, removed items are retired, and register lists switch a machine off instead of deleting the link.
+  Names in title case (e.g. "Utility 1 General Plant", "Boiler 1 (Loos)", "Trane Chiller 1", section titles).
+- Handover water treatment plant (owner, 2026-11-12): "No. of raw water pumps running", "No. of treated water pumps
+  running", "pH – raw water", "pH – treated water".
+- Passwords: "Forgot password?" on the sign-in page emails a reset link (needs the live address set in Supabase and a
+  proper email sender: Supabase's built-in email only reaches members of the Supabase organisation). Until then an admin
+  can set a temporary password (Admin → Users); only the hash is stored and the action is audited. Everyone can change
+  their password from the menu ("Change password").
+- Tables: one table style across the app (header alignment follows the column: numbers right, ticks centred; tables in
+  cards line up with the card heading). Lists with expandable rows (Calibration, Jobs & POs) use aligned columns;
+  Downtime and RCA are tables.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

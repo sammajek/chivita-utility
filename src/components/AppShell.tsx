@@ -85,7 +85,8 @@ export function AppShell({ nav, name, roleLabel, unread, signOut, banners, child
             <Logo height={30} />
           </Link>
           <p className="px-5 pt-3 text-xs font-semibold text-brand-blue">Utility Ops · Engineering</p>
-                    <nav className="flex-1 overflow-y-auto px-2 py-3"><NavGroups nav={nav} path={path} /></nav>
+          <nav className="flex-1 overflow-y-auto px-2 py-3"><NavGroups nav={nav} path={path} /></nav>
+          <Link href="/reset-password" className="border-t border-gray-100 px-5 py-3 text-xs text-gray-500 hover:text-gray-800">Change password</Link>
         </div>
       </aside>
 
@@ -108,6 +109,7 @@ export function AppShell({ nav, name, roleLabel, unread, signOut, banners, child
           {open && (
             <div className="max-h-[calc(100vh-3.5rem)] overflow-y-auto border-t border-gray-100 bg-white px-3 pb-5 pt-4 shadow-lg lg:hidden">
               <NavGroups nav={nav} path={path} onPick={() => setOpen(false)} compact />
+              <Link href="/reset-password" onClick={() => setOpen(false)} className="mt-4 flex min-h-11 items-center rounded-lg px-3 text-sm text-gray-600">Change password</Link>
             </div>
           )}
         </header>

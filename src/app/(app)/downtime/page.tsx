@@ -44,39 +44,40 @@ export default async function DowntimePage({ searchParams }: { searchParams: Pro
         {canLog && <Link href="/downtime/new" className="btn-primary">+ Log downtime</Link>}
       </div>
       {sp.saved && <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-ok">Saved.</p>}
-      <ul className="space-y-2">
-        {events.map((e) => {
-          const hrs = hoursInPeriod(e as never, new Date(0), new Date(8.64e15));
-          return (
-            <li key={e.id} className="card">
-              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
-                <span className="font-semibold">{e.event_no} {e.is_demo && <DemoBadge />}</span>
-                <span>{formatLagos(e.start_at)} · {e.shift} shift</span>
-              </div>
-              <div className="mt-1 font-medium">{e.asset?.code} · {e.asset?.name}</div>
-              <div className="text-sm text-gray-700">{e.downtime_type} · {e.failure_category} → {e.failure_mode}</div>
-              <div className="mt-1 flex flex-wrap items-center gap-2 text-sm">
-                <span className={`rounded px-2 py-0.5 text-xs font-semibold ${e.status === "Closed" ? "bg-gray-100" : "bg-amber-100 text-warn"}`}>{e.status}</span>
-                <span>{hrs.toFixed(2)} h{!e.end_at && " (running)"}</span>
-                {e.followup_stage && <span className={`rounded px-2 py-0.5 text-xs font-semibold ${FU_STYLE[e.followup_stage]}`}>{FU_LABEL[e.followup_stage]}</span>}
-                {e.rca_required && (
-                  e.rcas.length ? (
-                    <Link href={`/rca/${e.rcas[0].id}`} className="text-xs text-brand-blue">{e.rcas[0].rca_no}</Link>
-                  ) : (
-                    <span className="rounded bg-red-100 px-2 py-0.5 text-xs font-semibold text-crit" title={e.rca_reason ?? ""}>RCA required</span>
-                  )
-                )}
-              </div>
-              <div className="mt-2 flex gap-3 text-sm">
-                <Link href={`/downtime/${e.id}`} className="font-semibold text-brand-blue">Follow up / photos</Link>
-                {canLog && <Link href={`/downtime/new?id=${e.id}`} className="text-brand-blue">Update</Link>}
-                {canRca && e.rca_required && !e.rcas.length && <Link href={`/rca/new?downtime=${e.id}`} className="text-brand-blue">Start RCA</Link>}
-              </div>
-            </li>
-          );
-        })}
-        {events.length === 0 && <li className="card text-sm text-gray-500">No downtime events.</li>}
-      </ul>
+      <div className="table-wrap">
+        <table className="data-table min-w-[960px]">
+          <thead><tr><th>Event</th><th>Start</th><th>Equipment</th><th>Type / failure</th><th className="num">Hours</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            {events.map((e) => {
+              const hrs = hoursInPeriod(e as never, new Date(0), new Date(8.64e15));
+              return (
+                <tr key={e.id}>
+                  <td className="code"><Link href={`/downtime/${e.id}`} className="text-brand-blue">{e.event_no}</Link>{e.is_demo && <span className="ml-1"><DemoBadge /></span>}</td>
+                  <td className="whitespace-nowrap">{formatLagos(e.start_at)}<span className="block text-xs text-gray-500">{e.shift} shift</span></td>
+                  <td><b>{e.asset?.code}</b><span className="block text-xs text-gray-500">{e.asset?.name}</span></td>
+                  <td>{e.downtime_type}<span className="block text-xs text-gray-500">{e.failure_category} → {e.failure_mode}</span></td>
+                  <td className="num">{hrs.toFixed(2)}{!e.end_at && <span className="block text-xs text-warn">running</span>}</td>
+                  <td>
+                    <div className="flex flex-wrap gap-1">
+                      <span className={`rounded px-2 py-0.5 text-xs font-semibold ${e.status === "Closed" ? "bg-gray-100" : "bg-amber-100 text-warn"}`}>{e.status}</span>
+                      {e.followup_stage && <span className={`rounded px-2 py-0.5 text-xs font-semibold ${FU_STYLE[e.followup_stage]}`}>{FU_LABEL[e.followup_stage]}</span>}
+                      {e.rca_required && (e.rcas.length
+                        ? <Link href={`/rca/${e.rcas[0].id}`} className="rounded bg-blue-50 px-2 py-0.5 text-xs font-semibold text-brand-blue">{e.rcas[0].rca_no}</Link>
+                        : <span className="rounded bg-red-100 px-2 py-0.5 text-xs font-semibold text-crit" title={e.rca_reason ?? ""}>RCA required</span>)}
+                    </div>
+                  </td>
+                  <td className="whitespace-nowrap text-sm">
+                    <Link href={`/downtime/${e.id}`} className="font-semibold text-brand-blue">Follow up</Link>
+                    {canLog && <><span className="text-gray-300"> · </span><Link href={`/downtime/new?id=${e.id}`} className="text-brand-blue">Update</Link></>}
+                    {canRca && e.rca_required && !e.rcas.length && <><span className="text-gray-300"> · </span><Link href={`/rca/new?downtime=${e.id}`} className="text-brand-blue">Start RCA</Link></>}
+                  </td>
+                </tr>
+              );
+            })}
+            {events.length === 0 && <tr><td colSpan={7} className="text-gray-500">No downtime events.</td></tr>}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

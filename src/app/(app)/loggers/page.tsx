@@ -64,13 +64,13 @@ Content-Type: application/json
       <section className="card overflow-x-auto">
         <h2 className="mb-2 font-semibold">Latest logger data</h2>
         {rows.length === 0 ? <p className="text-sm text-gray-500">Nothing received yet.</p> : (
-          <table className="data-table w-full min-w-[640px] text-xs">
-            <thead className="text-left text-gray-500"><tr><th>Time</th><th>Logger</th><th>Point</th><th>Value</th><th>Used as</th></tr></thead>
+          <table className="data-table min-w-[640px]">
+            <thead><tr><th>Time</th><th>Logger</th><th>Point</th><th className="num">Value</th><th>Used as</th></tr></thead>
             <tbody>{rows.map((r) => (
-              <tr key={r.id} className="border-t">
-                <td className="py-1">{formatLagos(r.ts)}</td><td>{r.logger?.name}</td>
+              <tr key={r.id}>
+                <td>{formatLagos(r.ts)}</td><td>{r.logger?.name}</td>
                 <td>{r.meter?.code ?? `${r.asset?.code ?? "?"} · ${r.parameter?.name ?? "?"}`}</td>
-                <td>{r.value_num ?? r.value_text}</td>
+                <td className="num">{r.value_num ?? r.value_text}</td>
                 <td className={r.placed === "rejected" ? "text-crit" : ""}>{PLACED[r.placed]}{r.note ? `: ${r.note}` : ""}</td>
               </tr>
             ))}</tbody>

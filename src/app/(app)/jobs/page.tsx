@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { StatTile } from "@/components/BarList";
+import { GridList, GridRow } from "@/components/GridList";
 import { ActionForm } from "@/components/ActionForm";
 import { saveJob, saveOrder, voidJobRecord } from "./actions";
 
@@ -87,38 +88,32 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
         </div>
         <form className="flex gap-2" action="/jobs">
           <input type="hidden" name="tab" value={tab} />
-          <select name="show" defaultValue={show} className="rounded-lg border border-gray-300 px-2 text-sm">
+          <select name="show" defaultValue={show} className="input w-auto py-2">
             <option value="open">Open only</option><option value="all">All</option>
           </select>
-          <input name="q" defaultValue={sp.q} placeholder="Search" className="w-36 rounded-lg border border-gray-300 px-2 py-2 text-sm" />
-          <button className="btn-secondary px-3 py-2 text-sm">Go</button>
+          <input name="q" defaultValue={sp.q} placeholder="Search" className="input w-40 py-2" />
+          <button className="btn-secondary btn-sm">Go</button>
         </form>
       </div>
 
       {tab === "jobs" ? (
-        <div className="space-y-2">
-          {shownJobs.map((j) => (
-            <details key={j.id} className="card">
-              <summary className="cursor-pointer list-none">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="font-medium">{j.description}</span>
-                  <span className={`rounded px-2 py-0.5 text-xs font-semibold ${STATUS_CLS[j.status] ?? "bg-amber-50 text-warn"}`}>{j.status}</span>
-                </div>
-                <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-gray-600">
-                  <span>{j.request_date ?? "no date"}</span>
-                  {j.cs_number && <span>{j.cs_number}</span>}
-                  {j.brk_number && <span>{j.brk_number}</span>}
-                  {j.po_number && <span>{j.po_number} · {ngn(j.po_value_ngn)}</span>}
-                  {j.vendor && <span>{j.vendor}</span>}
-                  <span className="font-semibold">{stage(j)}</span>
-                  {j.recorded_by_type === "logger" && <span className="text-gray-400">from Excel</span>}
-                </div>
-              </summary>
-              {j.remarks && <p className="mt-2 text-sm text-gray-600">{j.remarks}</p>}
-              {canEdit && <JobForm job={j} />}
-            </details>
-          ))}
-          {!shownJobs.length && <p className="text-sm text-gray-500">Nothing to show.</p>}
+        <div className="space-y-3">
+          <GridList cols="minmax(0,2.4fr) 6.5rem minmax(0,1.2fr) minmax(0,1.2fr) 8rem minmax(0,1fr)"
+            head={[{ label: "Job" }, { label: "Requested" }, { label: "CS / BRK no." }, { label: "PO / vendor" }, { label: "Status" }, { label: "Stage" }]}>
+            {shownJobs.map((j) => (
+              <GridRow key={j.id} cells={[
+                { content: <b className="font-medium">{j.description}</b> },
+                { content: j.request_date ?? "—", muted: true },
+                { content: [j.cs_number, j.brk_number].filter(Boolean).join(" · ") || "—", muted: true },
+                { content: j.po_number ? <>{j.po_number} · {ngn(j.po_value_ngn)}{j.vendor && <span className="block">{j.vendor}</span>}</> : j.vendor ?? "—", muted: true },
+                { content: <span className={`inline-block rounded px-2 py-0.5 text-xs font-semibold ${STATUS_CLS[j.status] ?? "bg-amber-50 text-warn"}`}>{j.status}</span> },
+                { content: <>{stage(j)}{j.recorded_by_type === "logger" && <span className="block text-xs text-gray-400">from Excel</span>}</>, muted: true },
+              ]}>
+                {j.remarks && <p className="mb-2 text-sm text-gray-600">{j.remarks}</p>}
+                {canEdit ? <JobForm job={j} /> : !j.remarks && <p className="text-sm text-gray-500">No remarks.</p>}
+              </GridRow>
+            ))}
+          </GridList>
           {canEdit && (
             <details className="card">
               <summary className="cursor-pointer font-semibold">+ New job request</summary>
@@ -127,28 +122,22 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
           )}
         </div>
       ) : (
-        <div className="space-y-2">
-          {shownOrders.map((o) => (
-            <details key={o.id} className="card">
-              <summary className="cursor-pointer list-none">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="whitespace-pre-line font-medium">{o.items}</span>
-                  <span className={`rounded px-2 py-0.5 text-xs font-semibold ${o.received_date ? "bg-green-100 text-ok" : STATUS_CLS[o.status] ?? "bg-amber-50 text-warn"}`}>
-                    {o.received_date ? "Received" : o.status}
-                  </span>
-                </div>
-                <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-gray-600">
-                  <span>{o.order_date ?? "no date"}</span>
-                  {o.mrs_number && <span>{o.mrs_number}</span>}
-                  {o.po_number && <span>{o.po_number} · {ngn(o.po_value_ngn)}</span>}
-                  {o.vendor && <span>{o.vendor}</span>}
-                </div>
-              </summary>
-              {o.remarks && <p className="mt-2 text-sm text-gray-600">{o.remarks}</p>}
-              {canEdit && <OrderForm order={o} />}
-            </details>
-          ))}
-          {!shownOrders.length && <p className="text-sm text-gray-500">Nothing to show.</p>}
+        <div className="space-y-3">
+          <GridList cols="minmax(0,2.4fr) 6.5rem minmax(0,1fr) minmax(0,1.4fr) 8rem"
+            head={[{ label: "Items" }, { label: "Ordered" }, { label: "MRS no." }, { label: "PO / vendor" }, { label: "Status" }]}>
+            {shownOrders.map((o) => (
+              <GridRow key={o.id} cells={[
+                { content: <b className="whitespace-pre-line font-medium">{o.items}</b> },
+                { content: o.order_date ?? "—", muted: true },
+                { content: o.mrs_number ?? "—", muted: true },
+                { content: o.po_number ? <>{o.po_number} · {ngn(o.po_value_ngn)}{o.vendor && <span className="block">{o.vendor}</span>}</> : o.vendor ?? "—", muted: true },
+                { content: <span className={`inline-block rounded px-2 py-0.5 text-xs font-semibold ${o.received_date ? "bg-green-100 text-ok" : STATUS_CLS[o.status] ?? "bg-amber-50 text-warn"}`}>{o.received_date ? "Received" : o.status}</span> },
+              ]}>
+                {o.remarks && <p className="mb-2 text-sm text-gray-600">{o.remarks}</p>}
+                {canEdit ? <OrderForm order={o} /> : !o.remarks && <p className="text-sm text-gray-500">No remarks.</p>}
+              </GridRow>
+            ))}
+          </GridList>
           {canEdit && (
             <details className="card">
               <summary className="cursor-pointer font-semibold">+ New item order</summary>
