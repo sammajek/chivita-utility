@@ -65,3 +65,39 @@ export async function addContract(_prev: State, form: FormData): Promise<State> 
   revalidatePath("/amc");
   return { ok: "Contract added." };
 }
+
+/** Edit a contract's details (managers). */
+export async function updateContract(_prev: State, form: FormData): Promise<State> {
+  const description = String(form.get("description") ?? "").trim().toUpperCase();
+  const vendor = String(form.get("vendor") ?? "").trim().toUpperCase();
+  if (!description || !vendor) return { error: "Enter the description and the vendor." };
+  const area = String(form.get("area") ?? "");
+  const supabase = await createClient();
+  const { error } = await supabase.from("amc_contracts").update({
+    description, vendor, area: area === "U1" || area === "U2" ? area : null,
+    start_date: String(form.get("start_date") || "") || null,
+    end_date: String(form.get("end_date") || "") || null,
+    notes: String(form.get("notes") ?? "").trim() || null,
+  } as never).eq("id", String(form.get("id")));
+  if (error) return { error: error.code === "23505" ? "Another contract has that description." : error.message };
+  revalidatePath("/amc");
+  return { ok: "Saved." };
+}
+
+/** End (remove) a contract: it leaves the tracker and raises no more flags; its visit history is kept. */
+export async function endContract(_prev: State, form: FormData): Promise<State> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("end_amc_contract", { p_id: String(form.get("id")), p_reason: String(form.get("reason") ?? "").trim() });
+  if (error) return { error: error.message };
+  revalidatePath("/amc");
+  revalidatePath("/flags");
+  return { ok: "Contract ended and removed from the tracker." };
+}
+
+export async function reactivateContract(_prev: State, form: FormData): Promise<State> {
+  const supabase = await createClient();
+  const { error } = await supabase.from("amc_contracts").update({ active: true, end_date: null } as never).eq("id", String(form.get("id")));
+  if (error) return { error: error.message };
+  revalidatePath("/amc");
+  return { ok: "Contract back on the tracker." };
+}

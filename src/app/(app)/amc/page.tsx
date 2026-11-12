@@ -6,7 +6,7 @@ import { lagosDate } from "@/lib/time";
 import { StatTile } from "@/components/BarList";
 import { ActionForm } from "@/components/ActionForm";
 import { DemoBadge } from "@/components/StatusBadge";
-import { addContract, recordVisit, togglePlan, voidVisit } from "./actions";
+import { addContract, endContract, reactivateContract, updateContract, recordVisit, togglePlan, voidVisit } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -161,6 +161,8 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
         )}
       </div>
 
+      {isManager && <ManageContracts />}
+
       {isManager && (
         <details className="card">
           <summary className="cursor-pointer font-semibold">Add a contract</summary>
@@ -176,5 +178,46 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
         </details>
       )}
     </div>
+  );
+}
+
+/** Managers: edit a contract, end it (company no longer does the AMC) or bring an ended one back. */
+async function ManageContracts() {
+  const supabase = await createClient();
+  const { data } = await supabase.from("amc_contracts").select("id, description, vendor, area, start_date, end_date, notes, active").order("active", { ascending: false }).order("description");
+  const rows = (data ?? []) as { id: string; description: string; vendor: string; area: string | null; start_date: string | null; end_date: string | null; notes: string | null; active: boolean }[];
+  return (
+    <details className="card">
+      <summary className="cursor-pointer font-semibold">Edit or end contracts</summary>
+      <p className="mt-1 text-xs text-gray-500">Ending a contract removes it from the tracker and stops its flags. Its visit history is kept, and it can be brought back.</p>
+      <div className="mt-3 divide-y">
+        {rows.map((c) => (
+          <div key={c.id} className={`space-y-2 py-3 ${c.active ? "" : "opacity-70"}`}>
+            {c.active ? (
+              <>
+                <ActionForm action={updateContract} submit="Save changes" className="grid gap-2 sm:grid-cols-2">
+                  <input type="hidden" name="id" value={c.id} />
+                  <input name="description" defaultValue={c.description} className="input sm:col-span-2" required />
+                  <input name="vendor" defaultValue={c.vendor} className="input" required />
+                  <select name="area" defaultValue={c.area ?? ""} className="input"><option value="">Both / factory-wide</option><option value="U1">Utility 1</option><option value="U2">Utility 2</option></select>
+                  <label className="block"><span className="text-xs text-gray-600">Contract start</span><input type="date" name="start_date" defaultValue={c.start_date ?? ""} className="input" /></label>
+                  <label className="block"><span className="text-xs text-gray-600">Contract end</span><input type="date" name="end_date" defaultValue={c.end_date ?? ""} className="input" /></label>
+                  <input name="notes" defaultValue={c.notes ?? ""} placeholder="Notes" className="input sm:col-span-2" />
+                </ActionForm>
+                <ActionForm action={endContract} submit="End contract" className="flex flex-wrap items-center gap-2">
+                  <input type="hidden" name="id" value={c.id} />
+                  <input name="reason" required minLength={5} className="input max-w-md py-2" placeholder="Why it ends (e.g. vendor no longer does AMC)" />
+                </ActionForm>
+              </>
+            ) : (
+              <ActionForm action={reactivateContract} submit="Bring back" className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                <input type="hidden" name="id" value={c.id} />
+                <span><b>{c.description}</b> · {c.vendor} · <span className="text-gray-500">ended{c.end_date ? ` ${c.end_date}` : ""}{c.notes ? ` · ${c.notes}` : ""}</span></span>
+              </ActionForm>
+            )}
+          </div>
+        ))}
+      </div>
+    </details>
   );
 }
