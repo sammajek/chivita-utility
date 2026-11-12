@@ -49,7 +49,7 @@ export default async function EquipmentDetail({ params, searchParams }: { params
 
   return (
     <div className="space-y-4">
-      <Link href="/equipment" className="text-sm text-brand-blue">← Equipment</Link>
+      <Link href="/equipment" className="text-sm text-brand-blue">← Equipment Inventory</Link>
       {sp.scanned && (
         <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-ok">✓ Scan recorded. You can now complete this machine’s PMs (valid for 12 hours). <Link href="/pm?freq=monthly" className="font-semibold underline">Go to PM</Link></p>
       )}

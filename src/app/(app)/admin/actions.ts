@@ -198,7 +198,7 @@ export async function addAsset(_p: AdminState, f: FormData): Promise<AdminState>
     capacity: txt(f, "capacity"), location: txt(f, "location"), criticality: txt(f, "criticality"), confirmed: true,
   } as never);
   if (error?.code === "23505") return { error: `${code} already exists.` };
-  return done(error, `${code} added. Add it to its register(s) on the Registers tab and to PM tasks if needed.`);
+  return done(error, `${code} added. Add it to its register(s) on the Registers tab (Equipment Registers) and to PM tasks if needed.`);
 }
 
 /** Edit or add a PM task (library row). */

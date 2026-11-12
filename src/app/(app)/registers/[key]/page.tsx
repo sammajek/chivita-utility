@@ -86,7 +86,7 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
     <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <Link href="/registers" className="text-sm text-brand-blue">← Registers</Link>
+          <Link href="/registers" className="text-sm text-brand-blue">← Equipment Registers</Link>
           <h1 className="page-title">{register.title}</h1>
           <p className="page-sub">
             {register.document_no} · {register.area === "U1" ? "Utility 1" : "Utility 2"}

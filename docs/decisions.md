@@ -252,7 +252,8 @@ Each entry: date, decision, who decided, notes.
   cards line up with the card heading). Lists with expandable rows (Calibration, Jobs & POs) use aligned columns;
   Downtime and RCA are tables.
 - Menu names (owner, 2026-11-12): Preventive Maintenance, Annual Maintenance Contract, Job Orders & POs, Cleaning Schedule,
-  Downtime Log & Analysis, RCA Log & Analysis, Utility Consumption, Water Quality, Instrument Calibration (page titles match).
+  Downtime Log & Analysis, RCA Log & Analysis, Utility Consumption, Water Quality, Instrument Calibration, Equipment
+  Registers, Equipment Inventory (page titles match).
 - Downtime rework (owner approved, 2026-11-12):
   - Types: Unplanned Breakdown, Condition-Based Maintenance (CBM), Planned Maintenance, External Supply Failure.
     Idle / Standby is not downtime (equipment status covers it); old events keep their type and are ignored by KPIs.

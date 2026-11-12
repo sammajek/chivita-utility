@@ -42,7 +42,7 @@ export default async function EquipmentPage({ searchParams }: { searchParams: Pr
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h1 className="page-title">Equipment</h1>
+          <h1 className="page-title">Equipment Inventory</h1>
           <p className="page-sub">All Utility equipment with PM code, PM schedule and specifications. Tap a machine to change its state, log running-hours services or add photos.</p>
         </div>
         <div className="flex gap-2"><a href={`/equipment/csv${qs({}).slice(10)}`} className="btn-secondary btn-sm">Download CSV</a><Link href="/equipment/labels" className="btn-secondary btn-sm">QR labels</Link></div>
