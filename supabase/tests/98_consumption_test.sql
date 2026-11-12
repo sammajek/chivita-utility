@@ -4,15 +4,15 @@ insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000000c9
 update public.profiles set role = 'operator', active = true where email = 'consop@test.local';
 do $$
 begin
-  assert (select count(*) from public.meters) = 93, '93 meters from the template';
-  assert (select count(*) from public.meters where asset_id is null) = 21, 'most meters mapped to equipment';
+  assert (select count(*) from public.meters) = 92, '92 meters (flowmeter structure from the owner)';
+  assert (select count(*) from public.meters where asset_id is null) = 24, 'most meters mapped to equipment';
 end $$;
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000c9', true);
 do $$
 declare g uuid := (select id from public.meters where code = 'B1-GAS');
-        rt uuid := (select id from public.meters where code = 'B4-STR');
+        rt uuid := (select id from public.meters where code = 'B5-STR');
         d date := public.lagos_now()::date;
 begin
   insert into public.meter_readings (meter_id, read_date, value) values (g, d - 3, 1000), (g, d - 2, 1450), (g, d, 2350);
@@ -49,7 +49,7 @@ do $$
 declare n int;
 begin
   n := public.generate_consumption_demo('00000000-0000-0000-0000-0000000000cd', 45);
-  assert n = 93 * 46, 'one reading per meter per day';
+  assert n = 92 * 46, 'one reading per meter per day';
   assert not exists (select 1 from public.meter_usage where kind <> 'rate' and used < 0), 'totalisers only rise';
   assert (select bool_and(is_demo) from public.meter_readings), 'all DEMO';
 end $$;

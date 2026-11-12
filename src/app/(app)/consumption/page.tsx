@@ -11,7 +11,8 @@ import { dailyUseByMeter, monthDays } from "@/lib/consumption";
 export const dynamic = "force-dynamic";
 
 const GROUPS = [
-  ["daily", "7 A.M. report"], ["water", "Water flowmeters"], ["energy", "Energy meters"], ["borehole", "Boreholes"], ["condensate", "Condensate"],
+  ["air", "Compressed Air Flowmeters"], ["steam", "Steam Flowmeters"], ["gas", "Gas Flowmeters"], ["diesel", "Diesel Flowmeters"],
+  ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"], ["daily", "Running Hours"],
 ] as const;
 type Group = (typeof GROUPS)[number][0];
 
@@ -21,7 +22,7 @@ interface Usage { meter_id: string; kind: string; read_date: string; value: numb
 export default async function ConsumptionPage({ searchParams }: { searchParams: Promise<{ g?: string; date?: string; view?: string; month?: string }> }) {
   const profile = await requireProfile();
   const sp = await searchParams;
-  const grp: Group = (GROUPS.map((g) => g[0]) as string[]).includes(sp.g ?? "") ? (sp.g as Group) : "daily";
+  const grp: Group = (GROUPS.map((g) => g[0]) as string[]).includes(sp.g ?? "") ? (sp.g as Group) : "air";
   const today = lagosDate(new Date());
   const date = sp.date && /^\d{4}-\d{2}-\d{2}$/.test(sp.date) && sp.date <= today ? sp.date : today;
   const report = sp.view === "report";
@@ -92,6 +93,8 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
     const sum = (code: string) => { const m = meters.find((x) => x.code === code); return m ? byMeter.get(m.id)?.total ?? 0 : 0; };
     const lines = meters.filter((m) => /^W-L\d+$/.test(m.code)).reduce((s, m) => s + (byMeter.get(m.id)?.total ?? 0), 0);
     const wtp = sum("W-WTP");
+    const total = (re: RegExp) => meters.filter((m) => re.test(m.code)).reduce((t, m) => t + (byMeter.get(m.id)?.total ?? 0), 0);
+    const airKwh = total(/^E-C\d+$/), airM3 = total(/^A-C\d+$/);
     const prevMonth = lagosDate(new Date(Date.parse(`${month}-01T12:00:00Z`) - 15 * 86_400_000)).slice(0, 7);
     const nextMonth = lagosDate(new Date(Date.parse(`${month}-01T12:00:00Z`) + 45 * 86_400_000)).slice(0, 7);
     const ratio = (a: number, b: number) => (a > 0 && b > 0 ? (a / b).toLocaleString("en-GB", { maximumFractionDigits: 3 }) : "–");
@@ -113,13 +116,14 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
         </div>
         {usage.some((u) => u.is_demo) && <p className="text-xs font-semibold text-purple-700">Includes DEMO data</p>}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <StatTile label="Boiler 1 gas per m³ steam" value={ratio(sum("B1-GAS"), sum("B1-STM"))} sub={`${Math.round(sum("B1-GAS")).toLocaleString()} m³ gas`} />
-          <StatTile label="Boiler 2 gas per m³ steam" value={ratio(sum("B2-GAS"), sum("B2-STM"))} sub={`${Math.round(sum("B2-GAS")).toLocaleString()} m³ gas`} />
-          <StatTile label="Boiler 4 gas per t steam" value={ratio(sum("B4-GAS"), sum("B4-STM"))} sub={`${Math.round(sum("B4-GAS")).toLocaleString()} m³ gas`} />
+          {[["1", "m³"], ["2", "m³"], ["3", "t"], ["5", "t"]].map(([n, u]) => (
+            <StatTile key={n} label={`Boiler ${n}: gas per ${u} steam`} value={ratio(sum(`B${n}-GAS`), sum(`B${n}-STM`))} sub={`${Math.round(sum(`B${n}-GAS`)).toLocaleString()} m³ gas`} />
+          ))}
+          <StatTile label="Compressed air: kWh per m³" value={ratio(airKwh, airM3)} sub={`${Math.round(airKwh).toLocaleString()} kWh · ${Math.round(airM3).toLocaleString()} m³`} />
           <StatTile label="Water: lines ÷ WTP output" value={wtp > 0 ? `${Math.round((lines / wtp) * 100)}%` : "–"}
             sub={`${Math.round(lines).toLocaleString()} of ${Math.round(wtp).toLocaleString()} m³`} />
         </div>
-        <p className="text-xs text-gray-500">Gas per steam uses the boiler’s own gas and steam totalisers for the month. Lines ÷ WTP shows how much treated water reaches the metered lines (the rest is backwash, unmetered use or losses). kWh per m³ of air will be added once air flow meters are installed; kWh/TR and water per unit of product need chiller output and production figures.</p>
+        <p className="text-xs text-gray-500">Gas per steam uses each boiler’s own gas and steam flowmeters for the month. Compressed air kWh per m³ = all compressor energy meters ÷ all compressor air flowmeters. Lines ÷ WTP shows how much treated water reaches the metered lines (the rest is backwash, unmetered use or losses). kWh/TR and water per unit of product need chiller output and production figures.</p>
 
         {GROUPS.map(([g, label]) => {
           const ms = meters.filter((m) => m.grp === g);

@@ -292,6 +292,12 @@ Each entry: date, decision, who decided, notes.
   status), register machine lists (add / take off, audited), PM task library (edit, add, retire), pick lists (add, hide,
   reorder; values used by the app's logic are locked; used values are never renamed), cleaning zones and activities
   (edit, add, retire), instruments (retire with reason). Utility 2 has never had nitrogen generators (its log stays off).
+- Utility Consumption restructure (owner, 2026-11-12): tabs Compressed Air Flowmeters (Compressors 2–12 + Central Air
+  Headers 1–3), Steam Flowmeters (Boilers 1–5 + VAM 1, which is steam-fired), Gas and Diesel Flowmeters (Boilers 1, 2, 3, 5
+  and VAM 2, 3 — not Boiler 4, VAM 1, VAM 4), Energy Meters, Water, Boreholes, Condensate, Running Hours (renamed from
+  "7 A.M."; only VAM 2/3 gas hours, which no register records). The 7 A.M. sheet's "Boiler 4" is Boiler 5. Switched off
+  (readings kept): VAM 1 gas, compressor kWh duplicates (on Energy Meters), Trane/VAM/boiler hours (in the registers).
+  New KPI: compressed air kWh per m³.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

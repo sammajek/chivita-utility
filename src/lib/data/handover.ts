@@ -13,7 +13,7 @@ export async function prefillHandover(areas: string[], shiftDate: string, shift:
   const supabase = await createClient();
   const [{ data: a }, { data: fuel }, { data: params }] = await Promise.all([
     supabase.from("assets").select("code, name, area, op_state, op_reason, category:asset_categories(name)").neq("status", "retired").order("code"),
-    supabase.from("meter_usage").select("code, name, unit, used").eq("grp", "daily").eq("read_date", shift === "day" ? shiftDate : addDays(shiftDate, 1)),
+    supabase.from("meter_usage").select("code, name, unit, used").in("grp", ["gas", "diesel"]).eq("read_date", shift === "day" ? shiftDate : addDays(shiftDate, 1)),
     supabase.from("parameters").select("id, name, unit").in("name", ["Raw Water Tank Level", "Process Water Tank Level", "pH", "Treated Water pH", "Raw Water pH"]),
   ]);
   const assets = ((a ?? []) as unknown as Asset[]).filter((x) => !x.area || areas.includes(x.area));
@@ -26,7 +26,7 @@ export async function prefillHandover(areas: string[], shiftDate: string, shift:
     const note = reasons(xs);
     groups[g.key] = { ...summarise(items, note), items, note };
   }
-  const f = ((fuel ?? []) as { code: string; name: string; unit: string | null; used: number | null }[]).filter((x) => /GAS|DH|GH/.test(x.code) && x.used !== null);
+  const f = ((fuel ?? []) as { code: string; name: string; unit: string | null; used: number | null }[]).filter((x) => x.used !== null);
   const pids = (params ?? []).map((p) => p.id);
   const latest = new Map<string, number>();
   if (pids.length) {

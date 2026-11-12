@@ -17,32 +17,32 @@ def add(group, code, name, unit, kind, asset=None):
                    "sort": len(meters) + 1})
 
 
-# Sheet "CONSUMPTION " (7 A.M. daily)
-for n, a in [(1, "BLR-01"), (2, "BLR-02")]:
-    add("daily", f"B{n}-GAS", f"Steam Boiler {n} – gas flow", "m³", "totaliser", a)
-    add("daily", f"B{n}-STM", f"Steam Boiler {n} – steam flow", "m³", "totaliser", a)
-    add("daily", f"B{n}-DH", f"Steam Boiler {n} – diesel hours", "h", "hours", a)
-    add("daily", f"B{n}-GH", f"Steam Boiler {n} – gas hours", "h", "hours", a)
-add("daily", "B4-GAS", "Steam Boiler 4 – gas flow", "m³", "totaliser", "BLR-04")
-add("daily", "B4-STM", "Steam Boiler 4 – steam flow", "t", "totaliser", "BLR-04")
-add("daily", "B4-STR", "Steam Boiler 4 – steam flow rate", "kg/h", "rate", "BLR-04")
-add("daily", "B4-DH", "Steam Boiler 4 – diesel hours", "h", "hours", "BLR-04")
-add("daily", "B4-GH", "Steam Boiler 4 – gas hours", "h", "hours", "BLR-04")
+# Owner's structure (2026-11-12): flowmeters per utility; the 7 A.M. sheet's "Boiler 4" is Boiler 5; VAM 1 is steam-fired
+# (no gas); compressor kWh are on the Energy sheet; running hours already in the registers are not repeated here.
+for n in range(2, 13):
+    add("air", f"A-C{n}", f"Air Compressor {n} – Air Flow", "m³", "totaliser", f"CMP-{n:02d}")
 for n in (1, 2, 3):
-    add("daily", f"V{n}-TH", f"VAM {n} – total hours", "h", "hours", f"CHV-0{n}")
-    add("daily", f"V{n}-GH", f"VAM {n} – gas hours", "h", "hours", f"CHV-0{n}")
-    add("daily", f"V{n}-GAS", f"VAM {n} – gas flow", "m³", "totaliser", f"CHV-0{n}")
-for n in range(1, 6):
-    add("daily", f"T{n}-H", f"Trane Chiller {n} – hours", "h", "hours", f"CHT-0{n}")
-# owner (2026-11-06): the compressor figures on this sheet are kWh readings, and "ATLAS COMP." is an Atlas Copco compressor
-for n in range(2, 10):
-    add("daily", f"C{n}-KWH", f"IR Air Compressor {n} – energy", "kWh", "totaliser", f"CMP-{n:02d}")
-add("daily", "CATLAS-KWH", "Atlas Copco Compressor – energy", "kWh", "totaliser", "CMP-AC1")
+    add("air", f"A-CEN{n}", f"Central Air Header {n} – Air Flow", "m³", "totaliser", None)
+add("steam", "B1-STM", "Boiler 1 – Steam Flow", "m³", "totaliser", "BLR-01")
+add("steam", "B2-STM", "Boiler 2 – Steam Flow", "m³", "totaliser", "BLR-02")
+add("steam", "B3-STM", "Boiler 3 – Steam Flow", "t", "totaliser", "BLR-03")
+add("steam", "B4-STM", "Boiler 4 – Steam Flow", "t", "totaliser", "BLR-04")
+add("steam", "B5-STM", "Boiler 5 – Steam Flow", "t", "totaliser", "BLR-05")
+add("steam", "B5-STR", "Boiler 5 – Steam Flow Rate", "kg/h", "rate", "BLR-05")
+add("steam", "V1-STM", "VAM 1 – Steam Flow", "t", "totaliser", "CHV-01")
+FUEL = (("B1", "Boiler 1", "BLR-01"), ("B2", "Boiler 2", "BLR-02"), ("B3", "Boiler 3", "BLR-03"), ("B5", "Boiler 5", "BLR-05"),
+        ("V2", "VAM 2", "CHV-02"), ("V3", "VAM 3", "CHV-03"))   # not Boiler 4, VAM 1, VAM 4
+for code, label, asset in FUEL:
+    add("gas", f"{code}-GAS", f"{label} – Gas Flow", "m³", "totaliser", asset)
+for code, label, asset in FUEL:
+    add("diesel", f"{code}-DSL", f"{label} – Diesel Flow", "L", "totaliser", asset)
+add("daily", "V2-GH", "VAM 2 – Gas Running Hours", "h", "hours", "CHV-02")
+add("daily", "V3-GH", "VAM 3 – Gas Running Hours", "h", "hours", "CHV-03")
 
 # Sheet "Water" (flowmeters, m³, 7 am)
-add("water", "W-WTP", "WTP output", "m³", "totaliser")
-add("water", "W-BWASH", "WTP backwash", "m³", "totaliser")
-add("water", "W-RECOV", "Water recovery", "m³", "totaliser")
+add("water", "W-WTP", "WTP Output", "m³", "totaliser")
+add("water", "W-BWASH", "WTP Backwash", "m³", "totaliser")
+add("water", "W-RECOV", "Water Recovery", "m³", "totaliser")
 for n, name in enumerate(["Expansion", "RO section", "Debottleneck", "Pineapple land", "Miteco Sugar", "CHI Snacks",
                           "New Capri-Sonne", "New Building", "Old Capri-Sonne", "Old Building"], 1):
     add("water", f"W-L{n:02d}", f"Line {n} – {name}", "m³", "totaliser")
@@ -54,8 +54,8 @@ for n in range(1, 6):
     add("energy", f"E-T{n}", f"Trane Chiller {n}", "kWh", "totaliser", f"CHT-0{n}")
 for n in range(1, 6):
     add("energy", f"E-CT{n}", f"Cooling Tower {n}", "kWh", "totaliser", f"CHT-0{n}")
-add("energy", "E-ICEP", "Ice water pumps", "kWh", "totaliser", None)
-add("energy", "E-TWP", "Treated water pumps", "kWh", "totaliser", "PMP-TW")
+add("energy", "E-ICEP", "Ice Water Pumps", "kWh", "totaliser", None)
+add("energy", "E-TWP", "Treated Water Pumps", "kWh", "totaliser", "PMP-TW")
 for n in (1, 2, 3):
     add("energy", f"E-V{n}", f"VAM Chiller {n}", "kWh", "totaliser", f"CHV-0{n}")
 for n in range(2, 13):
@@ -66,15 +66,12 @@ for n in (1, 2, 4, 5, 6, 7):
     add("borehole", f"BH{n}", f"Borehole {n}", "m³", "totaliser", f"BH-0{n}")
 
 # Sheet "CONDENSATE " (flow rate, recorded as read)
-for name in ["Expansion A", "Expansion B", "Carpark", "UHT5 A", "UHT5 B", "L-19", "Old Building CIP room"]:
-    add("condensate", "CD-" + "".join(w[0] for w in name.replace("-", " ").split()).upper() + str(len(meters)),
-        f"Condensate – {name}", "kg/h", "rate")
+# codes fixed as first loaded (they must not change when meters are added above)
+for code, name in [("CD-EA86", "Expansion A"), ("CD-EB87", "Expansion B"), ("CD-C88", "Carpark"), ("CD-UA89", "UHT5 A"),
+                   ("CD-UB90", "UHT5 B"), ("CD-L191", "L-19"), ("CD-OBCR92", "Old Building CIP Room")]:
+    add("condensate", code, f"Condensate – {name}", "kg/h", "rate")
 
-ATLAS_SQL = (
-    "insert into public.assets (code, name, category_id, make, confirmed, notes)\n"
-    "select 'CMP-AC1', 'Air Compressor - Atlas Copco', id, 'Atlas Copco', false,\n"
-    "       'Added from the 7 A.M. consumption sheet (\"ATLAS COMP.\"); confirm number, area and model.'\n"
-    "  from public.asset_categories where name = 'Air Compressors' on conflict (code) do nothing;\n")
+ATLAS_SQL = ""  # the Atlas Copco compressor is CMP-10 in the master data
 
 data = {"document": "7A.M Daily Utility Consumption Report", "meters": meters}
 (ROOT / "seed_data/meters.json").write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
