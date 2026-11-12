@@ -11,7 +11,7 @@ export interface PmTask {
   tasks: string[];
   hours_interval: number | null;
   document_no: string;
-  asset: { code: string; name: string } | null;
+  asset: { code: string; name: string; criticality?: string | null } | null;
 }
 
 export interface PmCompletion {
@@ -21,6 +21,7 @@ export interface PmCompletion {
   result: PmResult;
   note: string | null;
   pending_until?: string | null;
+  site_verified?: boolean;
   recorded_by_id: string | null;
   recorded_at: string;
   is_demo: boolean;
@@ -30,7 +31,7 @@ export async function loadPmTasks(freq?: PmFrequency, area?: string): Promise<Pm
   const supabase = await createClient();
   let q = supabase
     .from("pm_tasks")
-    .select("id, frequency, register_sn, equipment_as_written, asset_id, area, tasks, hours_interval, document_no, asset:assets(code, name)")
+    .select("id, frequency, register_sn, equipment_as_written, asset_id, area, tasks, hours_interval, document_no, asset:assets(code, name, criticality)")
     .eq("active", true)
     .order("register_sn");
   if (freq) q = q.eq("frequency", freq);
@@ -47,7 +48,7 @@ export async function loadPmCompletions(taskIds: string[], fromPeriod: string, t
   for (let i = 0; i < taskIds.length; i += 150) {
     let q = supabase
       .from("pm_completions")
-      .select("id, task_id, period_start, result, note, pending_until, recorded_by_id, recorded_at, is_demo")
+      .select("id, task_id, period_start, result, note, pending_until, site_verified, recorded_by_id, recorded_at, is_demo")
       .in("task_id", taskIds.slice(i, i + 150))
       .gte("period_start", fromPeriod)
       .is("voided_at", null)

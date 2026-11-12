@@ -271,6 +271,13 @@ Each entry: date, decision, who decided, notes.
   P "Pending" (new; must give the date it will be done by; flagged when that date passes; finished later with the final
   result, the pending entry kept), -- "Skipped" (reason required). Only √ and X count as carried out.
 - Handover water levels are entered and shown as % (owner, 2026-11-12).
+- PM verification (owner chose 1, 3, 4 + photos for critical equipment, 2026-11-12):
+  machine scan labels with a secret code (Equipment → QR labels; issuing again invalidates old labels): once a machine
+  has a code, its monthly-and-longer PMs can only be completed after scanning its label (valid 12 h, setting); weekly
+  random spot-checks (3 per area) of "Completed – no issue found" PMs, checked on site by another engineer — "Not
+  satisfactory" reopens the PM; "Breakdown soon after PM" flag (within 7 days); photo required (flag after 24 h) for
+  monthly-and-longer PMs on criticality A equipment. All thresholds in Admin → Settings.
+- Cleaning Schedule: photo evidence per cleaned zone; the manager's sign-off needs a comment if any cleaned zone has no photo.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

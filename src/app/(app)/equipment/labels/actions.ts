@@ -22,3 +22,23 @@ export async function issueRoomCodes(_p: RoomCodes, f: FormData): Promise<RoomCo
   }
   return { rooms };
 }
+
+export interface ScanLabels { error?: string; labels?: { code: string; name: string; area: string | null; svg: string }[] }
+
+/** New secret scan codes for the machines shown (old labels stop working) and their printable labels. */
+export async function issueScanLabels(_p: ScanLabels, f: FormData): Promise<ScanLabels> {
+  const ids = f.getAll("asset").map(String).filter(Boolean);
+  if (!ids.length) return { error: "No machines selected." };
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("issue_asset_scan_codes", { p_assets: ids });
+  if (error) return { error: error.message };
+  const { data: assets } = await supabase.from("assets").select("id, code, name, area").in("id", ids).order("code");
+  const codes = new Map(((data ?? []) as { asset_id: string; code: string }[]).map((r) => [r.asset_id, r.code]));
+  const h = await headers();
+  const base = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("x-forwarded-host") ?? h.get("host")}`;
+  const labels = await Promise.all(((assets ?? []) as { id: string; code: string; name: string; area: string | null }[])
+    .filter((a) => codes.has(a.id))
+    .map(async (a) => ({ code: a.code, name: a.name, area: a.area,
+      svg: await QRCode.toString(`${base}/equipment/${encodeURIComponent(a.code)}/scan?s=${codes.get(a.id)}`, { type: "svg", margin: 1, errorCorrectionLevel: "M" }) })));
+  return { labels };
+}

@@ -75,3 +75,14 @@ export async function voidAffirmation(_prev: { ok?: string; error?: string }, fo
   revalidatePath("/pm");
   return { ok: "Affirmation withdrawn." };
 }
+
+/** Engineer's on-site spot-check of a completed PM. */
+export async function checkSpot(_prev: { ok?: string; error?: string }, form: FormData): Promise<{ ok?: string; error?: string }> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("check_pm_spot", {
+    p_id: String(form.get("id")), p_result: String(form.get("result") ?? ""), p_note: String(form.get("note") ?? "").trim() || null,
+  });
+  if (error) return { error: error.message };
+  revalidatePath("/pm");
+  return { ok: "Spot-check saved." };
+}

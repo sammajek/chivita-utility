@@ -21,8 +21,9 @@ interface Interval {
 
 const SERVICE_STYLE = { ok: "text-ok", due_soon: "text-warn", overdue: "text-crit", no_baseline: "text-gray-500", no_reading: "text-gray-500" };
 
-export default async function EquipmentDetail({ params }: { params: Promise<{ code: string }> }) {
+export default async function EquipmentDetail({ params, searchParams }: { params: Promise<{ code: string }>; searchParams: Promise<{ scanned?: string; scan_error?: string }> }) {
   const profile = await requireProfile();
+  const sp = await searchParams;
   const code = decodeURIComponent((await params).code);
   const supabase = await createClient();
   const { data } = await supabase.from("assets").select("*, category:asset_categories(name)").eq("code", code).maybeSingle();
@@ -49,6 +50,10 @@ export default async function EquipmentDetail({ params }: { params: Promise<{ co
   return (
     <div className="space-y-4">
       <Link href="/equipment" className="text-sm text-brand-blue">← Equipment</Link>
+      {sp.scanned && (
+        <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-ok">✓ Scan recorded. You can now complete this machine’s PMs (valid for 12 hours). <Link href="/pm?freq=monthly" className="font-semibold underline">Go to PM</Link></p>
+      )}
+      {sp.scan_error && <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-crit">{sp.scan_error}</p>}
       <div className="card space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="page-title">{a.code} · {a.name}</h1>

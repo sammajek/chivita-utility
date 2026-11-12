@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EvidenceList } from "@/components/EvidenceList";
 import { requireProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { cleaningCompliance } from "@/lib/amc";
@@ -12,6 +13,8 @@ import { CleaningForm, type Activity, type Check, type Zone } from "./CleaningFo
 import { signOff, voidCleaning } from "./actions";
 
 export const dynamic = "force-dynamic";
+
+const DAY: Record<number, string> = { 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri", 6: "Sat", 7: "Sun" };
 
 export default async function CleaningPage({ searchParams }: { searchParams: Promise<{ week?: string }> }) {
   const profile = await requireProfile();
@@ -45,6 +48,13 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
   const canEnter = profile.active && !signed && ["operator", "engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
   const canSign = profile.active && ["shift_manager", "section_manager", "admin"].includes(profile.role);
   const isEngineer = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const firstDone = zones.map((zn) => checks.find((x) => x.zone_id === zn.id && x.result === "done")?.id).filter((x): x is string => !!x);
+  const { data: att } = firstDone.length
+    ? await (await createClient()).from("attachments").select("entity_id").eq("entity_type", "cleaning").in("entity_id", firstDone)
+    : { data: [] };
+  const photoCount = new Map<string, number>();
+  for (const r of (att ?? []) as { entity_id: string }[]) photoCount.set(r.entity_id, (photoCount.get(r.entity_id) ?? 0) + 1);
+  const missingPhotos = firstDone.filter((id) => !photoCount.get(id)).length;
 
   return (
     <div className="space-y-4">
@@ -79,13 +89,35 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
 
       <CleaningForm key={week} zones={zones} activities={activities} checks={checks} names={names} weekStart={week} canEnter={canEnter} />
 
+      <section className="card space-y-3">
+        <h2 className="section-title">Photo evidence</h2>
+        <p className="text-xs text-gray-500">After cleaning a zone, add photos of the cleaned area (before and after if possible). The manager checks them before signing off the week.</p>
+        <div className="divide-y">
+          {zones.map((zn) => {
+            const first = checks.find((x) => x.zone_id === zn.id && x.result === "done");
+            const n = photoCount.get(first?.id ?? "") ?? 0;
+            return (
+              <div key={zn.id} className="space-y-2 py-3">
+                <p className="text-sm"><b>{DAY[zn.day_of_week] ?? ""}</b> · {zn.name}
+                  {first && (n > 0 ? <span className="ml-2 rounded bg-green-100 px-1.5 text-xs font-semibold text-ok">{n} photo{n > 1 ? "s" : ""}</span>
+                    : <span className="ml-2 rounded bg-amber-100 px-1.5 text-xs font-semibold text-warn">photo needed</span>)}</p>
+                {first ? <EvidenceList entityType="cleaning" entityId={first.id} canAdd={canEnter} />
+                  : <p className="text-xs text-gray-500">Record the cleaning for this zone first, then add photos.</p>}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       {canSign && !signed && (
         <div className="card">
           <h2 className="font-semibold">Manager sign-off</h2>
           <p className="text-xs text-gray-500">Signing off locks this week&apos;s entries.</p>
+          {missingPhotos > 0 && <p className="mt-1 text-sm text-warn">{missingPhotos} cleaned zone(s) have no photo. Check them before signing, and say why in the comment.</p>}
           <ActionForm action={signOff} submit="Sign off week" className="mt-2 space-y-2">
             <input type="hidden" name="week_start" value={week} />
-            <input name="comment" className="input" placeholder="Comment (optional)" />
+            <input name="comment" className="input" placeholder={missingPhotos > 0 ? "Comment on the missing photos *" : "Comment (optional)"}
+              required={missingPhotos > 0} minLength={missingPhotos > 0 ? 5 : undefined} />
           </ActionForm>
         </div>
       )}

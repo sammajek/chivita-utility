@@ -5,10 +5,11 @@ import { createClient } from "@/lib/supabase/server";
 import { Logo } from "@/components/Logo";
 import { PrintButton } from "@/components/PrintButton";
 import { RoomCodes } from "./RoomCodes";
+import { ScanLabels } from "./ScanLabels";
 
 export const dynamic = "force-dynamic";
 
-interface Asset { code: string; name: string; area: string | null; category: { name: string; sort: number } | null }
+interface Asset { id: string; code: string; name: string; area: string | null; category: { name: string; sort: number } | null }
 
 /**
  * Printable QR labels: one per machine (opens its equipment page: state, running hours, PM, photos, log downtime),
@@ -19,7 +20,7 @@ export default async function LabelsPage({ searchParams }: { searchParams: Promi
   const h = await headers();
   const base = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("x-forwarded-host") ?? h.get("host")}`;
   const supabase = await createClient();
-  let q = supabase.from("assets").select("code, name, area, category:asset_categories(name, sort)").neq("status", "retired").order("code");
+  let q = supabase.from("assets").select("id, code, name, area, category:asset_categories(name, sort)").neq("status", "retired").order("code");
   if (sp.area === "U1" || sp.area === "U2") q = q.eq("area", sp.area);
   const [{ data }, { data: cats }] = await Promise.all([q, supabase.from("asset_categories").select("name").order("sort")]);
   let assets = (data ?? []) as unknown as Asset[];
@@ -30,7 +31,9 @@ export default async function LabelsPage({ searchParams }: { searchParams: Promi
   const labels = await Promise.all(assets.map(async (a) => ({ ...a, url: `${base}/equipment/${encodeURIComponent(a.code)}`, qr: await svg(`${base}/equipment/${encodeURIComponent(a.code)}`) })));
   const profile = await requireProfile();
   const canIssue = ["admin", "section_manager"].includes(profile.role);
-  const { data: issued } = await supabase.rpc("checkin_codes_status");
+  const [{ data: issued }, { data: scanCodes }] = await Promise.all([supabase.rpc("checkin_codes_status"), supabase.rpc("asset_scan_codes_status")]);
+  const coded = new Set(((scanCodes ?? []) as { asset_id: string }[]).map((r) => r.asset_id));
+  const canIssueScan = ["admin", "section_manager", "shift_manager"].includes(profile.role);
 
   return (
     <div className="space-y-4 bg-white">
@@ -42,6 +45,8 @@ export default async function LabelsPage({ searchParams }: { searchParams: Promi
         <span className="text-xs text-gray-500">{labels.length} labels · scanning opens the machine’s page (sign-in needed). Codes point to {base}.</span>
       </form>
       {canIssue && <RoomCodes issued={(issued ?? []) as { area: string; issued_at: string }[]} />}
+      {canIssueScan && <ScanLabels assets={assets.map((a) => ({ id: a.id, code: a.code }))} withCode={assets.filter((a) => coded.has(a.id)).length} />}
+      <h2 className="no-print section-title">Information labels (open the machine’s page)</h2>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 print:grid-cols-3">
         {labels.map((a) => (
           <div key={a.code} className="flex break-inside-avoid items-center gap-2 rounded border p-2">

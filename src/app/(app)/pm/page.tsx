@@ -9,6 +9,7 @@ import { addDays, lagosDate } from "@/lib/time";
 import { StatTile } from "@/components/BarList";
 import { ActionForm } from "@/components/ActionForm";
 import { PmForm } from "./PmForm";
+import { checkSpot } from "./actions";
 import { affirmPm, voidAffirmation, voidPm } from "./actions";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos } from "@/lib/time";
@@ -74,6 +75,10 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
   const completions = await loadPmCompletions(tasks.map((t) => t.id), period, period);
   const existing: Record<string, PmCompletion> = Object.fromEntries(completions.map((c) => [c.task_id, c]));
   const names = Object.fromEntries(await namesFor(completions.map((c) => c.recorded_by_id)));
+  const { data: ph } = completions.length
+    ? await (await createClient()).from("attachments").select("entity_id").eq("entity_type", "pm_completion").in("entity_id", completions.map((c) => c.id).slice(0, 300))
+    : { data: [] };
+  const photoIds = ((ph ?? []) as { entity_id: string }[]).map((x) => x.entity_id);
   const canEnter = profile.active && ["operator", "engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
   const isEngineer = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
   const count = (r: string) => completions.filter((c) => c.result === r).length;
@@ -111,7 +116,9 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
       <Affirmations freq={freq} period={period} areas={area ? [area] : ["U1", "U2"]} canAffirm={isEngineer && profile.active}
         canWithdraw={["section_manager", "admin"].includes(profile.role)} tasks={tasks} completions={completions} />
 
-      <PmForm key={`${freq}-${period}-${area}`} tasks={tasks} existing={existing} names={names} periodStart={period} canEnter={canEnter} />
+      <PmForm key={`${freq}-${period}-${area}`} tasks={tasks} existing={existing} names={names} periodStart={period} canEnter={canEnter} photos={photoIds} />
+
+      {isEngineer && <SpotChecks profileId={profile.id} />}
 
       {canEnter && completions.some((c) => isEngineer || c.recorded_by_id === profile.id) && (
         <details className="card">
@@ -261,5 +268,48 @@ async function Schedule({ today, area, header, tabs, areaPicker }: {
         </table>
       </div>
     </div>
+  );
+}
+
+/** This week's random PM spot-checks: an engineer checks the work on site (not their own). */
+async function SpotChecks({ profileId }: { profileId: string }) {
+  const supabase = await createClient();
+  const { data } = await supabase.from("pm_spot_checks")
+    .select("id, week_start, area, result, note, checked_by, checked_at, completion:pm_completions(id, recorded_by_id, recorded_at, period_start, task:pm_tasks(equipment_as_written, frequency, asset:assets(code)))")
+    .order("week_start", { ascending: false }).limit(30);
+  type Row = { id: string; week_start: string; area: string | null; result: string | null; note: string | null; checked_by: string | null; checked_at: string | null;
+    completion: { id: string; recorded_by_id: string; recorded_at: string; task: { equipment_as_written: string; frequency: string; asset: { code: string } | null } | null } | null };
+  const rows = (data ?? []) as unknown as Row[];
+  if (!rows.length) return null;
+  const names = await namesFor(rows.flatMap((r) => [r.completion?.recorded_by_id ?? null, r.checked_by]));
+  const open = rows.filter((r) => !r.result);
+  return (
+    <section className="card space-y-3">
+      <h2 className="section-title">PM spot-checks {open.length > 0 && <span className="ml-2 rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-warn">{open.length} to check</span>}</h2>
+      <p className="text-xs text-gray-500">Each week a few PMs marked “Completed – no issue found” are picked at random. Go to the machine and check the work. “Not satisfactory” reopens the PM and raises a follow-up.</p>
+      <ul className="divide-y">
+        {rows.map((r) => {
+          const t = r.completion?.task;
+          return (
+            <li key={r.id} className="space-y-2 py-3 text-sm">
+              <p><b>{t?.equipment_as_written}</b>{t?.asset && <span className="text-gray-500"> ({t.asset.code})</span>} · {t?.frequency.replace("_", "-")} · done by {names.get(r.completion?.recorded_by_id ?? "") ?? "—"} on {r.completion ? formatLagos(r.completion.recorded_at) : "—"} · {r.area} · week of {r.week_start}</p>
+              {r.result ? (
+                <p className={r.result === "confirmed" ? "text-ok" : "text-crit"}>{r.result === "confirmed" ? "✓ Confirmed" : "✗ Not satisfactory"} by {names.get(r.checked_by ?? "") ?? "—"}{r.note ? `: ${r.note}` : ""}</p>
+              ) : r.completion?.recorded_by_id === profileId ? (
+                <p className="text-xs text-gray-500">This is your own work: another engineer checks it.</p>
+              ) : (
+                <ActionForm action={checkSpot} submit="Save check" className="flex flex-wrap items-center gap-2">
+                  <input type="hidden" name="id" value={r.id} />
+                  <select name="result" className="input w-auto py-2" required defaultValue="">
+                    <option value="" disabled>Result…</option><option value="confirmed">Confirmed on site</option><option value="not_satisfactory">Not satisfactory</option>
+                  </select>
+                  <input name="note" className="input max-w-md py-2" placeholder="Note (required if not satisfactory)" />
+                </ActionForm>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }

@@ -43,6 +43,9 @@ const KIND: Record<string, string> = {
   patrol_issue: "Patrol issue",
   handover_missing: "Handover not written",
   handover_unack: "Handover not acknowledged",
+  pm_photo_missing: "PM photo missing",
+  pm_spot_check: "PM spot-checks not done",
+  pm_early_failure: "Breakdown soon after PM",
 };
 const SEV: Record<string, string> = { critical: "border-l-crit", warning: "border-l-warn", info: "border-l-gray-300" };
 const LEVEL = ["Reminder", "Escalated to on-duty engineer", "Escalated to shift manager"];

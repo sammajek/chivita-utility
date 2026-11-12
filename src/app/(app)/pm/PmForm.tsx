@@ -4,6 +4,9 @@ import { useActionState, useState } from "react";
 import { RESULT_LABEL, type PmResult } from "@/lib/pm";
 import type { PmCompletion, PmTask } from "@/lib/data/pm";
 import { DemoBadge } from "@/components/StatusBadge";
+import { EvidenceUpload } from "@/components/EvidenceUpload";
+
+const LONG = ["monthly", "quarterly", "bi_annual", "annual"];
 import { savePm, type PmSaveState } from "./actions";
 
 const RESULT_STYLE: Record<PmResult, string> = {
@@ -43,9 +46,10 @@ function ResultPicker({ taskId, sel, onPick, allowPending, minDate }: { taskId: 
   );
 }
 
-export function PmForm({ tasks, existing, names, periodStart, canEnter }: {
+export function PmForm({ tasks, existing, names, periodStart, canEnter, photos }: {
   tasks: PmTask[];
   existing: Record<string, PmCompletion>;
+  photos: string[];
   names: Record<string, string>;
   periodStart: string;
   canEnter: boolean;
@@ -73,6 +77,9 @@ export function PmForm({ tasks, existing, names, periodStart, canEnter }: {
                   <span className="ml-1 text-xs font-normal text-warn">(equipment not mapped yet)</span>
                 )}
               </div>
+              {LONG.includes(t.frequency) && t.asset && !ex && canEnter && (
+                <span className="text-xs font-semibold text-brand-blue">Scan {t.asset.code}’s label at the machine before completing</span>
+              )}
               {t.hours_interval && (
                 <span className="text-xs text-gray-500">Running-hours service: every {t.hours_interval.toLocaleString()} h</span>
               )}
@@ -97,7 +104,14 @@ export function PmForm({ tasks, existing, names, periodStart, canEnter }: {
                 </span>
                 <span className="text-xs text-gray-500">by {ex.recorded_by_id ? names[ex.recorded_by_id] ?? "—" : "—"}</span>
                 {ex.is_demo && <DemoBadge />}
+                {ex.site_verified && <span className="rounded bg-blue-50 px-1.5 text-xs font-semibold text-brand-blue">✓ verified at machine</span>}
                 {ex.note && <span className="text-xs text-gray-600">“{ex.note}”</span>}
+                {canEnter && t.asset?.criticality === "A" && LONG.includes(t.frequency) && ["done_ok", "done_not_ok"].includes(ex.result) && !photos.includes(ex.id) && (
+                  <div className="w-full rounded-lg bg-amber-50 p-2">
+                    <p className="mb-1 text-xs font-semibold text-warn">Critical equipment: attach a photo of the work (required)</p>
+                    <EvidenceUpload entityType="pm_completion" entityId={ex.id} label="Add photo" />
+                  </div>
+                )}
               </div>
             ) : canEnter ? (
               <ResultPicker taskId={t.id} sel={sel} onPick={(r) => setPicked((p) => ({ ...p, [t.id]: r }))} allowPending minDate={periodStart} />
