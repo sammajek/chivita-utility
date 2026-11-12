@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 const GROUPS = [
   ["air", "Compressed Air Flowmeters"], ["steam", "Steam Flowmeters"], ["gas", "Gas Flowmeters"], ["diesel", "Diesel Flowmeters"],
-  ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"],
+  ["nitrogen", "Nitrogen Flowmeters"], ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"],
 ] as const;
 type Group = (typeof GROUPS)[number][0];
 

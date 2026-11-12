@@ -302,6 +302,9 @@ Each entry: date, decision, who decided, notes.
   is gone. Steam flowmeters are read in kg and reported in tonnes (kg ÷ 1000); OEE converts kg to t for t/h ratings.
   VAM 4 energy meter and steam flowmeter added switched off (planned) — switch on in Admin → Meters when installed.
   Two central diesel flowmeters added. Admin → Meters: rename, set unit, switch on/off, add meters.
+- Meter readings in one place (owner, 2026-11-12): register totalisers switched off (Boiler and VAM "Gas Flowmeter
+  Reading", Nitrogen "Total flow"); entered on Utility Consumption (new Nitrogen Flowmeters tab, N2G 1–4).
+- Menu: "Area Patrols".
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

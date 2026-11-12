@@ -35,7 +35,7 @@ export const NAV: NavItem[] = [
   { href: "/downtime", label: "Downtime Log & Analysis", group: "Operations", roles: FLOOR },
   { href: "/rca", label: "RCA Log & Analysis", group: "Operations", roles: [...ENGINEER_UP, "viewer"] },
   { href: "/consumption", label: "Utility Consumption", group: "Operations", roles: FLOOR },
-  { href: "/patrol", label: "Patrols", group: "Operations", roles: ALL },
+  { href: "/patrol", label: "Area Patrols", group: "Operations", roles: ALL },
   { href: "/outage", label: "Outage Plan", group: "Operations", roles: ALL },
   { href: "/pm", label: "Preventive Maintenance", group: "Maintenance", roles: FLOOR },
   { href: "/amc", label: "Annual Maintenance Contract", group: "Maintenance", roles: [...ENGINEER_UP, "viewer"] },

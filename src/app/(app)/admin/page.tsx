@@ -495,7 +495,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
   async function Meters() {
     const GRP: [string, string][] = [["air", "Compressed Air Flowmeters"], ["steam", "Steam Flowmeters"], ["gas", "Gas Flowmeters"], ["diesel", "Diesel Flowmeters"],
-      ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"]];
+      ["nitrogen", "Nitrogen Flowmeters"], ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"]];
     const [{ data }, { data: assets }] = await Promise.all([
       supabase.from("meters").select("id, code, name, grp, unit, kind, asset_id, active").neq("grp", "daily").order("grp").order("sort"),
       supabase.from("assets").select("id, code, name").neq("status", "retired").order("code"),

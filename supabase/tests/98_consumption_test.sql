@@ -4,7 +4,7 @@ insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000000c9
 update public.profiles set role = 'operator', active = true where email = 'consop@test.local';
 do $$
 begin
-  assert (select count(*) from public.meters) = 94, '92 meters + 2 planned VAM 4 meters';
+  assert (select count(*) from public.meters) = 98, '92 meters + 2 planned VAM 4 + 4 nitrogen';
   assert (select count(*) from public.meters where asset_id is null) = 26, format('most meters mapped to equipment (%s without)', (select string_agg(code, ' ') from public.meters where asset_id is null));
 end $$;
 
