@@ -287,6 +287,10 @@ Each entry: date, decision, who decided, notes.
   log shown in normal casing (stored text unchanged); AMC names and vendors converted from capitals; Water Quality
   categories and points in Title Case. Water points renamed: "Raw Water – Water from Raw Water Storage Tank",
   "Treated Water – Water to Distribution Header".
+- Admin can now maintain (2026-11-12): equipment (add; edit category, make, model, capacity, location; retire via
+  status), register machine lists (add / take off, audited), PM task library (edit, add, retire), pick lists (add, hide,
+  reorder; values used by the app's logic are locked; used values are never renamed), cleaning zones and activities
+  (edit, add, retire), instruments (retire with reason). Utility 2 has never had nitrogen generators (its log stays off).
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

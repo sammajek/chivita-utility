@@ -45,3 +45,16 @@ export async function voidCalibration(_prev: State, f: FormData): Promise<State>
   revalidatePath("/calibration");
   return { ok: "Voided." };
 }
+
+/** Retire an instrument (removed / replaced): leaves the register and raises no more due flags; history kept. */
+export async function retireInstrument(_p: { ok?: string; error?: string }, f: FormData): Promise<{ ok?: string; error?: string }> {
+  const reason = String(f.get("reason") ?? "").trim();
+  if (reason.length < 5) return { error: "Give a reason (5+ characters)." };
+  const supabase = await createClient();
+  const { data: i } = await supabase.from("instruments").select("notes").eq("id", String(f.get("id"))).single();
+  const today = new Date().toISOString().slice(0, 10);
+  const { error } = await supabase.from("instruments").update({ active: false, notes: [i?.notes, `Retired ${today}: ${reason}`].filter(Boolean).join(" · ") } as never).eq("id", String(f.get("id")));
+  if (error) return { error: error.message };
+  revalidatePath("/calibration");
+  return { ok: "Instrument retired." };
+}

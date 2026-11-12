@@ -25,8 +25,8 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
 
   const supabase = await createClient();
   const [{ data: z }, { data: a }, { data: c }, { data: so }, { data: hist }] = await Promise.all([
-    supabase.from("cleaning_zones").select("id, day_of_week, area, name").order("day_of_week"),
-    supabase.from("cleaning_activities").select("id, sort, name").order("sort"),
+    supabase.from("cleaning_zones").select("id, day_of_week, area, name").eq("active", true).order("day_of_week"),
+    supabase.from("cleaning_activities").select("id, sort, name").eq("active", true).order("sort"),
     supabase.from("cleaning_checks").select("id, zone_id, activity_id, result, note, recorded_by_id, is_demo").eq("week_start", week).is("voided_at", null),
     supabase.from("cleaning_signoffs").select("week_start, signed_by, signed_at, comment").gte("week_start", from8),
     supabase.from("cleaning_checks").select("week_start, result").gte("week_start", from8).lt("week_start", current).is("voided_at", null).limit(5000),

@@ -7,7 +7,7 @@ import { GridList, GridRow } from "@/components/GridList";
 import { ActionForm } from "@/components/ActionForm";
 import { DemoBadge } from "@/components/StatusBadge";
 import { EvidenceList } from "@/components/EvidenceList";
-import { recordCalibration, saveInstrument, voidCalibration } from "./actions";
+import { recordCalibration, saveInstrument, voidCalibration, retireInstrument } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -96,6 +96,15 @@ export default async function CalibrationPage() {
                     </li>
                   ))}
                 </ul>
+              )}
+              {canEdit && (
+                <details className="text-sm">
+                  <summary className="cursor-pointer text-gray-500">Retire this instrument (removed or replaced)</summary>
+                  <ActionForm action={retireInstrument} submit="Retire" className="mt-2 flex flex-wrap items-center gap-2">
+                    <input type="hidden" name="id" value={i.id} />
+                    <input name="reason" required minLength={5} className="input max-w-md py-2" placeholder="Reason (e.g. replaced by PG-BLR04-02)" />
+                  </ActionForm>
+                </details>
               )}
               {canEdit && (
                 <ActionForm action={recordCalibration} submit="Record calibration" className="grid gap-2 sm:grid-cols-3">

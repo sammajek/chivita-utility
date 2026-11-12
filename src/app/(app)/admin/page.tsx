@@ -5,17 +5,17 @@ import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
 import { formatLagos } from "@/lib/time";
 import { describeStandard } from "@/lib/evaluate";
-import { importStaffCsv, saveCause, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
+import { addAsset, importStaffCsv, saveCause, saveCleaningActivity, saveCleaningZone, saveListItem, savePmTask, setRegisterAsset, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
 import type { Parameter } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
+  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["pm", "PM Tasks"], ["lists", "Pick Lists"], ["cleaning", "Cleaning Setup"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
 ] as const;
 
-export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string }> }) {
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; freq?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string }> }) {
   const profile = await requireRole("admin", "section_manager");
   const sp = await searchParams;
   const tab = TABS.some(([t]) => t === sp.tab) ? sp.tab! : "review";
@@ -38,6 +38,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       {tab === "assets" && <Assets q={q} />}
       {tab === "limits" && <Limits q={q} />}
       {tab === "registers" && <Registers />}
+      {tab === "pm" && <PmTasks q={q} freq={sp.freq ?? ""} />}
+      {tab === "lists" && <PickLists />}
+      {tab === "cleaning" && <CleaningSetup />}
       {tab === "causes" && <Causes type={sp.type ?? "Unplanned Breakdown"} eq={sp.eq ?? ""} />}
       {tab === "audit" && <Audit who={sp.who ?? ""} t={sp.t ?? ""} act={sp.act ?? ""} from={sp.from ?? ""} q={q} />}
       {tab === "settings" && <Settings />}
@@ -329,24 +332,46 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   }
 
   async function Assets({ q }: { q: string }) {
-    let query = supabase.from("assets").select("id, code, name, area, status, criticality, confirmed, notes, rated_output, rated_unit").order("code");
+    let query = supabase.from("assets").select("id, code, name, area, status, criticality, confirmed, notes, rated_output, rated_unit, category_id, make, model, capacity, location").order("code");
     if (q) query = query.or(`code.ilike.%${q}%,name.ilike.%${q}%`);
-    const { data } = await query;
+    const [{ data }, { data: cats }] = await Promise.all([query, supabase.from("asset_categories").select("id, name").order("sort")]);
+    const catOpts = ((cats ?? []) as { id: number; name: string }[]).map((c) => <option key={c.id} value={c.id}>{c.name}</option>);
+    const L = ({ t, children }: { t: string; children: React.ReactNode }) => <label className="block"><span className="text-xs text-gray-500">{t}</span>{children}</label>;
     return (
       <div className="space-y-2">
         <form className="flex gap-2"><input type="hidden" name="tab" value="assets" /><input name="q" defaultValue={q} placeholder="Search code or name" className="input py-2" /><button className="btn-secondary min-h-10">Search</button></form>
+        <details className="card">
+          <summary className="cursor-pointer section-title">+ Add Equipment</summary>
+          <ActionForm action={addAsset} submit="Add equipment" className="mt-3 grid gap-2 sm:grid-cols-4">
+            <L t="Code *"><input name="code" required placeholder="e.g. CMP-14" className="input py-2 uppercase" /></L>
+            <div className="sm:col-span-2"><L t="Name *"><input name="name" required className="input py-2" placeholder="e.g. Air Compressor 14 - Oil-free (Atlas Copco)" /></L></div>
+            <L t="Category *"><select name="category_id" required className="input py-2">{catOpts}</select></L>
+            <L t="Area"><select name="area" className="input py-2"><option value="">—</option><option>U1</option><option>U2</option></select></L>
+            <L t="Make"><input name="make" className="input py-2" /></L>
+            <L t="Model"><input name="model" className="input py-2" /></L>
+            <L t="Capacity"><input name="capacity" className="input py-2" /></L>
+            <L t="Location"><input name="location" className="input py-2" /></L>
+            <L t="Criticality"><select name="criticality" className="input py-2"><option value="">—</option><option>A</option><option>B</option><option>C</option></select></L>
+          </ActionForm>
+        </details>
+        <p className="text-xs text-gray-500">To remove a machine, set its status to “retired”: it disappears from forms and lists, and its history is kept.</p>
         {(data ?? []).map((a) => (
-          <ActionForm key={a.id} action={updateAsset} className="card grid gap-2 sm:grid-cols-5">
+          <ActionForm key={a.id} action={updateAsset} className={`card grid gap-2 sm:grid-cols-4 ${a.status === "retired" ? "opacity-60" : ""}`}>
             <input type="hidden" name="id" value={a.id} />
-            <div className="font-semibold sm:col-span-5">{a.code}</div>
-            <input name="name" defaultValue={a.name} className="input py-2 sm:col-span-2" />
-            <select name="area" defaultValue={a.area ?? ""} className="input py-2"><option value="">—</option><option>U1</option><option>U2</option></select>
-            <select name="status" defaultValue={a.status} className="input py-2"><option>active</option><option>standby</option><option>retired</option></select>
-            <select name="criticality" defaultValue={a.criticality ?? ""} className="input py-2"><option value="">Criticality</option><option>A</option><option>B</option><option>C</option></select>
-            <input name="rated_output" defaultValue={a.rated_output ?? ""} placeholder="Rated output (e.g. 3.5)" inputMode="decimal" className="input py-2" />
-            <input name="rated_unit" defaultValue={a.rated_unit ?? ""} placeholder="Unit (t/h, m³/h, TR)" className="input py-2" />
-            <input name="notes" defaultValue={a.notes ?? ""} placeholder="Notes" className="input py-2 sm:col-span-2" />
-            <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="confirmed" defaultChecked={a.confirmed} /> Confirmed</label>
+            <div className="font-semibold sm:col-span-4">{a.code}</div>
+            <div className="sm:col-span-2"><L t="Name"><input name="name" defaultValue={a.name} className="input py-2" /></L></div>
+            <L t="Category"><select name="category_id" defaultValue={a.category_id} className="input py-2">{catOpts}</select></L>
+            <L t="Area"><select name="area" defaultValue={a.area ?? ""} className="input py-2"><option value="">—</option><option>U1</option><option>U2</option></select></L>
+            <L t="Make"><input name="make" defaultValue={a.make ?? ""} className="input py-2" /></L>
+            <L t="Model"><input name="model" defaultValue={a.model ?? ""} className="input py-2" /></L>
+            <L t="Capacity"><input name="capacity" defaultValue={a.capacity ?? ""} className="input py-2" /></L>
+            <L t="Location"><input name="location" defaultValue={a.location ?? ""} className="input py-2" /></L>
+            <L t="Status"><select name="status" defaultValue={a.status} className="input py-2"><option>active</option><option>standby</option><option>retired</option></select></L>
+            <L t="Criticality"><select name="criticality" defaultValue={a.criticality ?? ""} className="input py-2"><option value="">—</option><option>A</option><option>B</option><option>C</option></select></L>
+            <L t="Rated output"><input name="rated_output" defaultValue={a.rated_output ?? ""} placeholder="e.g. 3.5" inputMode="decimal" className="input py-2" /></L>
+            <L t="Rated unit"><input name="rated_unit" defaultValue={a.rated_unit ?? ""} placeholder="t/h, m³/h, TR" className="input py-2" /></L>
+            <div className="sm:col-span-3"><L t="Notes"><input name="notes" defaultValue={a.notes ?? ""} className="input py-2" /></L></div>
+            <label className="flex items-center gap-1 self-end pb-2 text-sm"><input type="checkbox" name="confirmed" defaultChecked={a.confirmed} /> Confirmed</label>
           </ActionForm>
         ))}
       </div>
@@ -380,18 +405,174 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   }
 
   async function Registers() {
-    const { data } = await supabase.from("registers").select("id, key, area, document_no, title, monitor").order("area").order("sort");
+    const [{ data }, { data: ra }, { data: assets }] = await Promise.all([
+      supabase.from("registers").select("id, key, area, document_no, title, monitor, active").order("area").order("sort"),
+      supabase.from("register_assets").select("register_id, active, asset:assets(id, code, name, status)"),
+      supabase.from("assets").select("id, code, name, area").neq("status", "retired").order("code"),
+    ]);
+    const links = (ra ?? []) as unknown as { register_id: string; active: boolean; asset: { id: string; code: string; name: string; status: string } | null }[];
+    const all = (assets ?? []) as { id: string; code: string; name: string; area: string | null }[];
     return (
-      <div className="card">
-        <p className="mb-2 text-sm text-gray-600">Turn on monitoring for a register when its operators start using the app. Missing readings then raise flags and escalate.</p>
-        <ul className="divide-y text-sm">
-          {(data ?? []).map((r) => (
-            <li key={r.id} className="flex items-center justify-between gap-2 py-2">
-              <span>{r.area} · <b>{r.title}</b> <span className="text-xs text-gray-500">{r.document_no}</span></span>
-              <MonitorToggle id={r.id} monitor={r.monitor} />
-            </li>
+      <div className="space-y-2">
+        <p className="text-sm text-gray-600">Monitoring: turn on when operators start using the app for that register (missing readings then raise flags). Machines: the equipment each register is filled for. Taking a machine off keeps its past readings.</p>
+        {(data ?? []).map((r) => {
+          const on = links.filter((l) => l.register_id === r.id && l.active && l.asset && l.asset.status !== "retired");
+          const ids = new Set(on.map((l) => l.asset!.id));
+          return (
+            <details key={r.id} className={`card ${r.active ? "" : "opacity-60"}`}>
+              <summary className="flex cursor-pointer flex-wrap items-center justify-between gap-2 text-sm">
+                <span>{r.area} · <b>{r.title}</b> <span className="text-xs text-gray-500">{r.document_no} · {on.length} machine(s){r.active ? "" : " · switched off"}</span></span>
+                <MonitorToggle id={r.id} monitor={r.monitor} />
+              </summary>
+              <ul className="mt-3 divide-y text-sm">
+                {on.map((l) => (
+                  <li key={l.asset!.id} className="flex items-center justify-between gap-2 py-1.5">
+                    <span><b>{l.asset!.code}</b> <span className="text-gray-500">{l.asset!.name}</span></span>
+                    <ActionForm action={setRegisterAsset} submit="Take off" className="flex items-center">
+                      <input type="hidden" name="register_id" value={r.id} /><input type="hidden" name="asset_id" value={l.asset!.id} /><input type="hidden" name="on" value="0" />
+                    </ActionForm>
+                  </li>
+                ))}
+                {on.length === 0 && <li className="py-1.5 text-gray-500">No machines (readings not tied to one machine).</li>}
+              </ul>
+              <ActionForm action={setRegisterAsset} submit="Add machine" className="mt-2 flex flex-wrap items-center gap-2">
+                <input type="hidden" name="register_id" value={r.id} /><input type="hidden" name="on" value="1" />
+                <select name="asset_id" className="input w-auto py-2" defaultValue="">
+                  <option value="">Choose a machine…</option>
+                  {all.filter((x) => !ids.has(x.id)).map((x) => <option key={x.id} value={x.id}>{x.code} · {x.name}{x.area ? ` (${x.area})` : ""}</option>)}
+                </select>
+              </ActionForm>
+            </details>
+          );
+        })}
+      </div>
+    );
+  }
+
+  async function PmTasks({ q, freq }: { q: string; freq: string }) {
+    let query = supabase.from("pm_tasks").select("id, frequency, register_sn, equipment_as_written, asset_id, area, tasks, hours_interval, active").order("register_sn").limit(120);
+    if (freq) query = query.eq("frequency", freq);
+    if (q) query = query.ilike("equipment_as_written", `%${q}%`);
+    const [{ data }, { data: assets }] = await Promise.all([query, supabase.from("assets").select("id, code, name").neq("status", "retired").order("code")]);
+    const rows = (data ?? []) as { id: string; frequency: string; register_sn: number; equipment_as_written: string; asset_id: string | null; area: string; tasks: string[]; hours_interval: number | null; active: boolean }[];
+    const aOpts = ((assets ?? []) as { id: string; code: string; name: string }[]).map((x) => <option key={x.id} value={x.id}>{x.code} · {x.name}</option>);
+    const FREQS = ["daily", "weekly", "monthly", "quarterly", "bi_annual", "annual"];
+    const fields = (t?: (typeof rows)[number]) => (
+      <>
+        <input name="equipment" defaultValue={t?.equipment_as_written} required placeholder="Equipment (as on the PM log)" className="input py-2 sm:col-span-2" />
+        <select name="frequency" defaultValue={t?.frequency ?? "monthly"} className="input py-2">{FREQS.map((x) => <option key={x} value={x}>{x.replace("_", "-")}</option>)}</select>
+        <select name="area" defaultValue={t?.area ?? "U1"} className="input py-2"><option>U1</option><option>U2</option></select>
+        <select name="asset_id" defaultValue={t?.asset_id ?? ""} className="input py-2 sm:col-span-2"><option value="">Machine (optional)</option>{aOpts}</select>
+        <input name="hours_interval" defaultValue={t?.hours_interval ?? ""} inputMode="numeric" placeholder="Running-hours interval (optional)" className="input py-2 sm:col-span-2" />
+        <textarea name="tasks" defaultValue={t?.tasks.join("\n")} rows={Math.min(8, Math.max(3, t?.tasks.length ?? 3))} required placeholder="Tasks, one per line" className="input py-2 text-sm sm:col-span-4" />
+      </>
+    );
+    return (
+      <div className="space-y-2">
+        <form className="flex flex-wrap gap-2" action="/admin">
+          <input type="hidden" name="tab" value="pm" />
+          <select name="freq" defaultValue={freq} className="input w-auto py-2"><option value="">All frequencies</option>{FREQS.map((x) => <option key={x} value={x}>{x.replace("_", "-")}</option>)}</select>
+          <input name="q" defaultValue={q} placeholder="Search equipment" className="input w-48 py-2" />
+          <button className="btn-secondary btn-sm">Show</button>
+        </form>
+        <p className="text-xs text-gray-500">The PM checklist (CHIENGUTRG08). Untick “in use” to retire a task: it leaves the PM page and its past results are kept. Showing up to 120 tasks; use the filters.</p>
+        <details className="card">
+          <summary className="cursor-pointer section-title">+ Add a PM Task</summary>
+          <ActionForm action={savePmTask} submit="Add task" className="mt-3 grid gap-2 sm:grid-cols-4">{fields()}</ActionForm>
+        </details>
+        {rows.map((t) => (
+          <ActionForm key={t.id} action={savePmTask} className={`card grid gap-2 sm:grid-cols-4 ${t.active ? "" : "opacity-60"}`}>
+            <input type="hidden" name="id" value={t.id} />
+            <div className="text-xs text-gray-500 sm:col-span-4">#{t.register_sn}</div>
+            {fields(t)}
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="active" defaultChecked={t.active} className="h-5 w-5" /> In use</label>
+          </ActionForm>
+        ))}
+      </div>
+    );
+  }
+
+  async function PickLists() {
+    const NAMES: [string, string, string[]][] = [
+      ["attended_by", "Attended by (downtime)", []], ["production_impact", "Impact on production (downtime)", []],
+      ["downtime_status", "Downtime status", ["Open", "Closed"]], ["category_6m", "Root cause category (6M)", []],
+      ["action_type", "RCA action type", []], ["rca_status", "RCA status", ["Not Started", "Completed - Pending Verification", "Closed - Verified Effective"]],
+    ];
+    const { data } = await supabase.from("lists").select("list_name, value, sort, active").in("list_name", NAMES.map((n) => n[0])).order("sort");
+    const rows = (data ?? []) as { list_name: string; value: string; sort: number; active: boolean }[];
+    return (
+      <div className="space-y-3">
+        <p className="text-sm text-gray-600">Choices offered on the forms. Values already used on records are not renamed: hide an old value and add the new one. Values the app relies on are locked.</p>
+        {NAMES.map(([key, label, locked]) => (
+          <details key={key} className="card">
+            <summary className="cursor-pointer section-title">{label}</summary>
+            <ul className="mt-2 divide-y">
+              {rows.filter((r) => r.list_name === key).map((r) => (
+                <li key={r.value} className="py-1.5">
+                  {locked.includes(r.value) ? <span className="text-sm">{r.value} <span className="text-xs text-gray-500">(locked)</span></span> : (
+                    <ActionForm action={saveListItem} submit="Save" className="flex flex-wrap items-center gap-2 text-sm">
+                      <input type="hidden" name="list_name" value={key} /><input type="hidden" name="value" value={r.value} /><input type="hidden" name="existing" value="1" />
+                      <span className={`min-w-0 flex-1 ${r.active ? "" : "text-gray-400 line-through"}`}>{r.value}</span>
+                      <input name="sort" defaultValue={r.sort} inputMode="numeric" className="input w-16 py-1" aria-label="Order" />
+                      <label className="flex items-center gap-1"><input type="checkbox" name="active" defaultChecked={r.active} className="h-5 w-5" /> Shown</label>
+                    </ActionForm>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <ActionForm action={saveListItem} submit="Add" className="mt-2 flex flex-wrap items-center gap-2">
+              <input type="hidden" name="list_name" value={key} />
+              <input name="value" required minLength={2} placeholder="New value" className="input max-w-sm py-2" />
+            </ActionForm>
+          </details>
+        ))}
+      </div>
+    );
+  }
+
+  async function CleaningSetup() {
+    const [{ data: z }, { data: a }] = await Promise.all([
+      supabase.from("cleaning_zones").select("id, day_of_week, area, name, active").order("day_of_week"),
+      supabase.from("cleaning_activities").select("id, sort, name, active").order("sort"),
+    ]);
+    const zones = (z ?? []) as { id: number; day_of_week: number; area: string; name: string; active: boolean }[];
+    const acts = (a ?? []) as { id: number; sort: number; name: string; active: boolean }[];
+    const DAYS = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const freeDays = [1, 2, 3, 4, 5, 6, 7].filter((d) => !zones.some((x) => x.day_of_week === d));
+    return (
+      <div className="space-y-3">
+        <section className="card space-y-2">
+          <h2 className="section-title">Zones (One per Weekday)</h2>
+          {zones.map((x) => (
+            <ActionForm key={x.id} action={saveCleaningZone} className={`grid gap-2 border-t pt-2 sm:grid-cols-6 ${x.active ? "" : "opacity-60"}`}>
+              <input type="hidden" name="id" value={x.id} /><input type="hidden" name="day" value={x.day_of_week} />
+              <b className="pt-2 text-sm">{DAYS[x.day_of_week]}</b>
+              <select name="area" defaultValue={x.area} className="input py-2"><option>U1</option><option>U2</option></select>
+              <input name="name" defaultValue={x.name} className="input py-2 sm:col-span-3" />
+              <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="active" defaultChecked={x.active} className="h-5 w-5" /> In use</label>
+            </ActionForm>
           ))}
-        </ul>
+          {freeDays.length > 0 && (
+            <ActionForm action={saveCleaningZone} submit="Add zone" className="grid gap-2 border-t pt-2 sm:grid-cols-6">
+              <select name="day" className="input py-2">{freeDays.map((d) => <option key={d} value={d}>{DAYS[d]}</option>)}</select>
+              <select name="area" className="input py-2"><option>U1</option><option>U2</option></select>
+              <input name="name" required placeholder="Zone and equipment to clean" className="input py-2 sm:col-span-4" />
+            </ActionForm>
+          )}
+        </section>
+        <section className="card space-y-2">
+          <h2 className="section-title">Activities (Done in Every Zone)</h2>
+          {acts.map((x) => (
+            <ActionForm key={x.id} action={saveCleaningActivity} className={`flex flex-wrap items-center gap-2 border-t pt-2 ${x.active ? "" : "opacity-60"}`}>
+              <input type="hidden" name="id" value={x.id} />
+              <input name="name" defaultValue={x.name} className="input min-w-0 flex-1 py-2" />
+              <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="active" defaultChecked={x.active} className="h-5 w-5" /> In use</label>
+            </ActionForm>
+          ))}
+          <ActionForm action={saveCleaningActivity} submit="Add activity" className="flex flex-wrap items-center gap-2 border-t pt-2">
+            <input name="name" required placeholder="New activity" className="input min-w-0 flex-1 py-2" />
+          </ActionForm>
+        </section>
       </div>
     );
   }
