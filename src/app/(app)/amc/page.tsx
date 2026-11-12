@@ -50,7 +50,7 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h1 className="page-title">Annual maintenance contracts</h1>
+          <h1 className="page-title">Annual Maintenance Contract</h1>
           <p className="page-sub">Utility section AMC {year} · Planned / Done / Past due per month</p>
         </div>
         <div className="flex gap-2 text-sm">

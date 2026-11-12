@@ -35,7 +35,7 @@ function NavGroups({ nav, path, onPick, compact }: { nav: NavItem[]; path: strin
                 return (
                   <li key={n.href}>
                     <Link href={n.href} onClick={onPick} aria-current={on ? "page" : undefined}
-                      className={`flex items-center rounded-lg px-3 text-sm font-medium transition ${compact ? "min-h-11" : "min-h-8"} ${
+                      className={`flex items-center rounded-lg px-3 text-sm font-medium transition ${compact ? "min-h-11 py-1.5 leading-snug" : "min-h-8"} ${
                         on ? "bg-brand-red/10 text-brand-red" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"}`}>
                       {n.label}
                     </Link>

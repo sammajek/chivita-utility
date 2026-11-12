@@ -251,6 +251,8 @@ Each entry: date, decision, who decided, notes.
 - Tables: one table style across the app (header alignment follows the column: numbers right, ticks centred; tables in
   cards line up with the card heading). Lists with expandable rows (Calibration, Jobs & POs) use aligned columns;
   Downtime and RCA are tables.
+- Menu names (owner, 2026-11-12): Preventive Maintenance, Annual Maintenance Contract, Job Orders & POs, Cleaning Schedule,
+  Downtime Log & Analysis, RCA Log & Analysis, Utility Consumption, Water Quality, Instrument Calibration (page titles match).
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

@@ -48,7 +48,7 @@ export default async function WaterPage({ searchParams }: { searchParams: Promis
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="page-title">Water quality</h1>
+        <h1 className="page-title">Water Quality</h1>
         <p className="page-sub">Process water sampling plan · CHICQARG24 · results judged against specification and alert limit</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">

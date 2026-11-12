@@ -70,7 +70,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="page-title">Job requests &amp; item orders</h1>
+        <h1 className="page-title">Job Orders &amp; POs</h1>
         <p className="page-sub">From request to PO, execution, job completion certificate (JCC) and payment</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">

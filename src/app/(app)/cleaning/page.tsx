@@ -49,7 +49,7 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="page-title">Cleaning roster</h1>
+        <h1 className="page-title">Cleaning Schedule</h1>
         <p className="page-sub">Cleaning of Utility 1, 2 environment &amp; equipment · CHI/ENG/UTI/CLN/001</p>
       </div>
 

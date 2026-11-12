@@ -64,7 +64,7 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
   );
   const header = (
     <div>
-      <h1 className="page-title">Preventive maintenance</h1>
+      <h1 className="page-title">Preventive Maintenance</h1>
       <p className="page-sub">Utility PM log · CHIENGUTRG08 · Done OK “√”, Not done “--”, Done not OK “X”</p>
     </div>
   );

@@ -35,7 +35,7 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
   const header = (
     <div className="flex items-start justify-between gap-3">
       <div>
-        <h1 className="page-title">Utility consumption</h1>
+        <h1 className="page-title">Utility Consumption</h1>
         <p className="page-sub">7A.M Daily Utility Consumption Report · read every meter at 07:00. Daily use = today’s reading − the previous reading.</p>
       </div>
       <Logo height={32} className="hidden print:block" />

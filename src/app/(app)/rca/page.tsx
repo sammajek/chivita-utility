@@ -27,7 +27,7 @@ export default async function RcaListPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-end justify-between">
-        <h1 className="page-title">RCA register</h1>
+        <h1 className="page-title">RCA Log &amp; Analysis</h1>
         {canEdit && <Link href="/rca/new" className="btn-primary">+ New RCA</Link>}
       </div>
       {awaiting.length > 0 && (

@@ -49,7 +49,7 @@ export default async function CalibrationPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="page-title">Instrument calibration</h1>
+        <h1 className="page-title">Instrument Calibration</h1>
         <p className="page-sub">Calibration register: next due = last calibration + interval. Flags {warnDays} days before the due date.</p>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
