@@ -45,6 +45,8 @@ export async function saveDowntime(_prev: FormState, f: FormData): Promise<FormS
     failure_category: s(f, "failure_category"),
     failure_mode: s(f, "failure_mode"),
     issue_description: s(f, "issue_description"),
+    immediate_stop: f.get("immediate_stop") === "on",
+    planned_hours: s(f, "planned_hours") ? Number(String(s(f, "planned_hours")).replace(",", ".")) : null,
     start_at: start.toISOString(),
     end_at: end?.toISOString() ?? null,
     override_hours: override ? Number(override) : null,
@@ -63,7 +65,8 @@ export async function saveDowntime(_prev: FormState, f: FormData): Promise<FormS
   const { data, error } = id
     ? await supabase.from("downtime_events").update(row as never).eq("id", id).select("id").single()
     : await supabase.from("downtime_events").insert({ ...row, recorded_by_type: "person" } as never).select("id").single();
-  if (error) return { error: error.message.includes("check constraint") ? "Override hours need a reason." : error.message };
+  if (row.planned_hours !== null && !(row.planned_hours > 0)) return { error: "Planned duration must be a number of hours above 0." };
+  if (error) return { error: error.message.includes("override") ? "Override hours need a reason." : error.message.includes("planned_hours") ? "Planned duration must be above 0." : error.message };
   revalidatePath("/downtime");
   redirect(`/downtime/${(data as { id: string }).id}`);
 }

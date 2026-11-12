@@ -8,8 +8,11 @@
  *          downtime is used instead and the figure is marked "estimated".
  *          (Not total calendar equipment-hours across the fleet, which is what
  *          the Excel dashboard does and gives ~315,000 h.)
- *  Availability = (scheduled hours − unplanned downtime hours) ÷ scheduled hours
+ *  Availability = (scheduled hours − planned downtime − availability loss) ÷ (scheduled hours − planned downtime)
  *          Scheduled hours = 24 h × days in the period (24/7 plant).
+ *          Availability loss = unplanned breakdowns + condition-based stops that had to happen at once
+ *          + time planned work ran over its planned duration. Planned work within its plan is taken out of
+ *          scheduled time; external supply failures are shown separately and not charged to the machine.
  */
 
 export interface DowntimeEvent {
@@ -18,9 +21,16 @@ export interface DowntimeEvent {
   start_at: string;
   end_at: string | null;
   override_hours: number | null;
+  /** CBM only: the machine had to stop at once (counts as a loss) */
+  immediate_stop?: boolean | null;
+  /** planned work / scheduled CBM: planned duration; time beyond it counts as a loss */
+  planned_hours?: number | null;
 }
 
 export const UNPLANNED = "Unplanned Breakdown";
+export const CBM = "Condition-Based Maintenance (CBM)";
+export const PLANNED = "Planned Maintenance";
+export const EXTERNAL = "External Supply Failure";
 const H = 3_600_000;
 
 /** Hours of an event that fall inside [from, to). Override hours are pro-rated. */
@@ -36,6 +46,23 @@ export function hoursInPeriod(e: DowntimeEvent, from: Date, to: Date, now = new 
   return full > 0 ? (e.override_hours * clipped) / full : e.override_hours;
 }
 
+/** Splits an event's hours inside [from, to) into availability loss, planned downtime and external downtime. */
+export function splitHours(e: DowntimeEvent, from: Date, to: Date, now = new Date()) {
+  const h = hoursInPeriod(e, from, to, now);
+  const out = { loss: 0, planned: 0, external: 0 };
+  if (e.downtime_type === UNPLANNED || (e.downtime_type === CBM && e.immediate_stop)) out.loss = h;
+  else if (e.downtime_type === PLANNED || e.downtime_type === CBM) {
+    if (e.planned_hours == null) out.planned = h;
+    else {
+      const full = hoursInPeriod(e, new Date(0), new Date(8.64e15), now);
+      const share = full > 0 ? Math.min(1, e.planned_hours / full) : 1;
+      out.planned = h * share;
+      out.loss = h - out.planned;
+    }
+  } else if (e.downtime_type === EXTERNAL) out.external = h;
+  return out;
+}
+
 export function mttr(events: DowntimeEvent[], from: Date, to: Date, now = new Date()): number | null {
   const unplanned = events.filter((e) => e.downtime_type === UNPLANNED && new Date(e.start_at) >= from && new Date(e.start_at) < to);
   if (unplanned.length === 0) return null;
@@ -48,9 +75,11 @@ export function mtbf(operatingHours: number, failures: number): number | null {
   return operatingHours / failures;
 }
 
-export function availability(scheduledHours: number, unplannedHours: number): number | null {
-  if (scheduledHours <= 0) return null;
-  return Math.max(0, (scheduledHours - unplannedHours) / scheduledHours);
+/** Availability = (scheduled − planned − loss) ÷ (scheduled − planned). */
+export function availability(scheduledHours: number, lossHours: number, plannedHours = 0): number | null {
+  const base = scheduledHours - plannedHours;
+  if (base <= 0) return null;
+  return Math.max(0, (base - lossHours) / base);
 }
 
 /** Running hours from cumulative counter readings: sum of positive increases (counter resets ignored). */
@@ -68,8 +97,10 @@ export function operatingHoursFromCounter(values: { at: string; value: number }[
 export interface AssetKpi {
   asset_id: string;
   failures: number;
+  /** availability loss hours (breakdowns, urgent CBM, planned overruns) */
   unplanned_hours: number;
   planned_hours: number;
+  external_hours: number;
   operating_hours: number;
   operating_hours_estimated: boolean;
   mttr: number | null;
@@ -90,21 +121,24 @@ export function assetKpis(
     const evs = events.filter((e) => e.asset_id === id);
     const unplannedEvs = evs.filter((e) => e.downtime_type === UNPLANNED);
     const failures = unplannedEvs.filter((e) => new Date(e.start_at) >= from && new Date(e.start_at) < to).length;
-    const unplanned = unplannedEvs.reduce((t, e) => t + hoursInPeriod(e, from, to, now), 0);
-    const planned = evs.filter((e) => e.downtime_type !== UNPLANNED).reduce((t, e) => t + hoursInPeriod(e, from, to, now), 0);
+    const parts = evs.map((e) => splitHours(e, from, to, now));
+    const unplanned = parts.reduce((t, p) => t + p.loss, 0);
+    const planned = parts.reduce((t, p) => t + p.planned, 0);
+    const external = parts.reduce((t, p) => t + p.external, 0);
     const counted = operatingHoursFromCounter(counters.get(id) ?? []);
-    const operating = counted ?? Math.max(0, scheduled - unplanned - planned);
+    const operating = counted ?? Math.max(0, scheduled - unplanned - planned - external);
     return {
       asset_id: id,
       failures,
       unplanned_hours: unplanned,
       planned_hours: planned,
+      external_hours: external,
       operating_hours: operating,
       operating_hours_estimated: counted === null,
       mttr: failures ? unplannedEvs.filter((e) => new Date(e.start_at) >= from && new Date(e.start_at) < to)
         .reduce((t, e) => t + hoursInPeriod(e, new Date(0), new Date(8.64e15), now), 0) / failures : null,
       mtbf: mtbf(operating, failures),
-      availability: availability(scheduled, unplanned),
+      availability: availability(scheduled, unplanned, planned),
     };
   });
 }

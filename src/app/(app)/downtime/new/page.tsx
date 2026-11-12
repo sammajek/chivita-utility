@@ -2,7 +2,7 @@ import { requireProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { loadAssetsForPicker, loadLists } from "@/lib/data/lists";
 import { lagosDate, lagosParts, shiftAt } from "@/lib/time";
-import { DowntimeForm, type DowntimeDefaults } from "../DowntimeForm";
+import { DowntimeForm, type Cause, type DowntimeDefaults } from "../DowntimeForm";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +14,10 @@ const hhmm = (iso: string) => {
 export default async function NewDowntimePage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
   const profile = await requireProfile();
   const { id } = await searchParams;
-  const [lists, assets] = await Promise.all([loadLists(), loadAssetsForPicker()]);
+  const supabase0 = await createClient();
+  const [lists, assets, { data: causes }, { data: gi }] = await Promise.all([loadLists(), loadAssetsForPicker(),
+    supabase0.from("downtime_causes").select("downtime_type, equipment_category, failure_category, failure_mode, issue_descriptions").eq("active", true).order("sort"),
+    supabase0.from("app_settings").select("value").eq("key", "downtime_general_issues").maybeSingle()]);
   let d: DowntimeDefaults = { date: lagosDate(new Date()), shift: shiftAt(new Date()).shift, start_time: hhmm(new Date().toISOString()), status: "Open" };
 
   if (id) {
@@ -29,7 +32,8 @@ export default async function NewDowntimePage({ searchParams }: { searchParams: 
         id, asset_id: String(ev.asset_id), date: lagosDate(new Date(start)), shift: String(ev.shift), start_time: hhmm(start),
         end_time: end ? hhmm(end) : "", end_date: end && !sameOrNext ? lagosDate(new Date(end)) : "",
         downtime_type: String(ev.downtime_type), failure_category: String(ev.failure_category), failure_mode: String(ev.failure_mode),
-        issue_description: (ev.issue_description as string) ?? "", override_hours: ev.override_hours?.toString() ?? "",
+        issue_description: (ev.issue_description as string) ?? "", immediate_stop: Boolean(ev.immediate_stop),
+        planned_hours: ev.planned_hours?.toString() ?? "", override_hours: ev.override_hours?.toString() ?? "",
         override_reason: (ev.override_reason as string) ?? "", immediate_action: (ev.immediate_action as string) ?? "",
         spares_used: (ev.spares_used as string) ?? "", attended_by: (ev.attended_by as string) ?? "",
         production_impact: (ev.production_impact as string) ?? "", status: String(ev.status), remarks: (ev.remarks as string) ?? "",
@@ -40,8 +44,8 @@ export default async function NewDowntimePage({ searchParams }: { searchParams: 
   return (
     <div className="space-y-4">
       <h1 className="page-title">{id ? "Update downtime event" : "Log downtime"}</h1>
-      <p className="page-sub">Same fields and lists as the 603-001 Utility Downtime Analysis template. RCA is required automatically at ≥ 4 h or ≥ 3 repeats.</p>
-      <DowntimeForm lists={lists} assets={assets} d={d} canClose={canClose} />
+      <p className="page-sub">603-001 Utility Downtime Analysis template, with causes tailored to each machine. An unplanned breakdown of ≥ 4 h or a 3rd repeat opens a draft RCA automatically.</p>
+      <DowntimeForm lists={lists} assets={assets} d={d} canClose={canClose} causes={(causes ?? []) as Cause[]} generalIssues={(gi?.value as string[]) ?? []} />
     </div>
   );
 }

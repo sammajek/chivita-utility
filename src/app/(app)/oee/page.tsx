@@ -27,7 +27,7 @@ export default async function OeePage({ searchParams }: { searchParams: Promise<
   const [{ data: a }, { data: inp }, { data: dt }] = await Promise.all([
     aq,
     supabase.rpc("oee_inputs", { p_from: from.toISOString(), p_to: to.toISOString() } as never),
-    supabase.from("downtime_events").select("asset_id, downtime_type, start_at, end_at, override_hours")
+    supabase.from("downtime_events").select("asset_id, downtime_type, start_at, end_at, override_hours, immediate_stop, planned_hours")
       .is("voided_at", null).gte("start_at", new Date(from.getTime() - 30 * 86_400_000).toISOString()).limit(5000),
   ]);
   const assets = (a ?? []) as Asset[];

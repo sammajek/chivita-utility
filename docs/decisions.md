@@ -253,6 +253,20 @@ Each entry: date, decision, who decided, notes.
   Downtime and RCA are tables.
 - Menu names (owner, 2026-11-12): Preventive Maintenance, Annual Maintenance Contract, Job Orders & POs, Cleaning Schedule,
   Downtime Log & Analysis, RCA Log & Analysis, Utility Consumption, Water Quality, Instrument Calibration (page titles match).
+- Downtime rework (owner approved, 2026-11-12):
+  - Types: Unplanned Breakdown, Condition-Based Maintenance (CBM), Planned Maintenance, External Supply Failure.
+    Idle / Standby is not downtime (equipment status covers it); old events keep their type and are ignored by KPIs.
+  - Availability (and OEE) = (scheduled − planned − lost) ÷ (scheduled − planned). Lost = breakdowns + CBM stops that had
+    to happen at once + time planned work ran over its planned duration. Planned work within its plan is taken out of
+    scheduled time. External supply failures are reported separately, not charged to the machine. MTTR / MTBF count
+    unplanned breakdowns only. (Engineer KPI shift availability counts breakdowns and urgent CBM stops.)
+  - RCA: automatic for unplanned breakdowns ≥ 4 h or 3rd repeat of the same failure mode on the machine in 12 months,
+    and for the 3rd CBM repeat; never for planned work or external supply failures. A draft RCA is created at once and
+    assigned to the engineer on duty in that area (target date + 14 days, setting rca_target_days).
+  - Cause tree (seed_data/downtime_causes.json, scripts/build_downtime_causes.py, 253 causes): downtime type → failure
+    category → failure mode → suggested issue descriptions, with machine-specific causes for 15 equipment types plus
+    causes for every machine. The form shows only the causes that fit the chosen machine and the previous step; issue
+    description can be picked or typed. Editable in Admin → Downtime causes.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

@@ -157,3 +157,26 @@ export async function setTempPassword(_p: AdminState, f: FormData): Promise<Admi
   if (error) return { error: error.message };
   return { ok: "Temporary password set. Give it to the person and ask them to change it (menu → Change password)." };
 }
+
+const lines = (v: FormDataEntryValue | null) => String(v ?? "").split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+
+/** Edit or add a downtime cause (type → equipment category → failure category → failure mode → issue descriptions). */
+export async function saveCause(_p: AdminState, f: FormData): Promise<AdminState> {
+  await requireRole("admin", "section_manager");
+  const id = String(f.get("id") ?? "");
+  const row = {
+    downtime_type: String(f.get("downtime_type") ?? ""),
+    equipment_category: String(f.get("equipment_category") ?? "") || null,
+    failure_category: String(f.get("failure_category") ?? "").trim(),
+    failure_mode: String(f.get("failure_mode") ?? "").trim(),
+    issue_descriptions: lines(f.get("issue_descriptions")),
+    active: id ? f.get("active") === "on" : true,
+  };
+  if (!row.downtime_type || row.failure_category.length < 3 || row.failure_mode.length < 3) return { error: "Type, failure category and failure mode are needed." };
+  const supabase = await createClient();
+  const { error } = id
+    ? await supabase.from("downtime_causes").update(row as never).eq("id", id)
+    : await supabase.from("downtime_causes").insert({ ...row, sort: 10000 } as never);
+  if (error?.code === "23505") return { error: "That cause already exists for this downtime type and equipment." };
+  return done(error, id ? "Saved." : "Cause added.");
+}

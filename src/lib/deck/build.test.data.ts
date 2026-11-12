@@ -10,7 +10,7 @@ export const data: DeckData = {
            commentary: { downtime: "Compressor 5 bearing failure drove most hours." } },
   dash: {
     compliance: { due: 100, filled: 96, pct: 96 }, openFlags: 4, criticalFlags: 1, openDowntime: 2, onDuty: [], outOfSpec24h: 3, early24h: 0, missingOpen: 1,
-    kpis: [{ asset_id: "a", code: "CMP-05", name: "Air Compressor 5", failures: 2, unplanned_hours: 9.5, planned_hours: 0, operating_hours: 700,
+    kpis: [{ asset_id: "a", code: "CMP-05", name: "Air Compressor 5", failures: 2, unplanned_hours: 9.5, planned_hours: 0, external_hours: 0, operating_hours: 700,
              operating_hours_estimated: false, mttr: 4.75, mtbf: 350, availability: 0.987 }],
     fleet: { events: 2, unplannedHours: 9.5, mttr: 4.75, availability: 0.995 },
     pareto: [{ label: "Bearing failure", hours: 7, events: 1 }, { label: "Air leak", hours: 2.5, events: 1 }],

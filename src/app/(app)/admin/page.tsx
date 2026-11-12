@@ -4,17 +4,17 @@ import { createClient } from "@/lib/supabase/server";
 import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
 import { describeStandard } from "@/lib/evaluate";
-import { importStaffCsv, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
+import { importStaffCsv, saveCause, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
 import type { Parameter } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["settings", "Settings"],
+  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To review"], ["assets", "Equipment"], ["limits", "Limits"], ["registers", "Registers"], ["causes", "Downtime causes"], ["settings", "Settings"],
 ] as const;
 
-export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string }> }) {
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; type?: string; eq?: string }> }) {
   const profile = await requireRole("admin", "section_manager");
   const sp = await searchParams;
   const tab = TABS.some(([t]) => t === sp.tab) ? sp.tab! : "review";
@@ -37,9 +37,65 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       {tab === "assets" && <Assets q={q} />}
       {tab === "limits" && <Limits q={q} />}
       {tab === "registers" && <Registers />}
+      {tab === "causes" && <Causes type={sp.type ?? "Unplanned Breakdown"} eq={sp.eq ?? ""} />}
       {tab === "settings" && <Settings />}
     </div>
   );
+
+  async function Causes({ type, eq }: { type: string; eq: string }) {
+    const [{ data: types }, { data: cats }, { data: rows }] = await Promise.all([
+      supabase.from("lists").select("value").eq("list_name", "downtime_type").eq("active", true).order("sort"),
+      supabase.from("asset_categories").select("name").order("sort"),
+      (() => {
+        let q = supabase.from("downtime_causes").select("id, downtime_type, equipment_category, failure_category, failure_mode, issue_descriptions, active")
+          .eq("downtime_type", type).order("failure_category").order("sort");
+        q = eq === "_all" ? q.is("equipment_category", null) : eq ? q.eq("equipment_category", eq) : q;
+        return q;
+      })(),
+    ]);
+    const list = (rows ?? []) as { id: string; downtime_type: string; equipment_category: string | null; failure_category: string; failure_mode: string; issue_descriptions: string[]; active: boolean }[];
+    const catNames = ((cats ?? []) as { name: string }[]).map((c) => c.name);
+    const href = (o: Record<string, string>) => `/admin?${new URLSearchParams({ tab: "causes", type, ...(eq ? { eq } : {}), ...o })}`;
+    return (
+      <div className="space-y-3">
+        <p className="text-sm text-gray-600">The cause lists on the downtime form: downtime type → failure category → failure mode → suggested issue descriptions. A cause with no equipment applies to every machine. Untick “in use” to retire a cause (old events keep it).</p>
+        <div className="flex flex-wrap gap-2">
+          {((types ?? []) as { value: string }[]).map((t) => <Link key={t.value} href={href({ type: t.value })} className={`tab ${t.value === type ? "tab-on" : ""}`}>{t.value}</Link>)}
+        </div>
+        <form className="flex flex-wrap items-center gap-2" action="/admin">
+          <input type="hidden" name="tab" value="causes" /><input type="hidden" name="type" value={type} />
+          <select name="eq" defaultValue={eq} className="input w-auto py-2">
+            <option value="">All equipment</option><option value="_all">Every machine (general causes)</option>
+            {catNames.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <button className="btn-secondary btn-sm">Show</button>
+          <span className="text-xs text-gray-500">{list.length} cause(s)</span>
+        </form>
+        <details className="card">
+          <summary className="cursor-pointer section-title">+ Add a cause</summary>
+          <ActionForm action={saveCause} submit="Add cause" className="mt-3 grid gap-2 sm:grid-cols-2">
+            <select name="downtime_type" defaultValue={type} className="input">{((types ?? []) as { value: string }[]).map((t) => <option key={t.value}>{t.value}</option>)}</select>
+            <select name="equipment_category" defaultValue={eq && eq !== "_all" ? eq : ""} className="input"><option value="">Every machine</option>{catNames.map((c) => <option key={c}>{c}</option>)}</select>
+            <input name="failure_category" required minLength={3} placeholder="Failure category (e.g. Mechanical)" className="input" />
+            <input name="failure_mode" required minLength={3} placeholder="Failure mode (e.g. Separator element blocked)" className="input" />
+            <textarea name="issue_descriptions" rows={3} placeholder="Suggested issue descriptions, one per line (optional)" className="input sm:col-span-2" />
+          </ActionForm>
+        </details>
+        <div className="space-y-2">
+          {list.map((c) => (
+            <ActionForm key={c.id} action={saveCause} className={`card grid gap-2 sm:grid-cols-4 ${c.active ? "" : "opacity-60"}`}>
+              <input type="hidden" name="id" value={c.id} /><input type="hidden" name="downtime_type" value={c.downtime_type} />
+              <select name="equipment_category" defaultValue={c.equipment_category ?? ""} className="input py-2"><option value="">Every machine</option>{catNames.map((n) => <option key={n}>{n}</option>)}</select>
+              <input name="failure_category" defaultValue={c.failure_category} className="input py-2" />
+              <input name="failure_mode" defaultValue={c.failure_mode} className="input py-2 sm:col-span-2" />
+              <textarea name="issue_descriptions" rows={2} defaultValue={c.issue_descriptions.join("\n")} placeholder="Issue descriptions, one per line" className="input py-2 text-sm sm:col-span-3" />
+              <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="active" defaultChecked={c.active} className="h-5 w-5" /> In use</label>
+            </ActionForm>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   async function Users({ canEdit }: { canEdit: boolean }) {
     const { data } = await supabase.from("profiles").select("id, full_name, email, role, areas, active, staff_id, phone, whatsapp").order("active").order("full_name");

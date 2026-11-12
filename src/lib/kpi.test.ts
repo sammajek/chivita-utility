@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assetKpis, availability, hoursInPeriod, mtbf, mttr, oee, operatingHoursFromCounter, performance, quality, type DowntimeEvent } from "./kpi";
+import { assetKpis, availability, splitHours, hoursInPeriod, mtbf, mttr, oee, operatingHoursFromCounter, performance, quality, type DowntimeEvent } from "./kpi";
 import { describeStandard, evaluateValue, type ParamSpec } from "./evaluate";
 
 const from = new Date("2026-09-01T00:00:00+01:00");
@@ -32,9 +32,9 @@ describe("worked example: Compressor 5 in September", () => {
     expect(k.operating_hours_estimated).toBe(false);
     expect(k.mtbf).toBeCloseTo(216.67, 1);
   });
-  it("Availability = (720 − 12) ÷ 720 = 98.3 % (planned maintenance not counted)", () => {
+  it("Availability = (720 − 6 planned − 12 lost) ÷ (720 − 6) = 98.32 % (planned work taken out of scheduled time)", () => {
     expect(k.planned_hours).toBeCloseTo(6);
-    expect(k.availability).toBeCloseTo(708 / 720);
+    expect(k.availability).toBeCloseTo(702 / 714, 6);
   });
 });
 
@@ -117,5 +117,30 @@ describe("worked example: Boiler 4 OEE over 30 days", () => {
   });
   it("caps performance at 100 % (meter or rating error)", () => {
     expect(performance(3000, 3.5, 600)).toBe(1);
+  });
+});
+
+describe("worked example: how each downtime type counts (one compressor, 30 days = 720 h)", () => {
+  const evs: DowntimeEvent[] = [
+    ev("C9", "2026-09-02T08:00:00+01:00", "2026-09-02T12:00:00+01:00"),                                  // 4 h breakdown → loss
+    { ...ev("C9", "2026-09-05T07:00:00+01:00", "2026-09-05T15:00:00+01:00", "Planned Maintenance"), planned_hours: 6 }, // 8 h, planned 6 → 6 planned + 2 overrun loss
+    { ...ev("C9", "2026-09-10T09:00:00+01:00", "2026-09-10T12:00:00+01:00", "Condition-Based Maintenance (CBM)"), immediate_stop: true }, // 3 h urgent CBM → loss
+    ev("C9", "2026-09-12T09:00:00+01:00", "2026-09-12T11:00:00+01:00", "Condition-Based Maintenance (CBM)"),  // 2 h scheduled CBM → planned
+    ev("C9", "2026-09-15T07:00:00+01:00", "2026-09-15T12:00:00+01:00", "External Supply Failure"),       // 5 h grid outage → external
+    ev("C9", "2026-09-20T07:00:00+01:00", "2026-09-20T19:00:00+01:00", "Idle / Standby"),                // old idle event → ignored
+  ];
+  const [k] = assetKpis(["C9"], evs, new Map(), from, to, now);
+  it("splits the hours", () => {
+    expect(k.unplanned_hours).toBeCloseTo(4 + 2 + 3, 6);
+    expect(k.planned_hours).toBeCloseTo(6 + 2, 6);
+    expect(k.external_hours).toBeCloseTo(5, 6);
+    expect(k.failures).toBe(1);
+  });
+  it("availability = (720 − 8) − 9 over (720 − 8) = 98.74 %", () => {
+    expect(k.availability).toBeCloseTo((712 - 9) / 712, 6);
+  });
+  it("planned work without a planned duration is all planned", () => {
+    expect(splitHours(ev("X", "2026-09-05T07:00:00+01:00", "2026-09-05T15:00:00+01:00", "Planned Maintenance"), from, to, now))
+      .toEqual({ loss: 0, planned: 8, external: 0 });
   });
 });

@@ -139,7 +139,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <h3 className="mb-2 font-semibold">Per equipment</h3>
           <table className="data-table w-full text-sm">
             <thead>
-              <tr><th>Equipment</th><th className="num">Breakdowns</th><th className="num">Down (h)</th><th className="num">MTTR</th><th className="num">MTBF</th><th className="num">Availability</th></tr>
+              <tr><th>Equipment</th><th className="num">Breakdowns</th><th className="num">Lost (h)</th><th className="num">Planned (h)</th><th className="num">External (h)</th><th className="num">MTTR</th><th className="num">MTBF</th><th className="num">Availability</th></tr>
             </thead>
             <tbody className="tabular-nums">
               {d.kpis.map((k) => (
@@ -147,6 +147,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                   <td><b>{k.code}</b> <span className="text-gray-500">{k.name}</span></td>
                   <td className="num">{k.failures}</td>
                   <td className="num">{k.unplanned_hours.toFixed(1)}</td>
+                  <td className="num">{k.planned_hours.toFixed(1)}</td>
+                  <td className="num">{k.external_hours.toFixed(1)}</td>
                   <td className="num">{h(k.mttr)}</td>
                   <td className="num" title={k.operating_hours_estimated ? "Estimated: no running-hours counter readings" : `${k.operating_hours.toFixed(0)} running hours from counter`}>
                     {h(k.mtbf)}{k.operating_hours_estimated && k.mtbf !== null ? "*" : ""}
@@ -154,15 +156,15 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                   <td className="num">{pct(k.availability === null ? null : k.availability * 100)}</td>
                 </tr>
               ))}
-              {d.kpis.length === 0 && <tr><td colSpan={6} className="py-2 text-gray-500">No downtime recorded in this period.</td></tr>}
+              {d.kpis.length === 0 && <tr><td colSpan={8} className="text-gray-500">No downtime recorded in this period.</td></tr>}
             </tbody>
           </table>
           <details className="mt-3 text-xs text-gray-600">
             <summary className="cursor-pointer font-medium">How these are calculated</summary>
             <ul className="mt-1 list-disc space-y-1 pl-4">
-              <li><b>MTTR</b> = total unplanned breakdown hours ÷ number of unplanned breakdowns.</li>
+              <li><b>MTTR</b> = total unplanned breakdown hours ÷ number of unplanned breakdowns (breakdowns only).</li>
               <li><b>MTBF</b> = operating hours of that equipment ÷ its breakdowns. Operating hours come from the running-hours counters on the registers; * means no counter readings, so scheduled hours minus downtime were used.</li>
-              <li><b>Availability</b> = (scheduled hours − unplanned downtime) ÷ scheduled hours, with 24 h/day scheduled. Planned maintenance is shown separately and not counted as unavailability.</li>
+              <li><b>Availability</b> = (scheduled − planned − lost) ÷ (scheduled − planned), with 24 h/day scheduled. <b>Lost</b> = unplanned breakdowns + condition-based stops that had to happen at once + time planned work ran over its planned duration. <b>Planned</b> work within its plan is taken out of scheduled time. <b>External</b> supply failures (power, gas, water) are shown separately and not charged to the machine.</li>
               <li>Unlike the Excel dashboard, MTBF is per equipment, not total calendar hours across the whole fleet.</li>
             </ul>
           </details>

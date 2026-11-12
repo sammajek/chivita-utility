@@ -32,7 +32,7 @@ export async function loadDashboard(from: Date, to: Date, area: string | null): 
     supabase.from("flags").select("severity, kind, is_demo, raised_at").or("resolved_at.is.null,kind.eq.reading_early"),
     supabase.from("duty_sessions").select("areas, checked_out_at, profile:profiles(full_name)").is("checked_out_at", null),
     supabase.from("downtime_events")
-      .select("asset_id, downtime_type, start_at, end_at, override_hours, status, failure_mode, area, is_demo, asset:assets(code, name, area)")
+      .select("asset_id, downtime_type, start_at, end_at, override_hours, immediate_stop, planned_hours, status, failure_mode, area, is_demo, asset:assets(code, name, area)")
       .is("voided_at", null).gte("start_at", new Date(from.getTime() - 30 * 86_400_000).toISOString()).limit(5000),
     supabase.from("readings").select("id", { count: "exact", head: true }).in("status", ["out_of_spec", "critical"])
       .is("voided_at", null).gte("reading_for", new Date(now.getTime() - 86_400_000).toISOString()),
@@ -109,7 +109,12 @@ export async function loadDashboard(from: Date, to: Date, area: string | null): 
       events: unplanned.length,
       unplannedHours,
       mttr: unplanned.length ? unplanned.reduce((t, e) => t + hoursInPeriod(e, new Date(0), new Date(8.64e15), now), 0) / unplanned.length : null,
-      availability: sched > 0 ? Math.max(0, 1 - unplannedHours / (sched * nAssets)) : null,
+      // fleet: (scheduled − planned − lost) ÷ (scheduled − planned) over the equipment with downtime
+      availability: (() => {
+        const lost = kpis.reduce((t, k) => t + k.unplanned_hours, 0), planned = kpis.reduce((t, k) => t + k.planned_hours, 0);
+        const base = sched * nAssets - planned;
+        return sched > 0 && base > 0 ? Math.max(0, (base - lost) / base) : null;
+      })(),
     },
     pareto: group((e) => e.failure_mode).sort((a, b) => b.hours - a.hours).slice(0, 10),
     trend: group((e) => weekOf(e.start_at)).sort((a, b) => a.label.localeCompare(b.label)),

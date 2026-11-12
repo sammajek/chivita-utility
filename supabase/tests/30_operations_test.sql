@@ -51,7 +51,7 @@ begin
   -- override hours need a reason
   begin
     insert into public.downtime_events (asset_id, shift, downtime_type, failure_category, failure_mode, start_at, end_at, override_hours, status)
-    values (b, 'day', 'Planned Maintenance', 'Planned Maintenance', 'Major overhaul', now() - interval '2 hours', now(), 8, 'Closed');
+    values (b, 'day', 'Planned Maintenance', 'Overhaul / Major Service', 'Major overhaul', now() - interval '2 hours', now(), 8, 'Closed');
     raise exception 'override without reason should fail';
   exception when check_violation then null;
   end;
