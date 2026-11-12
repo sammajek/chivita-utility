@@ -298,3 +298,14 @@ export async function saveMeter(_p: AdminState, f: FormData): Promise<AdminState
   if (error?.code === "23505") return { error: `${code} already exists.` };
   return done(error, `${code} added.`);
 }
+
+/** Admin: remove a register or a machine that never existed (audited; refused if it has real records). */
+export async function removeNeverExisted(_p: AdminState, f: FormData): Promise<AdminState> {
+  await requireRole("admin");
+  const reason = String(f.get("reason") ?? "").trim();
+  const supabase = await createClient();
+  const { error } = f.get("register_id")
+    ? await supabase.rpc("purge_never_existed_register", { p_id: String(f.get("register_id")), p_reason: reason })
+    : await supabase.rpc("purge_never_existed_assets", { p_codes: [String(f.get("code"))], p_reason: reason });
+  return done(error, "Removed permanently. The removal is recorded in the Audit Trail.");
+}

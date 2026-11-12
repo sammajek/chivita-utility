@@ -5,7 +5,7 @@ import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
 import { formatLagos } from "@/lib/time";
 import { describeStandard } from "@/lib/evaluate";
-import { addAsset, saveMeter, importStaffCsv, saveCause, saveCleaningActivity, saveCleaningZone, saveListItem, savePmTask, setRegisterAsset, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
+import { addAsset, removeNeverExisted, saveMeter, importStaffCsv, saveCause, saveCleaningActivity, saveCleaningZone, saveListItem, savePmTask, setRegisterAsset, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
 import type { Parameter } from "@/lib/types";
 
@@ -357,7 +357,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         </details>
         <p className="text-xs text-gray-500">To remove a machine, set its status to “retired”: it disappears from forms and lists, and its history is kept.</p>
         {(data ?? []).map((a) => (
-          <ActionForm key={a.id} action={updateAsset} className={`card grid gap-2 sm:grid-cols-4 ${a.status === "retired" ? "opacity-60" : ""}`}>
+          <div key={a.id}>
+          <ActionForm action={updateAsset} className={`card grid gap-2 sm:grid-cols-4 ${a.status === "retired" ? "opacity-60" : ""}`}>
             <input type="hidden" name="id" value={a.id} />
             <div className="font-semibold sm:col-span-4">{a.code}</div>
             <div className="sm:col-span-2"><L t="Name"><input name="name" defaultValue={a.name} className="input py-2" /></L></div>
@@ -374,6 +375,14 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             <div className="sm:col-span-3"><L t="Notes"><input name="notes" defaultValue={a.notes ?? ""} className="input py-2" /></L></div>
             <label className="flex items-center gap-1 self-end pb-2 text-sm"><input type="checkbox" name="confirmed" defaultChecked={a.confirmed} /> Confirmed</label>
           </ActionForm>
+          {a.status === "retired" && profile.role === "admin" && (
+            <ActionForm action={removeNeverExisted} submit={`Remove ${a.code} permanently`} className="-mt-1 flex flex-wrap items-center gap-2 rounded-b-xl bg-red-50 p-2">
+              <input type="hidden" name="code" value={a.code} />
+              <input name="reason" required minLength={5} className="input max-w-md py-2" placeholder="Why (e.g. never existed, duplicate entry)" />
+              <span className="text-xs text-gray-600">Only for equipment that never existed. Decommissioned equipment stays retired.</span>
+            </ActionForm>
+          )}
+          </div>
         ))}
       </div>
     );
@@ -436,6 +445,13 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                 ))}
                 {on.length === 0 && <li className="py-1.5 text-gray-500">No machines (readings not tied to one machine).</li>}
               </ul>
+              {!r.active && profile.role === "admin" && (
+                <ActionForm action={removeNeverExisted} submit="Remove permanently" className="mt-2 flex flex-wrap items-center gap-2 rounded-lg bg-red-50 p-2">
+                  <input type="hidden" name="register_id" value={r.id} />
+                  <input name="reason" required minLength={5} className="input max-w-md py-2" placeholder="Why (e.g. this register never applied)" />
+                  <span className="text-xs text-gray-600">Only for a register that never applied; refused if it has real readings.</span>
+                </ActionForm>
+              )}
               <ActionForm action={setRegisterAsset} submit="Add machine" className="mt-2 flex flex-wrap items-center gap-2">
                 <input type="hidden" name="register_id" value={r.id} /><input type="hidden" name="on" value="1" />
                 <select name="asset_id" className="input w-auto py-2" defaultValue="">
