@@ -4,8 +4,8 @@ insert into auth.users (id, email) values ('00000000-0000-0000-0000-0000000000c9
 update public.profiles set role = 'operator', active = true where email = 'consop@test.local';
 do $$
 begin
-  assert (select count(*) from public.meters) = 92, '92 meters (flowmeter structure from the owner)';
-  assert (select count(*) from public.meters where asset_id is null) = 24, 'most meters mapped to equipment';
+  assert (select count(*) from public.meters) = 94, '92 meters + 2 planned VAM 4 meters';
+  assert (select count(*) from public.meters where asset_id is null) = 26, format('most meters mapped to equipment (%s without)', (select string_agg(code, ' ') from public.meters where asset_id is null));
 end $$;
 
 set local role authenticated;
@@ -49,7 +49,7 @@ do $$
 declare n int;
 begin
   n := public.generate_consumption_demo('00000000-0000-0000-0000-0000000000cd', 45);
-  assert n = 92 * 46, 'one reading per meter per day';
+  assert n = (select count(*) from public.meters where active) * 46, 'one reading per meter per day';
   assert not exists (select 1 from public.meter_usage where kind <> 'rate' and used < 0), 'totalisers only rise';
   assert (select bool_and(is_demo) from public.meter_readings), 'all DEMO';
 end $$;

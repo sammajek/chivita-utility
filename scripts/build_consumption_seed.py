@@ -23,21 +23,22 @@ for n in range(2, 13):
     add("air", f"A-C{n}", f"Air Compressor {n} – Air Flow", "m³", "totaliser", f"CMP-{n:02d}")
 for n in (1, 2, 3):
     add("air", f"A-CEN{n}", f"Central Air Header {n} – Air Flow", "m³", "totaliser", None)
-add("steam", "B1-STM", "Boiler 1 – Steam Flow", "m³", "totaliser", "BLR-01")
-add("steam", "B2-STM", "Boiler 2 – Steam Flow", "m³", "totaliser", "BLR-02")
-add("steam", "B3-STM", "Boiler 3 – Steam Flow", "t", "totaliser", "BLR-03")
-add("steam", "B4-STM", "Boiler 4 – Steam Flow", "t", "totaliser", "BLR-04")
-add("steam", "B5-STM", "Boiler 5 – Steam Flow", "t", "totaliser", "BLR-05")
+add("steam", "B1-STM", "Boiler 1 – Steam Flow", "kg", "totaliser", "BLR-01")
+add("steam", "B2-STM", "Boiler 2 – Steam Flow", "kg", "totaliser", "BLR-02")
+add("steam", "B3-STM", "Boiler 3 – Steam Flow", "kg", "totaliser", "BLR-03")
+add("steam", "B4-STM", "Boiler 4 – Steam Flow", "kg", "totaliser", "BLR-04")
+add("steam", "B5-STM", "Boiler 5 – Steam Flow", "kg", "totaliser", "BLR-05")
 add("steam", "B5-STR", "Boiler 5 – Steam Flow Rate", "kg/h", "rate", "BLR-05")
-add("steam", "V1-STM", "VAM 1 – Steam Flow", "t", "totaliser", "CHV-01")
+add("steam", "V1-STM", "VAM 1 – Steam Flow", "kg", "totaliser", "CHV-01")
 FUEL = (("B1", "Boiler 1", "BLR-01"), ("B2", "Boiler 2", "BLR-02"), ("B3", "Boiler 3", "BLR-03"), ("B5", "Boiler 5", "BLR-05"),
         ("V2", "VAM 2", "CHV-02"), ("V3", "VAM 3", "CHV-03"))   # not Boiler 4, VAM 1, VAM 4
 for code, label, asset in FUEL:
     add("gas", f"{code}-GAS", f"{label} – Gas Flow", "m³", "totaliser", asset)
 for code, label, asset in FUEL:
     add("diesel", f"{code}-DSL", f"{label} – Diesel Flow", "L", "totaliser", asset)
-add("daily", "V2-GH", "VAM 2 – Gas Running Hours", "h", "hours", "CHV-02")
-add("daily", "V3-GH", "VAM 3 – Gas Running Hours", "h", "hours", "CHV-03")
+for n in (1, 2):
+    add("diesel", f"D-CEN{n}", f"Central Diesel Flowmeter {n}", "L", "totaliser", None)
+# VAM gas running hours are recorded in the VAM register (owner, 2026-11-12), so there is no running-hours tab.
 
 # Sheet "Water" (flowmeters, m³, 7 am)
 add("water", "W-WTP", "WTP Output", "m³", "totaliser")

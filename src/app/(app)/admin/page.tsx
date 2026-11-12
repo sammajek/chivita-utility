@@ -5,14 +5,14 @@ import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
 import { formatLagos } from "@/lib/time";
 import { describeStandard } from "@/lib/evaluate";
-import { addAsset, importStaffCsv, saveCause, saveCleaningActivity, saveCleaningZone, saveListItem, savePmTask, setRegisterAsset, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
+import { addAsset, saveMeter, importStaffCsv, saveCause, saveCleaningActivity, saveCleaningZone, saveListItem, savePmTask, setRegisterAsset, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
 import type { Parameter } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 const TABS = [
-  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment Inventory"], ["limits", "Limits"], ["registers", "Equipment Registers"], ["pm", "PM Tasks"], ["lists", "Pick Lists"], ["cleaning", "Cleaning Setup"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
+  ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment Inventory"], ["limits", "Limits"], ["registers", "Equipment Registers"], ["pm", "PM Tasks"], ["meters", "Meters"], ["lists", "Pick Lists"], ["cleaning", "Cleaning Setup"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
 ] as const;
 
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; freq?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string }> }) {
@@ -39,6 +39,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       {tab === "limits" && <Limits q={q} />}
       {tab === "registers" && <Registers />}
       {tab === "pm" && <PmTasks q={q} freq={sp.freq ?? ""} />}
+      {tab === "meters" && <Meters />}
       {tab === "lists" && <PickLists />}
       {tab === "cleaning" && <CleaningSetup />}
       {tab === "causes" && <Causes type={sp.type ?? "Unplanned Breakdown"} eq={sp.eq ?? ""} />}
@@ -487,6 +488,50 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             {fields(t)}
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="active" defaultChecked={t.active} className="h-5 w-5" /> In use</label>
           </ActionForm>
+        ))}
+      </div>
+    );
+  }
+
+  async function Meters() {
+    const GRP: [string, string][] = [["air", "Compressed Air Flowmeters"], ["steam", "Steam Flowmeters"], ["gas", "Gas Flowmeters"], ["diesel", "Diesel Flowmeters"],
+      ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"]];
+    const [{ data }, { data: assets }] = await Promise.all([
+      supabase.from("meters").select("id, code, name, grp, unit, kind, asset_id, active").neq("grp", "daily").order("grp").order("sort"),
+      supabase.from("assets").select("id, code, name").neq("status", "retired").order("code"),
+    ]);
+    const rows = (data ?? []) as { id: string; code: string; name: string; grp: string; unit: string | null; kind: string; asset_id: string | null; active: boolean }[];
+    const aOpts = ((assets ?? []) as { id: string; code: string; name: string }[]).map((x) => <option key={x.id} value={x.id}>{x.code} · {x.name}</option>);
+    return (
+      <div className="space-y-3">
+        <p className="text-sm text-gray-600">Meters on the Utility Consumption page. Switch a meter on when it is installed (e.g. VAM 4) and off when it is removed; its readings are kept. Steam flowmeters are read in kg (reports show tonnes).</p>
+        <details className="card">
+          <summary className="cursor-pointer section-title">+ Add a Meter</summary>
+          <ActionForm action={saveMeter} submit="Add meter" className="mt-3 grid gap-2 sm:grid-cols-3">
+            <input name="code" required placeholder="Code (e.g. A-C13)" className="input py-2 uppercase" />
+            <input name="name" required placeholder="Name (e.g. Air Compressor 13 – Air Flow)" className="input py-2 sm:col-span-2" />
+            <select name="grp" className="input py-2">{GRP.map(([g, l]) => <option key={g} value={g}>{l}</option>)}</select>
+            <input name="unit" placeholder="Unit (m³, kg, L, kWh)" className="input py-2" />
+            <select name="kind" className="input py-2"><option value="totaliser">Totaliser (cumulative)</option><option value="rate">Rate (as read)</option></select>
+            <select name="asset_id" className="input py-2 sm:col-span-3" defaultValue=""><option value="">Machine (optional)</option>{aOpts}</select>
+          </ActionForm>
+        </details>
+        {GRP.map(([g, label]) => (
+          <details key={g} className="card">
+            <summary className="cursor-pointer section-title">{label} <span className="text-xs font-normal text-gray-500">({rows.filter((r) => r.grp === g && r.active).length} on)</span></summary>
+            <div className="mt-2 divide-y">
+              {rows.filter((r) => r.grp === g).map((m) => (
+                <ActionForm key={m.id} action={saveMeter} className={`grid gap-2 py-2 sm:grid-cols-6 ${m.active ? "" : "opacity-60"}`}>
+                  <input type="hidden" name="id" value={m.id} />
+                  <span className="pt-2 text-xs font-semibold text-gray-500">{m.code}</span>
+                  <input name="name" defaultValue={m.name} className="input py-2 sm:col-span-2" />
+                  <input name="unit" defaultValue={m.unit ?? ""} className="input py-2" aria-label="Unit" />
+                  <select name="asset_id" defaultValue={m.asset_id ?? ""} className="input py-2"><option value="">No machine</option>{aOpts}</select>
+                  <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="active" defaultChecked={m.active} className="h-5 w-5" /> On</label>
+                </ActionForm>
+              ))}
+            </div>
+          </details>
         ))}
       </div>
     );

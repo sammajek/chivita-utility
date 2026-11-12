@@ -298,6 +298,10 @@ Each entry: date, decision, who decided, notes.
   "7 A.M."; only VAM 2/3 gas hours, which no register records). The 7 A.M. sheet's "Boiler 4" is Boiler 5. Switched off
   (readings kept): VAM 1 gas, compressor kWh duplicates (on Energy Meters), Trane/VAM/boiler hours (in the registers).
   New KPI: compressed air kWh per m³.
+- VAM gas running hours are a reading on the Utility 1 VAM register (Shift Checks), so the Running Hours consumption tab
+  is gone. Steam flowmeters are read in kg and reported in tonnes (kg ÷ 1000); OEE converts kg to t for t/h ratings.
+  VAM 4 energy meter and steam flowmeter added switched off (planned) — switch on in Admin → Meters when installed.
+  Two central diesel flowmeters added. Admin → Meters: rename, set unit, switch on/off, add meters.
 
 ## Open questions (awaiting owner)
 - Conflicting equipment standards (14 items: see the Phase 1 plan, section 2A). Until answered,

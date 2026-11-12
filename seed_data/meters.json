@@ -131,7 +131,7 @@
    "group": "steam",
    "code": "B1-STM",
    "name": "Boiler 1 – Steam Flow",
-   "unit": "m³",
+   "unit": "kg",
    "kind": "totaliser",
    "asset": "BLR-01",
    "sort": 15
@@ -140,7 +140,7 @@
    "group": "steam",
    "code": "B2-STM",
    "name": "Boiler 2 – Steam Flow",
-   "unit": "m³",
+   "unit": "kg",
    "kind": "totaliser",
    "asset": "BLR-02",
    "sort": 16
@@ -149,7 +149,7 @@
    "group": "steam",
    "code": "B3-STM",
    "name": "Boiler 3 – Steam Flow",
-   "unit": "t",
+   "unit": "kg",
    "kind": "totaliser",
    "asset": "BLR-03",
    "sort": 17
@@ -158,7 +158,7 @@
    "group": "steam",
    "code": "B4-STM",
    "name": "Boiler 4 – Steam Flow",
-   "unit": "t",
+   "unit": "kg",
    "kind": "totaliser",
    "asset": "BLR-04",
    "sort": 18
@@ -167,7 +167,7 @@
    "group": "steam",
    "code": "B5-STM",
    "name": "Boiler 5 – Steam Flow",
-   "unit": "t",
+   "unit": "kg",
    "kind": "totaliser",
    "asset": "BLR-05",
    "sort": 19
@@ -185,7 +185,7 @@
    "group": "steam",
    "code": "V1-STM",
    "name": "VAM 1 – Steam Flow",
-   "unit": "t",
+   "unit": "kg",
    "kind": "totaliser",
    "asset": "CHV-01",
    "sort": 21
@@ -299,21 +299,21 @@
    "sort": 33
   },
   {
-   "group": "daily",
-   "code": "V2-GH",
-   "name": "VAM 2 – Gas Running Hours",
-   "unit": "h",
-   "kind": "hours",
-   "asset": "CHV-02",
+   "group": "diesel",
+   "code": "D-CEN1",
+   "name": "Central Diesel Flowmeter 1",
+   "unit": "L",
+   "kind": "totaliser",
+   "asset": null,
    "sort": 34
   },
   {
-   "group": "daily",
-   "code": "V3-GH",
-   "name": "VAM 3 – Gas Running Hours",
-   "unit": "h",
-   "kind": "hours",
-   "asset": "CHV-03",
+   "group": "diesel",
+   "code": "D-CEN2",
+   "name": "Central Diesel Flowmeter 2",
+   "unit": "L",
+   "kind": "totaliser",
+   "asset": null,
    "sort": 35
   },
   {

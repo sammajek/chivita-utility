@@ -278,3 +278,23 @@ export async function saveCleaningActivity(_p: AdminState, f: FormData): Promise
   }
   return done(error, "Activity saved.");
 }
+
+/** Utility Consumption meters: rename, change unit, switch on / off (e.g. when installed), or add. */
+export async function saveMeter(_p: AdminState, f: FormData): Promise<AdminState> {
+  await requireRole("admin", "section_manager");
+  const id = String(f.get("id") ?? "");
+  const name = String(f.get("name") ?? "").trim();
+  if (name.length < 3) return { error: "Enter the meter name." };
+  const supabase = await createClient();
+  if (id) {
+    const { error } = await supabase.from("meters").update({ name, unit: txt(f, "unit"), asset_id: txt(f, "asset_id"), active: f.get("active") === "on" } as never).eq("id", id);
+    return done(error, "Meter saved.");
+  }
+  const code = String(f.get("code") ?? "").trim().toUpperCase();
+  if (!/^[A-Z0-9][A-Z0-9-]{1,15}$/.test(code)) return { error: "Code: letters, numbers and dashes (e.g. A-C13)." };
+  const { error } = await supabase.from("meters").insert({
+    code, name, grp: String(f.get("grp")), unit: txt(f, "unit"), kind: String(f.get("kind") ?? "totaliser"), asset_id: txt(f, "asset_id"), sort: 900,
+  } as never);
+  if (error?.code === "23505") return { error: `${code} already exists.` };
+  return done(error, `${code} added.`);
+}

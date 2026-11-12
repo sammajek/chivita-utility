@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 const GROUPS = [
   ["air", "Compressed Air Flowmeters"], ["steam", "Steam Flowmeters"], ["gas", "Gas Flowmeters"], ["diesel", "Diesel Flowmeters"],
-  ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"], ["daily", "Running Hours"],
+  ["energy", "Energy Meters"], ["water", "Water Flowmeters"], ["borehole", "Boreholes"], ["condensate", "Condensate"],
 ] as const;
 type Group = (typeof GROUPS)[number][0];
 
@@ -116,14 +116,15 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
         </div>
         {usage.some((u) => u.is_demo) && <p className="text-xs font-semibold text-purple-700">Includes DEMO data</p>}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {[["1", "m³"], ["2", "m³"], ["3", "t"], ["5", "t"]].map(([n, u]) => (
-            <StatTile key={n} label={`Boiler ${n}: gas per ${u} steam`} value={ratio(sum(`B${n}-GAS`), sum(`B${n}-STM`))} sub={`${Math.round(sum(`B${n}-GAS`)).toLocaleString()} m³ gas`} />
+          {["1", "2", "3", "5"].map((n) => (
+            <StatTile key={n} label={`Boiler ${n}: m³ gas per t steam`} value={ratio(sum(`B${n}-GAS`), sum(`B${n}-STM`) / 1000)}
+              sub={`${Math.round(sum(`B${n}-GAS`)).toLocaleString()} m³ gas · ${(sum(`B${n}-STM`) / 1000).toLocaleString("en-GB", { maximumFractionDigits: 1 })} t steam`} />
           ))}
           <StatTile label="Compressed air: kWh per m³" value={ratio(airKwh, airM3)} sub={`${Math.round(airKwh).toLocaleString()} kWh · ${Math.round(airM3).toLocaleString()} m³`} />
           <StatTile label="Water: lines ÷ WTP output" value={wtp > 0 ? `${Math.round((lines / wtp) * 100)}%` : "–"}
             sub={`${Math.round(lines).toLocaleString()} of ${Math.round(wtp).toLocaleString()} m³`} />
         </div>
-        <p className="text-xs text-gray-500">Gas per steam uses each boiler’s own gas and steam flowmeters for the month. Compressed air kWh per m³ = all compressor energy meters ÷ all compressor air flowmeters. Lines ÷ WTP shows how much treated water reaches the metered lines (the rest is backwash, unmetered use or losses). kWh/TR and water per unit of product need chiller output and production figures.</p>
+        <p className="text-xs text-gray-500">Gas per steam uses each boiler’s own gas and steam flowmeters for the month; steam is read in kg and shown in tonnes (kg ÷ 1000). Compressed air kWh per m³ = all compressor energy meters ÷ all compressor air flowmeters. Lines ÷ WTP shows how much treated water reaches the metered lines (the rest is backwash, unmetered use or losses). kWh/TR and water per unit of product need chiller output and production figures.</p>
 
         {GROUPS.map(([g, label]) => {
           const ms = meters.filter((m) => m.grp === g);
@@ -139,14 +140,17 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
                   <tbody>
                     {ms.map((m) => {
                       const u = byMeter.get(m.id);
+                      // steam is read in kg and reported in tonnes (kg ÷ 1000)
+                      const t = m.unit === "kg";
+                      const f = (v: number) => (t ? (v / 1000).toLocaleString("en-GB", { maximumFractionDigits: 2 }) : Math.round(v).toLocaleString());
                       return (
                         <tr key={m.id}>
                           <td className="sticky left-0 whitespace-nowrap bg-white p-1">{m.name}</td>
-                          <td className="p-1 text-center text-gray-500">{m.unit ?? ""}</td>
-                          <td className="p-1 text-right font-semibold">{u && m.kind !== "rate" ? Math.round(u.total).toLocaleString() : m.kind === "rate" && u?.avg != null ? `avg ${Math.round(u.avg).toLocaleString()}` : ""}</td>
+                          <td className="p-1 text-center text-gray-500">{t ? "t" : m.unit ?? ""}</td>
+                          <td className="p-1 text-right font-semibold">{u && m.kind !== "rate" ? f(u.total) : m.kind === "rate" && u?.avg != null ? `avg ${Math.round(u.avg).toLocaleString()}` : ""}</td>
                           {days.map((d) => {
                             const x = u?.byDay.get(d);
-                            return <td key={d} className={`p-1 text-right ${x?.reset ? "bg-amber-50" : ""}`} title={x?.comment ?? ""}>{x?.v != null ? Math.round(x.v).toLocaleString() : ""}</td>;
+                            return <td key={d} className={`p-1 text-right ${x?.reset ? "bg-amber-50" : ""}`} title={x?.comment ?? ""}>{x?.v != null ? f(x.v) : ""}</td>;
                           })}
                         </tr>
                       );

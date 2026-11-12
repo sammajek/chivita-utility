@@ -1,9 +1,9 @@
 -- The seed loaded everything and every field points at a parameter.
 do $$ begin
   assert (select count(*) from public.assets) = 100, 'assets loaded (93 + 7 Utility 2 additions from the owner)';
-  assert (select count(*) from public.parameters) = 251, 'parameters loaded';
+  assert (select count(*) from public.parameters) = 252, 'parameters loaded (251 + VAM gas running hours)';
   assert (select count(*) from public.registers) = 28, 'registers loaded';
-  assert (select count(*) from public.register_fields) = 428, 'fields loaded';
+  assert (select count(*) from public.register_fields) = 429, 'fields loaded (428 + VAM gas running hours)';
   assert (select count(*) from public.asset_aliases where not confirmed) > 0, 'unconfirmed aliases for review';
   assert not exists (select 1 from public.register_sections where slot_kind = 'time' and slot_times is null), 'time sections have slots';
   assert (select count(*) from public.parameters where needs_review) > 10, 'conflicts flagged for review';

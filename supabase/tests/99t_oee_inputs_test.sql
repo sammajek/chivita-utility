@@ -12,6 +12,6 @@ declare r record;
 begin
   select * into r from public.oee_inputs('2026-09-01 00:00+01', '2026-09-04 00:00+01') i
     join public.assets a on a.id = i.asset_id where a.code = 'BLR-04';
-  assert r.output = 150 and r.output_unit = 't', format('steam output only, got %s %s', r.output, r.output_unit);
+  assert r.output = 0.15 and r.output_unit = 't', format('steam output only (150 kg = 0.15 t), got %s %s', r.output, r.output_unit);
 end $$;
 rollback;
