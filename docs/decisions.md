@@ -317,3 +317,10 @@ Each entry: date, decision, who decided, notes.
   Clivet/Carrier/nitrogen counts, Utility 1 vs 2 split, asset code scheme).
 - Register document numbers (keep as printed or correct), night-hour slots, late vs missing threshold.
 - Email sender (M365 SMTP vs Resend), IT approval for cloud hosting, Supabase region.
+
+## 2026-11-12 — Demo data cleared before go-live
+- Owner asked to clear the DEMO data; the team will be added by the owner (Admin → Staff).
+- `clear_demo_data_all()` removed only rows marked DEMO, plus flags/follow-ups/spot-checks that existed only because of them
+  (each removal written to the audit trail). Removed: 19,074 readings, 4,278 meter readings, 1,038 PM records, 648 water results,
+  95 flags, 8 downtime events, 3 RCAs, 6 instruments (and their calibrations), cleaning/AMC/duty demo rows.
+- The 5 demo logins (`*.demo@chi-utility.test`) were deactivated, not deleted.
