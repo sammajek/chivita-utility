@@ -342,3 +342,14 @@ Each entry: date, decision, who decided, notes.
 - Defaults are exactly the previous fixed rules. The Admin role always keeps every right and the Admin screen (no lock-out).
 - Hiding a screen removes it from the menu; what a person can change is controlled by the rights groups.
 - Every change is in the Audit Trail.
+
+## 2026-11-13 — Office-hours staff (Mon–Fri 08:00–17:00)
+- Some users are not on shifts: e.g. the Engineering Manager (viewer) and the maintenance team.
+- Each person has a work pattern: shift worker (day/night) or office hours. Set on Admin → Staff (before sign-up) or
+  Admin → Users; the Excel import accepts "office" (or "8-5") in the shift column.
+- Office-hours people are not expected to check in to a shift (they can still check in when covering one), do not write
+  shift handovers, and are listed on the On Duty page as the Office Hours Team.
+- Alerts per person: "Maintenance alerts" = PM, follow-up, AMC, calibration, open downtime and RCA flags in their areas,
+  e-mailed in batches during office hours, each flag once; "Daily digest" = the 07:00 compliance summary (section
+  managers always get it). Office hours are settings `office_start_hour` (8) and `office_end_hour` (17).
+- E-mail sending still needs the email provider (pending owner choice).

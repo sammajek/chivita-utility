@@ -31,6 +31,7 @@ export async function updateUser(_p: AdminState, f: FormData): Promise<AdminStat
     staff_id: String(f.get("staff_id") ?? "").trim() || null,
     phone: String(f.get("phone") ?? "").trim() || null,
     whatsapp: String(f.get("whatsapp") ?? "").trim() || null,
+    ...pattern(f),
   } as never).eq("id", String(f.get("id")));
   return done(error, "User updated.");
 }
@@ -92,6 +93,16 @@ export async function updateSetting(_p: AdminState, f: FormData): Promise<AdminS
 
 const t = (f: FormData, k: string) => String(f.get(k) ?? "").trim() || null;
 
+/** Work pattern from the form: "day" / "night" (shift workers) or "office" (Mon–Fri office hours), plus alert choices. */
+function pattern(f: FormData): { work_pattern: "shift" | "office"; default_shift: string | null; alerts: string[] } {
+  const p = String(f.get("pattern") ?? "");
+  return {
+    work_pattern: p === "office" ? "office" : "shift",
+    default_shift: p === "day" || p === "night" ? p : null,
+    alerts: f.getAll("alerts").map(String).filter((a) => a === "maintenance" || a === "digest"),
+  };
+}
+
 /** Staff record: contact details and pre-approval (email + role → their sign-up is activated with that role). */
 export async function saveStaff(_p: AdminState, f: FormData): Promise<AdminState> {
   await requireCap("manager_tasks");
@@ -100,7 +111,7 @@ export async function saveStaff(_p: AdminState, f: FormData): Promise<AdminState
     staff_id: t(f, "staff_id"), surname: t(f, "surname"), first_name: t(f, "first_name"),
     band: t(f, "band") ? Number(t(f, "band")) : null, job_title: t(f, "job_title"), area: t(f, "area"),
     email: t(f, "email"), phone: t(f, "phone"), whatsapp: t(f, "whatsapp"), app_role: t(f, "app_role"),
-    default_shift: t(f, "default_shift"), active: f.get("active") !== null ? f.get("active") === "on" : true, team: "Utility",
+    ...pattern(f), active: f.get("active") !== null ? f.get("active") === "on" : true, team: "Utility",
   };
   if (!row.staff_id || !row.surname || !row.first_name) return { error: "Staff ID, surname and first name are required." };
   const id = t(f, "id");
@@ -110,6 +121,13 @@ export async function saveStaff(_p: AdminState, f: FormData): Promise<AdminState
   if (error) return { error: error.code === "23505" ? "That staff ID or email is already used." : error.message };
   await supabase.rpc("link_staff_profiles");
   return done(null, "Staff saved.");
+}
+
+/** The "shift" column of an import: day, night, or office hours ("office", "8-5", "8am-5pm", "office hours"). */
+function shiftCol(v: string | null): { default_shift: string | null; work_pattern: "shift" | "office" } {
+  const x = (v ?? "").toLowerCase();
+  if (/office|8\s*(am)?\s*-\s*5|08:00/.test(x)) return { default_shift: null, work_pattern: "office" };
+  return { default_shift: x === "day" || x === "night" ? x : null, work_pattern: "shift" };
 }
 
 /**
@@ -139,10 +157,10 @@ export async function importStaffCsv(_p: AdminState, f: FormData): Promise<Admin
     const full: Record<string, unknown> = {
       staff_id: g("staff_id"), surname: g("surname"), first_name: g("first_name"), band: g("band") ? Number(g("band")) : null,
       job_title: g("job_title"), area, email: g("email"), phone: g("phone"), whatsapp: g("whatsapp"), app_role: role,
-      default_shift: g("shift")?.toLowerCase() ?? null,
+      ...shiftCol(g("shift")),
     };
     // only columns present in the pasted header are written, so a partial sheet never blanks other details
-    const src: Record<string, string> = { app_role: "role", default_shift: "shift" };
+    const src: Record<string, string> = { app_role: "role", default_shift: "shift", work_pattern: "shift" };
     rows.push(Object.fromEntries(Object.entries(full).filter(([k]) => col(src[k] ?? k) >= 0)));
   }
   const supabase = await createClient();

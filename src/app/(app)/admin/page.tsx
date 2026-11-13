@@ -158,8 +158,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   }
 
   async function Users({ canEdit }: { canEdit: boolean }) {
-    const { data } = await supabase.from("profiles").select("id, full_name, email, role, areas, active, staff_id, phone, whatsapp").order("active").order("full_name");
-    const users = (data ?? []) as { id: string; full_name: string; email: string; role: string; areas: string[]; active: boolean; staff_id: string | null; phone: string | null; whatsapp: string | null }[];
+    const { data } = await supabase.from("profiles").select("id, full_name, email, role, areas, active, staff_id, phone, whatsapp, work_pattern, default_shift, alerts").order("active").order("full_name");
+    const users = (data ?? []) as { id: string; full_name: string; email: string; role: string; areas: string[]; active: boolean; staff_id: string | null; phone: string | null; whatsapp: string | null;
+      work_pattern: string; default_shift: string | null; alerts: string[] }[];
     return (
       <div className="space-y-2">
         <p className="text-sm text-gray-600">New people request access from the sign-in page (“Request access”). They stay inactive until you set their role and tick Active.</p>
@@ -180,6 +181,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
               ))}
               <label className="flex items-center gap-1"><input type="checkbox" name="active" defaultChecked={u.active} disabled={!canEdit} /> Active</label>
             </div>
+            <PatternFields pattern={u.work_pattern === "office" ? "office" : u.default_shift ?? ""} alerts={u.alerts} disabled={!canEdit} />
           </ActionForm>
           {canEdit && (
             <details className="border-t pt-2 text-sm">
@@ -198,11 +200,11 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
   async function Staff({ canImport }: { canImport: boolean }) {
     const { data } = await supabase.from("staff")
-      .select("id, staff_id, surname, first_name, full_name, band, job_title, area, email, phone, whatsapp, app_role, default_shift, active, profile:profiles(email, role, active)")
+      .select("id, staff_id, surname, first_name, full_name, band, job_title, area, email, phone, whatsapp, app_role, default_shift, work_pattern, alerts, active, profile:profiles(email, role, active)")
       .order("active", { ascending: false }).order("first_name");
     type S = { id: string; staff_id: string; surname: string; first_name: string; full_name: string; band: number | null; job_title: string | null;
       area: string | null; email: string | null; phone: string | null; whatsapp: string | null; app_role: string | null; default_shift: string | null;
-      active: boolean; profile: { email: string; role: string; active: boolean } | null };
+      work_pattern: string; alerts: string[]; active: boolean; profile: { email: string; role: string; active: boolean } | null };
     const staff = (data ?? []) as unknown as S[];
     const fields = (s?: S) => (
       <>
@@ -218,7 +220,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         </select>
         <input name="phone" defaultValue={s?.phone ?? ""} placeholder="Phone" inputMode="tel" className="input py-2" />
         <input name="whatsapp" defaultValue={s?.whatsapp ?? ""} placeholder="WhatsApp" inputMode="tel" className="input py-2" />
-        <select name="default_shift" defaultValue={s?.default_shift ?? ""} className="input py-2"><option value="">Shift: —</option><option value="day">Day</option><option value="night">Night</option></select>
+        <PatternFields pattern={s?.work_pattern === "office" ? "office" : s?.default_shift ?? ""} alerts={s?.alerts ?? []} />
         {s && <label className="flex items-center gap-1 text-sm"><input type="checkbox" name="active" defaultChecked={s.active} /> Active</label>}
       </>
     );
@@ -239,7 +241,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         </details>
         {canImport && (
           <details className="card"><summary className="cursor-pointer font-semibold">Import from Excel (Paste)</summary>
-            <p className="mt-1 text-xs text-gray-600">Copy the rows from Excel including a header row and paste below. Columns (any order): staff_id, surname, first_name, band, job_title, area (U1/U2), email, phone, whatsapp, role (operator / engineer / shift_manager / section_manager / admin / viewer), shift (day/night). Existing staff IDs are updated; only the columns you paste are changed.</p>
+            <p className="mt-1 text-xs text-gray-600">Copy the rows from Excel including a header row and paste below. Columns (any order): staff_id, surname, first_name, band, job_title, area (U1/U2), email, phone, whatsapp, role (operator / engineer / shift_manager / section_manager / admin / viewer), shift (day / night / office for Mon–Fri 08:00–17:00). Existing staff IDs are updated; only the columns you paste are changed.</p>
             <ActionForm action={importStaffCsv} submit="Import" className="mt-2 space-y-2">
               <textarea name="csv" rows={6} className="input font-mono text-xs" placeholder={"staff_id\tsurname\tfirst_name\temail\trole\n11102687\tAdeniji\tRasheed\trasheed@…\toperator"} />
             </ActionForm>
@@ -688,4 +690,22 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       </div>
     );
   }
+}
+
+/** Work pattern (day / night shift, or Mon–Fri office hours) and which e-mail alerts the person gets. */
+function PatternFields({ pattern, alerts, disabled }: { pattern: string; alerts: string[]; disabled?: boolean }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm sm:col-span-4">
+      <select name="pattern" defaultValue={pattern} disabled={disabled} className="input w-auto py-2">
+        <option value="">Shift worker (day or night)</option>
+        <option value="day">Shift worker: usually day</option>
+        <option value="night">Shift worker: usually night</option>
+        <option value="office">Office hours (Mon–Fri 08:00–17:00)</option>
+      </select>
+      <label className="flex items-center gap-1" title="PM, follow-ups, AMC, calibration, open downtime and RCA flags, e-mailed during office hours">
+        <input type="checkbox" name="alerts" value="maintenance" defaultChecked={alerts.includes("maintenance")} disabled={disabled} /> Maintenance alerts (office hours)</label>
+      <label className="flex items-center gap-1" title="Daily compliance summary at 07:00">
+        <input type="checkbox" name="alerts" value="digest" defaultChecked={alerts.includes("digest")} disabled={disabled} /> Daily digest e-mail</label>
+    </div>
+  );
 }

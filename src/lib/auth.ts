@@ -10,6 +10,8 @@ export interface Profile {
   role: Role;
   areas: ("U1" | "U2")[];
   active: boolean;
+  /** "shift" (day/night) or "office" (Mon–Fri office hours: no shift check-in expected). */
+  work_pattern: "shift" | "office";
   /** Action groups this user's role may do (Admin → Access). Empty when inactive. */
   caps: Capability[];
   /** Screen overrides for this role (path → shown), set on Admin → Access. */
@@ -26,12 +28,12 @@ export const requireProfile = cache(async (): Promise<Profile> => {
 
   const { data } = await supabase
     .from("profiles")
-    .select("id, full_name, email, role, areas, active")
+    .select("id, full_name, email, role, areas, active, work_pattern")
     .eq("id", user.id)
     .single<Omit<Profile, "caps" | "screens">>();
 
   if (!data || !data.active) {
-    return { id: user.id, full_name: user.email ?? "Unknown user", email: user.email ?? null, role: "viewer", areas: [], active: false, caps: [], screens: {} };
+    return { id: user.id, full_name: user.email ?? "Unknown user", email: user.email ?? null, role: "viewer", areas: [], active: false, work_pattern: "shift", caps: [], screens: {} };
   }
   const { data: rights } = await supabase.from("role_capabilities").select("capability, allowed").eq("role", data.role);
   const caps: Capability[] = [];

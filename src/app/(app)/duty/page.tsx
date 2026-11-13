@@ -30,14 +30,22 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
   const sp = await searchParams;
   const supabase = await createClient();
   const cur = shiftAt(new Date());
-  const [{ data: sessions }, { count: openFlags }] = await Promise.all([
+  const [{ data: sessions }, { count: openFlags }, { data: officeTeam }, { data: hours }] = await Promise.all([
     supabase
       .from("duty_sessions")
       .select("id, profile_id, shift_date, shift, areas, checked_in_at, checked_out_at, handover_note, open_flags_at_checkout, is_demo, presence_verified_at, presence_area, profile:profiles(full_name, role)")
       .order("checked_in_at", { ascending: false })
       .limit(30),
     supabase.from("flags").select("id", { count: "exact", head: true }).is("resolved_at", null),
+    supabase.from("profiles").select("id, full_name, role, areas").eq("active", true).eq("work_pattern", "office").order("full_name"),
+    supabase.from("app_settings").select("key, value").in("key", ["office_start_hour", "office_end_hour"]),
   ]);
+  const hourOf = (k: string, d: number) => Number((hours ?? []).find((h) => h.key === k)?.value ?? d);
+  const [oStart, oEnd] = [hourOf("office_start_hour", 8), hourOf("office_end_hour", 17)];
+  const officeLabel = `Mon–Fri ${String(oStart).padStart(2, "0")}:00–${String(oEnd).padStart(2, "0")}:00`;
+  const lagosNow = new Date(new Date().getTime() + 3600e3); // Lagos is UTC+1, no daylight saving
+  const officeOpen = lagosNow.getUTCDay() >= 1 && lagosNow.getUTCDay() <= 5 && lagosNow.getUTCHours() >= oStart && lagosNow.getUTCHours() < oEnd;
+  const team = (officeTeam ?? []) as { id: string; full_name: string; role: keyof typeof ROLE_LABELS; areas: string[] }[];
   const list = (sessions ?? []) as unknown as Session[];
   const mine = list.find((s) => s.profile_id === profile.id && !s.checked_out_at);
   const onNow = list.filter((s) => !s.checked_out_at && s.shift_date === cur.shiftDate && s.shift === cur.shift);
@@ -68,6 +76,14 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
                 <Link href="/flags" className="btn-secondary">Review open flags ({openFlags ?? 0})</Link>
               </div>
             </>
+          ) : profile.work_pattern === "office" ? (
+            <>
+              <p>You work office hours ({officeLabel}), so you don’t check in to a shift. You can still enter records, PM and downtime at any time.</p>
+              <details>
+                <summary className="cursor-pointer text-sm text-brand-blue">Covering a shift today? Check in</summary>
+                <div className="mt-2"><CheckInForm defaultAreas={profile.areas} /></div>
+              </details>
+            </>
           ) : (
             <>
               <p>Tap when you start your shift. If nobody checks in within 30 minutes of shift start, the section manager is alerted.</p>
@@ -95,6 +111,21 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
           </ul>
         )}
       </section>
+
+      {team.length > 0 && (
+        <section>
+          <h2 className="mb-2 font-semibold">Office Hours Team ({officeLabel})</h2>
+          <p className="mb-2 text-xs text-gray-500">{officeOpen ? "Office hours now: reach them for maintenance and management matters." : "Outside office hours now: contact the people on shift above."}</p>
+          <ul className="space-y-2">
+            {team.map((t) => (
+              <li key={t.id} className="card flex justify-between text-sm">
+                <span><b>{t.full_name}</b> · {ROLE_LABELS[t.role]}</span>
+                <span className="text-gray-500">{t.areas.join(" + ")}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section>
         <h2 className="mb-2 font-semibold">Recent Handovers</h2>
