@@ -363,3 +363,10 @@ Each entry: date, decision, who decided, notes.
 - The KPI page lists open follow-ups (count, overdue) for the person's areas, with links.
 - For office-hours staff, shift-based KPIs (availability on my shift, CW temp, water quality, dew point, leakage) show
   "Not applicable".
+
+## 2026-11-13 — Dashboard: maintenance KPIs and charts
+- Dashboard → Maintenance KPIs now also shows PM completion, follow-ups on time, open and overdue follow-ups for the
+  selected period (7/30/90 days) and area, using `maintenance_kpis()` (same rules as the Engineer KPI tracker).
+- Charts (plain SVG, no chart library): PM completion & follow-ups by month (last 6 months, one 0–100% axis),
+  unplanned downtime per week (columns, zero weeks shown), lost hours by equipment, and equipment status by category.
+  Every chart has a hover tooltip and a "Show as table" view; series colours pass the colour-blind/contrast check.

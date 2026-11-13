@@ -4,6 +4,7 @@ import { loadDashboard } from "@/lib/data/dashboard";
 import { createClient } from "@/lib/supabase/server";
 import { addDays, formatLagos, lagosDate, lagosInstant, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { BarList, StatTile } from "@/components/BarList";
+import { Columns, PercentLines, StatusBars } from "@/components/Charts";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,23 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const supabase = await createClient();
   let aq = supabase.from("assets").select("code, name, op_state, op_reason, category:asset_categories(name)").neq("status", "retired");
   if (area) aq = aq.eq("area", area);
+  // maintenance KPIs: the selected period, and each of the last 6 months (same rules as the Engineer KPI tracker)
+  const areas = area ? [area] : ["U1", "U2"];
+  const today = lagosDate(now);
+  const monthStarts = Array.from({ length: 6 }, (_, i) => {
+    const d0 = new Date(`${today.slice(0, 7)}-01T12:00:00Z`);
+    d0.setUTCMonth(d0.getUTCMonth() - (5 - i));
+    return d0.toISOString().slice(0, 10);
+  });
+  const nextMonth = (m: string) => { const d0 = new Date(`${m}T12:00:00Z`); d0.setUTCMonth(d0.getUTCMonth() + 1); return d0.toISOString().slice(0, 10); };
+  type MK = { pm_done: number; pm_due: number; fu_on_time: number; fu_due: number; fu_open: number; fu_overdue: number };
+  const mk = (a: string, b: string) => supabase.rpc("maintenance_kpis", { p_from: a, p_to: b, p_areas: areas } as never)
+    .then(({ data }) => ((data ?? []) as MK[])[0] ?? null);
+  const [mPeriod, ...mMonths] = await Promise.all([mk(addDays(today, 1 - days), addDays(today, 1)), ...monthStarts.map((m) => mk(m, nextMonth(m)))]);
+  const ratio = (n?: number, dd?: number) => (dd && Number(dd) > 0 ? (Number(n) / Number(dd)) * 100 : null);
+  const pmPct = ratio(mPeriod?.pm_done, mPeriod?.pm_due), fuPct = ratio(mPeriod?.fu_on_time, mPeriod?.fu_due);
+  const monthLabel = (m: string) => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][Number(m.slice(5, 7)) - 1];
+
   const [d, { data: assetData }, { count: hoursDue }, { data: use }] = await Promise.all([
     loadDashboard(from, to, area),
     aq,
@@ -39,6 +57,18 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const sumUse = (f: (u: (typeof usage)[number]) => boolean) => usage.filter(f).reduce((t, u) => t + Number(u.used), 0);
   const gas = sumUse((u) => /GAS$/.test(u.code)), kwh = sumUse((u) => u.unit === "kWh" && u.grp === "energy"), wtp = sumUse((u) => u.code === "W-WTP");
   const shift = shiftAt(now);
+  // every week in the period, including weeks without breakdowns (zero), for the column chart
+  const weekly = (() => {
+    const byWeek = new Map(d.trend.map((t) => [t.label, t]));
+    const out: { label: string; value: number; note: string }[] = [];
+    const first = new Date(`${addDays(today, 1 - days)}T12:00:00Z`);
+    first.setUTCDate(first.getUTCDate() - ((first.getUTCDay() + 6) % 7));
+    for (let w = first; w.toISOString().slice(0, 10) <= today; w = new Date(w.getTime() + 7 * 86_400_000)) {
+      const k = w.toISOString().slice(0, 10), t = byWeek.get(k);
+      out.push({ label: `${k.slice(8, 10)} ${monthLabel(k)}`, value: t?.hours ?? 0, note: `${t?.events ?? 0} breakdown${t?.events === 1 ? "" : "s"}` });
+    }
+    return out;
+  })();
   const link = (o: Record<string, string>) => `/?${new URLSearchParams({ days: String(days), ...(area ? { area } : {}), ...o })}`;
 
   return (
@@ -88,9 +118,12 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <Link key={a.code} href={`/equipment/${encodeURIComponent(a.code)}`} className="mr-2 underline">{a.code}{a.op_reason ? ` (${a.op_reason})` : ""}</Link>
           ))}</p>
         )}
-        <div className="flex flex-wrap gap-2 text-xs text-gray-600">
-          {[...byCat.entries()].map(([c, n]) => <span key={c} className="rounded bg-gray-100 px-2 py-0.5">{c}: {n.a}/{n.a + n.s + n.u}{n.u ? <b className="text-crit"> · {n.u} down</b> : null}</span>)}
-        </div>
+        <details className="pt-1">
+          <summary className="cursor-pointer text-sm text-brand-blue">Status by equipment category (chart)</summary>
+          <div className="mt-2">
+            <StatusBars rows={[...byCat.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([c, n]) => ({ label: c, available: n.a, standby: n.s, unavailable: n.u }))} />
+          </div>
+        </details>
       </section>
 
       <section className="card space-y-1">
@@ -124,14 +157,42 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <StatTile label="Availability" value={pct(d.fleet.availability === null ? null : d.fleet.availability * 100)} sub="of equipment with downtime" />
         </div>
 
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <StatTile label="PM completion" value={pct(pmPct)} sub={mPeriod?.pm_due ? `${mPeriod.pm_done} of ${mPeriod.pm_due} PM due · target 85%` : "no PM due in this period"}
+            tone={pmPct === null ? "default" : pmPct >= 85 ? "ok" : pmPct >= 70 ? "warn" : "crit"} />
+          <StatTile label="Follow-ups on time" value={pct(fuPct)} sub={mPeriod?.fu_due ? `${mPeriod.fu_on_time} of ${mPeriod.fu_due} due · target 90%` : "none due in this period"}
+            tone={fuPct === null ? "default" : fuPct >= 90 ? "ok" : fuPct >= 75 ? "warn" : "crit"} />
+          <StatTile label="Open follow-ups" value={String(mPeriod?.fu_open ?? 0)} sub="downtime actions & PM issues, now" tone={mPeriod?.fu_open ? "warn" : "ok"} />
+          <StatTile label="Overdue follow-ups" value={String(mPeriod?.fu_overdue ?? 0)} sub="past their due date" tone={mPeriod?.fu_overdue ? "crit" : "ok"} />
+        </div>
+
+        <div className="grid gap-3 lg:grid-cols-2 [&>*]:min-w-0">
+          <div className="card">
+            <div className="mb-2 flex items-baseline justify-between gap-2">
+              <h3 className="font-semibold">PM Completion &amp; Follow-ups by Month</h3>
+              <Link href="/kpi" className="whitespace-nowrap text-sm text-brand-blue">KPIs →</Link>
+            </div>
+            <PercentLines labels={monthStarts.map(monthLabel)} empty="No PM or follow-ups due yet in the last 6 months."
+              series={[
+                { label: "PM completion", short: "PM", target: 85, values: mMonths.map((m) => ratio(m?.pm_done, m?.pm_due)) },
+                { label: "Follow-ups on time", short: "Follow-ups", target: 90, values: mMonths.map((m) => ratio(m?.fu_on_time, m?.fu_due)) },
+              ]} />
+          </div>
+          <div className="card">
+            <h3 className="mb-2 font-semibold">Unplanned Downtime per Week (hours)</h3>
+            <Columns rows={weekly} unit="h" empty="No weeks in this period." />
+          </div>
+        </div>
+
         <div className="grid gap-3 lg:grid-cols-2">
           <div className="card">
             <h3 className="mb-3 font-semibold">Downtime by Failure Mode (Pareto)</h3>
             <BarList rows={d.pareto.map((p) => ({ label: p.label, value: p.hours, note: `${p.events}×` }))} unit="h" empty="No breakdowns in this period." />
           </div>
           <div className="card">
-            <h3 className="mb-3 font-semibold">Unplanned Downtime per Week</h3>
-            <BarList rows={d.trend.map((t) => ({ label: `Week of ${t.label}`, value: t.hours, note: `${t.events}×` }))} unit="h" empty="No breakdowns in this period." />
+            <h3 className="mb-3 font-semibold">Lost Hours by Equipment</h3>
+            <BarList rows={[...d.kpis].filter((k) => k.unplanned_hours > 0).sort((a, b) => b.unplanned_hours - a.unplanned_hours).slice(0, 8)
+              .map((k) => ({ label: `${k.code} ${k.name}`, value: k.unplanned_hours, note: `${k.failures}×` }))} unit="h" empty="No breakdowns in this period." />
           </div>
         </div>
 

@@ -39,5 +39,10 @@ begin
   assert n = 1 and d = 2, format('expected 1 of 2 on time, got %s of %s', n, d);
   assert (select count(*) from public.open_followups() where kind = 'downtime' and overdue and title = 'Order spare seal kit') = 1, 'open overdue item listed';
   assert not exists (select 1 from public.open_followups() where title = 'Replace valve'), 'completed item not listed';
+  -- dashboard: same example over the last 7 days in Utility 1
+  select fu_on_time, fu_due into n, d from public.maintenance_kpis(due - 6, due + 1, '{U1}');
+  assert n = 1 and d = 2, format('dashboard: expected 1 of 2, got %s of %s', n, d);
+  assert (select fu_open = 1 and fu_overdue = 1 from public.maintenance_kpis(due - 6, due + 1, '{U1}')), 'dashboard open/overdue';
+  assert (select fu_due = 0 from public.maintenance_kpis(due - 6, due + 1, '{U2}')), 'Utility 2 has none';
 end $$;
 rollback;
