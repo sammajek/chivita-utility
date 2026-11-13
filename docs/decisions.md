@@ -353,3 +353,13 @@ Each entry: date, decision, who decided, notes.
   e-mailed in batches during office hours, each flag once; "Daily digest" = the 07:00 compliance summary (section
   managers always get it). Office hours are settings `office_start_hour` (8) and `office_end_hour` (17).
 - E-mail sending still needs the email provider (pending owner choice).
+
+## 2026-11-13 — Maintenance KPIs: PM completion and follow-ups
+- PM Task Completion % (already on the tracker) is measured on the person's areas, so it works for office-hours staff.
+- New KPI "Follow-ups Closed on Time %" (target ≥90%, Maintenance): follow-ups due in the month in my areas closed by their
+  due date ÷ follow-ups due. Follow-ups = downtime further actions (due = target date; closed when marked complete or the
+  event is resolved) and PM tasks done with an issue (X) (due 7 days after recording, setting `pm_followup_days`;
+  closed when the PM issue flag is resolved). Worked example in `supabase/tests/99s_followup_kpi_test.sql` (1 of 2 = 50%).
+- The KPI page lists open follow-ups (count, overdue) for the person's areas, with links.
+- For office-hours staff, shift-based KPIs (availability on my shift, CW temp, water quality, dew point, leakage) show
+  "Not applicable".

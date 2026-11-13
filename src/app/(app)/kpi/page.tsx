@@ -10,7 +10,8 @@ import { saveWeeklyLog } from "./actions";
 
 export const dynamic = "force-dynamic";
 
-interface Def { code: string; name: string; category: string; target_text: string; target_min: number; source: string; formula: string }
+interface Def { code: string; name: string; category: string; target_text: string; target_min: number; source: string; formula: string; shift_based: boolean }
+interface Followup { kind: "downtime" | "pm"; ref_id: string; ref: string; asset_code: string | null; title: string; owner: string | null; due: string; overdue: boolean; area: string }
 interface Staff { id: string; staff_id: string; full_name: string; band: number | null; job_title: string | null; area: string | null; profile_id: string | null }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -28,7 +29,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
   const isMgr = can(profile, "shift_manager_tasks");
 
   const [{ data: defs }, { data: staffData }] = await Promise.all([
-    supabase.from("kpi_definitions").select("code, name, category, target_text, target_min, source, formula").order("sort"),
+    supabase.from("kpi_definitions").select("code, name, category, target_text, target_min, source, formula, shift_based").order("sort"),
     supabase.from("staff").select("id, staff_id, full_name, band, job_title, area, profile_id").eq("active", true).order("first_name"),
   ]);
   const kpis = (defs ?? []) as Def[];
@@ -45,11 +46,16 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
     );
   }
 
-  const [{ data: auto }, { data: weekly }] = await Promise.all([
+  const [{ data: auto }, { data: weekly }, { data: pp }, { data: fus }] = await Promise.all([
     person.profile_id ? supabase.rpc("engineer_kpi_auto", { p_profile: person.profile_id, p_year: year }) : Promise.resolve({ data: [] }),
     supabase.from("engineer_weekly_logs").select("*").eq("staff_ref", person.id)
       .gte("week_start", `${year - 1}-12-25`).lte("week_start", `${year}-12-31`).order("week_start", { ascending: false }),
+    person.profile_id ? supabase.from("profiles").select("work_pattern").eq("id", person.profile_id).maybeSingle() : Promise.resolve({ data: null }),
+    person.profile_id ? supabase.rpc("open_followups", { p_profile: person.profile_id } as never) : Promise.resolve({ data: [] }),
   ]);
+  const office = (pp as { work_pattern?: string } | null)?.work_pattern === "office";
+  const followups = (fus ?? []) as Followup[];
+  const overdue = followups.filter((f) => f.overdue).length;
   const logs = (weekly ?? []) as (WeeklyLog & Record<string, unknown>)[];
   const parts: Part[] = [
     ...((auto ?? []) as { month: string; kpi: string; num: number; den: number }[]).map((a) => ({ month: Number(a.month.slice(5, 7)), kpi: a.kpi, num: Number(a.num), den: Number(a.den) })),
@@ -71,7 +77,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
         <div>
           <h1 className="page-title">Individual Engineer KPI Tracker – FY {year}</h1>
           <p className="text-sm">Engineer: <b>{person.full_name}</b> · Staff ID: {person.staff_id}{person.band ? ` · Band ${person.band}` : ""}{person.area ? ` · ${person.area}` : ""}</p>
-          <p className="text-xs text-gray-500">Maintenance and quality KPIs are calculated from the app (my checked-in shifts and areas); safety and THERMAX come from the weekly log below.</p>
+          <p className="text-xs text-gray-500">Maintenance and quality KPIs are calculated from the app (my areas; quality and availability on my checked-in shifts); safety and THERMAX come from the weekly log below.{office ? " Office-hours staff: shift-based KPIs do not apply." : ""}</p>
           <PrintButton />
         </div>
         <Logo height={36} className="hidden print:block" />
@@ -102,6 +108,16 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
                 const st = status(v, Number(k.target_min));
                 return <td key={key} className={`p-1 text-center ${CELL[st]} ${strong ? "font-semibold" : ""}`}>{v === null ? "—" : `${v}%`}{strong && v !== null ? ` ${ICON[st]}` : ""}</td>;
               };
+              if (office && k.shift_based) {
+                return (
+                  <tr key={k.code} className="text-gray-400">
+                    <td className="font-medium" title={k.formula}>{k.name}</td>
+                    <td className="whitespace-nowrap">{k.category}</td>
+                    <td className="p-1 text-center">{k.target_text}</td>
+                    <td colSpan={17} className="p-1 text-center text-xs">Not applicable: office-hours staff (measured on checked-in shifts)</td>
+                  </tr>
+                );
+              }
               return (
                 <tr key={k.code}>
                   <td className="font-medium" title={k.formula}>{k.name}<span className="ml-1.5 rounded bg-gray-100 px-1 text-[10px] font-normal text-gray-500">{k.source === "auto" ? "auto" : "weekly"}</span></td>
@@ -116,6 +132,34 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
         </table>
       </div>
       <p className="text-xs text-gray-500">✅ on/above target · ❌ below target · — no data yet. Quarter and year figures add up the counts behind each month, so busy weeks count more than quiet ones. Hover a KPI for how it is calculated.</p>
+
+      {person.profile_id && (
+        <section className="card space-y-2">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="font-semibold">Open Follow-ups ({person.area ?? "my areas"})</h2>
+            <span className="text-sm"><b>{followups.length}</b> open · <b className={overdue ? "text-crit" : ""}>{overdue}</b> overdue</span>
+          </div>
+          {followups.length === 0 ? <p className="text-sm text-gray-500">No open follow-ups.</p> : (
+            <div className="table-wrap">
+              <table className="data-table min-w-[640px] text-sm">
+                <thead><tr><th>Due</th><th>From</th><th>Equipment</th><th>Action</th><th>Owner</th></tr></thead>
+                <tbody>
+                  {followups.map((f) => (
+                    <tr key={`${f.kind}${f.ref_id}${f.title}`}>
+                      <td className={`whitespace-nowrap ${f.overdue ? "font-semibold text-crit" : ""}`}>{f.due}{f.overdue ? " · overdue" : ""}</td>
+                      <td className="whitespace-nowrap">{f.kind === "downtime"
+                        ? <Link href={`/downtime/${f.ref_id}`} className="text-brand-blue">{f.ref}</Link>
+                        : <Link href="/pm" className="text-brand-blue">{f.ref}</Link>}</td>
+                      <td>{f.asset_code ?? "–"}</td><td>{f.title}</td><td>{f.owner ?? "–"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          <p className="text-xs text-gray-500">Downtime further actions (closed when marked complete or the event is resolved) and PM tasks done with an issue (X), which are due within 7 days and closed when their flag is resolved.</p>
+        </section>
+      )}
 
       <details className="card text-sm">
         <summary className="cursor-pointer font-semibold">How Each KPI Is Calculated</summary>

@@ -7,7 +7,7 @@ update public.staff set profile_id = '00000000-0000-0000-0000-0000000000e9' wher
 create temp table t_k (k text, v uuid);
 grant all on t_k to authenticated;
 insert into t_k values ('staff', (select id from public.staff where staff_id = '11104472'));
-do $$ begin assert (select count(*) from public.kpi_definitions) = 11, '11 KPIs'; end $$;
+do $$ begin assert (select count(*) from public.kpi_definitions) = 12, '12 KPIs'; end $$;
 
 -- a day shift yesterday with readings and a 3-hour breakdown
 insert into public.duty_sessions (profile_id, shift_date, shift, areas, checked_in_at, checked_out_at, handover_note)
