@@ -370,3 +370,7 @@ Each entry: date, decision, who decided, notes.
 - Charts (plain SVG, no chart library): PM completion & follow-ups by month (last 6 months, one 0–100% axis),
   unplanned downtime per week (columns, zero weeks shown), lost hours by equipment, and equipment status by category.
   Every chart has a hover tooltip and a "Show as table" view; series colours pass the colour-blind/contrast check.
+
+## 2026-11-13 — PM go-live date: 1 December 2026
+- Setting `pm_monitor_from` = 2026-12-01 (live database). PM completion % (dashboard, Engineer KPIs, reports) counts only
+  PM periods starting on or after this date, and missed-PM flags start from it too. Change it in Admin → Settings.
