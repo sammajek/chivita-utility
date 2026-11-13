@@ -324,3 +324,13 @@ Each entry: date, decision, who decided, notes.
   (each removal written to the audit trail). Removed: 19,074 readings, 4,278 meter readings, 1,038 PM records, 648 water results,
   95 flags, 8 downtime events, 3 RCAs, 6 instruments (and their calibrations), cleaning/AMC/duty demo rows.
 - The 5 demo logins (`*.demo@chi-utility.test`) were deactivated, not deleted.
+
+## 2026-11-13 — Hosting plan, registers, AMC planning
+- Hosting: stay on the free Vercel and Supabase plans for now.
+- Supabase Auth URL settings and "Confirm email" off: done by the owner. Criticality A marking: in progress (owner).
+- Trane Chiller 3 (CHT-03) is logged on the Trane Chiller Log Report (CHIENGUTRG07) with Trane Chillers 1, 2, 4 and 5.
+- Degasser 3 added to the Utility 1 General Log Report next to the other degassers ("Degasser 3 Blower Operation", per shift).
+- Carrier chiller: the owner will create its register (Admin → Equipment Registers).
+- CMP-12 confirmed on the Utility 2 IR MH75 Air Compressor Log Report together with CMP-11 (already set up).
+- AMC: the section manager/admin can tick a contract's planned months for any year in one save
+  (Annual Maintenance Contract → Edit Contracts, Planned Months or End a Contract). Months with a recorded visit are kept.

@@ -267,3 +267,38 @@ select public.purge_never_existed_register(id, 'Utility 2 has never had nitrogen
 -- The Utility 1 copy of "Chiller Logbook Thermax (THDC2)" is removed (owner, 2026-11-12): VAM 4 is in Utility 2.
 select public.purge_never_existed_register(id, 'Utility 1 copy of the THDC2 logbook: VAM 4 is in Utility 2 (owner, 2026-11-12)')
   from public.registers where area = 'U1' and title = 'Chiller Logbook Thermax (THDC2)';
+
+-- Trane Chiller 3 on the Trane register; Degasser 3 on the General Log Report (owner, 2026-11-13).
+do $$
+declare sec uuid; par uuid; dgs uuid;
+begin
+  perform public.set_change_reason('Register update by the section manager (2026-11-13)');
+
+  -- Trane Chiller 3 on the Trane Chiller Log Report
+  insert into public.register_assets (register_id, asset_id, sort)
+  select r.id, a.id, 0 from public.registers r, public.assets a
+   where r.area = 'U1' and r.title = 'Trane Chiller Log Report' and a.code = 'CHT-03'
+  on conflict (register_id, asset_id) do update set active = true;
+  update public.register_assets ra set sort = x.n
+    from (select ra2.register_id, ra2.asset_id, row_number() over (partition by ra2.register_id order by a.code) n
+            from public.register_assets ra2 join public.assets a on a.id = ra2.asset_id
+            join public.registers r on r.id = ra2.register_id
+           where r.area = 'U1' and r.title = 'Trane Chiller Log Report') x
+   where ra.register_id = x.register_id and ra.asset_id = x.asset_id and ra.sort is distinct from x.n;
+
+  -- Degasser 3 next to the other degassers
+  select s.id into sec from public.register_sections s join public.registers r on r.id = s.register_id
+   where r.area = 'U1' and r.title = 'General Log Report' and s.title = 'Chemicals, WTP & Auxiliaries';
+  select id into dgs from public.assets where code = 'DGS-03';
+  if sec is not null and dgs is not null and not exists (select 1 from public.register_fields where section_id = sec and asset_id = dgs) then
+    select f.parameter_id into par from public.register_fields f join public.assets a on a.id = f.asset_id
+     where f.section_id = sec and a.code = 'DGS-01';
+    -- make room after "Utility 1 Degasser Blower Operation" (two steps: sort is unique per section)
+    update public.register_fields set sort = -sort - 1
+     where section_id = sec and sort > (select f.sort from public.register_fields f where f.section_id = sec and f.asset_id = (select id from public.assets where code = 'DGS-01'));
+    update public.register_fields set sort = -sort where section_id = sec and sort < 0;
+    insert into public.register_fields (section_id, parameter_id, asset_id, label, sort)
+    select sec, par, dgs, 'Degasser 3 Blower Operation',
+           (select f.sort + 1 from public.register_fields f where f.section_id = sec and f.asset_id = (select id from public.assets where code = 'DGS-01'));
+  end if;
+end $$;

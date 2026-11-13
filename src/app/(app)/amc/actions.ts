@@ -101,3 +101,15 @@ export async function reactivateContract(_prev: State, form: FormData): Promise<
   revalidatePath("/amc");
   return { ok: "Contract back on the tracker." };
 }
+
+/** Managers/admin: tick the months of a year that have a planned visit for one contract. */
+export async function savePlanYear(_prev: State, form: FormData): Promise<State> {
+  const year = Number(form.get("year"));
+  const months = form.getAll("month").map(Number).filter((m) => m >= 1 && m <= 12);
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_amc_plan_year", { p_contract: String(form.get("contract_id")), p_year: year, p_months: months } as never);
+  if (error) return { error: error.message };
+  revalidatePath("/amc");
+  revalidatePath("/flags");
+  return { ok: `Planned months for ${year} saved (${months.length} month${months.length === 1 ? "" : "s"}).` };
+}

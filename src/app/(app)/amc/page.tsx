@@ -6,7 +6,7 @@ import { lagosDate } from "@/lib/time";
 import { StatTile } from "@/components/BarList";
 import { ActionForm } from "@/components/ActionForm";
 import { DemoBadge } from "@/components/StatusBadge";
-import { addContract, endContract, reactivateContract, updateContract, recordVisit, togglePlan, voidVisit } from "./actions";
+import { addContract, endContract, reactivateContract, updateContract, recordVisit, savePlanYear, togglePlan, voidVisit } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -161,7 +161,7 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
         )}
       </div>
 
-      {isManager && <ManageContracts />}
+      {isManager && <ManageContracts year={year} years={[thisYear - 1, thisYear, thisYear + 1]} planned={planned} visited={new Set(visited.keys())} />}
 
       {isManager && (
         <details className="card">
@@ -182,13 +182,13 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
 }
 
 /** Managers: edit a contract, end it (company no longer does the AMC) or bring an ended one back. */
-async function ManageContracts() {
+async function ManageContracts({ year, years, planned, visited }: { year: number; years: number[]; planned: Set<string>; visited: Set<string> }) {
   const supabase = await createClient();
   const { data } = await supabase.from("amc_contracts").select("id, description, vendor, area, start_date, end_date, notes, active").order("active", { ascending: false }).order("description");
   const rows = (data ?? []) as { id: string; description: string; vendor: string; area: string | null; start_date: string | null; end_date: string | null; notes: string | null; active: boolean }[];
   return (
     <details className="card">
-      <summary className="cursor-pointer font-semibold">Edit or End Contracts</summary>
+      <summary className="cursor-pointer font-semibold">Edit Contracts, Planned Months or End a Contract</summary>
       <p className="mt-1 text-xs text-gray-500">Ending a contract removes it from the tracker and stops its flags. Its visit history is kept, and it can be brought back.</p>
       <div className="mt-3 divide-y">
         {rows.map((c) => (
@@ -203,6 +203,30 @@ async function ManageContracts() {
                   <label className="block"><span className="text-xs text-gray-600">Contract start</span><input type="date" name="start_date" defaultValue={c.start_date ?? ""} className="input" /></label>
                   <label className="block"><span className="text-xs text-gray-600">Contract end</span><input type="date" name="end_date" defaultValue={c.end_date ?? ""} className="input" /></label>
                   <input name="notes" defaultValue={c.notes ?? ""} placeholder="Notes" className="input sm:col-span-2" />
+                </ActionForm>
+                <ActionForm action={savePlanYear} submit={`Save ${year} planned months`} className="rounded-lg border border-gray-200 p-2">
+                  <input type="hidden" name="contract_id" value={c.id} />
+                  <input type="hidden" name="year" value={year} />
+                  <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-sm font-medium">Planned visit months in {year}</span>
+                    <span className="flex gap-1 text-xs">
+                      {years.map((y) => <Link key={y} href={`/amc?year=${y}`} className={`tab ${y === year ? "tab-on" : ""}`}>{y}</Link>)}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-1 sm:grid-cols-6 lg:grid-cols-12">
+                    {MONTHS.map((m, i) => {
+                      const key = `${c.id}|${year}-${String(i + 1).padStart(2, "0")}-01`;
+                      const done = visited.has(key);
+                      return (
+                        <label key={m} className={`flex min-h-11 items-center justify-center gap-1 rounded border px-1 text-sm ${done ? "border-green-200 bg-green-50 text-ok" : "border-gray-200"}`}
+                          title={done ? "A visit is recorded for this month" : undefined}>
+                          <input type="checkbox" name="month" value={i + 1} defaultChecked={planned.has(key) || done} disabled={done} className="h-5 w-5" />
+                          {m}
+                        </label>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-1 text-xs text-gray-500">Tick the months with a planned vendor visit. Months with a recorded visit stay as they are. Use the year buttons to plan another year.</p>
                 </ActionForm>
                 <ActionForm action={endContract} submit="End contract" className="flex flex-wrap items-center gap-2">
                   <input type="hidden" name="id" value={c.id} />
