@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { addDays, lagosDate } from "@/lib/time";
 import { QUARTERS, ratioFor, status, weeklyParts, type Part, type WeeklyLog } from "@/lib/engineer-kpi";
@@ -25,7 +25,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
   const supabase = await createClient();
   const today = lagosDate(new Date());
   const year = /^\d{4}$/.test(sp.year ?? "") ? Number(sp.year) : Number(today.slice(0, 4));
-  const isMgr = ["shift_manager", "section_manager", "admin"].includes(profile.role);
+  const isMgr = can(profile, "shift_manager_tasks");
 
   const [{ data: defs }, { data: staffData }] = await Promise.all([
     supabase.from("kpi_definitions").select("code, name, category, target_text, target_min, source, formula").order("sort"),
@@ -55,7 +55,7 @@ export default async function KpiPage({ searchParams }: { searchParams: Promise<
     ...((auto ?? []) as { month: string; kpi: string; num: number; den: number }[]).map((a) => ({ month: Number(a.month.slice(5, 7)), kpi: a.kpi, num: Number(a.num), den: Number(a.den) })),
     ...weeklyParts(logs.filter((l) => l.week_start.startsWith(String(year)))),
   ];
-  const canWrite = profile.active && (isMgr || (person.profile_id === profile.id && profile.role !== "operator" && profile.role !== "viewer"));
+  const canWrite = profile.active && (isMgr || (person.profile_id === profile.id && can(profile, "engineer_tasks")));
   const week = sp.week && /^\d{4}-\d{2}-\d{2}$/.test(sp.week) ? mondayOf(sp.week) : mondayOf(today);
   const thisWeek = logs.find((l) => l.week_start === week) as Record<string, unknown> | undefined;
   const qs = (o: Record<string, string>) => `/kpi?${new URLSearchParams({ staff: person.id, year: String(year), ...o })}`;

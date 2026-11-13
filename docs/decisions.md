@@ -334,3 +334,11 @@ Each entry: date, decision, who decided, notes.
 - CMP-12 confirmed on the Utility 2 IR MH75 Air Compressor Log Report together with CMP-11 (already set up).
 - AMC: the section manager/admin can tick a contract's planned months for any year in one save
   (Annual Maintenance Contract → Edit Contracts, Planned Months or End a Contract). Months with a recorded visit are kept.
+
+## 2026-11-13 — Editable access rights (Admin → Access)
+- The admin can change each role's rights and menu screens on Admin → Access (pick a role, tick, save).
+- Rights are five groups: Enter records, Engineer tasks, Shift manager tasks, Section manager tasks, Admin tasks.
+  They are enforced by the database (`role_capabilities`; every `has_role` permission rule reads it), not just by the menus.
+- Defaults are exactly the previous fixed rules. The Admin role always keeps every right and the Admin screen (no lock-out).
+- Hiding a screen removes it from the menu; what a person can change is controlled by the rights groups.
+- Every change is in the Audit Trail.

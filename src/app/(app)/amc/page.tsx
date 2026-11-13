@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { amcCompletion, amcStatus, MONTHS, type AmcStatus } from "@/lib/amc";
 import { lagosDate } from "@/lib/time";
@@ -28,8 +28,8 @@ export default async function AmcPage({ searchParams }: { searchParams: Promise<
   const year = Number(sp.year) >= 2023 && Number(sp.year) <= thisYear + 1 ? Number(sp.year) : thisYear;
   const thisMonth = `${today.slice(0, 7)}-01`;
   const months = MONTHS.map((_, i) => `${year}-${String(i + 1).padStart(2, "0")}-01`);
-  const isEngineer = profile.active && ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
-  const isManager = profile.active && ["section_manager", "admin"].includes(profile.role);
+  const isEngineer = profile.active && can(profile, "engineer_tasks");
+  const isManager = profile.active && can(profile, "manager_tasks");
 
   const supabase = await createClient();
   const [{ data: cs }, { data: plan }, { data: vs }] = await Promise.all([

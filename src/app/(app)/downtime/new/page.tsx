@@ -1,4 +1,4 @@
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { loadAssetsForPicker, loadLists } from "@/lib/data/lists";
 import { lagosDate, lagosParts, shiftAt } from "@/lib/time";
@@ -40,7 +40,7 @@ export default async function NewDowntimePage({ searchParams }: { searchParams: 
       };
     }
   }
-  const canClose = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canClose = can(profile, "engineer_tasks");
   return (
     <div className="space-y-4">
       <h1 className="page-title">{id ? "Update downtime event" : "Log downtime"}</h1>

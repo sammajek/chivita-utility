@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { fieldsFor, loadRegister } from "@/lib/data/registers";
 import { defaultSlot, logDateOf, slotDue, slotKeys, slotLabel, slotOpens, slotState, type SlotState } from "@/lib/registers";
@@ -75,7 +75,7 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
     .limit(5000);
   const filled = new Set((filledRows ?? []).map((r) => r.slot_key));
 
-  const canEnter = ["operator", "engineer", "shift_manager", "section_manager", "admin"].includes(profile.role) && profile.active;
+  const canEnter = can(profile, "enter_records") && profile.active;
   const fieldAssetCodes = Object.fromEntries(fields.filter((f) => f.asset_id).map((f) => [f.id, fieldAssets[f.asset_id!]?.code ?? ""]));
   const href = (o: Partial<Search>) => {
     const q = new URLSearchParams({ ...(assetId ? { asset: assetId } : {}), date: logDate, section: section.id, slot, ...o });
@@ -163,7 +163,7 @@ export default async function RegisterEntryPage({ params, searchParams }: { para
           existing={existing}
           path={`/registers/${key}`}
           userId={profile.id}
-          isEngineer={profile.role !== "operator"}
+          isEngineer={can(profile, "engineer_tasks")}
         />
       )}
     </div>

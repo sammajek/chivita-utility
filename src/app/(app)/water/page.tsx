@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { lagosDate, addDays } from "@/lib/time";
 import { WATER_LABEL, WATER_STYLE, type WaterStatus } from "@/lib/water";
@@ -41,8 +41,8 @@ export default async function WaterPage({ searchParams }: { searchParams: Promis
   const alerts = judged.filter((r) => r.status === "alert").length;
   const actions = judged.filter((r) => r.status === "action").length;
   const dates = [...new Set(results.map((r) => r.sampled_on))].slice(0, 8);
-  const canEnter = profile.active && ["operator", "engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
-  const isEngineer = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canEnter = profile.active && can(profile, "enter_records");
+  const isEngineer = can(profile, "engineer_tasks");
   const href = (o: Record<string, string>) => `/water?${new URLSearchParams({ point: point ?? "", date, ...o })}`;
 
   return (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos, lagosDate } from "@/lib/time";
 import { namesFor } from "@/lib/data/pm";
@@ -45,8 +45,8 @@ export default async function TrainingPage({ searchParams }: { searchParams: Pro
   const all = plans;
   if (sp.status && TRAINING_STATUS[sp.status]) plans = plans.filter((p) => p.status === sp.status);
   const names = await namesFor(plans.map((p) => p.confirmed_by));
-  const isEng = profile.active && ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
-  const isMgr = ["section_manager", "admin"].includes(profile.role);
+  const isEng = profile.active && can(profile, "engineer_tasks");
+  const isMgr = can(profile, "manager_tasks");
   const today = lagosDate(new Date());
   const done = all.filter((p) => p.status === "completed").length;
   const due = all.filter((p) => p.planned_end && p.planned_end < today && p.status !== "cancelled").length;

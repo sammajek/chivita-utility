@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { requireRole } from "@/lib/auth";
+import { can, requireCap } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { NAV, ROLES, ROLE_LABELS } from "@/lib/roles";
+import { CAPABILITIES, NAV, ROLES, ROLE_LABELS, type Role } from "@/lib/roles";
 import { ActionForm } from "@/components/ActionForm";
 import { formatLagos } from "@/lib/time";
 import { describeStandard } from "@/lib/evaluate";
-import { addAsset, removeNeverExisted, saveMeter, importStaffCsv, saveCause, saveCleaningActivity, saveCleaningZone, saveListItem, savePmTask, setRegisterAsset, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
+import { addAsset, removeNeverExisted, saveMeter, saveRoleAccess, importStaffCsv, saveCause, saveCleaningActivity, saveCleaningZone, saveListItem, savePmTask, setRegisterAsset, saveStaff, setTempPassword, updateAsset, updateParameter, updateSetting, updateUser } from "./actions";
 import { AliasToggle, MonitorToggle } from "./Toggles";
 import type { Parameter } from "@/lib/types";
 
@@ -15,8 +15,8 @@ const TABS = [
   ["users", "Users"], ["staff", "Staff"], ["access", "Access"], ["review", "To Review"], ["assets", "Equipment Inventory"], ["limits", "Limits"], ["registers", "Equipment Registers"], ["pm", "PM Tasks"], ["meters", "Meters"], ["lists", "Pick Lists"], ["cleaning", "Cleaning Setup"], ["causes", "Downtime Causes"], ["audit", "Audit Trail"], ["settings", "Settings"],
 ] as const;
 
-export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; freq?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string }> }) {
-  const profile = await requireRole("admin", "section_manager");
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string; freq?: string; type?: string; eq?: string; who?: string; t?: string; act?: string; from?: string; role?: string }> }) {
+  const profile = await requireCap("manager_tasks");
   const sp = await searchParams;
   const tab = TABS.some(([t]) => t === sp.tab) ? sp.tab! : "review";
   const supabase = await createClient();
@@ -31,8 +31,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         ))}
       </nav>
 
-      {tab === "users" && <Users canEdit={profile.role === "admin"} />}
-      {tab === "staff" && <Staff canImport={profile.role === "admin"} />}
+      {tab === "users" && <Users canEdit={can(profile, "admin_tasks")} />}
+      {tab === "staff" && <Staff canImport={can(profile, "admin_tasks")} />}
       {tab === "access" && <Access />}
       {tab === "review" && <Review />}
       {tab === "assets" && <Assets q={q} />}
@@ -249,40 +249,76 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     );
   }
 
-  function Access() {
-    const can = (roles: readonly string[]) => ROLES.map((r) => <td key={r} className="center">{roles.includes(r) ? "✓" : ""}</td>);
-    const eng = ["engineer", "shift_manager", "section_manager", "admin"];
-    const entry = ["operator", ...eng];
-    const mgr = ["section_manager", "admin"];
-    const ACTIONS: [string, readonly string[]][] = [
-      ["Enter readings, PM results, downtime, water results, evidence photos", entry],
-      ["Change equipment state (available / standby / unavailable)", entry],
-      ["Correct or void own readings (with reason)", entry],
-      ["Correct or void anyone’s records; close downtime; resolve follow-ups", eng],
-      ["RCA, calibration, AMC, jobs & POs, cleaning sign-off", eng],
-      ["Affirm PM periods; tick training done", eng],
-      ["Withdraw a PM affirmation; remove training records", mgr],
-      ["Edit equipment specs and PM codes, limits, registers, staff", mgr],
-      ["Users: activate, change roles, import staff", ["admin"]],
-      ["Read-only: dashboards, reports, trends", ROLES],
-    ];
+  async function Access() {
+    const editRole: Role = (ROLES as readonly string[]).includes(sp.role ?? "") ? (sp.role as Role) : "engineer";
+    const { data } = await supabase.from("role_capabilities").select("role, capability, allowed");
+    const rows = (data ?? []) as { role: Role; capability: string; allowed: boolean }[];
+    const has = (r: Role, cap: string) => rows.some((x) => x.role === r && x.capability === cap && x.allowed);
+    const screenOn = (r: Role, n: (typeof NAV)[number]) => {
+      const o = rows.find((x) => x.role === r && x.capability === `screen:${n.href}`);
+      return o ? o.allowed : n.roles.includes(r);
+    };
+    const isAdmin = can(profile, "admin_tasks");
+    const tick = (on: boolean) => <span className={on ? "font-semibold text-ok" : "text-gray-300"}>{on ? "✓" : "–"}</span>;
     return (
       <div className="space-y-4">
-        <p className="text-sm text-gray-600">Who can do what. These rules are enforced by the database itself (row-level security), not only by hiding buttons, so they also apply to anyone using the data another way. Every change is recorded in the audit trail with who, when and why. An account stays inactive (read nothing) until an admin activates it or pre-approves the email on the Staff tab.</p>
-        <div className="card overflow-x-auto">
-          <h2 className="mb-2 font-semibold">Actions</h2>
+        <p className="text-sm text-gray-600">Who can do what. These rights are enforced by the database itself (row-level security), not only by hiding buttons. Every change is recorded in the Audit Trail with who and when. An account stays inactive (reads nothing) until an admin activates it or pre-approves the email on the Staff tab.</p>
+
+        <section className="card space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-semibold">Edit a Role: {ROLE_LABELS[editRole]}</h2>
+            <nav className="flex flex-wrap gap-1 text-sm">
+              {ROLES.map((r) => <Link key={r} href={`/admin?tab=access&role=${r}`} className={`tab ${r === editRole ? "tab-on" : ""}`}>{ROLE_LABELS[r]}</Link>)}
+            </nav>
+          </div>
+          {!isAdmin && <p className="text-sm text-warn">Only an admin can change access rights. You can view them.</p>}
+          <ActionForm action={saveRoleAccess} submit={`Save ${ROLE_LABELS[editRole]} access`} readOnly={!isAdmin} className="space-y-3">
+            <input type="hidden" name="role" value={editRole} />
+            <fieldset disabled={!isAdmin} className="space-y-3">
+              <div>
+                <h3 className="mb-1 text-sm font-semibold">What this role can do</h3>
+                <ul className="divide-y rounded-lg border border-gray-200">
+                  {CAPABILITIES.map((c) => {
+                    const locked = editRole === "admin";
+                    return (
+                      <li key={c.key}>
+                        <label className="flex min-h-12 items-start gap-3 p-2">
+                          <input type="checkbox" name="cap" value={c.key} defaultChecked={has(editRole, c.key)} disabled={locked} className="mt-0.5 h-5 w-5 shrink-0" />
+                          <span><span className="font-medium">{c.label}</span><span className="block text-xs text-gray-500">{c.detail}</span></span>
+                        </label>
+                      </li>
+                    );
+                  })}
+                </ul>
+                {editRole === "admin" && <p className="mt-1 text-xs text-gray-500">The Admin role always keeps every right, so nobody can be locked out.</p>}
+              </div>
+              <div>
+                <h3 className="mb-1 text-sm font-semibold">Screens in the menu</h3>
+                <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+                  {NAV.map((n) => (
+                    <label key={n.href} className="flex min-h-11 items-center gap-2 rounded border border-gray-200 px-2 text-sm">
+                      <input type="checkbox" name="screen" value={n.href} defaultChecked={screenOn(editRole, n)}
+                        disabled={editRole === "admin" && n.href === "/admin"} className="h-5 w-5" />
+                      {n.label}
+                    </label>
+                  ))}
+                </div>
+                <p className="mt-1 text-xs text-gray-500">Hiding a screen removes it from the menu. What a person can change is set by the rights above.</p>
+              </div>
+            </fieldset>
+          </ActionForm>
+        </section>
+
+        <section className="card overflow-x-auto">
+          <h2 className="mb-2 font-semibold">All Roles at a Glance</h2>
           <table className="data-table w-full min-w-[640px] text-sm">
-            <thead><tr><th>Action</th>{ROLES.map((r) => <th key={r} className="center">{ROLE_LABELS[r]}</th>)}</tr></thead>
-            <tbody>{ACTIONS.map(([l, r]) => <tr key={l}><td>{l}</td>{can(r)}</tr>)}</tbody>
+            <thead><tr><th>Right</th>{ROLES.map((r) => <th key={r} className="center">{ROLE_LABELS[r]}</th>)}</tr></thead>
+            <tbody>
+              {CAPABILITIES.map((c) => <tr key={c.key}><td><b>{c.label}</b><div className="text-xs text-gray-500">{c.detail}</div></td>{ROLES.map((r) => <td key={r} className="center">{tick(has(r, c.key))}</td>)}</tr>)}
+              {NAV.map((n) => <tr key={n.href}><td>Screen: {n.label}</td>{ROLES.map((r) => <td key={r} className="center">{tick(screenOn(r, n))}</td>)}</tr>)}
+            </tbody>
           </table>
-        </div>
-        <div className="card overflow-x-auto">
-          <h2 className="mb-2 font-semibold">Screens</h2>
-          <table className="data-table w-full min-w-[640px] text-sm">
-            <thead><tr><th>Screen</th>{ROLES.map((r) => <th key={r} className="center">{ROLE_LABELS[r]}</th>)}</tr></thead>
-            <tbody>{NAV.map((n) => <tr key={n.href}><td>{n.label}</td>{can(n.roles)}</tr>)}</tbody>
-          </table>
-        </div>
+        </section>
       </div>
     );
   }
@@ -375,7 +411,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             <div className="sm:col-span-3"><L t="Notes"><input name="notes" defaultValue={a.notes ?? ""} className="input py-2" /></L></div>
             <label className="flex items-center gap-1 self-end pb-2 text-sm"><input type="checkbox" name="confirmed" defaultChecked={a.confirmed} /> Confirmed</label>
           </ActionForm>
-          {a.status === "retired" && profile.role === "admin" && (
+          {a.status === "retired" && can(profile, "admin_tasks") && (
             <ActionForm action={removeNeverExisted} submit={`Remove ${a.code} permanently`} className="-mt-1 flex flex-wrap items-center gap-2 rounded-b-xl bg-red-50 p-2">
               <input type="hidden" name="code" value={a.code} />
               <input name="reason" required minLength={5} className="input max-w-md py-2" placeholder="Why (e.g. never existed, duplicate entry)" />
@@ -445,7 +481,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                 ))}
                 {on.length === 0 && <li className="py-1.5 text-gray-500">No machines (readings not tied to one machine).</li>}
               </ul>
-              {!r.active && profile.role === "admin" && (
+              {!r.active && can(profile, "admin_tasks") && (
                 <ActionForm action={removeNeverExisted} submit="Remove permanently" className="mt-2 flex flex-wrap items-center gap-2 rounded-lg bg-red-50 p-2">
                   <input type="hidden" name="register_id" value={r.id} />
                   <input name="reason" required minLength={5} className="input max-w-md py-2" placeholder="Why (e.g. this register never applied)" />

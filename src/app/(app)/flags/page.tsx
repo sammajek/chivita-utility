@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos } from "@/lib/time";
 import { DemoBadge } from "@/components/StatusBadge";
@@ -63,7 +63,7 @@ export default async function FlagsPage({ searchParams }: { searchParams: Promis
   q = closed ? q.not("resolved_at", "is", null) : q.is("resolved_at", null);
   const { data } = await q;
   const flags = (data ?? []) as FlagRow[];
-  const canResolve = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canResolve = can(profile, "engineer_tasks");
 
   return (
     <div className="space-y-4">
@@ -86,7 +86,7 @@ export default async function FlagsPage({ searchParams }: { searchParams: Promis
             <div className="mt-1 text-xs text-gray-500">
               {f.resolved_at ? `Closed: ${f.resolution_note ?? ""}` : f.acknowledged_at ? "Acknowledged" : LEVEL[f.escalation_level] ?? ""}
             </div>
-            {!f.resolved_at && profile.role !== "viewer" && (
+            {!f.resolved_at && can(profile, "enter_records") && (
               <FlagActions id={f.id} acknowledged={!!f.acknowledged_at} canResolve={canResolve} />
             )}
           </li>

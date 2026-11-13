@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { namesFor } from "@/lib/data/pm";
 import { formatLagos, SHIFT_LABELS } from "@/lib/time";
@@ -27,7 +27,7 @@ export default async function HandoverList() {
   const names = await namesFor(rows.flatMap((r) => [r.recorded_by_id, r.received_by]));
   const onDuty = (mine ?? []).length > 0;
   const toAck = rows.filter((r) => !r.received_at && !r.is_demo);
-  const isMgr = ["shift_manager", "section_manager", "admin"].includes(profile.role);
+  const isMgr = can(profile, "shift_manager_tasks");
   const toSign = isMgr ? rows.filter((r) => !r.manager_at) : [];
 
   return (

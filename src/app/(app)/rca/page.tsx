@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { DemoBadge } from "@/components/StatusBadge";
 
@@ -22,7 +22,7 @@ export default async function RcaListPage() {
   const awaiting = ((pending ?? []) as unknown as { id: string; event_no: string; rca_reason: string; asset: { code: string }; rcas: { id: string }[] }[])
     .filter((e) => e.rcas.length === 0);
   const today = new Date().toISOString().slice(0, 10);
-  const canEdit = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canEdit = can(profile, "engineer_tasks");
 
   return (
     <div className="space-y-6">

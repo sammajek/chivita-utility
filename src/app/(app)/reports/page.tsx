@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { lagosDate } from "@/lib/time";
 import { PERIODS, type Period } from "@/lib/deck/period";
@@ -29,8 +29,8 @@ export default async function ReportsPage() {
   const saved = (tdata ?? []) as Saved[];
   const people = ((pdata ?? []) as { id: string; full_name: string }[]).map((p) => ({ id: p.id, name: p.full_name }));
   const nameOf = new Map(people.map((p) => [p.id, p.name]));
-  const isMgr = ["section_manager", "admin"].includes(profile.role);
-  const canSchedule = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const isMgr = can(profile, "manager_tasks");
+  const canSchedule = can(profile, "engineer_tasks");
 
   return (
     <div className="space-y-4">

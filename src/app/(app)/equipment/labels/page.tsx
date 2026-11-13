@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import QRCode from "qrcode";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { Logo } from "@/components/Logo";
 import { PrintButton } from "@/components/PrintButton";
@@ -30,10 +30,10 @@ export default async function LabelsPage({ searchParams }: { searchParams: Promi
   const svg = (url: string) => QRCode.toString(url, { type: "svg", margin: 1, errorCorrectionLevel: "M", color: { dark: "#111827", light: "#ffffff" } });
   const labels = await Promise.all(assets.map(async (a) => ({ ...a, url: `${base}/equipment/${encodeURIComponent(a.code)}`, qr: await svg(`${base}/equipment/${encodeURIComponent(a.code)}`) })));
   const profile = await requireProfile();
-  const canIssue = ["admin", "section_manager"].includes(profile.role);
+  const canIssue = can(profile, "manager_tasks");
   const [{ data: issued }, { data: scanCodes }] = await Promise.all([supabase.rpc("checkin_codes_status"), supabase.rpc("asset_scan_codes_status")]);
   const coded = new Set(((scanCodes ?? []) as { asset_id: string }[]).map((r) => r.asset_id));
-  const canIssueScan = ["admin", "section_manager", "shift_manager"].includes(profile.role);
+  const canIssueScan = can(profile, "shift_manager_tasks");
 
   return (
     <div className="space-y-4 bg-white">

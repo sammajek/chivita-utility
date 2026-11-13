@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { requireRole } from "@/lib/auth";
+import { requireCap } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
+import { CAPABILITIES, NAV, ROLES, ROLE_LABELS, type Role } from "@/lib/roles";
 
 export interface AdminState {
   ok?: string;
@@ -21,7 +22,7 @@ async function done(error: { message: string } | null, msg: string): Promise<Adm
 }
 
 export async function updateUser(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin");
+  await requireCap("admin_tasks");
   const supabase = await createClient();
   const { error } = await supabase.from("profiles").update({
     role: String(f.get("role")),
@@ -35,7 +36,7 @@ export async function updateUser(_p: AdminState, f: FormData): Promise<AdminStat
 }
 
 export async function updateParameter(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const supabase = await createClient();
   const { error } = await supabase.from("parameters").update({
     std_min: num(f.get("std_min")), std_max: num(f.get("std_max")),
@@ -48,7 +49,7 @@ export async function updateParameter(_p: AdminState, f: FormData): Promise<Admi
 }
 
 export async function updateAsset(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const supabase = await createClient();
   const { error } = await supabase.from("assets").update({
     name: String(f.get("name")),
@@ -66,21 +67,21 @@ export async function updateAsset(_p: AdminState, f: FormData): Promise<AdminSta
 }
 
 export async function confirmAlias(id: string, confirmed: boolean) {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const supabase = await createClient();
   await supabase.from("asset_aliases").update({ confirmed } as never).eq("id", id);
   revalidatePath("/admin");
 }
 
 export async function setMonitor(id: string, monitor: boolean) {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const supabase = await createClient();
   await supabase.from("registers").update({ monitor } as never).eq("id", id);
   revalidatePath("/admin");
 }
 
 export async function updateSetting(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const supabase = await createClient();
   const raw = String(f.get("value") ?? "").trim();
   let value: unknown = raw;
@@ -93,7 +94,7 @@ const t = (f: FormData, k: string) => String(f.get(k) ?? "").trim() || null;
 
 /** Staff record: contact details and pre-approval (email + role → their sign-up is activated with that role). */
 export async function saveStaff(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const supabase = await createClient();
   const row = {
     staff_id: t(f, "staff_id"), surname: t(f, "surname"), first_name: t(f, "first_name"),
@@ -116,7 +117,7 @@ export async function saveStaff(_p: AdminState, f: FormData): Promise<AdminState
  * staff_id, surname, first_name, band, job_title, area, email, phone, whatsapp, role, shift
  */
 export async function importStaffCsv(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin");
+  await requireCap("admin_tasks");
   const text = String(f.get("csv") ?? "").trim();
   if (!text) return { error: "Paste the rows first." };
   const lines = text.split(/\r?\n/).filter((l) => l.trim());
@@ -153,7 +154,7 @@ export async function importStaffCsv(_p: AdminState, f: FormData): Promise<Admin
 
 /** Admin gives someone a temporary password (they should change it after signing in: menu → Change password). */
 export async function setTempPassword(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin");
+  await requireCap("admin_tasks");
   const supabase = await createClient();
   const { error } = await supabase.rpc("admin_set_temp_password", { p_user: String(f.get("id")), p_password: String(f.get("password") ?? "") });
   if (error) return { error: error.message };
@@ -164,7 +165,7 @@ const lines = (v: FormDataEntryValue | null) => String(v ?? "").split(/\r?\n/).m
 
 /** Edit or add a downtime cause (type → equipment category → failure category → failure mode → issue descriptions). */
 export async function saveCause(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const id = String(f.get("id") ?? "");
   const row = {
     downtime_type: String(f.get("downtime_type") ?? ""),
@@ -187,7 +188,7 @@ const txt = (f: FormData, k: string) => String(f.get(k) ?? "").trim() || null;
 
 /** Add a new machine to the equipment list. */
 export async function addAsset(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const code = String(f.get("code") ?? "").trim().toUpperCase();
   const name = String(f.get("name") ?? "").trim();
   if (!/^[A-Z0-9][A-Z0-9-]{1,20}$/.test(code)) return { error: "Code: letters, numbers and dashes (e.g. CMP-14)." };
@@ -203,7 +204,7 @@ export async function addAsset(_p: AdminState, f: FormData): Promise<AdminState>
 
 /** Edit or add a PM task (library row). */
 export async function savePmTask(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const id = String(f.get("id") ?? "");
   const tasks = lines(f.get("tasks"));
   const row = {
@@ -229,7 +230,7 @@ export async function savePmTask(_p: AdminState, f: FormData): Promise<AdminStat
 
 /** Put a machine on a register or take it off (nothing is deleted). */
 export async function setRegisterAsset(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const register_id = String(f.get("register_id")), asset_id = String(f.get("asset_id") ?? "");
   if (!asset_id) return { error: "Choose a machine." };
   const on = String(f.get("on")) === "1";
@@ -240,7 +241,7 @@ export async function setRegisterAsset(_p: AdminState, f: FormData): Promise<Adm
 
 /** Pick-list values: add, hide / show, or reorder. Values already used in records are never renamed. */
 export async function saveListItem(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const list_name = String(f.get("list_name")), value = String(f.get("value") ?? "").trim();
   if (value.length < 2) return { error: "Enter the value." };
   const supabase = await createClient();
@@ -254,7 +255,7 @@ export async function saveListItem(_p: AdminState, f: FormData): Promise<AdminSt
 
 /** Cleaning schedule zones (one per weekday) and activities. */
 export async function saveCleaningZone(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const id = String(f.get("id") ?? "");
   const row = { name: String(f.get("name") ?? "").trim(), area: String(f.get("area") ?? "U1"), day_of_week: Number(f.get("day")), active: id ? f.get("active") === "on" : true };
   if (row.name.length < 3) return { error: "Describe the zone." };
@@ -265,7 +266,7 @@ export async function saveCleaningZone(_p: AdminState, f: FormData): Promise<Adm
 }
 
 export async function saveCleaningActivity(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const id = String(f.get("id") ?? "");
   const name = String(f.get("name") ?? "").trim();
   if (name.length < 3) return { error: "Describe the activity." };
@@ -281,7 +282,7 @@ export async function saveCleaningActivity(_p: AdminState, f: FormData): Promise
 
 /** Utility Consumption meters: rename, change unit, switch on / off (e.g. when installed), or add. */
 export async function saveMeter(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const id = String(f.get("id") ?? "");
   const name = String(f.get("name") ?? "").trim();
   if (name.length < 3) return { error: "Enter the meter name." };
@@ -301,11 +302,39 @@ export async function saveMeter(_p: AdminState, f: FormData): Promise<AdminState
 
 /** Admin: remove a register or a machine that never existed (audited; refused if it has real records). */
 export async function removeNeverExisted(_p: AdminState, f: FormData): Promise<AdminState> {
-  await requireRole("admin");
+  await requireCap("admin_tasks");
   const reason = String(f.get("reason") ?? "").trim();
   const supabase = await createClient();
   const { error } = f.get("register_id")
     ? await supabase.rpc("purge_never_existed_register", { p_id: String(f.get("register_id")), p_reason: reason })
     : await supabase.rpc("purge_never_existed_assets", { p_codes: [String(f.get("code"))], p_reason: reason });
   return done(error, "Removed permanently. The removal is recorded in the Audit Trail.");
+}
+
+/** Admin: save one role's rights and menu screens (Admin → Access). Each change is a separate audited row. */
+export async function saveRoleAccess(_p: AdminState, f: FormData): Promise<AdminState> {
+  await requireCap("admin_tasks");
+  const role = String(f.get("role") ?? "") as Role;
+  if (!(ROLES as readonly string[]).includes(role)) return { error: "Pick a role." };
+  const caps = new Set(f.getAll("cap").map(String));
+  const screens = new Set(f.getAll("screen").map(String));
+  const supabase = await createClient();
+  const { data } = await supabase.from("role_capabilities").select("capability, allowed").eq("role", role);
+  const current = new Map(((data ?? []) as { capability: string; allowed: boolean }[]).map((r) => [r.capability, r.allowed]));
+  const wanted: [string, boolean][] = [];
+  if (role !== "admin") for (const c of CAPABILITIES) wanted.push([c.key, caps.has(c.key)]);
+  for (const n of NAV) {
+    if (role === "admin" && n.href === "/admin") continue;
+    wanted.push([`screen:${n.href}`, screens.has(n.href)]);
+  }
+  let changed = 0;
+  for (const [cap, allowed] of wanted) {
+    const now = current.get(cap) ?? (cap.startsWith("screen:") ? NAV.find((n) => `screen:${n.href}` === cap)!.roles.includes(role) : false);
+    if (now === allowed) continue;
+    const { error } = await supabase.rpc("set_role_capability", { p_role: role, p_cap: cap, p_allowed: allowed } as never);
+    if (error) return { error: error.message };
+    changed++;
+  }
+  revalidatePath("/", "layout");
+  return { ok: changed ? `${ROLE_LABELS[role]}: ${changed} change${changed === 1 ? "" : "s"} saved. People in this role see them on their next page load.` : "No changes." };
 }

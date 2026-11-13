@@ -1,4 +1,4 @@
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { namesFor } from "@/lib/data/pm";
 import { formatLagos, SHIFT_LABELS, shiftAt } from "@/lib/time";
@@ -26,7 +26,7 @@ export default async function PatrolPage() {
   const points = (pts ?? []) as Point[];
   const visits = (vis ?? []) as Visit[];
   const names = await namesFor(visits.map((v) => v.recorded_by_id));
-  const isMgr = ["shift_manager", "section_manager", "admin"].includes(profile.role);
+  const isMgr = can(profile, "shift_manager_tasks");
   const nowVisits = (p: Point) => visits.filter((v) => v.point_id === p.id && v.shift_date === cur.shiftDate && v.shift === cur.shift);
   const done = points.filter((p) => nowVisits(p).length >= p.rounds_per_shift).length;
 

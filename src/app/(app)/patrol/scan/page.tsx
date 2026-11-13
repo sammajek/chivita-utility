@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { VisitForm } from "../Forms";
 
@@ -19,7 +19,7 @@ export default async function ScanPage({ searchParams }: { searchParams: Promise
         <h1 className="page-title">{pt.name}</h1>
         <p className="page-sub">Patrol point · {pt.area_label ?? (pt.area === "U1" ? "Utility 1" : "Utility 2")}{pt.location ? ` · ${pt.location}` : ""}. Check each item and record the round.</p>
       </div>
-      {profile.active && profile.role !== "viewer"
+      {profile.active && can(profile, "enter_records")
         ? <VisitForm point={pt.id} code={sp.c} name={pt.name} checks={pt.checks} />
         : <p className="card text-sm text-gray-600">Your account cannot record patrol rounds.</p>}
     </div>

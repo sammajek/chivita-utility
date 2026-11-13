@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { StatTile } from "@/components/BarList";
 import { GridList, GridRow } from "@/components/GridList";
@@ -43,7 +43,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   const tab = sp.tab === "orders" ? "orders" : "jobs";
   const show = sp.show ?? "open";
   const q = (sp.q ?? "").trim().toLowerCase();
-  const canEdit = profile.active && ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canEdit = profile.active && can(profile, "engineer_tasks");
 
   const supabase = await createClient();
   const [{ data: js }, { data: os }] = await Promise.all([

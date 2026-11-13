@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { namesFor } from "@/lib/data/pm";
 import { HANDOVER_GROUPS, nextShift, type HandoverContent } from "@/lib/handover";
@@ -41,7 +41,7 @@ export default async function HandoverView({ params }: { params: Promise<{ id: s
   const cell = (v: string | undefined) => (v && v.trim() ? v : "—");
   const pctCell = (v: string | undefined) => (v && v.trim() ? (v.includes("%") ? v : `${v.trim()} %`) : "—");
   const canAck = onNextShift && !acks.some((a) => a.recorded_by_id === profile.id);
-  const canSign = !h.manager_at && ["shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canSign = !h.manager_at && can(profile, "shift_manager_tasks");
 
   return (
     <div className="space-y-4">

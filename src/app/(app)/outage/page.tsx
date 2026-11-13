@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos, lagosDate, lagosParts } from "@/lib/time";
 import { namesFor } from "@/lib/data/pm";
@@ -30,7 +30,7 @@ export default async function OutagePage() {
   const outages = (outs ?? []) as Outage[];
   const open = outages.find((o) => !o.ended_at);
   const names = await namesFor(outages.flatMap((o) => [o.recorded_by_id, o.ended_by]));
-  const isEng = profile.active && ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const isEng = profile.active && can(profile, "engineer_tasks");
   const backfill = Number(setting?.value ?? 24);
   const now = new Date();
 
@@ -49,7 +49,7 @@ export default async function OutagePage() {
         <div className="card space-y-2 border-red-300 bg-red-50">
           <b className="text-crit">Outage in progress since {formatLagos(open.started_at)}</b>
           <p className="text-sm">{open.reason} — declared by {names.get(open.recorded_by_id ?? "") ?? "—"}. Missing-reading flags are paused.</p>
-          <EvidenceList entityType="outage" entityId={open.id} canAdd={profile.active && profile.role !== "viewer"} />
+          <EvidenceList entityType="outage" entityId={open.id} canAdd={profile.active && can(profile, "enter_records")} />
           {isEng && (
             <ActionForm action={endOutage} submit="End outage" className="no-print flex flex-wrap items-end gap-2">
               <input type="hidden" name="id" value={open.id} />

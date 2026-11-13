@@ -1,4 +1,4 @@
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { lagosDate } from "@/lib/time";
 import { calibrationState, type CalState } from "@/lib/water";
@@ -43,7 +43,7 @@ export default async function CalibrationPage() {
   const count = (s: CalState) => withState.filter((x) => x.st === s).length;
   const order: CalState[] = ["overdue", "due_soon", "unknown", "ok"];
   withState.sort((a, b) => order.indexOf(a.st) - order.indexOf(b.st) || (a.i.next_due ?? "").localeCompare(b.i.next_due ?? ""));
-  const canEdit = profile.active && ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canEdit = profile.active && can(profile, "engineer_tasks");
   const inDate = instruments.length ? Math.round(((count("ok") + count("due_soon")) / instruments.length) * 1000) / 10 : null;
 
   return (

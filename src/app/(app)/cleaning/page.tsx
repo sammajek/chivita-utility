@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { EvidenceList } from "@/components/EvidenceList";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { cleaningCompliance } from "@/lib/amc";
 import { namesFor } from "@/lib/data/pm";
@@ -45,9 +45,9 @@ export default async function CleaningPage({ searchParams }: { searchParams: Pro
     return { w, done, pct: cleaningCompliance(perWeek, done), signed: signoffs.some((s) => s.week_start === w) };
   });
   const total = history.reduce((s, h) => s + h.done, 0);
-  const canEnter = profile.active && !signed && ["operator", "engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
-  const canSign = profile.active && ["shift_manager", "section_manager", "admin"].includes(profile.role);
-  const isEngineer = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canEnter = profile.active && !signed && can(profile, "enter_records");
+  const canSign = profile.active && can(profile, "shift_manager_tasks");
+  const isEngineer = can(profile, "engineer_tasks");
   const firstDone = zones.map((zn) => checks.find((x) => x.zone_id === zn.id && x.result === "done")?.id).filter((x): x is string => !!x);
   const { data: att } = firstDone.length
     ? await (await createClient()).from("attachments").select("entity_id").eq("entity_type", "cleaning").in("entity_id", firstDone)

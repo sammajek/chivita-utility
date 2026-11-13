@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos } from "@/lib/time";
 import { hoursInPeriod } from "@/lib/kpi";
@@ -41,8 +41,8 @@ export default async function DowntimeDetail({ params }: { params: Promise<{ id:
     .eq("downtime_id", id).is("voided_at", null).order("recorded_at");
   const followups = (fu ?? []) as Followup[];
   const names = await namesFor([e.recorded_by_id, ...followups.map((f) => f.recorded_by_id)]);
-  const canAct = profile.active && profile.role !== "viewer";
-  const isEng = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canAct = profile.active && can(profile, "enter_records");
+  const isEng = can(profile, "engineer_tasks");
   const hrs = hoursInPeriod(e as never, new Date(0), new Date(8.64e15));
   const today = new Date().toISOString().slice(0, 10);
 

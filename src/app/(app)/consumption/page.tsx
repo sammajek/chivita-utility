@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { addDays, lagosDate } from "@/lib/time";
 import { StatTile } from "@/components/BarList";
@@ -29,7 +29,7 @@ export default async function ConsumptionPage({ searchParams }: { searchParams: 
   const supabase = await createClient();
   const { data: mdata } = await supabase.from("meters").select("id, code, name, grp, unit, kind, sort, asset:assets(code)").eq("active", true).order("sort");
   const meters = (mdata ?? []) as unknown as Meter[];
-  const canEnter = profile.active && profile.role !== "viewer";
+  const canEnter = profile.active && can(profile, "enter_records");
   const tab = (g: string, label: string, on: boolean, href: string) => (
     <Link key={g} href={href} className={`tab ${on ? "tab-on" : ""}`}>{label}</Link>
   );

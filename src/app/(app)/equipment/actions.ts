@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { requireRole } from "@/lib/auth";
+import { requireCap } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 
 type Msg = { ok?: string; error?: string };
@@ -40,7 +40,7 @@ export async function recordService(_p: Msg, f: FormData): Promise<Msg> {
 }
 
 export async function updateInterval(_p: Msg, f: FormData): Promise<Msg> {
-  await requireRole("engineer", "shift_manager", "section_manager", "admin");
+  await requireCap("engineer_tasks");
   const supabase = await createClient();
   const { error } = await supabase.from("service_intervals").update({
     warn_before_hours: Number(s(f, "warn") ?? 200),
@@ -53,7 +53,7 @@ export async function updateInterval(_p: Msg, f: FormData): Promise<Msg> {
 
 /** PM code and specifications (admin / section manager). */
 export async function updateSpecs(_p: Msg, f: FormData): Promise<Msg> {
-  await requireRole("admin", "section_manager");
+  await requireCap("manager_tasks");
   const year = s(f, "year_installed");
   const supabase = await createClient();
   const { error } = await supabase.from("assets").update({

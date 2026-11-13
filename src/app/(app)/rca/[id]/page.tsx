@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { loadAssetsForPicker, loadLists } from "@/lib/data/lists";
 import { RcaForm, type RcaValues } from "../RcaForm";
@@ -26,7 +26,7 @@ export default async function RcaPage({ params, searchParams }: { params: Promis
     const { data: e } = await supabase.from("downtime_events").select("id, asset_id, event_no, failure_mode, rca_reason").eq("id", sp.downtime).maybeSingle();
     if (e) r = { downtime_id: e.id, asset_id: e.asset_id, problem: `${e.event_no}: ${e.failure_mode}. ${e.rca_reason ?? ""}` };
   }
-  const canEdit = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canEdit = can(profile, "engineer_tasks");
   return (
     <div className="space-y-4">
       <Link href="/rca" className="text-sm text-brand-blue">← RCA register</Link>

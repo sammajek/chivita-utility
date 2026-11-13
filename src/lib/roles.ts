@@ -10,6 +10,21 @@ export const ROLE_LABELS: Record<Role, string> = {
   viewer: "Viewer",
 };
 
+/** Groups of actions an admin can give or take away per role (Admin → Access). Enforced by the database. */
+export const CAPABILITIES = [
+  { key: "enter_records", label: "Enter records",
+    detail: "Readings, PM results, downtime, water results, cleaning checks, patrols, evidence photos; change equipment state; correct or void own entries; check in/out and handover" },
+  { key: "engineer_tasks", label: "Engineer tasks",
+    detail: "Correct or void anyone’s records; close downtime; resolve flags and follow-ups; RCA; calibration; AMC visits; jobs & POs; affirm PM periods; tick training; loggers" },
+  { key: "shift_manager_tasks", label: "Shift manager tasks",
+    detail: "Sign off handovers and cleaning; set up patrol points; KPI entries for others; issue machine scan labels" },
+  { key: "manager_tasks", label: "Section manager tasks",
+    detail: "Admin screen: edit equipment, limits, registers, PM tasks, meters, pick lists, staff; AMC contracts and planned months; withdraw PM affirmations" },
+  { key: "admin_tasks", label: "Admin tasks",
+    detail: "Activate users and change roles; import staff; issue logger keys; change these access rights" },
+] as const;
+export type Capability = (typeof CAPABILITIES)[number]["key"];
+
 export const NAV_GROUPS = ["Overview", "Operations", "Maintenance", "Quality", "People", "Reports & data"] as const;
 export type NavGroup = (typeof NAV_GROUPS)[number] | "Admin";
 

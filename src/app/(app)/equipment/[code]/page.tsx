@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos, lagosDate } from "@/lib/time";
 import { FREQ_LABEL, type PmFrequency } from "@/lib/pm";
@@ -41,9 +41,9 @@ export default async function EquipmentDetail({ params, searchParams }: { params
   const h = ((hours ?? []) as { hours: number; read_at: string }[])[0] ?? null;
   const st = (states ?? []) as { id: string; state: string; reason: string | null; note: string | null; started_at: string; ended_at: string | null; recorded_by_id: string | null }[];
   const names = await namesFor(st.map((s) => s.recorded_by_id));
-  const canAct = profile.active && profile.role !== "viewer";
-  const isEng = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
-  const isAdmin = ["section_manager", "admin"].includes(profile.role);
+  const canAct = profile.active && can(profile, "enter_records");
+  const isEng = can(profile, "engineer_tasks");
+  const isAdmin = can(profile, "manager_tasks");
   const today = lagosDate(new Date());
   const spec = (l: string, v: unknown) => <div><dt className="text-xs text-gray-500">{l}</dt><dd className="text-sm">{v === null || v === undefined || v === "" ? "—" : String(v)}</dd></div>;
 

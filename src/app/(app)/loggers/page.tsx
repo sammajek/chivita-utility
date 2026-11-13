@@ -1,4 +1,4 @@
-import { requireRole } from "@/lib/auth";
+import { can, requireCap } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos } from "@/lib/time";
 import { KeyForm, UploadForm } from "./Forms";
@@ -12,7 +12,7 @@ interface Raw { id: number; ts: string; value_num: number | null; value_text: st
 const PLACED: Record<string, string> = { slot: "Register slot", meter: "07:00 meter reading", stored: "Logger data", rejected: "Rejected" };
 
 export default async function LoggersPage() {
-  const profile = await requireRole("engineer", "shift_manager", "section_manager", "admin");
+  const profile = await requireCap("engineer_tasks");
   const supabase = await createClient();
   const [{ data: lg }, { data: raw }] = await Promise.all([
     supabase.from("loggers").select("id, name, description, active, last_seen_at, area").order("name"),
@@ -39,7 +39,7 @@ export default async function LoggersPage() {
             </li>
           ))}
         </ul>
-        {profile.role === "admin" && (<><h3 className="pt-2 text-sm font-semibold">Add a Logger or Issue a New Key (Admin)</h3><KeyForm /></>)}
+        {can(profile, "admin_tasks") && (<><h3 className="pt-2 text-sm font-semibold">Add a Logger or Issue a New Key (Admin)</h3><KeyForm /></>)}
       </section>
 
       <section className="card space-y-2">

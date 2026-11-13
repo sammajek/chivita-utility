@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { signOut } from "@/app/login/actions";
-import { requireProfile } from "@/lib/auth";
-import { navFor, ROLE_LABELS } from "@/lib/roles";
+import { navForProfile, requireProfile } from "@/lib/auth";
+import { ROLE_LABELS } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -28,7 +28,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     </>
   );
   return (
-    <AppShell nav={navFor(profile.role)} name={profile.full_name} roleLabel={ROLE_LABELS[profile.role]} unread={unread ?? 0}
+    <AppShell nav={navForProfile(profile)} name={profile.full_name} roleLabel={ROLE_LABELS[profile.role]} unread={unread ?? 0}
       signOut={signOut} banners={banners}>
       {children}
     </AppShell>

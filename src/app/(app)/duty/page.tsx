@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos, SHIFT_LABELS, shiftAt } from "@/lib/time";
 import { ROLE_LABELS, type Role } from "@/lib/roles";
@@ -42,7 +42,7 @@ export default async function DutyPage({ searchParams }: { searchParams: Promise
   const mine = list.find((s) => s.profile_id === profile.id && !s.checked_out_at);
   const onNow = list.filter((s) => !s.checked_out_at && s.shift_date === cur.shiftDate && s.shift === cur.shift);
   const handovers = list.filter((s) => s.handover_note).slice(0, 10);
-  const canCheckIn = profile.role !== "viewer" && profile.active;
+  const canCheckIn = can(profile, "enter_records") && profile.active;
 
   return (
     <div className="space-y-6">

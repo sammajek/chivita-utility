@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { formatLagos } from "@/lib/time";
 import { hoursInPeriod } from "@/lib/kpi";
@@ -31,8 +31,8 @@ export default async function DowntimePage({ searchParams }: { searchParams: Pro
   if (sp.open) q = q.neq("status", "Closed");
   const { data } = await q;
   const events = (data ?? []) as unknown as Ev[];
-  const canLog = profile.role !== "viewer" && profile.active;
-  const canRca = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canLog = can(profile, "enter_records") && profile.active;
+  const canRca = can(profile, "engineer_tasks");
 
   return (
     <div className="space-y-4">

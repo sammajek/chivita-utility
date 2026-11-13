@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { assetKpis, oee, performance, quality, type DowntimeEvent } from "@/lib/kpi";
 import { addDays, lagosDate, lagosInstant } from "@/lib/time";
@@ -49,7 +49,7 @@ export default async function OeePage({ searchParams }: { searchParams: Promise<
   const full = rows.filter((r) => r.o !== null);
   const avg = (xs: (number | null)[]) => { const v = xs.filter((n): n is number => n !== null); return v.length ? v.reduce((t, n) => t + n, 0) / v.length : null; };
   const link = (o: Record<string, string>) => `/oee?${new URLSearchParams({ days: String(days), ...(area ? { area } : {}), ...o })}`;
-  const isAdmin = ["admin", "section_manager"].includes(profile.role);
+  const isAdmin = can(profile, "manager_tasks");
 
   return (
     <div className="space-y-5">

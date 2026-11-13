@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProfile } from "@/lib/auth";
+import { requireProfile, can } from "@/lib/auth";
 import { loadPmCompletions, loadPmTasks, namesFor, type PmCompletion } from "@/lib/data/pm";
 import {
   completedPeriods, FREQ_LABEL, PM_FREQUENCIES, pmAdherence, pmPeriodEnd, pmPeriodLabel, pmPeriodStart,
@@ -79,8 +79,8 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
     ? await (await createClient()).from("attachments").select("entity_id").eq("entity_type", "pm_completion").in("entity_id", completions.map((c) => c.id).slice(0, 300))
     : { data: [] };
   const photoIds = ((ph ?? []) as { entity_id: string }[]).map((x) => x.entity_id);
-  const canEnter = profile.active && ["operator", "engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
-  const isEngineer = ["engineer", "shift_manager", "section_manager", "admin"].includes(profile.role);
+  const canEnter = profile.active && can(profile, "enter_records");
+  const isEngineer = can(profile, "engineer_tasks");
   const count = (r: string) => completions.filter((c) => c.result === r).length;
   const ended = next <= today;
 
@@ -114,7 +114,7 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
       {completions.some((c) => c.is_demo) && <p className="text-xs font-semibold text-purple-700">Includes DEMO data</p>}
 
       <Affirmations freq={freq} period={period} areas={area ? [area] : ["U1", "U2"]} canAffirm={isEngineer && profile.active}
-        canWithdraw={["section_manager", "admin"].includes(profile.role)} tasks={tasks} completions={completions} />
+        canWithdraw={can(profile, "manager_tasks")} tasks={tasks} completions={completions} />
 
       <PmForm key={`${freq}-${period}-${area}`} tasks={tasks} existing={existing} names={names} periodStart={period} canEnter={canEnter} photos={photoIds} />
 
