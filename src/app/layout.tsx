@@ -7,7 +7,6 @@ const inter = Inter({ variable: "--font-sans", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "CHI Utility Ops",
   description: "Utility section registers, flags, downtime and KPIs. CHI Limited (Chivita | Hollandia).",
-  icons: { icon: "/favicon.ico" },
 };
 
 export const viewport: Viewport = {
