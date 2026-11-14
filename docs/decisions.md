@@ -374,3 +374,12 @@ Each entry: date, decision, who decided, notes.
 ## 2026-11-13 — PM go-live date: 1 December 2026
 - Setting `pm_monitor_from` = 2026-12-01 (live database). PM completion % (dashboard, Engineer KPIs, reports) counts only
   PM periods starting on or after this date, and missed-PM flags start from it too. Change it in Admin → Settings.
+
+## 2026-11-14 — Running-hours PM cross-check
+- Compressor services are due by calendar (PM schedule) or by running hours, whichever comes first.
+- A running-hours PM task recorded done (√ or X) also records the service at the machine's last counter reading,
+  restarting its hours clock (bigger services restart smaller ones).
+- New flag kind `hours_check`: last service unknown; counter went down or rose faster than the clock; hours not logged
+  for 7+ days (setting `hours_stale_days`); a service entered at more hours than the counter showed.
+- Screen: Preventive Maintenance → Running-hours cross-check (/pm/hours): counter, status per service, quick entry of
+  last services (baselines). Worked example: `supabase/tests/99t2_hours_crosscheck_test.sql`.

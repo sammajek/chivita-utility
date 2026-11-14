@@ -66,6 +66,7 @@ export default async function PmPage({ searchParams }: { searchParams: Promise<S
     <div>
       <h1 className="page-title">Preventive Maintenance</h1>
       <p className="page-sub">Utility PM log · CHIENGUTRG08 · √ Completed – no issue found · X Completed – issue found · P Pending (with a date) · -- Skipped</p>
+      <Link href="/pm/hours" className="text-sm text-brand-blue">Running-hours cross-check (compressor services by hours) →</Link>
     </div>
   );
 
